@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "989341089260",
+    "project_id": "videopiratingapp",
+    "storage_bucket": "videopiratingapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989341089260:android:70effe058587b6c2d914c9",
+        "android_client_info": {
+          "package_name": "school.videopirateapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsR1c06mHDGH7jG_vuCWOa4rhkysENWCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
