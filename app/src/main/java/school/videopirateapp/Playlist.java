@@ -1,17 +1,25 @@
 package school.videopirateapp;
 
-import java.util.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Playlist {
-    String Name;
-    String Id;
-    Vector<Video>Videos;
-    User Creator;
-    Vector<User>Owners;
-    Boolean Editable;
+    private List<String> items;
 
-    public void Add(Video v){
-        if(Editable) Videos.add(v);
-        else throw new Error("Playlist is not editable");
+    public Playlist() {
+        this.items = new ArrayList<String>();
+    }
+
+    public List<String> getItems() {
+        return items;
+    }
+
+    public void setItems(List<String> items) {
+        this.items = items;
+    }
+
+    public void addItem(String item) {
+        items.add(item);
     }
 }
