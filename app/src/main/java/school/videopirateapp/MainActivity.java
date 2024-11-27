@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         test_Ed2=findViewById(R.id.test_Ed2);
 
         myRef = database.getReference("message");
-        myRef.setValue("MESSAGE STILL WROKING?");
+        myRef.setValue("MESSAGE IS STILL WORKING!");
 
         myRef=database.getReference("number");
-        for(Double i=0.0;i<1000;i+=0.1){
+        for(Double i=0.0;i<10000;i+=0.1){
             myRef.setValue(i.toString());
         }
     }
