@@ -35,13 +35,14 @@ public class MainActivity extends AppCompatActivity {
         myRef = database.getReference("message");
         myRef.setValue("MESSAGE IS STILL WORKING!");
 
+//        Do not run code of this kind
 //        myRef=database.getReference("number");
 //        for(Double i=0.0;i<10000;i+=0.1){
 //            myRef.setValue(i.toString());
 //        }
     }
     public void Test_AddTree(View view){
-        myRef=database.getReference(test_Ed1.getText().`toString());
+        myRef=database.getReference(test_Ed1.getText().toString());
         myRef.setValue(test_Ed2.getText().toString());
     }
 }
