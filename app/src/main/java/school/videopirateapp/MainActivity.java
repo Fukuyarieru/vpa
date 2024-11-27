@@ -54,20 +54,5 @@ public class MainActivity extends AppCompatActivity {
         playlist.addItem("Item2");
 
         // Set the user object in the Firebase database under the "users" node
-        database.child("users").child(user.getId()).setValue(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        // Show success message on successful write
-                        Toast.makeText(MainActivity.this, "DATA WRITTEN SUCCESSFULLY", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Show failure message on failed write
-                        Toast.makeText(MainActivity.this, "FAILED TO WRITE DATA", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 }
