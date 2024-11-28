@@ -6,36 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainMenuActivity">
+    tools:context=".Database_Dev_ListView_Component">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/MainMenu_Button_YourUser"
+        <TextView
+            android:id="@+id/Database_Dev_ListView_Component_TextView_Tree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Your User" />
+            android:padding="10dp"
+            android:text="Tree" />
 
-        <Button
-            android:id="@+id/MainMenu_Button_YourPlaylists"
+        <TextView
+            android:id="@+id/Database_Dev_ListView_Component_TextView_Message"
+            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Your Playlists" />
-
-        <Button
-            android:id="@+id/MainMenu_Button_Placeholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Placeholder" />
+            android:text="Message" />
     </LinearLayout>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </LinearLayout>

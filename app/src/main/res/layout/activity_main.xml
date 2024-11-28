@@ -8,26 +8,4 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Tree"
-        android:id="@+id/test_Ed1" />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Message"
-        android:id="@+id/test_Ed2" />
-
-    <Button
-        android:id="@+id/button2"
-        android:onClick="Test_AddTree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add" />
-
 </LinearLayout>

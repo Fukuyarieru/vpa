@@ -17,6 +17,9 @@ public class User {
         this.Id = id;
         this.Uploads = new Playlist();  // If you want to initialize Playlist when a User is created
     }
+    public void Watch(Video video) {
+
+    }
 
     // Getters and setters for Firebase to access the fields
     public String getName() {
