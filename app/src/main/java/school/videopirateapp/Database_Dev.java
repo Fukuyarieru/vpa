@@ -12,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 
 public class Database_Dev extends AppCompatActivity {
 
@@ -25,8 +27,14 @@ public class Database_Dev extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_database_dev);
 
+//        DocumentReference alovelaceDocumentRef = database.collection("users").document("alovelace");
+//        CollectionReference usersCollectionRef = database.collection("users");
+//        DocumentReference alovelaceDocumentRef = database.document("users/alovelace");
+
+
         Tree=findViewById(R.id.Database_Dev_EditText_Tree);
         Message=findViewById(R.id.Database_Dev_EditText_Message);
+
     }
     public void Add(View view){
         myRef=database.getReference(Tree.getText().toString());
