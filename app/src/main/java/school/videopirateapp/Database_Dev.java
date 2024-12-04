@@ -3,20 +3,15 @@ package school.videopirateapp;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 
 public class Database_Dev extends AppCompatActivity {
-
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
     DatabaseReference myRef = database.getReference();
     EditText Tree;
@@ -39,17 +34,23 @@ public class Database_Dev extends AppCompatActivity {
     public void Add(View view){
         myRef=database.getReference(Tree.getText().toString());
         myRef.setValue(Message.getText().toString());
+        Toast.makeText(Database_Dev.this, "Added " + Message.getText().toString(), Toast.LENGTH_SHORT).show();
     }
     public void Get(View view) {
         myRef=database.getReference(Tree.getText().toString());
         myRef.get().addOnSuccessListener(dataSnapshot -> {
             Message.setText(dataSnapshot.getValue(String.class));
+            Toast.makeText(this, Message.getText().toString(), Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(dataSnapshot -> {
+            Message.setText("ERROR");
+            Toast.makeText(Database_Dev.this, "Not Found", Toast.LENGTH_SHORT).show();
         });
     }
     public void Remove(View view) {
         myRef=database.getReference(Tree.getText().toString());
         myRef.get().addOnSuccessListener(dataSnapshot -> {
             Message.setText("Removed: " + dataSnapshot.getValue(String.class));
+            Toast.makeText(Database_Dev.this, "Removed " + Message.getText().toString(), Toast.LENGTH_SHORT).show();
             myRef.removeValue();
         });
     }

@@ -19,8 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:padding="5sp"
-            android:src="@tools:sample/avatars"
-            tools:srcCompat="@tools:sample/avatars[0]" />
+            app:srcCompat="@drawable/purplebook" />
 
         <TextView
             android:id="@+id/User_ListView_Component_TextView_UserName"
@@ -33,4 +32,10 @@
             android:text="UserName" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
 </LinearLayout>
