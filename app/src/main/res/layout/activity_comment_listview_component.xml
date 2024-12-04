@@ -35,6 +35,7 @@
                 android:padding="5sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:text="UserName" />
 
             <TextView
@@ -42,6 +43,7 @@
                 android:padding="5sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Comment" />
         </LinearLayout>
     </LinearLayout>
