@@ -12,8 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Database_Dev extends AppCompatActivity {
-    FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
-    DatabaseReference myRef = database.getReference();
+//    FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
+//    DatabaseReference myRef = database.getReference();
     EditText Tree;
     EditText Message;
     @Override
@@ -32,13 +32,15 @@ public class Database_Dev extends AppCompatActivity {
 
     }
     public void Add(View view){
-        myRef=database.getReference(Tree.getText().toString());
-        myRef.setValue(Message.getText().toString());
+        String treeStr=Tree.getText().toString();
+        String messageStr=Message.getText().toString();
+        Database.GetReference(treeStr).setValue(messageStr);
         Toast.makeText(Database_Dev.this, "Added " + Message.getText().toString(), Toast.LENGTH_SHORT).show();
     }
     public void Get(View view) {
-        myRef=database.getReference(Tree.getText().toString());
-        myRef.get().addOnSuccessListener(dataSnapshot -> {
+//        myRef=database.getReference(Tree.getText().toString());
+        String treeStr=Tree.getText().toString();
+        Database.GetReference(treeStr).get().addOnSuccessListener(dataSnapshot -> {
             Message.setText(dataSnapshot.getValue(String.class));
             Toast.makeText(this, Message.getText().toString(), Toast.LENGTH_SHORT).show();
         }).addOnFailureListener(dataSnapshot -> {
@@ -47,11 +49,11 @@ public class Database_Dev extends AppCompatActivity {
         });
     }
     public void Remove(View view) {
-        myRef=database.getReference(Tree.getText().toString());
-        myRef.get().addOnSuccessListener(dataSnapshot -> {
+        String treeStr=Tree.getText().toString();
+        Database.GetReference(treeStr).get().addOnSuccessListener(dataSnapshot -> {
             Message.setText("Removed: " + dataSnapshot.getValue(String.class));
             Toast.makeText(Database_Dev.this, "Removed " + Message.getText().toString(), Toast.LENGTH_SHORT).show();
-            myRef.removeValue();
+            Database.Remove(treeStr);
         });
     }
 }

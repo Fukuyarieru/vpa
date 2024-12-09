@@ -22,9 +22,11 @@
 
             <ImageView
                 android:id="@+id/User_Page_ImageView_UserImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@tools:sample/avatars" />
+                android:layout_width="200sp"
+                android:layout_height="200sp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/default_user_image" />
 
             <TextView
                 android:id="@+id/User_Page_TextView_UserName"

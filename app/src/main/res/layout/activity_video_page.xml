@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="5sp"
     tools:context=".VideoActivity">
 
     <VideoView
@@ -25,14 +26,16 @@
 
             <ImageView
                 android:id="@+id/Video_Page_ImageView_UserImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@tools:sample/avatars" />
+                android:layout_width="150sp"
+                android:layout_height="150sp"
+                android:padding="5sp"
+                android:src="@drawable/default_user_image" />
 
             <TextView
                 android:id="@+id/Video_Page_TextView_UserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="5sp"
                 android:gravity="center"
                 android:text="UserName" />
         </LinearLayout>
@@ -52,7 +55,8 @@
                     android:id="@+id/Video_Page_TextView_VideoTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:padding="5sp"
+                    android:gravity="top"
                     android:layout_weight="1"
                     android:text="VideoTitle" />
 
@@ -69,6 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:padding="5sp"
                         android:text="Downvote" />
 
                     <Button
@@ -76,6 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:padding="5sp"
                         android:text="Upvote" />
                 </LinearLayout>
             </LinearLayout>
@@ -86,5 +92,6 @@
     <ListView
         android:id="@+id/Video_Page_ListView_Comments"
         android:layout_width="wrap_content"
+        android:padding="5sp"
         android:layout_height="wrap_content" />
 </LinearLayout>

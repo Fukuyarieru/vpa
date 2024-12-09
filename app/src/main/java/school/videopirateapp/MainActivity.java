@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
         // warning to me: adding an empty tree key is BAD, it destroys the database
         // figured: it accesses the "main folder" of the database, which is the database itself
 
+        // NOTE FOR USER PICTURES, RECOMMEND SOME WHEN IN THE PROCESS THAT PFPs SHOULD BE 512x512, DO THIS SCALING ALSO DURING RUNTIME WHEN MAKING AND LOADING PICTURES
+
+        // TO ADD OBJECTS INTO THE DATABASE, THE STRUCTURE IS TREE/2TREE/3TREE, IN WHICH, FOR EACH TREE YOU CAN STORE DATA SEPARATELY AND ACT ON IT AS A CLASS HERE
+
         Intent intent=new Intent(this,Database_Dev.class);
         startActivity(intent);
     }

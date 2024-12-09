@@ -9,6 +9,6 @@ public class Video_ListView_Component extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_list_view_component);
+        setContentView(R.layout.activity_video_listview_component);
     }
 }
