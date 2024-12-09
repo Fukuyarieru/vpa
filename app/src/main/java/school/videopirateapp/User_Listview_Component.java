@@ -10,5 +10,7 @@ public class User_Listview_Component extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_listview_component);
+
+        
     }
 }

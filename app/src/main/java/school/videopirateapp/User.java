@@ -1,5 +1,9 @@
 package school.videopirateapp;
 
+import android.content.Intent;
+
+import java.util.HashMap;
+
 public class User {
     String Name;
     String Id;
@@ -17,9 +21,10 @@ public class User {
         this.Id = id;
         this.Uploads = new Playlist();  // If you want to initialize Playlist when a User is created
     }
-    public void Watch(Video video) {
-
-    }
+//    public void Watch(Video video) {
+//        Intent intent=new Intent(this,Video);
+//        intent
+//    }
 
     // Getters and setters for Firebase to access the fields
     public String getName() {
@@ -44,5 +49,12 @@ public class User {
 
     public void setUploads(Playlist uploads) {
         this.Uploads = uploads;
+    }
+
+    public HashMap<String,String> ToHashMap() {
+        HashMap<String,String>hashMap=new HashMap<>();
+        hashMap.put("name",this.Name);
+        hashMap.put("id",this.Id);
+        return hashMap;
     }
 }

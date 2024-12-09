@@ -13,14 +13,6 @@
         android:padding="10sp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/User_ListView_Component_ImageView_UserPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:padding="5sp"
-            app:srcCompat="@drawable/purplebook" />
-
         <TextView
             android:id="@+id/User_ListView_Component_TextView_UserName"
             android:layout_width="match_parent"
