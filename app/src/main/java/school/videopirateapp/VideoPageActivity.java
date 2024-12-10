@@ -19,23 +19,23 @@ public class VideoPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video_page);
 
 
-        VideoView videoView = findViewById(R.id.Video_Page_VideoView_Video);
-
-        // Set the media controller buttons
-        MediaController mediaController = new MediaController(this);
-        mediaController.setAnchorView(videoView);
-        videoView.setMediaController(mediaController);
-
-        // Specify the URI of the video to play
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.default_video); // example for a video in raw resources
-
-        // or a video from the web
-        // Uri videoUri = Uri.parse("http://path/to/your/video");
-
-        videoView.setVideoURI(videoUri);
-
-        // Start the video
-        videoView.setOnPreparedListener(mp -> videoView.start());
+//        VideoView videoView = findViewById(R.id.Video_Page_VideoView_Video);
+//
+//        // Set the media controller buttons
+//        MediaController mediaController = new MediaController(this);
+//        mediaController.setAnchorView(videoView);
+//        videoView.setMediaController(mediaController);
+//
+//        // Specify the URI of the video to play
+//        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.default_video); // example for a video in raw resources
+//
+//        // or a video from the web
+//        // Uri videoUri = Uri.parse("http://path/to/your/video");
+//
+//        videoView.setVideoURI(videoUri);
+//
+//        // Start the video
+//        videoView.setOnPreparedListener(mp -> videoView.start());
         // TODO
     }
 }

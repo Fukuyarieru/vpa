@@ -2,11 +2,13 @@ package school.videopirateapp;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User extends DatabaseAccesser {
     String Name;
     Playlist Uploads;
+    ArrayList<Comment> Comments;
 
 
     // Default constructor required for Firebase
@@ -14,6 +16,7 @@ public class User extends DatabaseAccesser {
         // Empty constructor for Firebase
         this.Name = "@Default";
         this.Uploads = new Playlist();
+        this.Comments=new ArrayList<Comment>();
     }
 
     // Constructor with parameters
@@ -23,6 +26,7 @@ public class User extends DatabaseAccesser {
         }
         this.Name = name;
         this.Uploads = new Playlist();  // If you want to initialize Playlist when a User is created
+        this.Comments = new ArrayList<Comment>();
     }
 //    public void Watch(Video video) {
 //        Intent intent=new Intent(this,Video);
