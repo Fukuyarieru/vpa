@@ -24,4 +24,10 @@ public class Database {
     public static void Add(User user) {
         User.GetTree();
     }
+    public static void Add(Comment newComment, Video targetVideo) {
+
+    }
+    public static void Add(Video newVideo, User targetUser) {
+
+    }
 }
