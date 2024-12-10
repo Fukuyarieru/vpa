@@ -1,24 +1,27 @@
 package school.videopirateapp;
 
-import android.content.Intent;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.HashMap;
 
-public class User {
+public class User extends DatabaseAccesser {
     String Name;
-    String Id;
     Playlist Uploads;
 
 
     // Default constructor required for Firebase
     public User() {
         // Empty constructor for Firebase
+        this.Name = "@Default";
+        this.Uploads = new Playlist();
     }
 
     // Constructor with parameters
-    public User(String name, String id) {
+    public User(String name) {
+        if (!name.startsWith("@")) {
+            name = "@" + name;
+        }
         this.Name = name;
-        this.Id = id;
         this.Uploads = new Playlist();  // If you want to initialize Playlist when a User is created
     }
 //    public void Watch(Video video) {
@@ -35,14 +38,6 @@ public class User {
         this.Name = name;
     }
 
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        this.Id = id;
-    }
-
     public Playlist getUploads() {
         return Uploads;
     }
@@ -52,10 +47,27 @@ public class User {
     }
 
     // test
-    public HashMap<String,String> ToHashMap() {
-        HashMap<String,String>hashMap=new HashMap<>();
-        hashMap.put("name",this.Name);
-        hashMap.put("id",this.Id);
+    // idk about this, probably remove later
+    public HashMap<String, String> ToHashMap() {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("name", this.Name);
         return hashMap;
+    }
+
+    //    public static void Add(User newUser) {
+//        DatabaseReference ref=Database.GetReference("users"+"/"+newUser.Name);
+//    }
+//    public static User Get(User getUser) {
+//        return null; // TODO
+//    }
+//    public static void Remove(User removeUser) {
+//
+//    }
+    public static User Default() {
+        return new User();
+    }
+
+    public static DatabaseReference GetTree() {
+        return Database.GetReference("users");
     }
 }

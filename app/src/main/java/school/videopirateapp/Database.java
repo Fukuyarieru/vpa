@@ -21,4 +21,7 @@ public class Database {
         GetReference(ref).removeValue();
         return remove_val;
     }
+    public static void Add(User user) {
+        User.GetTree();
+    }
 }

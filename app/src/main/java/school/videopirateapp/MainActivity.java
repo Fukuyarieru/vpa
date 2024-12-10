@@ -18,6 +18,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        User.Add(new User());
+//        Comment
+
+//        Database.
+
+
+
+        // Every class for use in the database will have its own Add, Remove, and Get functions to run directly staticly from the class
+        // As like in, User.Add(User), Comment.Add(Comment), Video.Add(Video)
+        // CHANGE OF MIND ON THE BELOW, why not just make so to have Database.Add(thing)
+        // Alright, Every class that needs to be in database gets default fns, GetTree for its reference tree,initialize somethind idk and else
+
+
         // warning to me: adding an empty tree key is BAD, it destroys the database
         // figured: it accesses the "main folder" of the database, which is the database itself
 
