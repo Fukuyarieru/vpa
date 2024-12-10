@@ -74,4 +74,8 @@ public class User extends DatabaseAccesser {
     public static DatabaseReference GetTree() {
         return Database.GetReference("users");
     }
+
+    public static User Get(String name) {
+        User.GetTree().getRef()
+    }
 }
