@@ -7,11 +7,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="5sp"
-    tools:context=".VideoActivity">
+    tools:context=".VideoPageActivity">
 
     <VideoView
         android:id="@+id/Video_Page_VideoView_Video"
         android:layout_width="match_parent"
+        android:padding="5sp"
         android:layout_height="200sp" />
 
     <LinearLayout
@@ -91,7 +92,7 @@
 
     <ListView
         android:id="@+id/Video_Page_ListView_Comments"
-        android:layout_width="wrap_content"
         android:padding="5sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

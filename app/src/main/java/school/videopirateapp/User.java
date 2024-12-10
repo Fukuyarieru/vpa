@@ -51,6 +51,7 @@ public class User {
         this.Uploads = uploads;
     }
 
+    // test
     public HashMap<String,String> ToHashMap() {
         HashMap<String,String>hashMap=new HashMap<>();
         hashMap.put("name",this.Name);

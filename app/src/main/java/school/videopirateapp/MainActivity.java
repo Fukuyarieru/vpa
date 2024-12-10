@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TO ADD OBJECTS INTO THE DATABASE, THE STRUCTURE IS TREE/2TREE/3TREE, IN WHICH, FOR EACH TREE YOU CAN STORE DATA SEPARATELY AND ACT ON IT AS A CLASS HERE
 
-        Intent intent=new Intent(this,Database_Dev.class);
+        Intent intent=new Intent(this, VideoPageActivity.class);
         startActivity(intent);
     }
 }
