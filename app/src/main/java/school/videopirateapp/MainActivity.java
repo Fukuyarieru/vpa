@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        Database.Users()
+
         User.Add(new User());
 //        Comment
 

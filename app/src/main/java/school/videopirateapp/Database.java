@@ -30,4 +30,7 @@ public class Database {
     public static void Add(Video newVideo, User targetUser) {
 
     }
+    public static DatabaseReference Users() {
+        return Database.GetReference("users/");
+    }
 }
