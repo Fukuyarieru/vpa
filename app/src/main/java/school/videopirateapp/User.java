@@ -53,9 +53,11 @@ public class User extends DatabaseAccesser {
     // test
     // idk about this, probably remove later
     public HashMap<String, String> ToHashMap() {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("name", this.Name);
-        return hashMap;
+        HashMap<String, String> userHashMap = new HashMap<>();
+        userHashMap.put("name",Name);
+        userHashMap.put("comments",Comments.toString());
+        userHashMap.put("uploads",Uploads.toString());
+        return userHashMap;
     }
 
     //    public static void Add(User newUser) {
@@ -72,10 +74,18 @@ public class User extends DatabaseAccesser {
     }
 
     public static DatabaseReference GetTree() {
-        return Database.GetReference("users");
+        return Database.GetReference("users/");
     }
+    public static String GetTreePath() {
+        return "users/";
+    }
+//    public static
 
-    public static User Get(String name) {
-        User.GetTree().getRef()
+    public static User GetUser(String name) {
+        return (User)(Object)Database.GetReference("users/"+name+"/").toString();
+    }
+    public static String GetUserPath(String userName) {
+//        Database.GetReference(User.GetTreePath()+userName);
+        return GetTreePath()+"@"+userName+"/";
     }
 }

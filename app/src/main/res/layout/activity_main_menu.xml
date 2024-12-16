@@ -15,7 +15,6 @@
         android:orientation="horizontal">
 
         <Button
-            android:background="@color/white"
             android:id="@+id/MainMenu_Button_YourUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,11 +29,11 @@
             android:text="Your Playlists" />
 
         <Button
-            android:id="@+id/MainMenu_Button_Placeholder"
+            android:id="@+id/MainMenu_Button_Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Placeholder" />
+            android:text="Login" />
     </LinearLayout>
 
     <ListView

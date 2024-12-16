@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 //    public static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -17,10 +17,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Database.Add(User.Default());
+        Database.Add(new User("gideon"));
 
-        Database.Users()
 
-        User.Add(new User());
+//        Database.Users()
+//        CollectionReference Users=Database.GetDatabase().;
+//        FirebaseFirestore db=FirebaseFirestore.getInstance().collection()
+//
+//
+//
+//
+//        User.Add(new User());
 //        Comment
 
 //        Database.
@@ -40,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TO ADD OBJECTS INTO THE DATABASE, THE STRUCTURE IS TREE/2TREE/3TREE, IN WHICH, FOR EACH TREE YOU CAN STORE DATA SEPARATELY AND ACT ON IT AS A CLASS HERE
 
-        Intent intent=new Intent(this, VideoPlayerActivity.class);
+        Intent intent=new Intent(this, MainMenuActivity.class);
         startActivity(intent);
     }
 }

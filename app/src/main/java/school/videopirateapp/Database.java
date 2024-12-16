@@ -2,9 +2,11 @@ package school.videopirateapp;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
+    private static FirebaseFirestore firestore = FirebaseFirestore.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 //    private static DatabaseReference databaseReference = database.getReference();
 
     public static DatabaseReference GetReference(String ref) {
@@ -16,13 +18,36 @@ public class Database {
     public static String GetValue(String ref) {
         return GetReference(ref).toString();
     }
+    public static FirebaseDatabase GetDatabase() {
+        return database;
+    }
+    public static FirebaseFirestore GetFirestore() {
+        return firestore;
+    }
     public static String Remove(String ref) {
         String remove_val=GetValue(ref);
         GetReference(ref).removeValue();
-        return remove_val;
+        return remove_val.toString();
     }
     public static void Add(User user) {
-        User.GetTree();
+        if (!Database.IsExist(User.GetUserPath(user.Name))) {
+            Database.GetReference("users/" + user.Name + "/").setValue(user.ToHashMap());
+        }
+
+//        Database.GetReference(User.GetUserPath(user.Name)).setValue(user.ToHashMap());
+
+//        if ( User.GetTree()
+//        HashMap<String,Object> databaseUser=new HashMap<>();
+//        databaseUser.put("name",user.Name);
+//        databaseUser.put("comments",user.Comments);
+//        databaseUser.put("uploads",user.Uploads);
+
+//        Database.GetFirestore().collection("users").document(user.Name).set(user.ToHashMap());
+
+//        User.GetTree().setValue(user.Name,user);
+    }
+    public static boolean IsExist(String path) {
+        return !database.getReference(path).equals(null);
     }
     public static void Add(Comment newComment, Video targetVideo) {
 
@@ -30,7 +55,7 @@ public class Database {
     public static void Add(Video newVideo, User targetUser) {
 
     }
-    public static DatabaseReference Users() {
-        return Database.GetReference("users/");
-    }
+//    public static DatabaseReference Users() {
+//        return Database.GetReference("users/");
+//    }
 }

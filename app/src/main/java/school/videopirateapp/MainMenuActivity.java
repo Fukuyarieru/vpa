@@ -16,5 +16,8 @@ public class MainMenuActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
 
+
+
+        // TOAST: YOU MUST LOGIN FIRST
     }
 }
