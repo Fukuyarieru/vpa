@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         Database.Add(User.Default());
         Database.Add(new User("gideon"));
 
+        Database.Add(Video.Default(),User.Default());
+
 
 //        Database.Users()
 //        CollectionReference Users=Database.GetDatabase().;

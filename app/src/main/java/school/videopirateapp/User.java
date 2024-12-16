@@ -73,16 +73,15 @@ public class User extends DatabaseAccesser {
         return new User();
     }
 
-    public static DatabaseReference GetTree() {
-        return Database.GetReference("users/");
+    public static DatabaseReference GetTreeRef() {
+        return Database.GetRef("users/");
     }
     public static String GetTreePath() {
         return "users/";
     }
-//    public static
-
     public static User GetUser(String name) {
-        return (User)(Object)Database.GetReference("users/"+name+"/").toString();
+        // oh what great stupid code
+        return (User)(Object)Database.GetRef("users/"+name+"/").toString();
     }
     public static String GetUserPath(String userName) {
 //        Database.GetReference(User.GetTreePath()+userName);

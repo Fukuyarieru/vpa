@@ -9,14 +9,14 @@ public class Database {
     private static FirebaseFirestore firestore = FirebaseFirestore.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 //    private static DatabaseReference databaseReference = database.getReference();
 
-    public static DatabaseReference GetReference(String ref) {
+    public static DatabaseReference GetRef(String ref) {
         if (ref=="") {
             return database.getReference("ERROR_REF_CANNOT_BE_EMPTY");
         }
         return database.getReference(ref);
     }
-    public static String GetValue(String ref) {
-        return GetReference(ref).toString();
+    public static String GetVal(String ref) {
+        return GetRef(ref).toString();
     }
     public static FirebaseDatabase GetDatabase() {
         return database;
@@ -25,13 +25,13 @@ public class Database {
         return firestore;
     }
     public static String Remove(String ref) {
-        String remove_val=GetValue(ref);
-        GetReference(ref).removeValue();
+        String remove_val= GetVal(ref);
+        GetRef(ref).removeValue();
         return remove_val.toString();
     }
     public static void Add(User user) {
         if (!Database.IsExist(User.GetUserPath(user.Name))) {
-            Database.GetReference("users/" + user.Name + "/").setValue(user.ToHashMap());
+            Database.GetRef(User.GetTreePath() + user.Name + "/").setValue(user.ToHashMap());
         }
 
 //        Database.GetReference(User.GetUserPath(user.Name)).setValue(user.ToHashMap());
@@ -54,6 +54,11 @@ public class Database {
     }
     public static void Add(Video newVideo, User targetUser) {
 
+    }
+    public static void Add(Video newVideo) {
+        // change the unique key later to be some ID or something?
+        if(!Database.IsExist(Video.GetVideoPath(newVideo.Title)))
+        Database.GetRef(Video.GetTreePath()+newVideo.Title+"/").setValue(newVideo.ToHashMap());
     }
 //    public static DatabaseReference Users() {
 //        return Database.GetReference("users/");
