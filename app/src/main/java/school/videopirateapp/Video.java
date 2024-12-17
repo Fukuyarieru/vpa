@@ -2,10 +2,12 @@ package school.videopirateapp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class Video {
-    String Title;
+    String title;
     User Uploader; // pointer
     ArrayList<Comment>Comments;
     Integer Views;
@@ -14,7 +16,7 @@ public class Video {
     //TODO: Video videodata; (add this to constructor later)
 
     public Video(String Title, User Uploader) {
-        this.Title=Title;
+        this.title =Title;
         this.Uploader=Uploader;
         Comments=new ArrayList<Comment>();
         Views=0;
@@ -23,12 +25,12 @@ public class Video {
     }
     public HashMap<String,String> ToHashMap() {
         HashMap<String,String>videoHashMap=new HashMap<>();
-        videoHashMap.put("title",Title);
-        videoHashMap.put("uploader",Uploader.Name);
-        videoHashMap.put("comments", Comments.toString());
-        videoHashMap.put("views",Views.toString());
-        videoHashMap.put("upvotes",Upvotes.toString());
-        videoHashMap.put("downvotes",Downvotes.toString());
+        videoHashMap.put("title", this.title);
+        videoHashMap.put("uploader",this.Uploader.name);
+        videoHashMap.put("comments", this.Comments.forEach(comment -> comment.ToHashMap()));
+        videoHashMap.put("views",this.Views.toString());
+        videoHashMap.put("upvotes",this.Upvotes.toString());
+        videoHashMap.put("downvotes",this.Downvotes.toString());
         return videoHashMap;
     }
     public void AddComment(Comment comment) {
@@ -44,5 +46,16 @@ public class Video {
     }
     public static String GetVideoPath(String videoTitle) {
         return Video.GetTreePath()+videoTitle+"/";
+    }
+    @Override
+    public String toString(){
+        return this.title;
+    }
+    public HashMap<String,HashMap<String,String>> commentsToHashMap() {
+        HashMap<String,HashMap<String,String>>commentsHashMap=new HashMap<>();
+//        this.Comments.forEach(comment -> comment.ToHashMap());
+        for(int i=0;i<this.Comments.size();i++) {
+//            commentsHashMap.put(new HashMap<String,String>());
+        }
     }
 }
