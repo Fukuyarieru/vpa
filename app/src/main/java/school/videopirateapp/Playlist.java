@@ -20,7 +20,7 @@ public class Playlist {
 //        // TODO, fix the below
         // TODO 2, FIX THE BELOW
         if(!User.Default().isOwningPlaylist(this)) { // strange piece of code, maybe impossible or bug inducing // this code is bad because "this" is contextual and since its a pointer and doesnt really check by the name there will be multilpe instances of #Default, this will cause bugs
-            User.Default().addPlayListOwnership(this);
+            User.Default().addPlaylistOwnership(this);
         }
         this.addVideo(Video.Default());
         this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue velit vel lacus blandit dignissim.";
@@ -28,15 +28,15 @@ public class Playlist {
     public Playlist(String playListName, User owner){
         // no need to check database here, because database checks itself
         if(!playListName.startsWith("#")) {
-            title ="#"+playListName;
+            playListName ="#"+playListName;
         }
         this.title =playListName;
         this.videos =new ArrayList<Video>();
         this.playlistDescription="";
         this.owner=owner;
-//        if( !owner.isOwningPlaylist(this)) { // TODO, another bug of the same type as before, "this" indacates a pointer to a new playlist that hasnt been checked yet
-//            owner.addPlayListOwnership(this);
-//        }
+        if( !owner.isOwningPlaylist(this)) { // TODO, another bug of the same type as before, "this" indacates a pointer to a new playlist that hasnt been checked yet
+            owner.addPlaylistOwnership(this);
+        }
     }
     public static String GetTreePath() {
         return "playlists/";
@@ -61,5 +61,8 @@ public class Playlist {
     @Override
     public String toString() {
         return "title:" + this.title +"/"+this.videos.toString();
+    }
+    public static String getPlayListPath(Playlist playlistInQeustion) {
+        return Playlist.GetTreePath()+playlistInQeustion.title+"/";
     }
 }

@@ -1,9 +1,6 @@
 package school.videopirateapp;
 
-import android.content.Intent;
-
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.internal.InternalTokenProvider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,11 +93,13 @@ public class User extends DatabaseAccesser {
 //        Database.GetReference(User.GetTreePath()+userName);
         return GetTreePath()+"@"+userName+"/";
     }
-    public void addPlayListOwnership(Playlist newOwnedPlaylist) {
+    public void addPlaylistOwnership(Playlist newOwnedPlaylist) {
         this.ownedPlaylists.add(newOwnedPlaylist);
     }
     public boolean isOwningPlaylist(Playlist playlistInQuestion) {
-        return this.ownedPlaylists.contains(playlistInQuestion);
+//        return this.ownedPlaylists.contains(playlistInQuestion);
+//        return Playlist.getPlayListPath(playlistInQuestion)
+        return playlistInQuestion.owner==this;
     }
 //    public void Watch(Video video) {
 //        Intent intent=new Intent(,VideoPlayerActivity.class);
