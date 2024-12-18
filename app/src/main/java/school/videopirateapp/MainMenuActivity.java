@@ -29,8 +29,9 @@ public class MainMenuActivity extends AppCompatActivity {
         // TOAST: YOU MUST LOGIN FIRST
     }
     public void openUserPage() {
-        finish(); // TODO, find how to do this properly, fix this
-        Intent intent=new Intent(this,UserPageActivity.class);
-        startActivity(intent);
+//        finish(); // TODO, find how to do this properly, fix this
+//        Intent intent=new Intent(this,UserPageActivity.class);
+//        startActivity(intent);
+        setContentView(R.layout.activity_user_page);
     }
 }
