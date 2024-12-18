@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 //        needs work on this
 //        Database.Add(Playlist.Default());
         Database.Add(Video.Default());
+        Video.Default().addComment(new Comment());
 
         Intent intent=new Intent(this, MainMenuActivity.class);
         startActivity(intent);

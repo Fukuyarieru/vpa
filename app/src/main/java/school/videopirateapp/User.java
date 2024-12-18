@@ -1,6 +1,9 @@
 package school.videopirateapp;
 
+import android.content.Intent;
+
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.internal.InternalTokenProvider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +13,7 @@ public class User extends DatabaseAccesser {
     Playlist Uploads;
     ArrayList<Comment> Comments;
     ArrayList<Playlist> ownedPlaylists;
+    Byte[] image;
     // Integer totalViews =====> TODO
     // Integer totalUpvotes ===> TODO
     // Integer totalDownvotes =>TODO
@@ -22,6 +26,7 @@ public class User extends DatabaseAccesser {
         this.Uploads = new Playlist("#Uploads",this);
         this.Comments=new ArrayList<Comment>();
         this.ownedPlaylists=new ArrayList<Playlist>();
+        this.image=null; // TODO this later
     }
 
     // Constructor with parameters
@@ -34,10 +39,6 @@ public class User extends DatabaseAccesser {
         this.Comments = new ArrayList<Comment>();
         this.ownedPlaylists=new ArrayList<Playlist>();
     }
-//    public void Watch(Video video) {
-//        Intent intent=new Intent(this,Video);
-//        intent
-//    }
 
     // Getters and setters for Firebase to access the fields
     public String getName() {
@@ -61,8 +62,10 @@ public class User extends DatabaseAccesser {
     public HashMap<String, String> ToHashMap() {
         HashMap<String, String> userHashMap = new HashMap<>();
         userHashMap.put("name", name);
-        userHashMap.put("comments",Comments.toString());
+        userHashMap.put("comments",Comments.toString()); // problem here because of arraylist
         userHashMap.put("uploads",Uploads.toString());
+        userHashMap.put("playlists",this.ownedPlaylists.toString()); // problem here because of arraylist
+        // toString on problematic code is a temporary solution , TODO fix it
         return userHashMap;
     }
 
@@ -99,4 +102,8 @@ public class User extends DatabaseAccesser {
     public boolean isOwningPlaylist(Playlist playlistInQuestion) {
         return this.ownedPlaylists.contains(playlistInQuestion);
     }
+//    public void Watch(Video video) {
+//        Intent intent=new Intent(,VideoPlayerActivity.class);
+//
+//    }
 }

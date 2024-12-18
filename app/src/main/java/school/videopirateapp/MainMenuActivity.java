@@ -1,6 +1,8 @@
 package school.videopirateapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,13 +12,25 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainMenuActivity extends AppCompatActivity {
 
+
+    Button yourUserButton;
+    Button yourPlaylistsButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
 
+        yourPlaylistsButton=findViewById(R.id.MainMenu_Button_YourPlaylists);
+        yourUserButton=findViewById(R.id.MainMenu_Button_YourUser);
+
+
 
         // TOAST: YOU MUST LOGIN FIRST
+    }
+    public void openUserPage() {
+        finish(); // TODO, find how to do this properly, fix this
+        Intent intent=new Intent(this,UserPageActivity.class);
+        startActivity(intent);
     }
 }

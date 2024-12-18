@@ -27,6 +27,12 @@ public class Comment{
 //        commentHashMap.put("comment", Comment);
 //        return commentHashMap;
 //    }
+    public Comment(Integer id) { // create a default comment, but with a set id
+//        this=new Comment(User.Default(),"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",id);
+        this.Comment="Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+        this.Author=User.Default();
+        this.id=id;
+    }
     public static Comment Default() {
         return new Comment();
     }

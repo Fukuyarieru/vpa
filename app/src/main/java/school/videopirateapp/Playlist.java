@@ -18,6 +18,7 @@ public class Playlist {
         // gonna check with database
 
 //        // TODO, fix the below
+        // TODO 2, FIX THE BELOW
         if(!User.Default().isOwningPlaylist(this)) { // strange piece of code, maybe impossible or bug inducing // this code is bad because "this" is contextual and since its a pointer and doesnt really check by the name there will be multilpe instances of #Default, this will cause bugs
             User.Default().addPlayListOwnership(this);
         }
@@ -56,5 +57,9 @@ public class Playlist {
     }
     public static Playlist Default() {
         return new Playlist();
+    }
+    @Override
+    public String toString() {
+        return "title:" + this.title +"/"+this.videos.toString();
     }
 }
