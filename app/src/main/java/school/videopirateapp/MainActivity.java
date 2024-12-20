@@ -16,17 +16,21 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 //    public static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 //    public static DatabaseReference databaseReference = database.getReference();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        // IDEAS
+        // point system
+        // watch history
+        // add activity transition animaition
+
 //        needs work on this
 //        Database.Add(Playlist.Default());
-        Database.Add(Video.Default());
+//        Database.Add(Video.Default());
 //        Video.Default().addComment(new Comment());
-        Database.Add(Playlist.Default());
+//        Database.Add(Playlist.Default());
 
         Intent intent=new Intent(this, MainMenuActivity.class);
         startActivity(intent);

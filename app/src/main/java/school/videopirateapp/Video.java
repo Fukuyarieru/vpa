@@ -39,7 +39,7 @@ public class Video {
         comment.id=this.commentCounter;
         this.Comments.add(comment);
 //        this.initializeLastComment();
-//        this.initializeComments();
+        this.initializeComments();
     }
 //    public void addComment(User user)
     public static Video Default() {

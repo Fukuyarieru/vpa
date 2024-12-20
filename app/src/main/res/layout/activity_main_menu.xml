@@ -39,6 +39,7 @@
     </LinearLayout>
 
     <ListView
+        android:id="@+id/MainMenu_ListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
