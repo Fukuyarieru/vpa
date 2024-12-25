@@ -45,12 +45,12 @@ public class Database_Dev extends AppCompatActivity {
             Toast.makeText(Database_Dev.this, "Not Found", Toast.LENGTH_SHORT).show();
         });
     }
-    public void Remove(View view) {
-        String treeStr=Tree.getText().toString();
-        Database.GetRef(treeStr).get().addOnSuccessListener(dataSnapshot -> {
-            Message.setText("Removed: " + dataSnapshot.getValue(String.class));
-            Toast.makeText(Database_Dev.this, "Removed " + Message.getText().toString(), Toast.LENGTH_SHORT).show();
-            Database.Remove(treeStr);
-        });
-    }
+//    public void Remove(View view) {
+//        String treeStr=Tree.getText().toString();
+//        Database.GetRef(treeStr).get().addOnSuccessListener(dataSnapshot -> {
+//            Message.setText("Removed: " + dataSnapshot.getValue(String.class));
+//            Toast.makeText(Database_Dev.this, "Removed " + Message.getText().toString(), Toast.LENGTH_SHORT).show();
+//            Database.Remove(treeStr);
+//        });
+//    }
 }

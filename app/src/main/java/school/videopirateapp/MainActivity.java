@@ -5,14 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.jetbrains.annotations.Contract;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class MainActivity extends AppCompatActivity {
 //    public static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 //    public static DatabaseReference databaseReference = database.getReference();
@@ -31,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 //        Database.Add(Video.Default());
 //        Video.Default().addComment(new Comment());
 //        Database.Add(Playlist.Default());
+
+        Database.addUser(User.Default());
 
         Intent intent=new Intent(this, MainMenuActivity.class);
         startActivity(intent);

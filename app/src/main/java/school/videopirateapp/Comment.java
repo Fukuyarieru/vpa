@@ -36,12 +36,12 @@ public class Comment{
     public static Comment Default() {
         return new Comment();
     }
-    public HashMap<String,String> ToHashMap() {
-        HashMap<String,String>commentHashMap=new HashMap<String,String>();
-        commentHashMap.put("comment",this.Comment);
-        commentHashMap.put("author",this.Author.name);
-        return commentHashMap;
-    }
+//    public HashMap<String,String> ToHashMap() {
+//        HashMap<String,String>commentHashMap=new HashMap<String,String>();
+//        commentHashMap.put("comment",this.Comment);
+//        commentHashMap.put("author",this.Author.name);
+//        return commentHashMap;
+//    }
 
     // alright unneeded, works bad
 //    // TODO, REALLY BIG NOTE HERE, CHECK HERE IF ANYTHING WITH THE TOSTRING, ALSO WHY

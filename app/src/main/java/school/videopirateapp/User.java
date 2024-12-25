@@ -1,16 +1,16 @@
 package school.videopirateapp;
 
-import com.google.firebase.database.DatabaseReference;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class User extends DatabaseAccesser {
     String name;
     Playlist Uploads;
     ArrayList<Comment> Comments;
-    ArrayList<Playlist> ownedPlaylists;
+    ArrayList<Playlist> Playlists;
     Byte[] image;
+
+    private static User defaultUser=new User();
+
     // Integer totalViews =====> TODO
     // Integer totalUpvotes ===> TODO
     // Integer totalDownvotes =>TODO
@@ -18,13 +18,22 @@ public class User extends DatabaseAccesser {
 
     // Default constructor required for Firebase
     public User() {
-        // Empty constructor for Firebase
         this.name = "@Default";
         this.Uploads = new Playlist("#Uploads",this);
+        this.Uploads.addVideo(new Video("DefaultVideo",this));
         this.Comments=new ArrayList<Comment>();
-        this.ownedPlaylists=new ArrayList<Playlist>();
+        this.Comments.add(Comment.Default());
+        this.Playlists =new ArrayList<Playlist>();
+        this.Playlists.add(new Playlist("#Default",this));
         this.image=null; // TODO this later
     }
+    public void addPlaylist(Playlist addedPlaylist) {
+        if(!this.Playlists.contains(addedPlaylist)) {
+            this.Playlists.add(addedPlaylist);
+        }
+    }
+//    public void addComment
+
 
     // Constructor with parameters
     public User(String name) {
@@ -34,7 +43,7 @@ public class User extends DatabaseAccesser {
         this.name = name;
         this.Uploads = new Playlist("#Uploads",this);  // If you want to initialize Playlist when a User is created
         this.Comments = new ArrayList<Comment>();
-        this.ownedPlaylists=new ArrayList<Playlist>();
+        this.Playlists =new ArrayList<Playlist>();
     }
 
     // Getters and setters for Firebase to access the fields
@@ -56,15 +65,15 @@ public class User extends DatabaseAccesser {
 
     // test
     // idk about this, probably remove later
-    public HashMap<String, String> ToHashMap() {
-        HashMap<String, String> userHashMap = new HashMap<>();
-        userHashMap.put("name", name);
-        userHashMap.put("comments",Comments.toString()); // problem here because of arraylist
-        userHashMap.put("uploads",Uploads.toString());
-        userHashMap.put("playlists",this.ownedPlaylists.toString()); // problem here because of arraylist
-        // toString on problematic code is a temporary solution , TODO fix it
-        return userHashMap;
-    }
+//    public HashMap<String, String> ToHashMap() {
+//        HashMap<String, String> userHashMap = new HashMap<>();
+//        userHashMap.put("name", name);
+//        userHashMap.put("comments",Comments.toString()); // problem here because of arraylist
+//        userHashMap.put("uploads",Uploads.toString());
+//        userHashMap.put("playlists",this.ownedPlaylists.toString()); // problem here because of arraylist
+//        // toString on problematic code is a temporary solution , TODO fix it
+//        return userHashMap;
+//    }
 
     //    public static void Add(User newUser) {
 //        DatabaseReference ref=Database.GetReference("users"+"/"+newUser.Name);
@@ -76,26 +85,31 @@ public class User extends DatabaseAccesser {
 //
 //    }
     public static User Default() {
-        return new User();
+        // figure out how to make this function
+        if (!defaultUser.Playlists.contains(Playlist.Default())) {
+            defaultUser.Comments.add(Comment.Default());
+        }
+        if (!defaultUser.Comments.contains(Comment.Default())) {
+            defaultUser.Comments.add(Comment.Default());
+        }
+        return defaultUser;
     }
 
-    public static DatabaseReference GetTreeRef() {
-        return Database.GetRef("users/");
-    }
-    public static String GetTreePath() {
-        return "users/";
-    }
-    public static User GetUser(String name) {
-        // oh what great stupid code
-        return (User)(Object)Database.GetRef("users/"+name+"/").toString();
-    }
-    public static String GetUserPath(String userName) {
-//        Database.GetReference(User.GetTreePath()+userName);
-        return GetTreePath()+"@"+userName+"/";
-    }
-    public void addPlaylistOwnership(Playlist newOwnedPlaylist) {
-        this.ownedPlaylists.add(newOwnedPlaylist);
-    }
+//    public static DatabaseReference GetTreeRef() {
+//        return Database.GetRef("users/");
+//    }
+//    public static String GetTreePath() {
+//        return "users/";
+//    }
+    // REWRITE -> IMPLEMENT THIS IN DATABASE CLASS
+//    public static User GetUser(String name) {
+//        // oh what great stupid code
+//        return (User)(Object)Database.GetRef("users/"+name+"/").toString();
+//    }
+//    public static String GetUserPath(String userName) {
+////        Database.GetReference(User.GetTreePath()+userName);
+//        return GetTreePath()+"@"+userName+"/";
+//    }
     public boolean isOwningPlaylist(Playlist playlistInQuestion) {
 //        return this.ownedPlaylists.contains(playlistInQuestion);
 //        return Playlist.getPlayListPath(playlistInQuestion)
