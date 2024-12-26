@@ -77,6 +77,9 @@ public class User{
     public void setUploads(Playlist uploads) {
         this.Uploads = uploads;
     }
+    public String getPath() {
+        return "users/"+this.name+"/";
+    }
 
     // test
     // idk about this, probably remove later

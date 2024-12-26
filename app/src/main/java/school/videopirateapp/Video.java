@@ -7,6 +7,62 @@ import java.util.HashMap;
 
 
 public class Video {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public User getUploader() {
+        return Uploader;
+    }
+
+    public void setUploader(User uploader) {
+        Uploader = uploader;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return Comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        Comments = comments;
+    }
+
+    public Integer getViews() {
+        return Views;
+    }
+
+    public void setViews(Integer views) {
+        Views = views;
+    }
+
+    public Integer getUpvotes() {
+        return Upvotes;
+    }
+
+    public void setUpvotes(Integer upvotes) {
+        Upvotes = upvotes;
+    }
+
+    public Integer getDownvotes() {
+        return Downvotes;
+    }
+
+    public void setDownvotes(Integer downvotes) {
+        Downvotes = downvotes;
+    }
+
+    public Integer getCommentCounter() {
+        return commentCounter;
+    }
+
+    public void setCommentCounter(Integer commentCounter) {
+        this.commentCounter = commentCounter;
+    }
+
     String title;
     User Uploader; // pointer
     ArrayList<Comment>Comments;
@@ -24,6 +80,11 @@ public class Video {
         Upvotes=0;
         Downvotes=0;
     }
+    public void addComment(Comment newComment) {
+        newComment.setId(commentCounter);
+        this.Comments.add(newComment);
+        this.commentCounter+=1;
+    }
 //    public HashMap<String,String> ToHashMap() {
 //        HashMap<String,String>videoHashMap=new HashMap<>();
 //        videoHashMap.put("title", this.title);
@@ -39,6 +100,9 @@ public class Video {
         Video default_video=new Video("DefaultVideo",User.Default());
         default_video.Comments.add(Comment.Default());
         return default_video;
+    }
+    public String getPath() {
+        return "videos/" + this.title+"/";
     }
 //    public HashMap<String,HashMap<String,String>> commentsToHashMap() {
 //        HashMap<String,HashMap<String,String>>commentsHashMap=new HashMap<>();

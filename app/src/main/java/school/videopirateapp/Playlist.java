@@ -10,6 +10,8 @@ public class Playlist {
     String playlistDescription;
 
 
+    // TODO figure out how to work showing the videos in the database
+
     public Playlist() {
         this.videos =new ArrayList<Video>();
         this.title ="#Default";
@@ -39,5 +41,8 @@ public class Playlist {
 //    }
     public static Playlist Default() {
         return new Playlist();
+    }
+    public String getPath() {
+        return "playlists/" + this.title + "/";
     }
 }

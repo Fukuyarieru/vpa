@@ -1,15 +1,11 @@
 package school.videopirateapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -23,58 +19,20 @@ public class Database {
 //    }
     public static User getUser(String userName) {
 
-        return database.getReference("users").child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user=snapshot.getValue(User.class)
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
     public static FirebaseDatabase getDatabase() {
         return database;
     }
-    public static void Add(User user) {
-        if (!Database.IsExist(User.GetUserPath(user.name))) {
-            Database.GetRef(User.GetTreePath() + user.name + "/").setValue(user.ToHashMap());
-        }
-
-//        Database.GetReference(User.GetUserPath(user.Name)).setValue(user.ToHashMap());
-
-//        if ( User.GetTree()
-//        HashMap<String,Object> databaseUser=new HashMap<>();
-//        databaseUser.put("name",user.Name);
-//        databaseUser.put("comments",user.Comments);
-//        databaseUser.put("uploads",user.Uploads);
-
-//        Database.GetFirestore().collection("users").document(user.Name).set(user.ToHashMap());
-
-//        User.GetTree().setValue(user.Name,user);
-    }
-    public static boolean IsExist(String path) {
-        database.getReference(path).addChildEventListener(new ChildEventListener() {
+    public static void add(User newUser) {
+        database.getReference(newUser.getPath()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    database.getReference(newUser.getPath()).setValue(newUser);
+                } else {
+                    // User already exists
+                }
             }
 
             @Override
@@ -82,24 +40,116 @@ public class Database {
 
             }
         });
-        return false;
-        // what?
     }
-    public static void Add(Comment newComment, Video targetVideo) {
-
-    }
-    public static void Add(Video newVideo) { // video already got a user ini it
-        // change the unique key later to be some ID or something?
-        if(!Database.IsExist(Video.GetVideoPath(newVideo.title))) {
-            Database.GetRef(Video.GetTreePath() + newVideo.title + "/").setValue(newVideo.ToHashMap());
-        }
-    }
-    public static void Add(Playlist newPlaylist) {
-        if(!Database.IsExist(newPlaylist.getPath())) {
-            Database.GetRef(newPlaylist.getPath()).setValue(newPlaylist.ToHashMap());
-        }
-    }
-//    public static DatabaseReference Users() {
-//        return Database.GetReference("users/");
+//    public static boolean isExist(String path) {
+//        database.getReference(path).addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        return false;
+//        // what?
 //    }
+    public static void add(Comment newComment, Video targetVideo) {
+        // two things are done
+        // first is that the comment gets added to the user's comments
+        // second is that the comment has to be added to the targeted video
+
+        // first check if video exists at all
+        database.getReference(targetVideo.getPath()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    Video video=snapshot.getValue(Video.class);
+
+                    database.getReference(newComment.getAuthor().getPath()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshotTWO) {
+                            if(snapshotTWO.exists()) {
+
+                                User user=snapshotTWO.getValue(User.class);
+                                user.Comments.add(newComment);
+                                video.addComment(newComment);
+
+                                // CONTINUE TO UPDATE DATABASE FROM HERE, TODO, MAKE CODE FOR IT
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // user does not exist
+                        }
+                    })
+
+                    video.addComment(newComment);
+                }
+                else {
+                    // video does not exist
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        })
+    }
+    public static void add(Video newVideo) { // video already got a user ini it
+        // change the unique key later to be some ID or something?
+        database.getReference(newVideo.getPath()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists())  {
+                    database.getReference(newVideo.getPath()).setValue(newVideo);
+                }
+                else  {
+                    // video exists
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // error
+            }
+        });
+    }
+    public static void add(Playlist newPlaylist) {
+        database.getReference(newPlaylist.getPath()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()) {
+                    database.getReference(newPlaylist.getPath()).setValue(newPlaylist);
+                }
+                else {
+                    // playlist exists
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // error
+            }
+        });
+    }
 }
