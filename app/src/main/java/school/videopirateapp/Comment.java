@@ -5,6 +5,30 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.HashMap;
 
 public class Comment{
+    public String getComment() {
+        return Comment;
+    }
+
+    public void setComment(String comment) {
+        Comment = comment;
+    }
+
+    public User getAuthor() {
+        return Author;
+    }
+
+    public void setAuthor(User author) {
+        Author = author;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     String Comment;
     User Author;
     Integer id; // must have an ID field because comment dont have distinct features like names or titles, a proper ID will need to be implemented
@@ -36,19 +60,10 @@ public class Comment{
     public static Comment Default() {
         return new Comment();
     }
-    public HashMap<String,String> ToHashMap() {
-        HashMap<String,String>commentHashMap=new HashMap<String,String>();
-        commentHashMap.put("comment",this.Comment);
-        commentHashMap.put("author",this.Author.name);
-        return commentHashMap;
-    }
-
-    // alright unneeded, works bad
-//    // TODO, REALLY BIG NOTE HERE, CHECK HERE IF ANYTHING WITH THE TOSTRING, ALSO WHY
-//    @Override
-//    public String toString() {
-//        return this.ToHashMap().toString();
+//    public HashMap<String,String> ToHashMap() {
+//        HashMap<String,String>commentHashMap=new HashMap<String,String>();
+//        commentHashMap.put("comment",this.Comment);
+//        commentHashMap.put("author",this.Author.name);
+//        return commentHashMap;
 //    }
-
-//    public HashMap<String,HashMap<String,String>>
 }

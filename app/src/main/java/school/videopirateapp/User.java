@@ -5,7 +5,31 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class User extends DatabaseAccesser {
+public class User{
+    public ArrayList<Comment> getComments() {
+        return Comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        Comments = comments;
+    }
+
+    public ArrayList<Playlist> getOwnedPlaylists() {
+        return ownedPlaylists;
+    }
+
+    public void setOwnedPlaylists(ArrayList<Playlist> ownedPlaylists) {
+        this.ownedPlaylists = ownedPlaylists;
+    }
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
+
     String name;
     Playlist Uploads;
     ArrayList<Comment> Comments;
@@ -56,50 +80,17 @@ public class User extends DatabaseAccesser {
 
     // test
     // idk about this, probably remove later
-    public HashMap<String, String> ToHashMap() {
-        HashMap<String, String> userHashMap = new HashMap<>();
-        userHashMap.put("name", name);
-        userHashMap.put("comments",Comments.toString()); // problem here because of arraylist
-        userHashMap.put("uploads",Uploads.toString());
-        userHashMap.put("playlists",this.ownedPlaylists.toString()); // problem here because of arraylist
-        // toString on problematic code is a temporary solution , TODO fix it
-        return userHashMap;
-    }
-
-    //    public static void Add(User newUser) {
-//        DatabaseReference ref=Database.GetReference("users"+"/"+newUser.Name);
-//    }
-//    public static User Get(User getUser) {
-//        return null; // TODO
-//    }
-//    public static void Remove(User removeUser) {
-//
+//    public HashMap<String, String> ToHashMap() {
+//        HashMap<String, String> userHashMap = new HashMap<>();
+//        userHashMap.put("name", name);
+//        userHashMap.put("comments",Comments.toString()); // problem here because of arraylist
+//        userHashMap.put("uploads",Uploads.toString());
+//        userHashMap.put("playlists",this.ownedPlaylists.toString()); // problem here because of arraylist
+//        // toString on problematic code is a temporary solution , TODO fix it
+//        return userHashMap;
 //    }
     public static User Default() {
         return new User();
-    }
-
-    public static DatabaseReference GetTreeRef() {
-        return Database.GetRef("users/");
-    }
-    public static String GetTreePath() {
-        return "users/";
-    }
-    public static User GetUser(String name) {
-        // oh what great stupid code
-        return (User)(Object)Database.GetRef("users/"+name+"/").toString();
-    }
-    public static String GetUserPath(String userName) {
-//        Database.GetReference(User.GetTreePath()+userName);
-        return GetTreePath()+"@"+userName+"/";
-    }
-    public void addPlaylistOwnership(Playlist newOwnedPlaylist) {
-        this.ownedPlaylists.add(newOwnedPlaylist);
-    }
-    public boolean isOwningPlaylist(Playlist playlistInQuestion) {
-//        return this.ownedPlaylists.contains(playlistInQuestion);
-//        return Playlist.getPlayListPath(playlistInQuestion)
-        return playlistInQuestion.owner==this;
     }
 //    public void Watch(Video video) {
 //        Intent intent=new Intent(,VideoPlayerActivity.class);

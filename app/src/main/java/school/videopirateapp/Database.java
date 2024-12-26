@@ -8,32 +8,35 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
-    private static FirebaseFirestore firestore = FirebaseFirestore.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 //    private static DatabaseReference databaseReference = database.getReference();
 
-    public static DatabaseReference GetRef(String ref) {
-        if (ref=="") {
-            return database.getReference("ERROR_REF_CANNOT_BE_EMPTY");
-        }
-        return database.getReference(ref);
+//    public static DatabaseReference GetRef(String ref) {
+//        if (ref=="") {
+//            return database.getReference("ERROR_REF_CANNOT_BE_EMPTY");
+//        }
+//        return database.getReference(ref);
+//    }
+    public static User getUser(String userName) {
+
+        return database.getReference("users").child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user=snapshot.getValue(User.class)
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
-    public static String GetVal(String ref) {
-        return GetRef(ref).toString();
-    }
-    public static FirebaseDatabase GetDatabase() {
+    public static FirebaseDatabase getDatabase() {
         return database;
-    }
-    public static FirebaseFirestore GetFirestore() {
-        return firestore;
-    }
-    public static String Remove(String ref) {
-        String remove_val= GetVal(ref);
-        GetRef(ref).removeValue();
-        return remove_val.toString();
     }
     public static void Add(User user) {
         if (!Database.IsExist(User.GetUserPath(user.name))) {
