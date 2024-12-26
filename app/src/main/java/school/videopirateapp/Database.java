@@ -18,8 +18,26 @@ public class Database {
 //        return database.getReference(ref);
 //    }
     public static User getUser(String userName) {
+        User user=new User();
+        database.getReference("users").child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User retUser=snapshot.getValue(User.class);
+                assert retUser != null;
+                // TODO, do this better
+                user.setComments(retUser.getComments());
+                user.setName(retUser.getName());
+                user.setImage(retUser.getImage());
+                user.setUploads(retUser.getUploads());
+                user.setOwnedPlaylists(retUser.getOwnedPlaylists());
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+        return user;
     }
     public static FirebaseDatabase getDatabase() {
         return database;
@@ -29,7 +47,7 @@ public class Database {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
-                    database.getReference(newUser.getPath()).setValue(newUser);
+                    database.getReference("users").child(newUser.getName()).setValue(newUser);
                 } else {
                     // User already exists
                 }
@@ -93,6 +111,10 @@ public class Database {
                                 video.addComment(newComment);
 
                                 // CONTINUE TO UPDATE DATABASE FROM HERE, TODO, MAKE CODE FOR IT
+
+                                database.getReference(newComment.getAuthor().getPath()).setValue(user);
+                                database.getReference(targetVideo.getPath()).setValue(video);
+
                             }
                         }
 
@@ -100,7 +122,7 @@ public class Database {
                         public void onCancelled(@NonNull DatabaseError error) {
                             // user does not exist
                         }
-                    })
+                    });
 
                     video.addComment(newComment);
                 }
@@ -113,7 +135,7 @@ public class Database {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        })
+        });
     }
     public static void add(Video newVideo) { // video already got a user ini it
         // change the unique key later to be some ID or something?
