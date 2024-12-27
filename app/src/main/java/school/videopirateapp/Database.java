@@ -2,8 +2,10 @@ package school.videopirateapp;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -89,6 +91,9 @@ public class Database {
 //        return false;
 //        // what?
 //    }
+    public static void addComment(Video targetVideo, Comment newComment) {
+        
+    }
     public static void add(Comment newComment, Video targetVideo) {
         // two things are done
         // first is that the comment gets added to the user's comments
@@ -112,8 +117,9 @@ public class Database {
 
                                 // CONTINUE TO UPDATE DATABASE FROM HERE, TODO, MAKE CODE FOR IT
 
-                                database.getReference(newComment.getAuthor().getPath()).setValue(user);
-                                database.getReference(targetVideo.getPath()).setValue(video);
+                                database.getReference("users").child(newComment.getAuthor().getName()).child("comments").child(targetVideo.getTitle()).child(newComment.getId().toString()).setValue(newComment);
+                                database.getReference(newComment.getAuthor().getPath()).child("comments").child(targetVideo.getTitle()).child(newComment.getId().toString()).setValue(newComment)
+                                database.getReference(targetVideo.getPath()).child("comments").child(newComment.getId().toString()).setValue(newComment);
 
                             }
                         }
