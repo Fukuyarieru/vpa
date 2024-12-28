@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 
 public class Video {
+
     public String getTitle() {
         return title;
     }
@@ -41,6 +42,9 @@ public class Video {
 
     public Integer getUpvotes() {
         return Upvotes;
+    }
+    public String getUploaderName() {
+        return this.Uploader.getName();
     }
 
     public void setUpvotes(Integer upvotes) {
@@ -79,6 +83,9 @@ public class Video {
         Views=0;
         Upvotes=0;
         Downvotes=0;
+    }
+    public Video()  {
+        this("defaultTitle",User.Default());
     }
     public void addComment(Comment newComment) {
         newComment.setId(commentCounter);

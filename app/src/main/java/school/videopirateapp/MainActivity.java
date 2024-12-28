@@ -17,8 +17,11 @@ public class MainActivity extends AppCompatActivity {
         // point system
         // watch history
         // add activity transition animaition
-        Database.addUser(new User("fukuya"));
-        Database.addUser(new Comment(),new Video("something",new User("fukuya")));
+        User myUser=new User("fukuya");
+        Video myVideo=new Video("my video",myUser);
+        Database.addUser(myUser);
+        Database.addVideo(new Video(myVideo.getTitle(),myUser));
+        Database.addComment(new Comment(),myVideo);
 
 //        needs work on this
 //        Database.Add(Playlist.Default());

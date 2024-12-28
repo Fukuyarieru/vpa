@@ -4,6 +4,38 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Playlist {
+    public ArrayList<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(ArrayList<Video> videos) {
+        this.videos = videos;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public String getPlaylistDescription() {
+        return playlistDescription;
+    }
+
+    public void setPlaylistDescription(String playlistDescription) {
+        this.playlistDescription = playlistDescription;
+    }
+
     ArrayList<Video> videos;
     String title; // Playlist names will start with a '#', just because I wanted
     User owner;

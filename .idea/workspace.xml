@@ -62,11 +62,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d58c1626-23e4-41b4-b0b8-ef1a9c485050" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Comment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Playlist.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Video.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Video.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +78,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=FirebaseDirectAccess, isTemplate=true, identifier=model_id=shiba/34)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\arick\.android\avd\Pixel_8_API_34.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />

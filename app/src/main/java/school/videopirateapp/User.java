@@ -42,12 +42,10 @@ public class User{
 
     // Default constructor required for Firebase
     public User() {
+        // NOTE: NEVER AGAIN ADD DEFAULT DETAILS TO DEFAULT DATA, THAT IS NOT NECESSERY TO BE THERE
+
         // Empty constructor for Firebase
-        this.name = "@Default";
-        this.Uploads = new Playlist("#Uploads",this);
-        this.Comments=new ArrayList<Comment>();
-        this.ownedPlaylists=new ArrayList<Playlist>();
-        this.image=null; // TODO this later
+        this("@Default");
     }
 
     // Constructor with parameters
@@ -59,6 +57,7 @@ public class User{
         this.Uploads = new Playlist("#Uploads",this);  // If you want to initialize Playlist when a User is created
         this.Comments = new ArrayList<Comment>();
         this.ownedPlaylists=new ArrayList<Playlist>();
+        this.image=null; // TODO , do this later
     }
 
     // Getters and setters for Firebase to access the fields
