@@ -28,6 +28,9 @@ public class Comment{
     public void setId(Integer id) {
         this.id = id;
     }
+    public String getAuthorName() {
+        return this.Author.getName();
+    }
 
     String Comment;
     User Author;

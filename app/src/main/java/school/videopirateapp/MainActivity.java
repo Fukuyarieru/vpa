@@ -5,14 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.jetbrains.annotations.Contract;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class MainActivity extends AppCompatActivity {
 //    public static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 //    public static DatabaseReference databaseReference = database.getReference();
@@ -25,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
         // point system
         // watch history
         // add activity transition animaition
-        Database.add(new User("fukuya"));
-        Database.add(new Comment(),new Video("something",new User("fukuya")));
+        Database.addUser(new User("fukuya"));
+        Database.addUser(new Comment(),new Video("something",new User("fukuya")));
 
 //        needs work on this
 //        Database.Add(Playlist.Default());

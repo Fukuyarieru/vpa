@@ -2,10 +2,8 @@ package school.videopirateapp;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -19,33 +17,33 @@ public class Database {
 //        }
 //        return database.getReference(ref);
 //    }
-    public static User getUser(String userName) {
-        User user=new User();
-        database.getReference("users").child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User retUser=snapshot.getValue(User.class);
-                assert retUser != null;
-                // TODO, do this better
-                user.setComments(retUser.getComments());
-                user.setName(retUser.getName());
-                user.setImage(retUser.getImage());
-                user.setUploads(retUser.getUploads());
-                user.setOwnedPlaylists(retUser.getOwnedPlaylists());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return user;
-    }
+//    public static User getUser(String userName) {
+//        User user=new User();
+//        database.getReference("users").child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                User retUser=snapshot.getValue(User.class);
+//                assert retUser != null;
+//                // TODO, do this better
+//                user.setComments(retUser.getComments());
+//                user.setName(retUser.getName());
+//                user.setImage(retUser.getImage());
+//                user.setUploads(retUser.getUploads());
+//                user.setOwnedPlaylists(retUser.getOwnedPlaylists());
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        return user;
+//    }
     public static FirebaseDatabase getDatabase() {
         return database;
     }
-    public static void add(User newUser) {
-        database.getReference(newUser.getPath()).addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void addUser(User newUser) {
+        database.getReference("users").child(newUser.getName()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
@@ -91,34 +89,31 @@ public class Database {
 //        return false;
 //        // what?
 //    }
-    public static void addComment(Video targetVideo, Comment newComment) {
-        
-    }
-    public static void add(Comment newComment, Video targetVideo) {
+    public static void addUser(Comment newComment, Video targetVideo) {
         // two things are done
         // first is that the comment gets added to the user's comments
         // second is that the comment has to be added to the targeted video
 
         // first check if video exists at all
+        database.getReference("videos").child(targetVideo.getTitle());
         database.getReference(targetVideo.getPath()).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    Video video=snapshot.getValue(Video.class);
+            public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
+                if(videoSnapshot.exists()) {
+                    Video video=videoSnapshot.getValue(Video.class);
 
-                    database.getReference(newComment.getAuthor().getPath()).addValueEventListener(new ValueEventListener() {
+                    database.getReference("users").child(newComment.getAuthorName()).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshotTWO) {
-                            if(snapshotTWO.exists()) {
+                        public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                            if(userSnapshot.exists()) {
 
-                                User user=snapshotTWO.getValue(User.class);
+                                User user=userSnapshot.getValue(User.class);
                                 user.Comments.add(newComment);
                                 video.addComment(newComment);
 
                                 // CONTINUE TO UPDATE DATABASE FROM HERE, TODO, MAKE CODE FOR IT
 
-                                database.getReference("users").child(newComment.getAuthor().getName()).child("comments").child(targetVideo.getTitle()).child(newComment.getId().toString()).setValue(newComment);
-                                database.getReference(newComment.getAuthor().getPath()).child("comments").child(targetVideo.getTitle()).child(newComment.getId().toString()).setValue(newComment)
+                                database.getReference("users").child(newComment.getAuthorName()).child("comments").child(targetVideo.getTitle()).child(newComment.getId().toString()).setValue(newComment);
                                 database.getReference(targetVideo.getPath()).child("comments").child(newComment.getId().toString()).setValue(newComment);
 
                             }
@@ -143,7 +138,7 @@ public class Database {
             }
         });
     }
-    public static void add(Video newVideo) { // video already got a user ini it
+    public static void addUser(Video newVideo) { // video already got a user ini it
         // change the unique key later to be some ID or something?
         database.getReference(newVideo.getPath()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -162,7 +157,7 @@ public class Database {
             }
         });
     }
-    public static void add(Playlist newPlaylist) {
+    public static void addUser(Playlist newPlaylist) {
         database.getReference(newPlaylist.getPath()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
