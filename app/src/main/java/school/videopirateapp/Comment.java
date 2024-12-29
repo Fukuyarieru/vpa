@@ -5,6 +5,8 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.HashMap;
 
 public class Comment{
+    private static Comment defaultComment=new Comment();
+
     public String getComment() {
         return Comment;
     }
@@ -13,11 +15,11 @@ public class Comment{
         Comment = comment;
     }
 
-    public User getAuthor() {
+    public String getAuthorName() {
         return Author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(String author) {
         Author = author;
     }
 
@@ -28,25 +30,24 @@ public class Comment{
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getAuthorName() {
-        return this.Author.getName();
-    }
 
-    String Comment;
-    User Author;
-    Integer id; // must have an ID field because comment dont have distinct features like names or titles, a proper ID will need to be implemented
+
+    private String Comment;
+    private String Author;
+    private Integer id; // must have an ID field because comment dont have distinct features like names or titles, a proper ID will need to be implemented
     
     
-    public Comment(User author, String comment, Integer id) {
+    public Comment(String author, String comment, Integer id) {
         this.Comment=comment;
         this.Author=author;
         this.id=id;
     }
     // Default for empty case
     public Comment() {
-        this.Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-        this.Author = User.Default();
-        this.id=0;
+        this("@Default","Lorem ipsum dolor sit amet, consectetur adipiscing elit",0); // User.Default().getName()
+    }
+    public Comment(String author, String comment) {
+        this(author,comment,0);
     }
 //    public HashMap<String,String> ToHashMap() {
 //        HashMap<String,String>commentHashMap=new HashMap<>();
@@ -54,14 +55,14 @@ public class Comment{
 //        commentHashMap.put("comment", Comment);
 //        return commentHashMap;
 //    }
-    public Comment(Integer id) { // create a default comment, but with a set id
-//        this=new Comment(User.Default(),"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",id);
-        this.Comment="Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-        this.Author=User.Default();
-        this.id=id;
-    }
+//    public Comment(Integer id) { // create a default comment, but with a set id
+////        this=new Comment(User.Default(),"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",id);
+//        this.Comment="Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+//        this.Author=User.Default().getName();
+//        this.id=id;
+//    }
     public static Comment Default() {
-        return new Comment();
+        return defaultComment;
     }
 //    public HashMap<String,String> ToHashMap() {
 //        HashMap<String,String>commentHashMap=new HashMap<String,String>();
@@ -69,8 +70,8 @@ public class Comment{
 //        commentHashMap.put("author",this.Author.name);
 //        return commentHashMap;
 //    }
-    @Override
-    public String toString() {
-        return this.Comment;
-    }
+//    @Override
+//    public String toString() {
+//        return this.Comment;
+//    }
 }

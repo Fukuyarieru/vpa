@@ -1,11 +1,26 @@
 package school.videopirateapp;
 
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class User{
+    private static User defaultUser=new User();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Playlist getUploads() {
+        return Uploads;
+    }
+
+    public void setUploads(Playlist uploads) {
+        this.Uploads = uploads;
+    }
     public ArrayList<Comment> getComments() {
         return Comments;
     }
@@ -30,11 +45,11 @@ public class User{
         this.image = image;
     }
 
-    String name;
-    Playlist Uploads;
-    ArrayList<Comment> Comments;
-    ArrayList<Playlist> ownedPlaylists;
-    Byte[] image;
+    private String name;
+    private Playlist Uploads;
+    private ArrayList<Comment> Comments;
+    private ArrayList<Playlist> ownedPlaylists;
+    private Byte[] image;
     // Integer totalViews =====> TODO
     // Integer totalUpvotes ===> TODO
     // Integer totalDownvotes =>TODO
@@ -54,28 +69,14 @@ public class User{
             name = "@" + name;
         }
         this.name = name;
-        this.Uploads = new Playlist("#Uploads",this);  // If you want to initialize Playlist when a User is created
+        this.Uploads = new Playlist("Uploads",name);  // If you want to initialize Playlist when a User is created
         this.Comments = new ArrayList<Comment>();
+        this.Comments.add(Comment.Default());
         this.ownedPlaylists=new ArrayList<Playlist>();
+//        ownedPlaylists.add(Playlist.Default());
         this.image=null; // TODO , do this later
     }
 
-    // Getters and setters for Firebase to access the fields
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Playlist getUploads() {
-        return Uploads;
-    }
-
-    public void setUploads(Playlist uploads) {
-        this.Uploads = uploads;
-    }
     // test
     // idk about this, probably remove later
 //    public HashMap<String, String> ToHashMap() {
@@ -88,7 +89,7 @@ public class User{
 //        return userHashMap;
 //    }
     public static User Default() {
-        return new User();
+        return defaultUser;
     }
 //    public void Watch(Video video) {
 //        Intent intent=new Intent(,VideoPlayerActivity.class);

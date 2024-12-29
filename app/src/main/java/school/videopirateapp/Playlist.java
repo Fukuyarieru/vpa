@@ -1,9 +1,10 @@
 package school.videopirateapp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Playlist {
+    private static Playlist defaultPlaylist=new Playlist();
+
     public ArrayList<Video> getVideos() {
         return videos;
     }
@@ -12,7 +13,7 @@ public class Playlist {
         this.videos = videos;
     }
 
-    public String getTitle() {
+    public String getName() {
         return title;
     }
 
@@ -20,11 +21,11 @@ public class Playlist {
         this.title = title;
     }
 
-    public User getOwner() {
+    public String getOwnerName() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
@@ -36,27 +37,24 @@ public class Playlist {
         this.playlistDescription = playlistDescription;
     }
 
-    ArrayList<Video> videos;
-    String title; // Playlist names will start with a '#', just because I wanted
-    User owner;
-    String playlistDescription;
+    private ArrayList<Video> videos;
+    private String title; // Playlist names will start with a '#', just because I wanted
+    private String owner;
+    private String playlistDescription;
 
 
     // TODO figure out how to work showing the videos in the database
 
     public Playlist() {
-        this.videos =new ArrayList<Video>();
-        this.title ="#Default";
-        this.owner =User.Default(); // recursive here, TODO FIX
-
+        this("Default","@Default"); // User.Default().getName()
         // gonna check with database
-        this.videos.add(Video.Default()); // recursive here, TODO FIX
-        this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue velit vel lacus blandit dignissim.";
+//        this.videos.add(Video.Default()); // recursive here, TODO FIX
+        this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
     }
-    public Playlist(String playListName, User owner){
+    public Playlist(String playListName, String owner){
         // no need to check database here, because database checks itself
-        if(!playListName.startsWith("#")) {
-            playListName ="#"+playListName;
+        if(!playListName.startsWith("&")) {
+            playListName ="&"+playListName;
         }
         this.title =playListName;
         this.videos =new ArrayList<Video>();
@@ -72,9 +70,6 @@ public class Playlist {
 //        return playListHashMap;
 //    }
     public static Playlist Default() {
-        return new Playlist();
-    }
-    public String getPath() {
-        return "playlists/" + this.title + "/";
+        return defaultPlaylist;
     }
 }

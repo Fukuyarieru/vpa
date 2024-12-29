@@ -52,8 +52,9 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                 if (!userSnapshot.exists()) {
 //                    database.getReference("users").child(newUser.getName()).setValue(newUser);
-                    userRef.child("name").setValue(newUser.getName());
-                    userRef.child("image").setValue(newUser.getImage().toString());
+//                    userRef.child("name").setValue(newUser.getName());
+//                    userRef.child("image").setValue(newUser.getImage().toString());
+                    userRef.setValue(newUser);
                 } else {
                     // User already exists
                 }
@@ -168,31 +169,42 @@ public class Database {
         });
         return null;
     }
+    public DatabaseReference getReference(String ref) {
+        if(ref!="") {
+        return database.getReference(ref);}
+        else
+            return database.getReference("error");
+    }
 
     public static void addVideo(Video newVideo) { // video already got a user ini it
         // change the unique key later to be some ID or something?
-        database.getReference(newVideo.getPath()).addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference videoRef= database.getReference("videos").child(newVideo.getTitle()); // is the .child(newVideo) behavior alright?
+        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                 if(!videoSnapshot.exists())  {
                     // get the uploader name
                     String uploaderName=newVideo.getUploaderName();
-                    database.getReference("users").child(uploaderName).addListenerForSingleValueEvent(new ValueEventListener() {
+                    DatabaseReference userRef=database.getReference("users").child(uploaderName);
+                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                             if(userSnapshot.exists()) {
-                                DatabaseReference videoRef=database.getReference("videos").child(newVideo.getTitle());
-                                videoRef.child("title").setValue(newVideo.getTitle());
-                                videoRef.child("views").setValue(newVideo.getViews());
-                                videoRef.child("uploader").setValue(newVideo.getUploaderName());
-                                videoRef.child("upvotes").setValue(newVideo.getUpvotes());
-                                videoRef.child("downvotes").setValue(newVideo.getDownvotes());
-                                videoRef.child("commentCounter").setValue(newVideo.getCommentCounter());
-                                DatabaseReference commentsRef=videoRef.child("comments");
-                                ArrayList<Comment>comments=newVideo.getComments();
-                                for(Integer i=0;i<comments.size();i++){
-                                    commentsRef.child(i.toString()).setValue(comments.get(i));
-                                }
+//                                DatabaseReference videoRef=database.getReference("videos").child(newVideo.getTitle());
+                                videoRef.setValue(newVideo);
+                                userRef.child("uploads").child(newVideo.getUploader()).setValue(newVideo);
+
+//                                videoRef.child("title").setValue(newVideo.getTitle());
+//                                videoRef.child("views").setValue(newVideo.getViews());
+//                                videoRef.child("uploader").setValue(newVideo.getUploaderName());
+//                                videoRef.child("upvotes").setValue(newVideo.getUpvotes());
+//                                videoRef.child("downvotes").setValue(newVideo.getDownvotes());
+//                                videoRef.child("commentCounter").setValue(newVideo.getCommentCounter());
+//                                DatabaseReference commentsRef=videoRef.child("comments");
+//                                ArrayList<Comment>comments=newVideo.getComments();
+//                                for(Integer i=0;i<comments.size();i++){
+//                                    commentsRef.child(i.toString()).setValue(comments.get(i));
+//                                }
                                 // done?
                             }
                             else {
@@ -219,11 +231,12 @@ public class Database {
         });
     }
     public static void addPlaylist(Playlist newPlaylist) {
-        database.getReference(newPlaylist.getPath()).addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference playlistRef=database.getReference("playlists").child(newPlaylist.getName());
+        playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
-                    database.getReference(newPlaylist.getPath()).setValue(newPlaylist);
+                    playlistRef.setValue(newPlaylist);
                 }
                 else {
                     // playlist exists

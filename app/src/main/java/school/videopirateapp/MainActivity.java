@@ -21,17 +21,27 @@ public class MainActivity extends AppCompatActivity {
         // point system
         // watch history
         // add activity transition animaition
-        User myUser=new User("fukuya");
-        Video myVideo=new Video("my video",myUser);
-        Database.addUser(myUser);
-        Database.addVideo(new Video(myVideo.getTitle(),myUser));
-        Database.addComment(new Comment(),myVideo);
 
-        ArrayList<Test>arr=new ArrayList<Test>();
-        arr.add(new Test(1,"a",'c'));
-        arr.add(new Test(2,"b",'d'));
-        arr.add(new Test(3,"c",'e'));
-        Database.getDatabase().getReference("test").setValue(arr);
+
+//        User myUser=new User("fukuya");
+//        Video myVideo=new Video("my video",myUser.getName());
+//        Comment myComment=new Comment("fukuya","test");
+//        Database.addUser(myUser);
+//        Database.addVideo(myVideo);
+//        Database.addComment(myComment,myVideo);
+
+
+        Database.addUser(User.Default());
+//        Database.addVideo(Video.Default()); // bug creating a video before a playlist, what??? TODO
+        Database.addComment(Comment.Default(),Video.Default());
+        Database.addPlaylist(Playlist.Default());
+        Database.addVideo(Video.Default());
+
+//        ArrayList<Test>arr=new ArrayList<Test>();
+//        arr.add(new Test(1,"a",'c'));
+//        arr.add(new Test(2,"b",'d'));
+//        arr.add(new Test(3,"c",'e'));
+//        Database.getDatabase().getReference("test").setValue(arr);
 
 //        needs work on this
 //        Database.Add(Playlist.Default());

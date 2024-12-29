@@ -1,26 +1,24 @@
 package school.videopirateapp;
 
-import com.google.firebase.database.DatabaseReference;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class Video {
+    private static Video defaultVideo=new Video();
 
     public String getTitle() {
-        return title;
+        return Title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.Title = title;
     }
 
-    public User getUploader() {
+    public String getUploaderName() {
         return Uploader;
     }
 
-    public void setUploader(User uploader) {
+    public void setUploader(String uploader) {
         Uploader = uploader;
     }
 
@@ -43,9 +41,9 @@ public class Video {
     public Integer getUpvotes() {
         return Upvotes;
     }
-    public String getUploaderName() {
-        return this.Uploader.getName();
-    }
+//    public String getUploaderName() {
+//        return this.Uploader;
+//    }
 
     public void setUpvotes(Integer upvotes) {
         Upvotes = upvotes;
@@ -67,25 +65,29 @@ public class Video {
         this.commentCounter = commentCounter;
     }
 
-    String title;
-    User Uploader; // pointer
-    ArrayList<Comment>Comments;
-    Integer Views;
-    Integer Upvotes;
-    Integer Downvotes;
-    Integer commentCounter=0;
+    public String getUploader() {
+        return Uploader;
+    }
+
+    private String Title;
+    private String Uploader; // pointer
+    private ArrayList<Comment>Comments;
+    private Integer Views;
+    private Integer Upvotes;
+    private Integer Downvotes;
+    private Integer commentCounter=0;
     //TODO: VideoView videodata; (add this to constructor later)
 
-    public Video(String Title, User Uploader) {
-        this.title =Title;
+    public Video(String Title, String Uploader) {
+        this.Title =Title;
         this.Uploader=Uploader;
-        Comments=new ArrayList<Comment>();
-        Views=0;
-        Upvotes=0;
-        Downvotes=0;
+        this.Comments=new ArrayList<Comment>();
+        this.Views=0;
+        this.Upvotes=0;
+        this.Downvotes=0;
     }
     public Video()  {
-        this("defaultTitle",User.Default());
+        this("defaultVideo",User.Default().getName());
     }
     public void addComment(Comment newComment) {
         newComment.setId(commentCounter);
@@ -104,12 +106,7 @@ public class Video {
 //        return videoHashMap;
 //    }
     public static Video Default() {
-        Video default_video=new Video("DefaultVideo",User.Default());
-        default_video.Comments.add(Comment.Default());
-        return default_video;
-    }
-    public String getPath() {
-        return "videos/" + this.title+"/";
+        return defaultVideo;
     }
 //    public HashMap<String,HashMap<String,String>> commentsToHashMap() {
 //        HashMap<String,HashMap<String,String>>commentsHashMap=new HashMap<>();
