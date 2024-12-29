@@ -69,4 +69,8 @@ public class Comment{
 //        commentHashMap.put("author",this.Author.name);
 //        return commentHashMap;
 //    }
+    @Override
+    public String toString() {
+        return this.Comment;
+    }
 }

@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 //    public static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -22,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
         Database.addUser(myUser);
         Database.addVideo(new Video(myVideo.getTitle(),myUser));
         Database.addComment(new Comment(),myVideo);
+
+        ArrayList<Test>arr=new ArrayList<Test>();
+        arr.add(new Test(1,"a",'c'));
+        arr.add(new Test(2,"b",'d'));
+        arr.add(new Test(3,"c",'e'));
+        Database.getDatabase().getReference("test").setValue(arr);
 
 //        needs work on this
 //        Database.Add(Playlist.Default());
@@ -51,5 +61,38 @@ public class MainActivity extends AppCompatActivity {
 
 //        Intent intent=new Intent(this, MainMenuActivity.class);
 //        startActivity(intent);
+    }
+    public class Test {
+        public Integer getItest() {
+            return itest;
+        }
+
+        public void setItest(Integer itest) {
+            this.itest = itest;
+        }
+
+        public String getStest() {
+            return stest;
+        }
+
+        public void setStest(String stest) {
+            this.stest = stest;
+        }
+
+        private Integer itest;
+        private String stest;
+//        public Character ctest;
+
+        public Test() {
+            itest=0;
+            stest="0";
+//            ctest='0';
+        }
+
+        public Test(Integer i,String s, Character c) {
+            itest=i;
+            stest=s;
+//            ctest=c;
+        }
     }
 }

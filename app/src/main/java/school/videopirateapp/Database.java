@@ -116,7 +116,7 @@ public class Database {
                             // user needs to exist
                             if(userSnapshot.exists()) {
 
-                                video.addComment(newComment);
+//                                video.addComment(newComment);
                                 videoRef.child("comments").child(newComment.getId().toString()).setValue(newComment.getComment());
                                 userRef.child("comments").child(targetVideo.getTitle()+":"+newComment.getId()).setValue(newComment.getComment());
 
@@ -137,8 +137,6 @@ public class Database {
                             // user does not exist
                         }
                     });
-
-                    video.addComment(newComment);
                 }
                 else {
                     // video does not exist
@@ -167,7 +165,8 @@ public class Database {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        })
+        });
+        return null;
     }
 
     public static void addVideo(Video newVideo) { // video already got a user ini it
