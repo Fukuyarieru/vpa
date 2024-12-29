@@ -37,11 +37,11 @@ public class User{
         this.ownedPlaylists = ownedPlaylists;
     }
 
-    public Byte[] getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Byte[] image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -49,10 +49,11 @@ public class User{
     private Playlist Uploads;
     private ArrayList<Comment> Comments;
     private ArrayList<Playlist> ownedPlaylists;
-    private Byte[] image;
+    private byte[] image;
     // Integer totalViews =====> TODO
     // Integer totalUpvotes ===> TODO
-    // Integer totalDownvotes =>TODO
+    // Integer totalDownvotes => TODO
+    // Integer watched ========> TODO
 
 
     // Default constructor required for Firebase

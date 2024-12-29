@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         Database.addUser(User.Default());
 //        Database.addVideo(Video.Default()); // bug creating a video before a playlist, what??? TODO
-        Database.addComment(Comment.Default(),Video.Default());
-        Database.addPlaylist(Playlist.Default());
+//        Database.addPlaylist(Playlist.Default());
         Database.addVideo(Video.Default());
+        Database.addComment(Comment.Default(),Video.Default());
 
 //        ArrayList<Test>arr=new ArrayList<Test>();
 //        arr.add(new Test(1,"a",'c'));

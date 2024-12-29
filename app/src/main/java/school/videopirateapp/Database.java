@@ -117,7 +117,7 @@ public class Database {
                             // user needs to exist
                             if(userSnapshot.exists()) {
 
-                                Video video=videoSnapshot.getValue(Video.class);
+                                Video video=videoSnapshot.getValue(Video.class); // TODO, CRASH HERE, DONT USE SNAPSHOTS COPYING?
                                 video.addComment(newComment);
                                 User user=userSnapshot.getValue(User.class);
 
@@ -189,15 +189,17 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                 if(!videoSnapshot.exists())  {
                     // get the uploader name
-                    String uploaderName=newVideo.getUploaderName();
-                    DatabaseReference userRef=database.getReference("users").child(uploaderName);
+                    DatabaseReference userRef=database.getReference("users").child(newVideo.getUploaderName());
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                             if(userSnapshot.exists()) {
 //                                DatabaseReference videoRef=database.getReference("videos").child(newVideo.getTitle());
                                 videoRef.setValue(newVideo);
-                                userRef.child("uploads").child(newVideo.getUploader()).setValue(newVideo);
+                                // TODO, check the line below this line later, NEED, (probably, something is messed up i think)
+//                                userRef.child("uploads").child("videos").child(newVideo.getTitle()).setValue(newVideo.);
+                                User user=userSnapshot.getValue(User.class);
+                                userRef.setValue(user.getUploads().getVideos().add(newVideo));
 
 //                                videoRef.child("title").setValue(newVideo.getTitle());
 //                                videoRef.child("views").setValue(newVideo.getViews());
@@ -236,13 +238,30 @@ public class Database {
         });
     }
     public static void addPlaylist(Playlist newPlaylist) {
+
+        // TODO, redo the logic here, playlists shouldnt be a standalone object, as they need an owner, therefore this functions need to have someting that the playlist will be connected to, P.S user most likely
+        // TODO 2, or not
+
         DatabaseReference playlistRef=database.getReference("playlists").child(newPlaylist.getName());
         playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(!snapshot.exists()) {
-                    playlistRef.setValue(newPlaylist);
-                }
+            public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
+                if(!playlistSnapshot.exists()) {
+                    DatabaseReference userRef=database.getReference("users").child(newPlaylist.getOwnerName());
+                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                            if(userSnapshot.exists()) {
+                                playlistRef.setValue(newPlaylist);
+                                userRef.child("ownedPlaylists").setValue(newPlaylist.getName());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // playlist already exists
+                        }
+                    });}
                 else {
                     // playlist exists
                 }
@@ -253,5 +272,8 @@ public class Database {
                 // error
             }
         });
+    }
+    public static void addVideoToPlaylist(Video video, Playlist targetPlaylist) {
+        // TODO
     }
 }

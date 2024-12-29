@@ -46,7 +46,8 @@ public class Playlist {
     // TODO figure out how to work showing the videos in the database
 
     public Playlist() {
-        this("Default","@Default"); // User.Default().getName()
+        // TODO, here is a bug, @Default is assosiated as a video
+        this("defaultPlaylist","@Default"); // User.Default().getName()
         // gonna check with database
 //        this.videos.add(Video.Default()); // recursive here, TODO FIX
         this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
