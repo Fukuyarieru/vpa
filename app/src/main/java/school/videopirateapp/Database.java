@@ -117,6 +117,11 @@ public class Database {
                             // user needs to exist
                             if(userSnapshot.exists()) {
 
+                                Video video=videoSnapshot.getValue(Video.class);
+                                video.addComment(newComment);
+                                User user=userSnapshot.getValue(User.class);
+
+
 //                                video.addComment(newComment);
                                 videoRef.child("comments").child(newComment.getId().toString()).setValue(newComment.getComment());
                                 userRef.child("comments").child(targetVideo.getTitle()+":"+newComment.getId()).setValue(newComment.getComment());

@@ -91,6 +91,9 @@ public class User{
     public static User Default() {
         return defaultUser;
     }
+    public void addComment(Comment newComment) {
+        // TODO, problem, dont put counter increment logic INSIDE the datastructures, this should be handled by Database functions/logic
+    }
 //    public void Watch(Video video) {
 //        Intent intent=new Intent(,VideoPlayerActivity.class);
 //
