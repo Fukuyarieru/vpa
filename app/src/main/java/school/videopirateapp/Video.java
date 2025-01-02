@@ -14,7 +14,7 @@ public class Video {
         this.Title = title;
     }
 
-    public String getUploaderName() {
+    public String getUploader() {
         return Uploader;
     }
 
@@ -63,10 +63,6 @@ public class Video {
 
     public void setCommentCounter(Integer commentCounter) {
         this.commentCounter = commentCounter;
-    }
-
-    public String getUploader() {
-        return Uploader;
     }
 
     private String Title;

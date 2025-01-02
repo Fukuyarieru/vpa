@@ -8,8 +8,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 //    private static DatabaseReference databaseReference = database.getReference();
@@ -117,9 +115,9 @@ public class Database {
                             // user needs to exist
                             if(userSnapshot.exists()) {
 
-                                Video video=videoSnapshot.getValue(Video.class); // TODO, CRASH HERE, DONT USE SNAPSHOTS COPYING?
-                                video.addComment(newComment);
-                                User user=userSnapshot.getValue(User.class);
+//                                Video video=videoSnapshot.getValue(Video.class); // TODO, CRASH HERE, DONT USE SNAPSHOTS COPYING?
+//                                video.addComment(newComment);
+//                                User user=userSnapshot.getValue(User.class);
 
 
 //                                video.addComment(newComment);
@@ -189,7 +187,7 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                 if(!videoSnapshot.exists())  {
                     // get the uploader name
-                    DatabaseReference userRef=database.getReference("users").child(newVideo.getUploaderName());
+                    DatabaseReference userRef=database.getReference("users").child(newVideo.getUploader());
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
@@ -253,7 +251,8 @@ public class Database {
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                             if(userSnapshot.exists()) {
                                 playlistRef.setValue(newPlaylist);
-                                userRef.child("ownedPlaylists").setValue(newPlaylist.getName());
+                                Integer userPlaylistCounter=Integer.parseInt(userRef.child("playlistCounter").getKey());
+                                userRef.child("ownedPlaylists").child(userPlaylistCounter.toString()).setValue(newPlaylist.getName());
                             }
                         }
 
