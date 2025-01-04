@@ -6,6 +6,10 @@ import java.util.HashMap;
 
 public class Comment{
     private static Comment defaultComment=new Comment();
+    private String Comment;
+    private String Author;
+//    private Integer id; // must have an ID field because comment dont have distinct features like names or titles, a proper ID will need to be implemented
+//    private String video;
 
     public String getComment() {
         return Comment;
@@ -23,71 +27,36 @@ public class Comment{
         Author = author;
     }
 
-    public Integer getId() {
-        return id;
-    }
+//    public Integer getId() {
+//        return id;
+//    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public String getVideo() {
-        return video;
-    }
-
-    public void setVideo(String video) {
-        this.video = video;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
+//    public String getVideo() {
+//        return video;
+//    }
+//
+//    public void setVideo(String video) {
+//        this.video = video;
+//    }
 
     public String getAuthor() {
         return Author;
     }
 
-
-    private String Comment;
-    private String Author;
-    private Integer id; // must have an ID field because comment dont have distinct features like names or titles, a proper ID will need to be implemented
-    private String video;
-    
-
-    public Comment(String comment, String author, String video, Integer id) {
+    public Comment(String comment, String author) {
         this.Comment=comment;
         this.Author=author;
-        this.id=id;
-        this.video=video;
-    }
-    public Comment(String comment, String author, Integer id) {
-        this(comment,author,"null",id);
-    }
-    // Default for empty case
-    public Comment() {
-        this("Lorem ipsum dolor sit amet, consectetur adipiscing elit","@Default",0); // User.Default().getName()
-    }
-    public Comment(String author, String comment) {
-        this(author,comment,0);
-    }
-//    public HashMap<String,String> ToHashMap() {
-//        HashMap<String,String>commentHashMap=new HashMap<>();
-//        commentHashMap.put("uploader", this.Author.toString()); (note later after commenting this function) // there wasnt a toString() initially, why did i do this?
-//        commentHashMap.put("comment", Comment);
-//        return commentHashMap;
-//    }
-//    public Comment(Integer id) { // create a default comment, but with a set id
-////        this=new Comment(User.Default(),"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",id);
-//        this.Comment="Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-//        this.Author=User.Default().getName();
 //        this.id=id;
-//    }
+//        this.video=video;
+    }
+
+    public Comment() {
+        this("Lorem ipsum dolor sit amet, consectetur adipiscing elit","@Default"); // User.Default().getName()
+    }
     public static Comment Default() {
         return defaultComment;
     }
-//    public HashMap<String,String> ToHashMap() {
-//        HashMap<String,String>commentHashMap=new HashMap<String,String>();
-//        commentHashMap.put("comment",this.Comment);
-//        commentHashMap.put("author",this.Author.name);
-//        return commentHashMap;
-//    }
-//    @Override
-//    public String toString() {
-//        return this.Comment;
-//    }
 }

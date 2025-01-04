@@ -4,6 +4,15 @@ import java.util.ArrayList;
 
 
 public class Video {
+
+    private String Title;
+    private String Uploader; // pointer
+    private ArrayList<Comment>Comments;
+    private Integer Views;
+    private Integer Upvotes;
+    private Integer Downvotes;
+    //TODO: VideoView videodata; (add this to constructor later)
+
     private static Video defaultVideo=new Video();
 
     public String getTitle() {
@@ -41,9 +50,6 @@ public class Video {
     public Integer getUpvotes() {
         return Upvotes;
     }
-//    public String getUploaderName() {
-//        return this.Uploader;
-//    }
 
     public void setUpvotes(Integer upvotes) {
         Upvotes = upvotes;
@@ -57,23 +63,6 @@ public class Video {
         Downvotes = downvotes;
     }
 
-    public Integer getCommentCounter() {
-        return commentCounter;
-    }
-
-    public void setCommentCounter(Integer commentCounter) {
-        this.commentCounter = commentCounter;
-    }
-
-    private String Title;
-    private String Uploader; // pointer
-    private ArrayList<Comment>Comments;
-    private Integer Views;
-    private Integer Upvotes;
-    private Integer Downvotes;
-    private Integer commentCounter=0;
-    //TODO: VideoView videodata; (add this to constructor later)
-
     public Video(String Title, String Uploader) {
         this.Title =Title;
         this.Uploader=Uploader;
@@ -85,30 +74,7 @@ public class Video {
     public Video()  {
         this("defaultVideo",User.Default().getName());
     }
-    public void addComment(Comment newComment) {
-        newComment.setId(commentCounter);
-        this.Comments.add(newComment);
-        this.commentCounter+=1;
-    }
-//    public HashMap<String,String> ToHashMap() {
-//        HashMap<String,String>videoHashMap=new HashMap<>();
-//        videoHashMap.put("title", this.title);
-//        videoHashMap.put("uploader",this.Uploader.name);
-////        videoHashMap.put("comments", this.Comments.forEach(comment -> comment.ToHashMap()));
-//        videoHashMap.put("comments",this.Comments.toString());
-//        videoHashMap.put("views",this.Views.toString());
-//        videoHashMap.put("upvotes",this.Upvotes.toString());
-//        videoHashMap.put("downvotes",this.Downvotes.toString());
-//        return videoHashMap;
-//    }
     public static Video Default() {
         return defaultVideo;
     }
-//    public HashMap<String,HashMap<String,String>> commentsToHashMap() {
-//        HashMap<String,HashMap<String,String>>commentsHashMap=new HashMap<>();
-////        this.Comments.forEach(comment -> comment.ToHashMap());
-//        for(int i=0;i<this.Comments.size();i++) {
-////            commentsHashMap.put(new HashMap<String,String>());
-//        }
-//    }
 }

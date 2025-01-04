@@ -10,7 +10,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
-//    private static DatabaseReference databaseReference = database.getReference();
 
 //    public static DatabaseReference GetRef(String ref) {
 //        if (ref=="") {
@@ -40,6 +39,7 @@ public class Database {
 //        });
 //        return user;
 //    }
+    @Deprecated
     public static FirebaseDatabase getDatabase() {
         return database;
     }
@@ -49,9 +49,6 @@ public class Database {
             @Override
             public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                 if (!userSnapshot.exists()) {
-//                    database.getReference("users").child(newUser.getName()).setValue(newUser);
-//                    userRef.child("name").setValue(newUser.getName());
-//                    userRef.child("image").setValue(newUser.getImage().toString());
                     userRef.setValue(newUser);
                 } else {
                     // User already exists
@@ -60,40 +57,10 @@ public class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // some kind of error, ?
             }
         });
     }
-//    public static boolean isExist(String path) {
-//        database.getReference(path).addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        return false;
-//        // what?
-//    }
     public static void addComment(Comment newComment, Video targetVideo) {
         // two things are done
         // first is that the comment gets added to the user's comments
@@ -115,23 +82,7 @@ public class Database {
                             // user needs to exist
                             if(userSnapshot.exists()) {
 
-//                                Video video=videoSnapshot.getValue(Video.class); // TODO, CRASH HERE, DONT USE SNAPSHOTS COPYING?
-//                                video.addComment(newComment);
-//                                User user=userSnapshot.getValue(User.class);
-
-
-//                                video.addComment(newComment);
-                                videoRef.child("comments").child(newComment.getId().toString()).setValue(newComment.getComment());
-                                userRef.child("comments").child(targetVideo.getTitle()+":"+newComment.getId()).setValue(newComment.getComment());
-
-//                                User user=userSnapshot.getValue(User.class);
-//                                video.addComment(newComment);
-//                                user.Comments.add(newComment);
-//
-//                                // CONTINUE TO UPDATE DATABASE FROM HERE, TODO, MAKE CODE FOR IT
-//
-//                                database.getReference("users").child(newComment.getAuthorName()).child("comments").child(targetVideo.getTitle()).child(newComment.getId().toString()).setValue(newComment);
-//                                database.getReference(targetVideo.getPath()).child("comments").child(newComment.getId().toString()).setValue(newComment);
+//                               // TODO, DELETED TO REDO THIS PART OF CODE
 
                             }
                         }

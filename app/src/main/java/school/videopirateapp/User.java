@@ -4,6 +4,18 @@ package school.videopirateapp;
 import java.util.ArrayList;
 
 public class User{
+
+    private String name;
+    private Playlist Uploads;
+    private ArrayList<Comment> Comments;
+    private ArrayList<Playlist> ownedPlaylists;
+    private byte[] image;
+
+// Integer totalViews =====> TODO
+    // Integer totalUpvotes ===> TODO
+    // Integer totalDownvotes => TODO
+    // Integer watched ========> TODO
+
     private static User defaultUser=new User();
 
     public String getName() {
@@ -45,27 +57,6 @@ public class User{
         this.image = image;
     }
 
-    public Integer getPlaylistCounter() {
-        return playlistCounter;
-    }
-
-    public void setPlaylistCounter(Integer playlistCounter) {
-        this.playlistCounter = playlistCounter;
-    }
-
-    private String name;
-    private Playlist Uploads;
-    private ArrayList<Comment> Comments;
-    private ArrayList<Playlist> ownedPlaylists;
-    private byte[] image;
-    private Integer playlistCounter;
-
-// Integer totalViews =====> TODO
-    // Integer totalUpvotes ===> TODO
-    // Integer totalDownvotes => TODO
-    // Integer watched ========> TODO
-
-
     // Default constructor required for Firebase
     public User() {
         // NOTE: NEVER AGAIN ADD DEFAULT DETAILS TO DEFAULT DATA, THAT IS NOT NECESSERY TO BE THERE
@@ -86,7 +77,6 @@ public class User{
         this.ownedPlaylists=new ArrayList<Playlist>();
 //        ownedPlaylists.add(Playlist.Default());
         this.image=null; // TODO , do this later
-        this.playlistCounter=0;
     }
 
     // test

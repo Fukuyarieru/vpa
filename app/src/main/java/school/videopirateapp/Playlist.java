@@ -3,6 +3,12 @@ package school.videopirateapp;
 import java.util.ArrayList;
 
 public class Playlist {
+
+    private ArrayList<Video> videos;
+    private String title; // Playlist names will start with a '#', just because I wanted
+    private String owner;
+    private String playlistDescription;
+
     private static Playlist defaultPlaylist=new Playlist();
 
     public ArrayList<Video> getVideos() {
@@ -37,39 +43,23 @@ public class Playlist {
         this.playlistDescription = playlistDescription;
     }
 
-    private ArrayList<Video> videos;
-    private String title; // Playlist names will start with a '#', just because I wanted
-    private String owner;
-    private String playlistDescription;
-
 
     // TODO figure out how to work showing the videos in the database
 
     public Playlist() {
         // TODO, here is a bug, @Default is assosiated as a video
-        this("defaultPlaylist","@Default"); // User.Default().getName()
-        // gonna check with database
-//        this.videos.add(Video.Default()); // recursive here, TODO FIX
-        this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
+        this("&defaultPlaylist","@Default");
     }
-    public Playlist(String playListName, String owner){
+    public Playlist(String playlistTitle, String owner){
         // no need to check database here, because database checks itself
-        if(!playListName.startsWith("&")) {
-            playListName ="&"+playListName;
+        if(!playlistTitle.startsWith("&")) {
+            playlistTitle ="&"+playlistTitle;
         }
-        this.title =playListName;
+        this.title =playlistTitle;
         this.videos =new ArrayList<Video>();
-        this.playlistDescription="";
+        this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
         this.owner=owner;
     }
-//    public HashMap<String,String> ToHashMap() {
-//        HashMap<String,String>playListHashMap=new HashMap<String,String>();
-//        playListHashMap.put("title",this.title);
-//        playListHashMap.put("owner",this.owner.name);
-//        playListHashMap.put("description",this.playlistDescription);
-//        playListHashMap.put("videos",videos.toString());
-//        return playListHashMap;
-//    }
     public static Playlist Default() {
         return defaultPlaylist;
     }
