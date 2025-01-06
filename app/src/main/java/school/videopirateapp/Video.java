@@ -13,7 +13,7 @@ public class Video {
     private Integer Downvotes;
     //TODO: VideoView videodata; (add this to constructor later)
 
-    private static Video defaultVideo=new Video();
+    private static final Video defaultVideo=new Video();
 
     public String getTitle() {
         return Title;
@@ -63,8 +63,8 @@ public class Video {
         Downvotes = downvotes;
     }
     public void addComment(Comment newComment) {
+        // this function adds a comment to the video's comments section, also it changes the context of the comment to be the video's path
         if(!this.Comments.contains(newComment)) {
-            newComment.setContext("videos/" + this.Title + "/comments");
             this.Comments.add(newComment);
         }
     }
@@ -81,5 +81,9 @@ public class Video {
     }
     public static Video Default() {
         return defaultVideo;
+    }
+
+    public String getContext() {
+        return "videos/"+this.Title+"comments";
     }
 }

@@ -83,18 +83,18 @@ public class Database {
                             // user needs to exist
                             if(userSnapshot.exists()) {
                                 User user=userSnapshot.getValue(User.class);
+                                newComment.setContext(targetVideo.getContext());
                                 targetVideo.addComment(newComment); // sets the comment context to this video
+                                assert user != null;
                                 user.addComment(newComment);
                                 userRef.setValue(user);
                                 videoRef.setValue(targetVideo);
-//                               // TODO, DELETED TO REDO THIS PART OF CODE
-
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            // user does not exist
+
                         }
                     });
                 }
@@ -105,35 +105,30 @@ public class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // some error idk
             }
         });
     }
-    public static Video getVideo(String videoTitle) {
-        DatabaseReference videoRef=database.getReference("videos").child(videoTitle);
-        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
-                if(videoSnapshot.exists()){
-                    Video retVid=Video.Default();
-                    // TODO, finish this?
-//                    retVid.addComment();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return null;
-    }
-    public DatabaseReference getReference(String ref) {
-        if(ref!="") {
-        return database.getReference(ref);}
-        else
-            return database.getReference("error");
-    }
+//    public static Video getVideo(String videoTitle) {
+//        Video video;
+//        DatabaseReference videoRef=database.getReference("videos").child(videoTitle);
+//        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
+//                if(videoSnapshot.exists()){
+////                    video=videoSnapshot.getValue(Video.class);
+//                    // TODO, finish this?
+////                    retVid.addComment();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        return null;
+//    }
 
     public static void addVideo(Video newVideo) { // video already got a user ini it
         // change the unique key later to be some ID or something?
@@ -153,19 +148,6 @@ public class Database {
                                 User user=userSnapshot.getValue(User.class);
                                 user.getUploads().addVideo(newVideo);
                                 userRef.setValue(user);
-
-//                                videoRef.child("title").setValue(newVideo.getTitle());
-//                                videoRef.child("views").setValue(newVideo.getViews());
-//                                videoRef.child("uploader").setValue(newVideo.getUploaderName());
-//                                videoRef.child("upvotes").setValue(newVideo.getUpvotes());
-//                                videoRef.child("downvotes").setValue(newVideo.getDownvotes());
-//                                videoRef.child("commentCounter").setValue(newVideo.getCommentCounter());
-//                                DatabaseReference commentsRef=videoRef.child("comments");
-//                                ArrayList<Comment>comments=newVideo.getComments();
-//                                for(Integer i=0;i<comments.size();i++){
-//                                    commentsRef.child(i.toString()).setValue(comments.get(i));
-//                                }
-                                // done?
                             }
                             else {
                                 // user does not exist, do not add the video
@@ -177,7 +159,6 @@ public class Database {
 
                         }
                     });
-//                    database.getReference(newVideo.getPath()).setValue(newVideo);
                 }
                 else  {
                     // video exists
@@ -186,7 +167,7 @@ public class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // error
+                // some error
             }
         });
     }
@@ -214,9 +195,10 @@ public class Database {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            // playlist already exists
+
                         }
-                    });}
+                    });
+                }
                 else {
                     // playlist exists
                 }
@@ -224,7 +206,7 @@ public class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // error
+                // some error
             }
         });
     }

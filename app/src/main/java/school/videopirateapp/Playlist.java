@@ -9,7 +9,7 @@ public class Playlist {
     private String owner;
     private String playlistDescription;
 
-    private static Playlist defaultPlaylist=new Playlist();
+    private static final Playlist defaultPlaylist=new Playlist();
 
     public ArrayList<Video> getVideos() {
         return videos;
