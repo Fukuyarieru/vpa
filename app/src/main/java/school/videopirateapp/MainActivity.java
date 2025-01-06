@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO, learn about fragments, they will be useful
 
+        // TODO, bug in adding comments, can create duplicate comments, not supposed to
+
 
 //        User myUser=new User("fukuya");
 //        Video myVideo=new Video("my video",myUser.getName());

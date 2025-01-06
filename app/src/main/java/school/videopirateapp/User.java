@@ -1,6 +1,8 @@
 package school.videopirateapp;
 
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 public class User{
@@ -62,7 +64,9 @@ public class User{
         this.image = image;
     }
     public void addComment(Comment newComment) {
-        this.Comments.add(newComment);
+        if(!this.Comments.contains(newComment)) {
+            this.Comments.add(newComment);
+        }
     }
     public void addVideo(Video newVideo) {
         this.Uploads.addVideo(newVideo);
