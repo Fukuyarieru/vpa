@@ -1,70 +1,66 @@
 package school.videopirateapp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Playlist {
-    ArrayList<Video> videos;
-    String title; // Playlist names will start with a '#', just because I wanted
-    User owner;
-    String playlistDescription;
 
-    private static Playlist defaultPlaylist;
+    private ArrayList<Video> videos;
+    private String title; // Playlist names will start with a '#', just because I wanted
+    private String owner;
+    private String playlistDescription;
 
+    private static Playlist defaultPlaylist=new Playlist();
+
+    public ArrayList<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(ArrayList<Video> videos) {
+        this.videos = videos;
+    }
+
+    public String getName() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getOwnerName() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getPlaylistDescription() {
+        return playlistDescription;
+    }
+
+    public void setPlaylistDescription(String playlistDescription) {
+        this.playlistDescription = playlistDescription;
+    }
+
+
+    // TODO figure out how to work showing the videos in the database
 
     public Playlist() {
-        this.videos =new ArrayList<Video>();
-        this.title ="#Default";
-        this.owner =User.Default();
-
-        // gonna check with database
-
-//        // TODO, fix the below
-        // TODO 2, FIX THE BELOW
-        if(!User.Default().isOwningPlaylist(this)) { // strange piece of code, maybe impossible or bug inducing // this code is bad because "this" is contextual and since its a pointer and doesnt really check by the name there will be multilpe instances of #Default, this will cause bugs
-            User.Default().addPlaylist(this);
-        }
-        this.addVideo(Video.Default());
-        this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue velit vel lacus blandit dignissim.";
+        // TODO, here is a bug, @Default is assosiated as a video
+        this("&defaultPlaylist","@Default");
     }
-    public Playlist(String playlistName, User owner){
+    public Playlist(String playlistTitle, String owner){
         // no need to check database here, because database checks itself
-        if(!playlistName.startsWith("#")) {
-            playlistName ="#"+playlistName;
+        if(!playlistTitle.startsWith("&")) {
+            playlistTitle ="&"+playlistTitle;
         }
-        this.title =playlistName;
+        this.title =playlistTitle;
         this.videos =new ArrayList<Video>();
-        this.playlistDescription="";
+        this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
         this.owner=owner;
-        owner.addPlaylist(this);
-//        if( !owner.isOwningPlaylist(this)) { // TODO, another bug of the same type as before, "this" indacates a pointer to a new playlist that hasnt been checked yet
-//            owner.addPlaylistOwnership(this);
-//        }
     }
-//    public static String GetTreePath() {
-//        return "playlists/";
-//    }
-    public void addVideo(Video addedVideo) {
-        this.videos.add(addedVideo);
-    }
-//    public String getPath() {
-//        return Playlist.GetTreePath()+this.title +"/";
-//    }
-//    public HashMap<String,String> ToHashMap() {
-//        HashMap<String,String>playListHashMap=new HashMap<String,String>();
-//        playListHashMap.put("title",this.title);
-//        playListHashMap.put("owner",this.owner.name);
-//        playListHashMap.put("description",this.playlistDescription);
-//        playListHashMap.put("videos",videos.toString());
-//        return playListHashMap;
-//    }
     public static Playlist Default() {
         return defaultPlaylist;
     }
-//    public String toString() {
-//        return "title:" + this.title +"/"+this.videos.toString();
-//    }
-//    public static String getPlayListPath(Playlist playlistInQeustion) {
-//        return Playlist.GetTreePath()+playlistInQeustion.title+"/";
-//    }
 }
