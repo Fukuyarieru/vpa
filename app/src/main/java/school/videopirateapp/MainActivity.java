@@ -1,13 +1,15 @@
 package school.videopirateapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 //    public static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -17,10 +19,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        initializeDatabase();
+
         // IDEAS
         // point system
         // watch history
         // add activity transition animaition
+
+        // TODO, learn about fragments, they will be useful
 
 
 //        User myUser=new User("fukuya");
@@ -30,12 +36,7 @@ public class MainActivity extends AppCompatActivity {
 //        Database.addVideo(myVideo);
 //        Database.addComment(myComment,myVideo);
 
-
-        Database.addUser(User.Default());
-//        Database.addVideo(Video.Default()); // bug creating a video before a playlist, what??? TODO
-        Database.addPlaylist(Playlist.Default());
-        Database.addVideo(Video.Default());
-        Database.addComment(Comment.Default(),Video.Default());
+        testDatabase();
 
 //        ArrayList<Test>arr=new ArrayList<Test>();
 //        arr.add(new Test(1,"a",'c'));
@@ -71,6 +72,56 @@ public class MainActivity extends AppCompatActivity {
 
 //        Intent intent=new Intent(this, MainMenuActivity.class);
 //        startActivity(intent);
+    }
+    public void testDatabase() {
+        Database.addUser(User.Default());
+        Database.addPlaylist(Playlist.Default());
+        Database.addVideo(Video.Default());
+        Database.addComment(Comment.Default(),Video.Default());
+    }
+    public void initializeDatabase() {
+        DatabaseReference videosRef=Database.getRef("videos");
+        videosRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()) {
+                    videosRef.setValue("null");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        DatabaseReference playlistsRef=Database.getRef("playlists");
+        playlistsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()) {
+                    playlistsRef.setValue("null");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        DatabaseReference usersRef=Database.getRef("users");
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()) {
+                    usersRef.setValue("null");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     public class Test {
         public Integer getItest() {

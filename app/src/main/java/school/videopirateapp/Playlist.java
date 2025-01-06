@@ -42,6 +42,9 @@ public class Playlist {
     public void setPlaylistDescription(String playlistDescription) {
         this.playlistDescription = playlistDescription;
     }
+    public void addVideo(Video newVideo) {
+        this.videos.add(newVideo);
+    }
 
 
     // TODO figure out how to work showing the videos in the database

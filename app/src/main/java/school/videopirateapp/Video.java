@@ -62,7 +62,10 @@ public class Video {
     public void setDownvotes(Integer downvotes) {
         Downvotes = downvotes;
     }
-
+    public void addComment(Comment newComment) {
+        newComment.setContext("videos/"+this.Title+"/comments");
+        this.Comments.add(newComment);
+    }
     public Video(String Title, String Uploader) {
         this.Title =Title;
         this.Uploader=Uploader;

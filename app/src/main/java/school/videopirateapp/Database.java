@@ -11,12 +11,13 @@ import com.google.firebase.database.ValueEventListener;
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 
-//    public static DatabaseReference GetRef(String ref) {
-//        if (ref=="") {
-//            return database.getReference("ERROR_REF_CANNOT_BE_EMPTY");
-//        }
-//        return database.getReference(ref);
-//    }
+    @Deprecated
+    public static DatabaseReference getRef(String ref) {
+        if (ref=="") {
+            return database.getReference("ERROR_REF_CANNOT_BE_EMPTY");
+        }
+        return database.getReference(ref);
+    }
 //    public static User getUser(String userName) {
 //        User user=new User();
 //        database.getReference("users").child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -75,13 +76,17 @@ public class Database {
                 if(videoSnapshot.exists()) {
 //                    Video video=videoSnapshot.getValue(Video.class);
 
-                    DatabaseReference userRef=database.getReference("users").child(newComment.getAuthorName());
+                    DatabaseReference userRef=database.getReference("users").child(newComment.getAuthor());
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                             // user needs to exist
                             if(userSnapshot.exists()) {
-
+                                User user=userSnapshot.getValue(User.class);
+                                targetVideo.addComment(newComment); // sets the comment context to this video
+                                user.addComment(newComment);
+                                userRef.setValue(user);
+                                videoRef.setValue(targetVideo);
 //                               // TODO, DELETED TO REDO THIS PART OF CODE
 
                             }
@@ -145,10 +150,9 @@ public class Database {
                             if(userSnapshot.exists()) {
 //                                DatabaseReference videoRef=database.getReference("videos").child(newVideo.getTitle());
                                 videoRef.setValue(newVideo);
-                                // TODO, check the line below this line later, NEED, (probably, something is messed up i think)
-//                                userRef.child("uploads").child("videos").child(newVideo.getTitle()).setValue(newVideo.);
                                 User user=userSnapshot.getValue(User.class);
-                                userRef.setValue(user.getUploads().getVideos().add(newVideo));
+                                user.getUploads().addVideo(newVideo);
+                                userRef.setValue(user);
 
 //                                videoRef.child("title").setValue(newVideo.getTitle());
 //                                videoRef.child("views").setValue(newVideo.getViews());
@@ -201,9 +205,10 @@ public class Database {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                             if(userSnapshot.exists()) {
+                                User user=userSnapshot.getValue(User.class);
+                                user.addPlaylist(newPlaylist);
                                 playlistRef.setValue(newPlaylist);
-                                Integer userPlaylistCounter=Integer.parseInt(userRef.child("playlistCounter").getKey());
-                                userRef.child("ownedPlaylists").child(userPlaylistCounter.toString()).setValue(newPlaylist.getName());
+                                userRef.setValue(user);
                             }
                         }
 

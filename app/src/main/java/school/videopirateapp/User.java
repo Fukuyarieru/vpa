@@ -25,7 +25,12 @@ public class User{
     public void setName(String name) {
         this.name = name;
     }
-
+    public void addPlaylist(Playlist newPlaylist) {
+        newPlaylist.setOwner(this.name);
+        if(!this.ownedPlaylists.contains(newPlaylist)) {
+            this.ownedPlaylists.add(newPlaylist);
+        }
+    }
     public Playlist getUploads() {
         return Uploads;
     }
@@ -56,6 +61,12 @@ public class User{
     public void setImage(byte[] image) {
         this.image = image;
     }
+    public void addComment(Comment newComment) {
+        this.Comments.add(newComment);
+    }
+    public void addVideo(Video newVideo) {
+        this.Uploads.addVideo(newVideo);
+    }
 
     // Default constructor required for Firebase
     public User() {
@@ -75,27 +86,13 @@ public class User{
         this.Comments = new ArrayList<Comment>();
         this.Comments.add(Comment.Default());
         this.ownedPlaylists=new ArrayList<Playlist>();
+        this.ownedPlaylists.add(Playlist.Default());
 //        ownedPlaylists.add(Playlist.Default());
         this.image=null; // TODO , do this later
     }
-
-    // test
-    // idk about this, probably remove later
-//    public HashMap<String, String> ToHashMap() {
-//        HashMap<String, String> userHashMap = new HashMap<>();
-//        userHashMap.put("name", name);
-//        userHashMap.put("comments",Comments.toString()); // problem here because of arraylist
-//        userHashMap.put("uploads",Uploads.toString());
-//        userHashMap.put("playlists",this.ownedPlaylists.toString()); // problem here because of arraylist
-//        // toString on problematic code is a temporary solution , TODO fix it
-//        return userHashMap;
-//    }
     public static User Default() {
         return defaultUser;
     }
-//    public void addComment(Comment newComment) {
-//        // TODO, problem, dont put counter increment logic INSIDE the datastructures, this should be handled by Database functions/logic
-//    }
 //    public void Watch(Video video) {
 //        Intent intent=new Intent(,VideoPlayerActivity.class);
 //
