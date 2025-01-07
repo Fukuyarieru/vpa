@@ -8,6 +8,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 
@@ -108,6 +110,14 @@ public class Database {
                 // some error idk
             }
         });
+    }
+    public static ArrayList<Video> getVideosArrayList() {
+        // TODO
+        return null;
+    }
+    public static ArrayList<User> getUsersArrayList() {
+        // TODO
+        return null;
     }
 //    public static Video getVideo(String videoTitle) {
 //        Video video;

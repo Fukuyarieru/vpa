@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5sp"
     android:layout_marginTop="30sp"
+    android:padding="5sp"
     tools:context=".MainMenuActivity">
 
     <LinearLayout
@@ -16,26 +16,28 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/MainMenu_Button_YourUser"
+            android:id="@+id/MainMenu_Button_UserPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="openUserPage"
-            android:text="Your User" />
+            android:onClick="UserPage"
+            android:text="UserPage" />
 
         <Button
-            android:id="@+id/MainMenu_Button_YourPlaylists"
+            android:id="@+id/MainMenu_Button_UploadPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Your Playlists" />
+            android:onClick="UploadPage"
+            android:text="UploadPage" />
 
         <Button
-            android:id="@+id/MainMenu_Button_Login"
+            android:id="@+id/MainMenu_Button_SearchVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Login" />
+            android:onClick="SearchVideo"
+            android:text="SearchVideo" />
     </LinearLayout>
 
     <ListView
