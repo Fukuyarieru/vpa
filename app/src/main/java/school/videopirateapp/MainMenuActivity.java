@@ -23,6 +23,9 @@ public class MainMenuActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
 
+        finishActivity();
+//        startActivityfrom();
+
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
         btnUserPage =findViewById(R.id.MainMenu_Button_UserPage);
         listView=findViewById(R.id.MainMenu_ListView);
