@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
-
+    private static ArrayList<User> users;
+    private static ArrayList<Video> videos;
     @Deprecated
     public static DatabaseReference getRef(String ref) {
         if (ref=="") {
@@ -111,15 +112,18 @@ public class Database {
             }
         });
     }
-    public static ArrayList<Video> getVideosArrayList() {
-        // TODO
+    public static ArrayList<Video> getVideos() {
+        // TODO, make these two functions replace the current database "videos" and "users", EVERYTHING GETS AN INDEX IN THIS APP
+        // NOTE, the getCategory functions will use return static variables for efficiency
         return null;
     }
-    public static ArrayList<User> getUsersArrayList() {
+    public static ArrayList<User> getUsers() {
         // TODO
         return null;
     }
 //    public static Video getVideo(String videoTitle) {
+    // TODO, this will maybe get use later, it will use the getVideos function
+
 //        Video video;
 //        DatabaseReference videoRef=database.getReference("videos").child(videoTitle);
 //        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {

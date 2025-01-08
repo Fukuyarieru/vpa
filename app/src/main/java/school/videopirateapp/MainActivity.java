@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         // IDEAS
         // point system
         // watch history
-        // add activity transition animaition
+        // add activity transition animation
 
         // TODO, learn about fragments, they will be useful
 

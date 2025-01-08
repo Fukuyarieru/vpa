@@ -9,18 +9,17 @@
     android:orientation="vertical"
     tools:context=".MainMenu_SearchVideo_Dialog_Activity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        android:text="PLACEHOLDER REMOVE LATER"/>
+<!--    this will be a multiple choice "button/list"-->
+<!--    SORT1 OPTIONS: by recommendations(algorithm), by upload time, by title, by views, by abc,  -->
+<!--    this will be a single button that cycles through the 3 options listed here -->
+    <!--    SORT2 OPTIONS: first, last, by (close to) average-->
     <Button
-        android:id="@+id/button"
+        android:id="@+id/MainMenu_SearchVideo_Dialog_Button_Search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Search" />
 </LinearLayout>

@@ -4,6 +4,7 @@ package school.videopirateapp;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class User{
 
@@ -67,6 +68,18 @@ public class User{
         if(!this.Comments.contains(newComment)) {
             this.Comments.add(newComment);
         }
+//        if(!this.Comments.contains(newComment)) {
+//            // half ass solution
+//            boolean notContain=true;
+//            for(int i=0;i<this.Comments.size();i++) {
+//                if(this.Comments.get(i).getComment()==newComment.getComment()) {
+//                    notContain=false;
+//                }
+//            }
+//            if(notContain) {
+//                this.Comments.add(newComment);
+//            }
+//        }
     }
     public void addVideo(Video newVideo) {
         this.Uploads.addVideo(newVideo);

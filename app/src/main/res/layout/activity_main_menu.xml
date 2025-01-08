@@ -28,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="UploadPage"
-            android:text="UploadPage" />
+            android:onClick="UploadVideo"
+            android:text="UploadVideo" />
 
         <Button
             android:id="@+id/MainMenu_Button_SearchVideo"

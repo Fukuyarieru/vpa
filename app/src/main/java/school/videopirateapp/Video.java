@@ -84,6 +84,6 @@ public class Video {
     }
 
     public String getContext() {
-        return "videos/"+this.Title+"comments";
+        return "videos/"+this.Title+"/comments";
     }
 }

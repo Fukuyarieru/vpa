@@ -1,7 +1,6 @@
 package school.videopirateapp;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,19 +28,32 @@ public class MainMenuActivity extends AppCompatActivity {
         listView=findViewById(R.id.MainMenu_ListView);
         btnSearchVideo=findViewById(R.id.MainMenu_Button_SearchVideo);
 
+        btnUserPage.setText("Login");
+
 
         // TOAST: YOU MUST LOGIN FIRST
     }
     public void SearchVideo(View view) {
         // dont do a dialog, change to a deticated screen that has an edittext and updates live
-//        Dialog searvhDialog=new Dialog(MainMenuActivity.this);
-//        searvhDialog.setContentView(R.layout.activity_main_menu_search_video_dialog);
-//        searvhDialog.show();
+        Dialog seachDialog=new Dialog(MainMenuActivity.this);
+        seachDialog.setContentView(R.layout.activity_main_menu_search_video_dialog);
+        seachDialog.show();
     }
-    public void UploadPage(View view) {
-
+    public void UploadVideo(View view) {
+        Dialog uploadDialog=new Dialog(MainMenuActivity.this);
+        uploadDialog.setContentView(R.layout.activity_main_menu_upload_video_dialog);
+        uploadDialog.show();
     }
     public void UserPage(View view) {
-
+        if(!btnUserPage.getText().toString().equals("Login")) {
+            Intent openUserPage = new Intent(MainMenuActivity.this, UserPageActivity.class);
+            openUserPage.putExtra("user", btnUserPage.getText().toString());
+            startActivity(openUserPage);
+        }
+        else {
+            Dialog loginDialog=new Dialog(MainMenuActivity.this); //this screen as context
+            loginDialog.setContentView(R.layout.activity_login_dialog);
+            loginDialog.show();
+        }
     }
 }
