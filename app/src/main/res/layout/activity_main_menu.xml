@@ -24,7 +24,7 @@
             android:text="UserPage" />
 
         <Button
-            android:id="@+id/MainMenu_Button_UploadPage"
+            android:id="@+id/MainMenu_Button_UploadVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
