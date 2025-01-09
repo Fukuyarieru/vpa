@@ -2,7 +2,6 @@ package school.videopirateapp;
 
 import java.util.ArrayList;
 
-
 public class Video {
 
     private String Title;

@@ -24,6 +24,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         finishActivity();
+
 //        startActivityfrom();
 
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
