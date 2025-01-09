@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:password="true"
+            android:inputType="textPassword"
             android:hint="at least 1 character,1 number"/>
 <!--        the edit text will ensure validation, it will tell a toast on error-->
 

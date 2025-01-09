@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 //        Database.addVideo(myVideo);
 //        Database.addComment(myComment,myVideo);
 
-        testDatabase();
+        // TODO, enable later
+//        testDatabase();
 
 
         Intent intent=new Intent(this, MainMenuActivity.class);

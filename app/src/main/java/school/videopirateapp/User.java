@@ -12,6 +12,7 @@ public class User{
     private Playlist Uploads;
     private ArrayList<Comment> Comments;
     private ArrayList<Playlist> ownedPlaylists;
+    private String Password;
     private byte[] image;
 
 // Integer totalViews =====> TODO
@@ -20,6 +21,15 @@ public class User{
     // Integer watched ========> TODO
 
     private static User defaultUser=new User();
+
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
 
     public String getName() {
         return name;
@@ -90,11 +100,11 @@ public class User{
         // NOTE: NEVER AGAIN ADD DEFAULT DETAILS TO DEFAULT DATA, THAT IS NOT NECESSERY TO BE THERE
 
         // Empty constructor for Firebase
-        this("@Default");
+        this("@Default","123");
     }
 
     // Constructor with parameters
-    public User(String name) {
+    public User(String name,String password) {
         if (!name.startsWith("@")) {
             name = "@" + name;
         }
@@ -106,6 +116,7 @@ public class User{
         this.ownedPlaylists.add(Playlist.Default());
 //        ownedPlaylists.add(Playlist.Default());
         this.image=null; // TODO , do this later
+        this.Password=password;
     }
     public static User Default() {
         return defaultUser;
