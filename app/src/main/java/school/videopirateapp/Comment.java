@@ -2,7 +2,14 @@ package school.videopirateapp;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class Comment{
 
@@ -11,6 +18,15 @@ public class Comment{
     private String Comment;
     private String Author;
     private String Context;
+    private String Date;
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
 
     // private ArrayList<Comment> Replies;
     public String getContext() {
@@ -41,7 +57,12 @@ public class Comment{
         this.Comment=Comment;
         this.Author=author;
         this.Context=context;
-}
+        // TODO, make this later like my own code and not some stack overflow solution
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        String datetime = dateformat.format(c.getTime());
+        this.Date= datetime;
+    }
     public Comment(String comment, String author) {
         this(comment,author,"unset");
     }

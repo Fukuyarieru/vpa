@@ -8,12 +8,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
-    private static ArrayList<User> users;
-    private static ArrayList<Video> videos;
+    private static HashMap<String,User> users;
+    private static HashMap<String,Video> videos;
     @Deprecated
     public static DatabaseReference getRef(String ref) {
         if (ref=="") {
@@ -112,12 +112,12 @@ public class Database {
             }
         });
     }
-    public static ArrayList<Video> getVideos() {
+    public static HashMap<String,Video> getVideos() {
         // TODO, make these two functions replace the current database "videos" and "users", EVERYTHING GETS AN INDEX IN THIS APP
         // NOTE, the getCategory functions will use return static variables for efficiency
         return null;
     }
-    public static ArrayList<User> getUsers() {
+    public static HashMap<String,User> getUsers() {
         // TODO
         return null;
     }
@@ -190,12 +190,12 @@ public class Database {
         // TODO, redo the logic here, playlists shouldnt be a standalone object, as they need an owner, therefore this functions need to have someting that the playlist will be connected to, P.S user most likely
         // TODO 2, or not
 
-        DatabaseReference playlistRef=database.getReference("playlists").child(newPlaylist.getName());
+        DatabaseReference playlistRef=database.getReference("playlists").child(newPlaylist.getTitle());
         playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
                 if(!playlistSnapshot.exists()) {
-                    DatabaseReference userRef=database.getReference("users").child(newPlaylist.getOwnerName());
+                    DatabaseReference userRef=database.getReference("users").child(newPlaylist.getOwner());
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {

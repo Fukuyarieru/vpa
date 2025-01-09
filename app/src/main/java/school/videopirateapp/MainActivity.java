@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
         initializeDatabase();
 
+        // TODO, I can use hashmaps for User and Video and Playlist
+
         // IDEAS
         // point system
         // watch history

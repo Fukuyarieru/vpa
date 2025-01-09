@@ -19,7 +19,7 @@ public class Playlist {
         this.videos = videos;
     }
 
-    public String getName() {
+    public String getTitle() {
         return title;
     }
 
@@ -27,7 +27,7 @@ public class Playlist {
         this.title = title;
     }
 
-    public String getOwnerName() {
+    public String getOwner() {
         return owner;
     }
 
