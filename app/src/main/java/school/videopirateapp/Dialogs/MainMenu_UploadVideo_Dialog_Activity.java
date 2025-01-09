@@ -1,4 +1,4 @@
-package school.videopirateapp;
+package school.videopirateapp.Dialogs;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import school.videopirateapp.R;
 
 public class MainMenu_UploadVideo_Dialog_Activity extends AppCompatActivity {
 

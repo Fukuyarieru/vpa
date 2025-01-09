@@ -1,10 +1,12 @@
-package school.videopirateapp;
+package school.videopirateapp.ListViewComponents;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class User_Listview_Component extends AppCompatActivity {
+import school.videopirateapp.R;
+
+public class User_ListView_Component extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

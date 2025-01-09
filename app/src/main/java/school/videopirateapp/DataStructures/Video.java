@@ -1,4 +1,4 @@
-package school.videopirateapp;
+package school.videopirateapp.DataStructures;
 
 import java.util.ArrayList;
 

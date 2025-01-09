@@ -1,4 +1,4 @@
-package school.videopirateapp;
+package school.videopirateapp.ListViewComponents;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import school.videopirateapp.R;
 
 public class Database_Dev_ListView_Component extends AppCompatActivity {
 

@@ -1,12 +1,11 @@
-package school.videopirateapp;
+package school.videopirateapp.Activities;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.widget.MediaController;
-import android.widget.VideoView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import school.videopirateapp.R;
 
 public class VideoPageActivity extends AppCompatActivity {
 

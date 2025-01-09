@@ -1,4 +1,4 @@
-package school.videopirateapp;
+package school.videopirateapp.Database;
 
 import androidx.annotation.NonNull;
 
@@ -10,10 +10,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+import school.videopirateapp.DataStructures.Comment;
+import school.videopirateapp.DataStructures.Playlist;
+import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.DataStructures.Video;
+
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
-    private static HashMap<String,User> users;
-    private static HashMap<String,Video> videos;
+    private static HashMap<String, User> users;
+    private static HashMap<String, Video> videos;
     @Deprecated
     public static DatabaseReference getRef(String ref) {
         if (ref=="") {

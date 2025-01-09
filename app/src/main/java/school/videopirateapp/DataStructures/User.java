@@ -1,10 +1,7 @@
-package school.videopirateapp;
+package school.videopirateapp.DataStructures;
 
-
-import android.graphics.Bitmap;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 public class User{
 

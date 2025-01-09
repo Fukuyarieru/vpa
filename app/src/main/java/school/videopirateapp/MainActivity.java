@@ -11,6 +11,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import school.videopirateapp.Activities.MainMenuActivity;
+import school.videopirateapp.DataStructures.Comment;
+import school.videopirateapp.DataStructures.Playlist;
+import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.Database.Database;
+
 public class MainActivity extends AppCompatActivity {
 //    public static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 //    public static DatabaseReference databaseReference = database.getReference();

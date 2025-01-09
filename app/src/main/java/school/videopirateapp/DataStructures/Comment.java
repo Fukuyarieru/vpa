@@ -1,15 +1,7 @@
-package school.videopirateapp;
+package school.videopirateapp.DataStructures;
 
-import com.google.firebase.database.DatabaseReference;
-
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Locale;
 
 public class Comment{
 

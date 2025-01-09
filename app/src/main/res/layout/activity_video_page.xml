@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".VideoPageActivity">
+    tools:context=".Activities.VideoPageActivity">
 
 <!--    TODO: add onClick to play video-->
     <ImageView

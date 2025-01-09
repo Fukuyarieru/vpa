@@ -1,4 +1,4 @@
-package school.videopirateapp;
+package school.videopirateapp.ListViewComponents;
 
 import android.os.Bundle;
 
@@ -8,7 +8,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class CommentListviewComponent extends AppCompatActivity {
+import school.videopirateapp.R;
+
+public class Comment_ListView_Component extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

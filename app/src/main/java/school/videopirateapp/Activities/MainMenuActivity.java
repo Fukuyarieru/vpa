@@ -1,4 +1,4 @@
-package school.videopirateapp;
+package school.videopirateapp.Activities;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import school.videopirateapp.R;
 
 public class MainMenuActivity extends AppCompatActivity {
 

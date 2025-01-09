@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Database_Dev_ListView_Component">
+    tools:context=".ListViewComponents.Database_Dev_ListView_Component">
 
     <LinearLayout
         android:layout_width="wrap_content"

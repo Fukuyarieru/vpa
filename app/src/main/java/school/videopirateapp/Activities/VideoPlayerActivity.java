@@ -1,4 +1,4 @@
-package school.videopirateapp;
+package school.videopirateapp.Activities;
 
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -8,9 +8,8 @@ import android.widget.VideoView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import school.videopirateapp.R;
 
 public class VideoPlayerActivity extends AppCompatActivity {
 
