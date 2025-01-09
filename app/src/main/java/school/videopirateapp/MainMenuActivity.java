@@ -14,7 +14,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
     Button btnUserPage;
-    Button btnUploadPage;
+    Button btnUploadVideo;
     Button btnSearchVideo;
     ListView listView;
     @Override
@@ -23,12 +23,18 @@ public class MainMenuActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
 
-        btnUploadPage =findViewById(R.id.MainMenu_Button_UploadPage);
+        finishActivity();
+
+//        startActivityfrom();
+
+        btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
         btnUserPage =findViewById(R.id.MainMenu_Button_UserPage);
         listView=findViewById(R.id.MainMenu_ListView);
         btnSearchVideo=findViewById(R.id.MainMenu_Button_SearchVideo);
 
         btnUserPage.setText("Login");
+        btnUploadVideo.setText("Upload Video");
+        btnSearchVideo.setText("Search");
 
 
         // TOAST: YOU MUST LOGIN FIRST
@@ -47,7 +53,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public void UserPage(View view) {
         if(!btnUserPage.getText().toString().equals("Login")) {
             Intent openUserPage = new Intent(MainMenuActivity.this, UserPageActivity.class);
-            openUserPage.putExtra("user", btnUserPage.getText().toString());
+            openUserPage.putExtra("user", btnUserPage.getText().toString()); // sends the current signed in user's name to the new screen (userPage), that screen would search it from database from that point
             startActivity(openUserPage);
         }
         else {

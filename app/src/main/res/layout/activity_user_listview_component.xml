@@ -13,9 +13,18 @@
         android:padding="10sp"
         android:orientation="horizontal">
 
+<!--         TODO, DO EVERYTHING HERE BETTER        -->
+        <ImageView
+            android:id="@+id/user_ListView_Component_ImageView_UserImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"
+            tools:srcCompat="@drawable/default_user_image" />
+
         <TextView
             android:id="@+id/User_ListView_Component_TextView_UserName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:layout_weight="0"
@@ -25,9 +34,4 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars" />
 </LinearLayout>

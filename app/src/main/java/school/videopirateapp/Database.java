@@ -66,10 +66,6 @@ public class Database {
         });
     }
     public static void addComment(Comment newComment, Video targetVideo) {
-        // two things are done
-        // first is that the comment gets added to the user's comments
-        // second is that the comment has to be added to the targeted video
-
         // first check if video exists at all
         DatabaseReference videoRef=database.getReference("videos").child(targetVideo.getTitle());
         videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
