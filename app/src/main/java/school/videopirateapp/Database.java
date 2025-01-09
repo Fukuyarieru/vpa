@@ -111,6 +111,20 @@ public class Database {
     public static HashMap<String,Video> getVideos() {
         // TODO, make these two functions replace the current database "videos" and "users", EVERYTHING GETS AN INDEX IN THIS APP
         // NOTE, the getCategory functions will use return static variables for efficiency
+        DatabaseReference videosRef=database.getReference("videos");
+        videosRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot videosShot) {
+                if(videosShot.exists()) {
+                    Videos videos=videosShot.getValue(Videos.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return null;
     }
     public static HashMap<String,User> getUsers() {
