@@ -11,6 +11,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import school.videopirateapp.Activities.MainMenuActivity;
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
@@ -123,5 +126,13 @@ public class MainActivity extends AppCompatActivity {
     }
     public static void changeScreen(Class<AppCompatActivity> screen) {
         // TODO?
+    }
+    public static<T> ArrayList<T> HashMapToArrayList(HashMap<String,T>hashMap) {
+        // this function does not do any sorting
+        ArrayList<T> arrayList = new ArrayList<>();
+        for (T value : hashMap.values()) {
+            arrayList.add(value);
+        }
+        return arrayList;
     }
 }

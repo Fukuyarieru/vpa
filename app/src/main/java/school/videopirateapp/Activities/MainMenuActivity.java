@@ -10,6 +10,11 @@ import android.widget.ListView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -28,6 +33,7 @@ public class MainMenuActivity extends AppCompatActivity {
 //        finishActivity();
 
 //        startActivityfrom();
+        ArrayList<Video>videos= HashMapToArrayList Database.getVideos()
 
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
         btnUserPage =findViewById(R.id.MainMenu_Button_UserPage);
