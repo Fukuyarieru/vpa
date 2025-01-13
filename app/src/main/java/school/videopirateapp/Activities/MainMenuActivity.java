@@ -1,5 +1,7 @@
 package school.videopirateapp.Activities;
 
+import static school.videopirateapp.Utilities.HashMapToArrayList;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,8 @@ import java.util.HashMap;
 
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
+import school.videopirateapp.Database.Videos;
+import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -33,12 +37,16 @@ public class MainMenuActivity extends AppCompatActivity {
 //        finishActivity();
 
 //        startActivityfrom();
-        ArrayList<Video>videos= HashMapToArrayList Database.getVideos()
+        ArrayList<Video>videos= HashMapToArrayList(Database.getVideos());
+        VideoAdapter videosAdaptar=new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
 
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
         btnUserPage =findViewById(R.id.MainMenu_Button_UserPage);
         listView=findViewById(R.id.MainMenu_ListView);
         btnSearchVideo=findViewById(R.id.MainMenu_Button_SearchVideo);
+
+
+        listView.setAdapter(videosAdaptar);
 
         btnUserPage.setText("Login");
         btnUploadVideo.setText("Upload Video");
