@@ -8,12 +8,12 @@ public class Videos {
 
     HashMap<String, Video>videos;
 
-    public HashMap<String, Video> getVideos() {
+    public static HashMap<String, Video> getVideos() {
         return videos;
     }
 
-    public void setVideos(HashMap<String, Video> videos) {
-        this.videos = videos;
+    public static void setVideos(HashMap<String, Video> videos) {
+        videos = videos;
     }
 
     public Videos(HashMap<String, Video> videos) {

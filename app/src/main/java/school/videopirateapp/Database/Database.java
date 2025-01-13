@@ -14,6 +14,7 @@ import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.Database.Videos;
 
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -121,7 +122,16 @@ public class Database {
             @Override
             public void onDataChange(@NonNull DataSnapshot videosShot) {
                 if(videosShot.exists()) {
+                    // TODO, NEED TO REDO THIS ENTIRE SECITON/LOOK OVER IT, the entire idea is wrong because Database needs to only access, and not Videos, implement this better
                     Videos videos=videosShot.getValue(Videos.class);
+                    HashMap<String,Video>videosMap=new HashMap<>();
+                    for (DataSnapshot videoSnapshot : videosShot.getChildren()) { // iterator
+                        Video video = videoSnapshot.getValue(Video.class);
+                        if (video != null) {
+                            Videos.getVideos().put(video.getTitle(), video);
+                        }
+                    }
+                    Videos.setVideos()
                 }
             }
 
