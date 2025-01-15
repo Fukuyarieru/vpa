@@ -1,10 +1,13 @@
 package school.videopirateapp.Database;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -13,20 +16,20 @@ import school.videopirateapp.DataStructures.Video;
 
 public class Videos {
 
+    private Videos() {
+        throw new UnsupportedOperationException("This class is not instantiable.");
+    }
+
     // TODO, what the fuck happens here?
-    private static HashMap<String, Video> staticVideos =new HashMap<String,Video>();
-    private HashMap<String,Video>localVideos;
+    private static HashMap<String, Video> Videos = new HashMap<String,Video>();
 
-    public HashMap<String, Video> getLocalVideos() {
-        return localVideos;
+    public static HashMap<String, Video> getVideos() {
+        return Videos;
     }
 
-    public void setLocalVideos(HashMap<String, Video> localVideos) {
-        this.localVideos = localVideos;
-    }
-
-    public static HashMap<String, Video> getStaticVideos() {
-        return staticVideos;
+    public static void setVideos(HashMap<String, Video> newVideos) {
+        Log.i("Videos, set videos", newVideos.toString());
+        Videos = newVideos;
     }
     public static void Refresh() {
         DatabaseReference videosRef= Database.getRef("videos");
@@ -34,30 +37,30 @@ public class Videos {
             @Override
             public void onDataChange(@NonNull DataSnapshot videosSnapshot) {
                 if(videosSnapshot.exists()) {
-                    HashMap<String,Video>videos=videosSnapshot.getValue(HashMap.class);
-                    Videos.setStaticVideos(videos);
-//                    Videos v=videosSnapshot.getValue(Videos.class);
-//                    Videos.setStaticVideos(v.staticVideos);
+                    Log.d("DatabaseDebug", "Raw data: " + videosSnapshot.getValue());
+                    GenericTypeIndicator<HashMap<String, Video>> typeIndicator = new GenericTypeIndicator<HashMap<String, Video>>() {};
+//                    for (DataSnapshot videoSnapshot : videosSnapshot.getChildren()) {
+//                        Video video = videoSnapshot.getValue(Video.class);
+//                        if (video != null) {
+//                            videoMap.put(videoSnapshot.getKey(), video);
+//                        }
+//                    }
+                    Videos = videosSnapshot.getValue(typeIndicator);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("DatabaseError", "Failed to fetch videos: " + error.getMessage());
             }
         });
     }
 
-    public static void setStaticVideos(HashMap<String, Video> newVideos) {
-        staticVideos = newVideos;
-    }
+//    public Videos(HashMap<String, Video> videos) {
+//        this.Videos = videos;
+//    }
 
-    public Videos(HashMap<String, Video> videos) {
-        this.staticVideos = videos;
-        this.localVideos=videos;
-    }
-
-    public Videos() {
-        this(new HashMap<>());
-    }
+//    public Videos() {
+//        this(new HashMap<>());
+//    }
 }

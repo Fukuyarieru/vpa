@@ -72,9 +72,17 @@ public class User {
         this.image = image;
     }
     public void addComment(Comment newComment) {
-        if(!this.Comments.contains(newComment)) {
-            this.Comments.add(newComment);
+        for(int i=0;i<this.Comments.size();i++) {
+            Comment comment=this.Comments.get(i);
+            if(comment.getComment()!=newComment.getComment()) {
+                if(comment.getContext()!=newComment.getContext()) {
+                    this.Comments.add(newComment);
+                }
+            }
         }
+//        if(!this.Comments.contains()) {
+//            this.Comments.add(newComment);
+//        }
 //        if(!this.Comments.contains(newComment)) {
 //            // half ass solution
 //            boolean notContain=true;

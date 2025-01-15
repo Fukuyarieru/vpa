@@ -19,6 +19,7 @@
             android:exported="false" />
         <activity
             android:name=".Dialogs.Login_Dialog_Activity"
+            android:theme="@style/Theme.AppCompat.Dialog"
             android:exported="false" />
         <activity
             android:name=".Dialogs.MainMenu_UploadVideo_Dialog_Activity"

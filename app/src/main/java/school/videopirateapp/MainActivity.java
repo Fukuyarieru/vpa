@@ -71,19 +71,13 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent=new Intent(this, MainMenuActivity.class);
 //        startActivity(intent);
     }
-    public void testDatabase() {
-        Database.addUser(User.Default());
-        Database.addPlaylist(Playlist.Default());
-        Database.addVideo(Video.Default());
-        Database.addComment(Comment.Default(),Video.Default());
-    }
     public void initializeDatabase() {
         DatabaseReference videosRef=Database.getRef("videos");
         videosRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
-                    videosRef.setValue("null");
+                    Database.addVideo(Video.Default());
                 }
             }
 
@@ -97,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
-                    playlistsRef.setValue("null");
+                    Database.addPlaylist(Playlist.Default());
                 }
             }
 
@@ -111,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
-                    usersRef.setValue("null");
+                    Database.addUser(User.Default());
                 }
             }
 

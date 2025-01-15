@@ -46,36 +46,32 @@ public class Login_Dialog_Activity extends AppCompatActivity {
         if (username.isEmpty() || password.isEmpty()) {
             // Display a message if the fields are empty
             Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
-            return;
         }
-
-        DatabaseReference userRef= Database.getRef("users").child(username);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-                if(userSnapshot.exists()) {
-                    User user=userSnapshot.getValue(User.class);
-                    if(user.getPassword()==password) {
-                        Button userPage=findViewById(R.id.MainMenu_Button_UserPage);
-                        userPage.setText(username);
-                        finish();
-                    }
-                    else {
-                        // Handle incorrect password
-                        Toast.makeText(Login_Dialog_Activity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+        else {
+            DatabaseReference userRef = Database.getRef("users").child(username);
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                    if (userSnapshot.exists()) {
+                        User user = userSnapshot.getValue(User.class);
+                        if (user.getPassword() == password) {
+                            Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
+                            userPage.setText(username);
+                            finish();
+                        } else {
+                            Toast.makeText(Login_Dialog_Activity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(Login_Dialog_Activity.this, "User not found", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else {
-                    // Handle case where user does not exist
-                    Toast.makeText(Login_Dialog_Activity.this, "User not found", Toast.LENGTH_SHORT).show();
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+            });
+        }
     }
     public void openSignupActivity(View view){
         // TODO

@@ -20,6 +20,7 @@ import school.videopirateapp.Database.Database;
 import school.videopirateapp.Database.Videos;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
+import school.videopirateapp.Dialogs.Login_Dialog_Activity.*;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -40,6 +41,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 //        startActivityfrom();
         ArrayList<Video>videos= HashMapToArrayList(Database.getVideos());
+
 //        ArrayList<Video>videos=new ArrayList<>();
 //        videos.add(new Video());
 //        videos.add(new Video("German Unity Day, eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","Menachem2007"));

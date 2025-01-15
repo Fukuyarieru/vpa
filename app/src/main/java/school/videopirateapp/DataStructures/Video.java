@@ -2,9 +2,7 @@ package school.videopirateapp.DataStructures;
 
 import static school.videopirateapp.Utilities.TimeNow;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Video {
 
@@ -91,11 +89,12 @@ public class Video {
     public Video()  {
         this("defaultVideo", User.Default().getName());
     }
+
     public static Video Default() {
         return defaultVideo;
     }
 
-    public String getContext() {
+    public String Context() {
         return "videos/"+this.Title+"/comments";
     }
 }

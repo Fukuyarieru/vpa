@@ -4,6 +4,13 @@
     <shared>
       <config />
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login_dialog.xml">
+        <config>
+          <theme>@style/Theme.Videopirateapp</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
@@ -11,13 +18,15 @@
   <component name="ChangeListManager">
     <list default="true" id="d9d0df33-6a1c-4b21-bbce-55edcec8262b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/MainMenuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/MainMenuActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Video.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Video.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Videos.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Videos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Dialogs/Login_Dialog_Activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Dialogs/Login_Dialog_Activity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/MainActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +75,7 @@
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
@@ -152,5 +162,21 @@
       <updated>1736705707370</updated>
     </task>
     <servers />
+  </component>
+  <component name="play_dynamic_filters_status">
+    <option name="appIdToCheckInfo">
+      <map>
+        <entry key="school.videopirateapp">
+          <value>
+            <CheckInfo lastCheckTimestamp="1736969956006" />
+          </value>
+        </entry>
+        <entry key="school.videopirateapp.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1736969956007" />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
