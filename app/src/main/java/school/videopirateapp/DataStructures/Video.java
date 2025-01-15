@@ -1,6 +1,10 @@
 package school.videopirateapp.DataStructures;
 
+import static school.videopirateapp.Utilities.TimeNow;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Video {
 
@@ -10,8 +14,16 @@ public class Video {
     private Integer Views;
     private Integer Upvotes;
     private Integer Downvotes;
+    private String UploadDate;
     //TODO: VideoView videodata; (add this to constructor later)
 
+    public String getUploadDate() {
+        return UploadDate;
+    }
+
+    public void setUploadDate(String uploadDate) {
+        UploadDate = uploadDate;
+    }
     private static final Video defaultVideo=new Video();
 
     public String getTitle() {
@@ -74,9 +86,10 @@ public class Video {
         this.Views=0;
         this.Upvotes=0;
         this.Downvotes=0;
+        this.UploadDate= TimeNow();
     }
     public Video()  {
-        this("defaultVideo",User.Default().getName());
+        this("defaultVideo", User.Default().getName());
     }
     public static Video Default() {
         return defaultVideo;

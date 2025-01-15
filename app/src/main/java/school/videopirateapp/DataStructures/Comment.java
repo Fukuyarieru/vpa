@@ -1,5 +1,7 @@
 package school.videopirateapp.DataStructures;
 
+import static school.videopirateapp.Utilities.TimeNow;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -49,11 +51,7 @@ public class Comment{
         this.Comment=Comment;
         this.Author=author;
         this.Context=context;
-        // TODO, make this later like my own code and not some stack overflow solution
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-        String datetime = dateformat.format(c.getTime());
-        this.Date= datetime;
+        this.Date=TimeNow();
     }
     public Comment(String comment, String author) {
         this(comment,author,"unset");

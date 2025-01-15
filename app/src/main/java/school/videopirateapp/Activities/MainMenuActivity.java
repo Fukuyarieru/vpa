@@ -34,10 +34,15 @@ public class MainMenuActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
 
+        Videos.Refresh();
+
 //        finishActivity();
 
 //        startActivityfrom();
         ArrayList<Video>videos= HashMapToArrayList(Database.getVideos());
+//        ArrayList<Video>videos=new ArrayList<>();
+//        videos.add(new Video());
+//        videos.add(new Video("German Unity Day, eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","Menachem2007"));
         VideoAdapter videosAdaptar=new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
 
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);

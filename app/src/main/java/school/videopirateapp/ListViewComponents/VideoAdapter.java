@@ -40,12 +40,19 @@ public class VideoAdapter extends ArrayAdapter<Video> {
         LayoutInflater layoutInflater=(LayoutInflater) this.context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 
         View view = layoutInflater.inflate(this.resource,null);
+        Video video=videos.get(position);
         TextView tvUploaderUserName=view.findViewById(R.id.Video_ListView_Component_TextView_UploaderUsername);
         TextView tvVideoTitle=view.findViewById(R.id.Video_ListView_Component_TextView_VideoTitle);
         TextView tvUpvotes=view.findViewById(R.id.Video_ListView_Component_TextView_Upvotes);
         TextView tvDownvotes=view.findViewById(R.id.Video_ListView_Component_TextView_Downvotes);
         ImageView uploaderImage=view.findViewById(R.id.Video_ListView_Component_ImageView_UploaderImage);
-        return super.getView(position, convertView, parent);
+
+        tvUploaderUserName.setText(video.getUploader().toString());
+        tvVideoTitle.setText(video.getTitle().toString());
+        tvUpvotes.setText("Upvotes: " +video.getUpvotes().toString());
+        tvDownvotes.setText("Downvotes: " +video.getDownvotes().toString());
+//        uploaderImage.setImageDrawable(video.get);
+        return view;
     }
 
     @Override

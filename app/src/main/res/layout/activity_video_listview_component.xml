@@ -21,8 +21,9 @@
             <ImageView
                 android:id="@+id/Video_ListView_Component_ImageView_UploaderImage"
                 android:layout_width="150sp"
-                android:layout_height="150sp"
-                android:src="@drawable/default_user_image" />
+                android:layout_height="85sp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/default_video_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,6 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textSize="10sp"
                     android:text="Upvotes" />
 
                 <TextView
@@ -41,6 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textSize="10sp"
                     android:text="Downvotes" />
             </LinearLayout>
 
@@ -53,17 +56,18 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/Video_ListView_Component_TextView_VideoTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="VideoTitle" />
-
-            <TextView
                 android:id="@+id/Video_ListView_Component_TextView_UploaderUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:text="Uploader" />
+
+            <TextView
+                android:id="@+id/Video_ListView_Component_TextView_VideoTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="VideoTitle" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

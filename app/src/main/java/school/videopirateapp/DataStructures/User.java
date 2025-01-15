@@ -3,7 +3,7 @@ package school.videopirateapp.DataStructures;
 
 import java.util.ArrayList;
 
-public class User{
+public class User {
 
     private String name;
     private Playlist Uploads;
@@ -101,7 +101,7 @@ public class User{
     }
 
     // Constructor with parameters
-    public User(String name,String password) {
+    public User(String name, String password) {
         if (!name.startsWith("@")) {
             name = "@" + name;
         }
