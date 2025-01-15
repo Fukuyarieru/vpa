@@ -15,6 +15,7 @@ public class Videos {
 
     // TODO, what the fuck happens here?
     private static HashMap<String, Video> staticVideos =new HashMap<String,Video>();
+    private HashMap<String,Video>localVideos;
 
     public HashMap<String, Video> getLocalVideos() {
         return localVideos;
@@ -23,8 +24,6 @@ public class Videos {
     public void setLocalVideos(HashMap<String, Video> localVideos) {
         this.localVideos = localVideos;
     }
-
-    private HashMap<String,Video>localVideos=new HashMap<String,Video>();
 
     public static HashMap<String, Video> getStaticVideos() {
         return staticVideos;
@@ -35,8 +34,10 @@ public class Videos {
             @Override
             public void onDataChange(@NonNull DataSnapshot videosSnapshot) {
                 if(videosSnapshot.exists()) {
-                    Videos v=videosSnapshot.getValue(Videos.class);
-                    Videos.setStaticVideos(v.staticVideos);
+                    HashMap<String,Video>videos=videosSnapshot.getValue(HashMap.class);
+                    Videos.setStaticVideos(videos);
+//                    Videos v=videosSnapshot.getValue(Videos.class);
+//                    Videos.setStaticVideos(v.staticVideos);
                 }
             }
 

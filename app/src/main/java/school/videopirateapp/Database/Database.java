@@ -116,30 +116,30 @@ public class Database {
     public static HashMap<String,Video> getVideos() {
         // TODO, make these two functions replace the current database "videos" and "users", EVERYTHING GETS AN INDEX IN THIS APP
         // NOTE, the getCategory functions will use return static variables for efficiency
-//        DatabaseReference videosRef=database.getReference("videos");
-//        videosRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot videosShot) {
-//                if(videosShot.exists()) {
-//                    // TODO, NEED TO REDO THIS ENTIRE SECITON/LOOK OVER IT, the entire idea is wrong because Database needs to only access, and not Videos, implement this better
-//                    Videos videos=videosShot.getValue(Videos.class);
-//                    HashMap<String,Video>videosMap=new HashMap<>();
-//                    for (DataSnapshot videoSnapshot : videosShot.getChildren()) { // iterator
-//                        Video video = videoSnapshot.getValue(Video.class);
-//                        if (video != null) {
-//                            videosMap.put(video.getTitle(), video);
-//                        }
-//                    }
-//                    // TODO
-//                    videosMap.put(null,null);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        DatabaseReference videosRef=database.getReference("videos");
+        videosRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot videosShot) {
+                if(videosShot.exists()) {
+                    // TODO, NEED TO REDO THIS ENTIRE SECITON/LOOK OVER IT, the entire idea is wrong because Database needs to only access, and not Videos, implement this better
+                    Videos videos=videosShot.getValue(Videos.class);
+                    HashMap<String,Video>videosMap=new HashMap<>();
+                    for (DataSnapshot videoSnapshot : videosShot.getChildren()) { // iterator
+                        Video video = videoSnapshot.getValue(Video.class);
+                        if (video != null) {
+                            videosMap.put(video.getTitle(), video);
+                        }
+                    }
+                    // TODO
+                    videosMap.put(null,null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return Videos.getStaticVideos();
     }
     public static HashMap<String, User> getUsers() {
