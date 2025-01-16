@@ -40,11 +40,11 @@ public class MainMenuActivity extends AppCompatActivity {
 //        finishActivity();
 
 //        startActivityfrom();
-        ArrayList<Video>videos= HashMapToArrayList(Database.getVideos());
+//        ArrayList<Video>videos= HashMapToArrayList(Database.getVideos());
 
-//        ArrayList<Video>videos=new ArrayList<>();
-//        videos.add(new Video());
-//        videos.add(new Video("German Unity Day, eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","Menachem2007"));
+        ArrayList<Video>videos=new ArrayList<>();
+        videos.add(new Video());
+        videos.add(new Video("Letplay","Frogger"));
         VideoAdapter videosAdaptar=new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
 
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
@@ -74,13 +74,12 @@ public class MainMenuActivity extends AppCompatActivity {
         uploadDialog.show();
     }
     public void UserPage(View view) {
-        if(!btnUserPage.getText().toString().equals("Login")) {
+        if (!btnUserPage.getText().toString().equals("Login")) {
             Intent openUserPage = new Intent(MainMenuActivity.this, UserPageActivity.class);
             openUserPage.putExtra("user", btnUserPage.getText().toString()); // sends the current signed in user's name to the new screen (userPage), that screen would search it from database from that point
             startActivity(openUserPage);
-        }
-        else {
-            Dialog loginDialog=new Dialog(MainMenuActivity.this); //this screen as context
+        } else {
+            Dialog loginDialog = new Dialog(MainMenuActivity.this); //this screen as context
             loginDialog.setContentView(R.layout.activity_login_dialog);
             loginDialog.show();
         }

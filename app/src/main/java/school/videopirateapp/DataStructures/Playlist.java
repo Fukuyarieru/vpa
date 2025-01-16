@@ -1,21 +1,24 @@
 package school.videopirateapp.DataStructures;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Playlist {
 
-    private ArrayList<Video> videos;
+    private HashMap<String, Video> videos;
     private String title; // Playlist names will start with a '#', just because I wanted
     private String owner;
     private String playlistDescription;
 
     private static final Playlist defaultPlaylist=new Playlist();
 
-    public ArrayList<Video> getVideos() {
+    public HashMap<String, Video> getVideos() {
         return videos;
     }
 
-    public void setVideos(ArrayList<Video> videos) {
+    public void setVideos(HashMap<String, Video> videos) {
         this.videos = videos;
     }
 
@@ -43,7 +46,7 @@ public class Playlist {
         this.playlistDescription = playlistDescription;
     }
     public void addVideo(Video newVideo) {
-        this.videos.add(newVideo);
+        this.videos.put(newVideo.getTitle(),newVideo);
     }
 
 
@@ -57,11 +60,17 @@ public class Playlist {
         // no need to check database here, because database checks itself
         if(!playlistTitle.startsWith("&")) {
             playlistTitle ="&"+playlistTitle;
+            Log.e("Playlist Contructor","Playlist Title did not start with &");
+        }
+        if(!owner.startsWith("@")) {
+            owner="@"+owner;
+            Log.e("Playlist Contructor","Playlist Owner(name) did not start with @");
         }
         this.title =playlistTitle;
-        this.videos =new ArrayList<Video>();
+        this.videos =new HashMap<String,Video>();
         this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
         this.owner=owner;
+        Log.i("Playlist: Contructor", "Created Playlist with:\nTitle: "+title+"\nDescription: "+playlistDescription+"\nOwner: "+owner);
     }
     public static Playlist Default() {
         return defaultPlaylist;
