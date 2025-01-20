@@ -7,17 +7,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.Database.Videos;
+import school.videopirateapp.Dialogs.Login_Dialog_Activity;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
 import school.videopirateapp.Dialogs.Login_Dialog_Activity.*;
@@ -43,7 +53,7 @@ public class MainMenuActivity extends AppCompatActivity {
 //        ArrayList<Video>videos= HashMapToArrayList(Database.getVideos());
 
         ArrayList<Video>videos=new ArrayList<>();
-        videos.add(new Video());
+        videos.add(Video.Default());
         videos.add(new Video("Letplay","Frogger"));
         VideoAdapter videosAdaptar=new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
 
@@ -83,5 +93,29 @@ public class MainMenuActivity extends AppCompatActivity {
             loginDialog.setContentView(R.layout.activity_login_dialog);
             loginDialog.show();
         }
+    }
+    public void openVideo(View view) {
+        Intent intent=new Intent(this, VideoPageActivity.class);
+//        intent.putExtra("videoTitle",videoTitle.getText());
+        startActivity(intent);
+    }
+    public void confirmLogin(View view){
+//        EditText etPassword=view.findViewById(R.id.Login_Dialog_EditText_Password);
+//        EditText etUsername=view.findViewById(R.id.Login_Dialog_EditText_Username);
+//        User user=Database.getUser(etUsername.getText().toString());
+//        if(user.getPassword()==etPassword.getText().toString()){
+            Intent intent=new Intent(this, UserPageActivity.class);
+            startActivity(intent);
+//        }
+//        else {
+//            Toast.makeText(this,"Wrong password",Toast.LENGTH_SHORT);
+//        }
+    }
+    public void openSignupActivity(View view){
+        // TODO
+        Intent openSignupActivity=new Intent(this, SignupActivity.class);
+//        openSignupActivity.putExtra("username", etUsername.getText().toString());
+//        openSignupActivity.putExtra("password", etPassword.getText().toString());
+        startActivity(openSignupActivity);
     }
 }

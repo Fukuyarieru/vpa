@@ -34,6 +34,9 @@
             android:name=".ListViewComponents.User_ListView_Component"
             android:exported="false" />
         <activity
+            android:name=".Activities.UserPageActivity"
+            android:exported="false"/>
+        <activity
             android:name=".ListViewComponents.Video_ListView_Component"
             android:exported="false" />
         <activity

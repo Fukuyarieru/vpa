@@ -2,11 +2,12 @@ package school.videopirateapp.ListViewComponents;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
-import com.google.firebase.firestore.core.View;
-
+import school.videopirateapp.Activities.VideoPageActivity;
 import school.videopirateapp.R;
 
 public class Video_ListView_Component extends AppCompatActivity {
@@ -23,6 +24,8 @@ public class Video_ListView_Component extends AppCompatActivity {
 
     }
     public void openVideo(View view) {
-
+        Intent intent=new Intent(this, VideoPageActivity.class);
+        intent.putExtra("videoTitle",videoTitle.getText());
+        startActivity(intent);
     }
 }

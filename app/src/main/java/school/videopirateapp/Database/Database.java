@@ -113,6 +113,13 @@ public class Database {
             }
         });
     }
+    public static User getUser(String userName) {
+        return Users.getUser(userName);
+
+    }
+    public static Playlist getPlaylist(String playlistTitle) {
+        return Playlists.getPlaylist(playlistTitle);
+    }
     public static HashMap<String,Video> getVideos() {
         return Videos.getVideos();
 

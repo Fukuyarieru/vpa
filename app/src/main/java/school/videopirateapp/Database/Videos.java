@@ -20,11 +20,14 @@ public class Videos {
         throw new UnsupportedOperationException("This class is not instantiable.");
     }
 
-    // TODO, what the fuck happens here?
     private static HashMap<String, Video> Videos = new HashMap<String,Video>();
 
     public static HashMap<String, Video> getVideos() {
         return Videos;
+    }
+    public static Video getVideo(String videoTitle) {
+        // this function does not refresh the videos, videos get refreshed only when Refresh() is called
+        return Videos.get(videoTitle);
     }
 
     public static void setVideos(HashMap<String, Video> newVideos) {

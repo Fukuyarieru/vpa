@@ -5,12 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="30sp"
     android:orientation="vertical"
     tools:context=".Activities.VideoPageActivity">
 
 <!--    TODO: add onClick to play video-->
+    <Button
+        android:id="@+id/Video_Page_Button_CloseVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="Close"
+        android:text="Back" />
+
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/Video_Page_ImageView_Thumbnail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -25,6 +33,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="openUserPage"
             android:orientation="vertical">
 
             <ImageView

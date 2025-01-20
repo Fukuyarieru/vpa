@@ -1,10 +1,13 @@
 package school.videopirateapp.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.R;
 
 public class VideoPageActivity extends AppCompatActivity {
@@ -36,5 +39,12 @@ public class VideoPageActivity extends AppCompatActivity {
 //        // Start the video
 //        videoView.setOnPreparedListener(mp -> videoView.start());
         // TODO
+    }
+    public void Close(View view) {
+        finish();
+    }
+    public void openUserPage(View view) {
+        Intent intent=new Intent(this, UserPageActivity.class);
+        startActivity(intent);
     }
 }

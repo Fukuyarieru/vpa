@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="openVideo"
     android:orientation="vertical"
     android:padding="5sp"
     tools:context=".ListViewComponents.Video_ListView_Component">
@@ -36,16 +37,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="10sp"
-                    android:text="Upvotes" />
+                    android:text="Upvotes"
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/Video_ListView_Component_TextView_Downvotes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="10sp"
-                    android:text="Downvotes" />
+                    android:text="Downvotes"
+                    android:textSize="10sp" />
             </LinearLayout>
 
         </LinearLayout>
