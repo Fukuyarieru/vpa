@@ -17,8 +17,6 @@ import school.videopirateapp.DataStructures.Video;
 
 public class Database {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
-    private static HashMap<String, User> users;
-    private static HashMap<String, Video> videos;
     @Deprecated
     public static DatabaseReference getRef(String ref) {
         if (ref=="") {
@@ -93,47 +91,17 @@ public class Database {
     }
     public static User getUser(String userName) {
         return Users.getUser(userName);
-
     }
     public static Playlist getPlaylist(String playlistTitle) {
         return Playlists.getPlaylist(playlistTitle);
     }
     public static HashMap<String,Video> getVideos() {
         return Videos.getVideos();
-
-
-//        // TODO, make these two functions replace the current database "videos" and "users", EVERYTHING GETS AN INDEX IN THIS APP
-//        // NOTE, the getCategory functions will use return static variables for efficiency
-//        DatabaseReference videosRef=database.getReference("videos");
-//        videosRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot videosShot) {
-//                if(videosShot.exists()) {
-//                    // TODO, NEED TO REDO THIS ENTIRE SECITON/LOOK OVER IT, the entire idea is wrong because Database needs to only access, and not Videos, implement this better
-//                    Videos videos=videosShot.getValue(Videos.class);
-//                    HashMap<String,Video>videosMap=new HashMap<>();
-//                    for (DataSnapshot videoSnapshot : videosShot.getChildren()) { // iterator
-//                        Video video = videoSnapshot.getValue(Video.class);
-//                        if (video != null) {
-//                            videosMap.put(video.getTitle(), video);
-//                        }
-//                    }
-//                    // TODO
-//                    videosMap.put(null,null);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        return Videos.getVideos();
     }
-    public static HashMap<String, User> getUsers() {
-        // TODO
-        return null;
-    }
+//    public static HashMap<String, User> getUsers() {
+//        // TODO
+//        return // Disabled this function, as i think its probably useless
+//    }
     public static Video getVideo(String videoTitle) {
         return Videos.getVideo(videoTitle);
     }
