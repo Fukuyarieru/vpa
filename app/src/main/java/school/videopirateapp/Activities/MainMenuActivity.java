@@ -71,6 +71,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
         // TOAST: YOU MUST LOGIN FIRST
+
     }
     public void SearchVideo(View view) {
         // dont do a dialog, change to a deticated screen that has an edittext and updates live
