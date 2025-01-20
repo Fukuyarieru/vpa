@@ -1,5 +1,7 @@
 package school.videopirateapp.Dialogs;
 
+import static android.icu.text.DisplayContext.LENGTH_SHORT;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,13 +17,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import school.videopirateapp.Activities.MainMenuActivity;
 import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
 import school.videopirateapp.Activities.SignupActivity;
 
-public class Login_Dialog_Activity extends AppCompatActivity {
+public class    Login_Dialog_Activity extends AppCompatActivity {
 
     EditText etUsername;
     EditText etPassword;
@@ -38,19 +41,28 @@ public class Login_Dialog_Activity extends AppCompatActivity {
         btnLogin=findViewById(R.id.Login_Dialog_Button_Login);
         btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
     }
-
     public void confirmLogin(View view){
         Intent intent=new Intent(this, UserPageActivity.class);
         startActivity(intent);
 
+
 //        // TODO, REMAKE THIS LATER
-//        String username = etUsername.getText().toString();
-//        String password = etPassword.getText().toString();
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
 //
-//        if (username.isEmpty() || password.isEmpty()) {
-//            // Display a message if the fields are empty
-//            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
-//        }
+        if (username.isEmpty() || password.isEmpty()) {
+            // Display a message if the fields are empty
+            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            User desiredUser=Database.getUser(username);
+            if(desiredUser.getPassword().equals(password)){
+                Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
+                userPage.setText(username);
+                Toast.makeText(this,"Logged in succesfully",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
 //        else {
 //            DatabaseReference userRef = Database.getRef("users").child(username);
 //            userRef.addListenerForSingleValueEvent(new ValueEventListener() {

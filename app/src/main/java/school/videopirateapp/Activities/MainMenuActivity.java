@@ -100,17 +100,33 @@ public class MainMenuActivity extends AppCompatActivity {
 //        intent.putExtra("videoTitle",videoTitle.getText());
         startActivity(intent);
     }
-    public void confirmLogin(View view){
-//        EditText etPassword=view.findViewById(R.id.Login_Dialog_EditText_Password);
-//        EditText etUsername=view.findViewById(R.id.Login_Dialog_EditText_Username);
-//        User user=Database.getUser(etUsername.getText().toString());
-//        if(user.getPassword()==etPassword.getText().toString()){
-            Intent intent=new Intent(this, UserPageActivity.class);
-            startActivity(intent);
-//        }
-//        else {
-//            Toast.makeText(this,"Wrong password",Toast.LENGTH_SHORT);
-//        }
+    public void confirmLogin(View view) {
+//        Intent intent = new Intent(this, UserPageActivity.class);
+//        startActivity(intent);
+
+        Login_Dialog_Activity.confirmLogin(view);
+
+        EditText etUsername=findViewById(R.id.Login_Dialog_EditText_Username);
+        EditText etPassword=findViewById(R.id.Login_Dialog_EditText_Password);
+//        Button btnLogin=findViewById(R.id.Login_Dialog_Button_Login);
+//        Button btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
+
+//        // TODO, REMAKE THIS LATER
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+//
+        if (username.isEmpty() || password.isEmpty()) {
+            // Display a message if the fields are empty
+            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+        } else {
+            User desiredUser = Database.getUser(username);
+            if (desiredUser.getPassword().equals(password)) {
+                Button userPage = findViewById(R.id.MainMenu_Button_UserPage);s`
+                userPage.setText(username);
+                Toast.makeText(this, "Logged in succesfully", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
     public void openSignupActivity(View view){
         // TODO
