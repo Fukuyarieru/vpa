@@ -29,7 +29,6 @@ public class Videos {
         // this function does not refresh the videos, videos get refreshed only when Refresh() is called
         return Videos.get(videoTitle);
     }
-
     public static void setVideos(HashMap<String, Video> newVideos) {
         Log.i("Videos, set videos", newVideos.toString());
         Videos = newVideos;

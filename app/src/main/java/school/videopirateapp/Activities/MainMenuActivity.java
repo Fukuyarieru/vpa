@@ -118,4 +118,10 @@ public class MainMenuActivity extends AppCompatActivity {
 //        openSignupActivity.putExtra("password", etPassword.getText().toString());
         startActivity(openSignupActivity);
     }
+    public void ConfirmUploadVideo(View view) {
+        // TODO
+    }
+    public void ChooseVideo(View view){
+        // TODO
+    }
 }

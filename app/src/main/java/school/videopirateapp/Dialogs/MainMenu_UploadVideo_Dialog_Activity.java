@@ -32,7 +32,7 @@ public class MainMenu_UploadVideo_Dialog_Activity extends AppCompatActivity {
     public void ChooseVideo(View view) {
         // TODO
     }
-    public void UploadVideo(View view) {
+    public void ConfirmUploadVideo(View view) {
         // TODO
     }
 }

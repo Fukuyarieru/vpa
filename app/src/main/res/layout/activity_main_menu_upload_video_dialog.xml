@@ -38,8 +38,8 @@
             android:id="@+id/MainMenu_UploadVideo_Dialog_Button_UploadVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="UploadVideo"
-            android:text="UploadVideo" />
+            android:onClick="ConfirmUploadVideo"
+            android:text="ConfirmUploadVideo" />
     </LinearLayout>
 
     <EditText

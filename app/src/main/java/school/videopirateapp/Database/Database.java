@@ -26,28 +26,6 @@ public class Database {
         }
         return database.getReference(ref);
     }
-//    public static User getUser(String userName) {
-//        User user=new User();
-//        database.getReference("users").child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                User retUser=snapshot.getValue(User.class);
-//                assert retUser != null;
-//                // TODO, do this better
-//                user.setComments(retUser.getComments());
-//                user.setName(retUser.getName());
-//                user.setImage(retUser.getImage());
-//                user.setUploads(retUser.getUploads());
-//                user.setOwnedPlaylists(retUser.getOwnedPlaylists());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        return user;
-//    }
     @Deprecated
     public static FirebaseDatabase getDatabase() {
         return database;
@@ -156,28 +134,9 @@ public class Database {
         // TODO
         return null;
     }
-//    public static Video getVideo(String videoTitle) {
-    // TODO, this will maybe get use later, it will use the getVideos function
-
-//        Video video;
-//        DatabaseReference videoRef=database.getReference("videos").child(videoTitle);
-//        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
-//                if(videoSnapshot.exists()){
-////                    video=videoSnapshot.getValue(Video.class);
-//                    // TODO, finish this?
-////                    retVid.addComment();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        return null;
-//    }
+    public static Video getVideo(String videoTitle) {
+        return Videos.getVideo(videoTitle);
+    }
 
     public static void addVideo(Video newVideo) { // video already got a user ini it
         // change the unique key later to be some ID or something?

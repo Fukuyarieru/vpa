@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         initializeDatabase();
 
+        // TODO, make all return back to page return client to the MainMenu
+
         // TODO, I can use hashmaps for User and Video and Playlist
 
         // IDEAS
