@@ -63,37 +63,13 @@ public class    Login_Dialog_Activity extends AppCompatActivity {
                 finish();
             }
         }
-//        else {
-//            DatabaseReference userRef = Database.getRef("users").child(username);
-//            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-//                    if (userSnapshot.exists()) {
-//                        User user = userSnapshot.getValue(User.class);
-//                        if (user.getPassword() == password) {
-//                            Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
-//                            userPage.setText(username);
-//                            finish();
-//                        } else {
-//                            Toast.makeText(Login_Dialog_Activity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
-//                        }
-//                    } else {
-//                        Toast.makeText(Login_Dialog_Activity.this, "User not found", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
 //        }
     }
     public void openSignupActivity(View view){
         // TODO
         Intent openSignupActivity=new Intent(this, SignupActivity.class);
-//        openSignupActivity.putExtra("username", etUsername.getText().toString());
-//        openSignupActivity.putExtra("password", etPassword.getText().toString());
+        openSignupActivity.putExtra("username", etUsername.getText().toString());
+        openSignupActivity.putExtra("password", etPassword.getText().toString());
         startActivity(openSignupActivity);
     }
 }

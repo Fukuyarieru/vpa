@@ -5,6 +5,7 @@ import static school.videopirateapp.Utilities.HashMapToArrayList;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,10 @@ public class MainMenuActivity extends AppCompatActivity {
     Button btnUserPage;
     Button btnUploadVideo;
     Button btnSearchVideo;
+    Button btnLogin;
+    Button btnSignup;
+    EditText etUsername;
+    EditText etPassword;
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,38 +106,36 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void confirmLogin(View view) {
-        Intent intent = new Intent(this, UserPageActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, UserPageActivity.class);
+//        startActivity(intent);
+        etUsername=view.findViewById(R.id.Login_Dialog_EditText_Username);
+        Log.i("etUsername",etUsername.toString());
+        etPassword=view.findViewById(R.id.Login_Dialog_EditText_Password);
+        btnLogin=findViewById(R.id.Login_Dialog_Button_Login);
+        btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
 
-//        Login_Dialog_Activity.confirmLogin(view);
-
-//        EditText etUsername=findViewById(R.id.Login_Dialog_EditText_Username);
-//        EditText etPassword=findViewById(R.id.Login_Dialog_EditText_Password);
-////        Button btnLogin=findViewById(R.id.Login_Dialog_Button_Login);
-////        Button btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
+//        // TODO, REMAKE THIS LATER
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
 //
-////        // TODO, REMAKE THIS LATER
-//        String username = etUsername.getText().toString();
-//        String password = etPassword.getText().toString();
-////
-//        if (username.isEmpty() || password.isEmpty()) {
-//            // Display a message if the fields are empty
-//            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
-//        } else {
-//            User desiredUser = Database.getUser(username);
-//            if (desiredUser.getPassword().equals(password)) {
-//                Button userPage = findViewById(R.id.MainMenu_Button_UserPage);s`
-//                userPage.setText(username);
-//                Toast.makeText(this, "Logged in succesfully", Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-//        }
+        if (username.isEmpty() || password.isEmpty()) {
+            // Display a message if the fields are empty
+            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+        } else {
+            User desiredUser = Database.getUser(username);
+            if (desiredUser.getPassword().equals(password)) {
+                Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
+                userPage.setText(username);
+                Toast.makeText(this, "Logged in succesfully", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
     public void openSignupActivity(View view){
         // TODO
         Intent openSignupActivity=new Intent(this, SignupActivity.class);
-//        openSignupActivity.putExtra("username", etUsername.getText().toString());
-//        openSignupActivity.putExtra("password", etPassword.getText().toString());
+        openSignupActivity.putExtra("username", etUsername.getText().toString());
+        openSignupActivity.putExtra("password", etPassword.getText().toString());
         startActivity(openSignupActivity);
     }
     public void ConfirmUploadVideo(View view) {
