@@ -1,5 +1,7 @@
 package school.videopirateapp.Database;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,8 +22,10 @@ public class Database {
     @Deprecated
     public static DatabaseReference getRef(String ref) {
         if (ref=="") {
+            Log.e("Database: getRef","Empty string passed to database reference");
             return database.getReference("ERROR_REF_CANNOT_BE_EMPTY");
         }
+        Log.i("Database: getRef","Got database reference: "+ref);
         return database.getReference(ref);
     }
     @Deprecated
@@ -35,14 +39,17 @@ public class Database {
             public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                 if (!userSnapshot.exists()) {
                     userRef.setValue(newUser);
+                    Log.i("Database: addUser","Added user to database: "+newUser.getName());
                 } else {
                     // User already exists
+                    Log.w("Database: addUser","Tried to add user to database, but it already existed, so nothing happened");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // some kind of error, ?
+                Log.e("Database: addUser","Listener error?");
             }
         });
     }
@@ -91,22 +98,20 @@ public class Database {
         });
     }
     public static User getUser(String userName) {
+        Log.i("Database: getUser","Getting user from database: "+userName);
         return Users.getUser(userName);
     }
     public static Playlist getPlaylist(String playlistTitle) {
         return Playlists.getPlaylist(playlistTitle);
     }
     public static HashMap<String,Video> getVideos() {
+        Log.i("Database: getVideos","Getting videos from database");
         return Videos.getVideos();
     }
-//    public static HashMap<String, User> getUsers() {
-//        // TODO
-//        return // Disabled this function, as i think its probably useless
-//    }
     public static Video getVideo(String videoTitle) {
+        Log.i("Database: getVideo","Getting video from database:" + videoTitle);
         return Videos.getVideo(videoTitle);
     }
-
     public static void addVideo(Video newVideo) { // video already got a user ini it
         // change the unique key later to be some ID or something?
         DatabaseReference videoRef= database.getReference("videos").child(newVideo.getTitle()); // is the .child(newVideo) behavior alright?

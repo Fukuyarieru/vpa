@@ -5,7 +5,8 @@ import static school.videopirateapp.Utilities.HashMapToArrayList;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,25 +14,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.Database.Videos;
-import school.videopirateapp.Dialogs.Login_Dialog_Activity;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
-import school.videopirateapp.Dialogs.Login_Dialog_Activity.*;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -44,23 +36,35 @@ public class MainMenuActivity extends AppCompatActivity {
     EditText etUsername;
     EditText etPassword;
     ListView listView;
+    ArrayList<Video>videos;
+    VideoAdapter videosAdaptar;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
 
-        Videos.Refresh();
+        VideosListViewInit();
+
+        // A bug happens here, Videos.Refresh relies on getting a reference from the database, which is an async operation, so it gets delayed and completed ONLY AFTER the adapter is set, therefore, empty listview
+        // The fix to that for now is just adding a manual refresh button
+        // Videos.Refresh()
+
 
 //        finishActivity();
 
 //        startActivityfrom();
-//        ArrayList<Video>videos= HashMapToArrayList(Database.getVideos());
 
-        ArrayList<Video>videos=new ArrayList<>();
-        videos.add(Video.Default());
-        videos.add(new Video("Letplay","Frogger"));
-        VideoAdapter videosAdaptar=new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
+
+//        ArrayList<Video>videos=new ArrayList<>();
+//        videos.add(Video.Default());
+//        videos.add(new Video("Letplay","Frogger"));
 
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
         btnUserPage =findViewById(R.id.MainMenu_Button_UserPage);
@@ -77,6 +81,15 @@ public class MainMenuActivity extends AppCompatActivity {
 
         // TOAST: YOU MUST LOGIN FIRST
 
+    }
+    public void VideosListViewInit() {
+        Videos.Refresh(); // more strange behavior here, i think
+        videos=HashMapToArrayList(Database.getVideos());
+        videosAdaptar=new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
+
+    }
+    public void RefreshVideosButton(View view) {
+        VideosListViewInit();
     }
     public void SearchVideo(View view) {
         // dont do a dialog, change to a deticated screen that has an edittext and updates live

@@ -26,34 +26,44 @@ public class Videos {
         return Videos;
     }
     public static Video getVideo(String videoTitle) {
+        Log.i("Videos: getVideo","Fetched Video: FINISH THIS MESSAGE");
         // this function does not refresh the videos, videos get refreshed only when Refresh() is called
         return Videos.get(videoTitle);
     }
+    @Deprecated
     public static void setVideos(HashMap<String, Video> newVideos) {
         Log.i("Videos, set videos", newVideos.toString());
         Videos = newVideos;
     }
     public static void Refresh() {
+        Log.i("Videos: Refresh","Refreshing Videos");
         DatabaseReference videosRef= Database.getRef("videos");
         videosRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot videosSnapshot) {
                 if(videosSnapshot.exists()) {
-                    Log.d("DatabaseDebug", "Raw data: " + videosSnapshot.getValue());
-                    GenericTypeIndicator<HashMap<String, Video>> typeIndicator = new GenericTypeIndicator<HashMap<String, Video>>() {};
-//                    for (DataSnapshot videoSnapshot : videosSnapshot.getChildren()) {
-//                        Video video = videoSnapshot.getValue(Video.class);
-//                        if (video != null) {
-//                            videoMap.put(videoSnapshot.getKey(), video);
-//                        }
-//                    }
-                    Videos = videosSnapshot.getValue(typeIndicator);
+                    Log.i("Videos: Refresh","Found videos from database");
+//                    GenericTypeIndicator<HashMap<String, Video>> typeIndicator = new GenericTypeIndicator<HashMap<String, Video>>() {};
+                    for (DataSnapshot videoSnapshot : videosSnapshot.getChildren()) {
+                        Video video = videoSnapshot.getValue(Video.class);
+                        if (video != null) {
+                            HashMap<String,Video>VideoMap=new HashMap<>();
+                            VideoMap.put(videoSnapshot.getKey(), video);
+                            Videos=VideoMap;
+                            Log.i("Videos: Refresh","Fetched video: " +video.getTitle());
+                        } else {
+                            Log.e("Videos: Refresh","Fetched video is null");
+                        }
+                    }
+
+                } else {
+                    Log.e("Videos: Refresh","Videos do not exist?");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("DatabaseError", "Failed to fetch videos: " + error.getMessage());
+                Log.e("Videos: Refresh", "DatabaseError Failed to fetch videos: " + error.getMessage());
             }
         });
     }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         initializeDatabase();
+
+//        Log.i() - information
+//        Log.e() - error
+//        Log.w() - warning
 
         // TODO, make all return back to page return client to the MainMenu
 

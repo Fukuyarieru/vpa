@@ -60,11 +60,11 @@ public class Playlist {
         // no need to check database here, because database checks itself
         if(!playlistTitle.startsWith("&")) {
             playlistTitle ="&"+playlistTitle;
-            Log.e("Playlist Contructor","Playlist Title did not start with &");
+            Log.w("Playlist Contructor","Playlist Title did not start with &, automatically fixed");
         }
         if(!owner.startsWith("@")) {
             owner="@"+owner;
-            Log.e("Playlist Contructor","Playlist Owner(name) did not start with @");
+            Log.w("Playlist Contructor","Playlist Owner(name) did not start with @, automatically fixed");
         }
         this.title =playlistTitle;
         this.videos =new HashMap<String,Video>();
