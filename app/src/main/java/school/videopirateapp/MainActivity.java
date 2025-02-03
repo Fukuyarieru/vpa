@@ -3,6 +3,7 @@ package school.videopirateapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import school.videopirateapp.Activities.MainMenuActivity;
+import school.videopirateapp.Activities.VideoPageActivity;
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.User;
@@ -32,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 //        Log.i() - information
 //        Log.e() - error
 //        Log.w() - warning
+//        Log.d() - debug
+//        Log.v() - verbose
+//        Log.wtf() - wtf, never supposed to happen
 
         // TODO, make all return back to page return client to the MainMenu
 
@@ -45,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         // TODO, learn about fragments, they will be useful
 
         // TODO, bug in adding comments, can create duplicate comments, not supposed to
-
 
 //        User myUser=new User("fukuya");
 //        Video myVideo=new Video("my video",myUser.getName());
@@ -121,8 +125,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
-    public static void changeScreen(Class<AppCompatActivity> screen) {
-        // TODO?
     }
 }

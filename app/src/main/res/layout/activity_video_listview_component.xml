@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="openVideo"
     android:orientation="vertical"
     android:padding="5sp"
     tools:context=".ListViewComponents.Video_ListView_Component">

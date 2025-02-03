@@ -1,19 +1,20 @@
 package school.videopirateapp.Activities;
 
 import static school.videopirateapp.Utilities.HashMapToArrayList;
+import static school.videopirateapp.Utilities.openVideoPage;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -37,8 +38,10 @@ public class MainMenuActivity extends AppCompatActivity {
     EditText etPassword;
     ListView listView;
     ArrayList<Video>videos;
-    VideoAdapter videosAdaptar;
+    VideoAdapter videosAdapter;
 
+
+    // TODO, DOES NOT WORK, TODO, FIX
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar,menu);
@@ -50,34 +53,19 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        VideosListViewInit();
-
-        // A bug happens here, Videos.Refresh relies on getting a reference from the database, which is an async operation, so it gets delayed and completed ONLY AFTER the adapter is set, therefore, empty listview
-        // The fix to that for now is just adding a manual refresh button
-        // Videos.Refresh()
-
-
-//        finishActivity();
-
-//        startActivityfrom();
-
-
-//        ArrayList<Video>videos=new ArrayList<>();
-//        videos.add(Video.Default());
-//        videos.add(new Video("Letplay","Frogger"));
-
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
         btnUserPage =findViewById(R.id.MainMenu_Button_UserPage);
         listView=findViewById(R.id.MainMenu_ListView);
         btnSearchVideo=findViewById(R.id.MainMenu_Button_SearchVideo);
 
-
-        listView.setAdapter(videosAdaptar);
+        // A bug happens here, Videos.Refresh relies on getting a reference from the database, which is an async operation, so it gets delayed and completed ONLY AFTER the adapter is set, therefore, empty listview
+        // The fix to that for now is just adding a manual refresh button
+        // DO NOT USE INFINITE WHILE LOOPS
+        VideosListViewInit();
 
         btnUserPage.setText("Login");
         btnUploadVideo.setText("Upload Video");
         btnSearchVideo.setText("Search");
-
 
         // TOAST: YOU MUST LOGIN FIRST
 
@@ -85,13 +73,15 @@ public class MainMenuActivity extends AppCompatActivity {
     public void VideosListViewInit() {
         Videos.Refresh(); // more strange behavior here, i think
         videos=HashMapToArrayList(Database.getVideos());
-        videosAdaptar=new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
-
+        videosAdapter =new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
+        listView.setAdapter(videosAdapter);
     }
-    public void RefreshVideosButton(View view) {
-        VideosListViewInit();
-    }
+    // todo, later, add the button to the menu to manually refresh the videos list
+//    public void RefreshVideosButton(View view) {
+//        VideosListViewInit();
+//    }
     public void SearchVideo(View view) {
+        VideosListViewInit(); // TODO, TEMPORARY SOLUTION FOR THE MENU WHICH DOES NOT WORK
         // dont do a dialog, change to a deticated screen that has an edittext and updates live
         Dialog seachDialog=new Dialog(MainMenuActivity.this);
         seachDialog.setContentView(R.layout.activity_main_menu_search_video_dialog);
@@ -127,7 +117,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         Toast.makeText(MainMenuActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
                     } else {
                         User desiredUser = Database.getUser(username);
-                        Toast.makeText(MainMenuActivity.this,"user: "+desiredUser.getName()+", pass: "+desiredUser.getPassword(),Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainMenuActivity.this,"user: "+desiredUser.getName()+", pass: "+desiredUser.getPassword(),Toast.LENGTH_SHORT).show();
                         if(desiredUser==null) {
                             Toast.makeText(MainMenuActivity.this,"User was not found",Toast.LENGTH_SHORT).show();
                         }
@@ -137,7 +127,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         else {
                             btnUserPage.setText(username);
                             Toast.makeText(MainMenuActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                            finish();
+                            loginDialog.dismiss();
                         }
 
                     }
@@ -147,9 +137,12 @@ public class MainMenuActivity extends AppCompatActivity {
         }
     }
     public void openVideo(View view) {
-        Intent intent=new Intent(this, VideoPageActivity.class);
-//        intent.putExtra("videoTitle",videoTitle.getText());
-        startActivity(intent);
+        TextView tvVideoTitle=view.findViewById(R.id.Video_ListView_Component_TextView_VideoTitle);
+
+        openVideoPage(this,tvVideoTitle.getText().toString());
+//        Intent intent=new Intent(this, VideoPageActivity.class);
+////        intent.putExtra("videoTitle",videoTitle.getText());
+//        startActivity(intent);
     }
     public void confirmLogin(View view) {
 //        Intent intent = new Intent(this, UserPageActivity.class);

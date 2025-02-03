@@ -3,22 +3,39 @@ package school.videopirateapp.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
 
 public class VideoPageActivity extends AppCompatActivity {
 
     // activity_video_page.xml
 
+    Video video;
+
+    TextView tvUploader;
+    TextView tvVideoTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_video_page);
+
+        tvUploader=findViewById(R.id.Video_Page_TextView_UserName);
+        tvVideoTitle=findViewById(R.id.Video_Page_TextView_VideoTitle);
+
+        Intent intent=getIntent();
+        String videoTitle=intent.getStringExtra("videoTitle");
+
+        tvVideoTitle.setText(videoTitle);
+        video= Database.getVideo(videoTitle);
+        String Uploader=video.getUploader();
+        tvUploader.setText(Uploader);
+
 
 
 //        VideoView videoView = findViewById(R.id.Video_Page_VideoView_Video);
@@ -45,6 +62,7 @@ public class VideoPageActivity extends AppCompatActivity {
     }
     public void openUserPage(View view) {
         Intent intent=new Intent(this, UserPageActivity.class);
+
         startActivity(intent);
     }
 }
