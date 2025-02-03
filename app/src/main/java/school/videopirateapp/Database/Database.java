@@ -46,6 +46,7 @@ public class Database {
             }
         });
     }
+
     public static void addComment(Comment newComment, Video targetVideo) {
         // first check if video exists at all
         DatabaseReference videoRef=database.getReference("videos").child(targetVideo.getTitle());
@@ -188,5 +189,23 @@ public class Database {
     }
     public static void addVideoToPlaylist(Video video, Playlist targetPlaylist) {
         // TODO
+    }
+    @Deprecated
+    public static<T> T GetObject(String Path) {
+        T val=null;
+        Database.getRef(Path).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+//                    val=snapshot.getValue(T.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return val;
     }
 }

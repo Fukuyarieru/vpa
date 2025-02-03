@@ -24,7 +24,7 @@ import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
 import school.videopirateapp.Activities.SignupActivity;
 
-public class    Login_Dialog_Activity extends AppCompatActivity {
+public class  Login_Dialog_Activity extends AppCompatActivity {
 
     EditText etUsername;
     EditText etPassword;
@@ -42,8 +42,8 @@ public class    Login_Dialog_Activity extends AppCompatActivity {
         btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
     }
     public void confirmLogin(View view){
-        Intent intent=new Intent(this, UserPageActivity.class);
-        startActivity(intent);
+//        Intent intent=new Intent(this, UserPageActivity.class);
+//        startActivity(intent);
 
 
 //        // TODO, REMAKE THIS LATER

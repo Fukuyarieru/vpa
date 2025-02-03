@@ -97,6 +97,39 @@ public class MainMenuActivity extends AppCompatActivity {
         } else {
             Dialog loginDialog = new Dialog(MainMenuActivity.this); //this screen as context
             loginDialog.setContentView(R.layout.activity_login_dialog);
+            etUsername=loginDialog.findViewById(R.id.Login_Dialog_EditText_Username);
+            etPassword=loginDialog.findViewById(R.id.Login_Dialog_EditText_Password);
+            btnLogin=loginDialog.findViewById(R.id.Login_Dialog_Button_Login);
+            btnSignup=loginDialog.findViewById(R.id.Login_Dialog_Button_Signup);
+
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String username = etUsername.getText().toString();
+                    String password = etPassword.getText().toString();
+
+                    if (username.isEmpty() || password.isEmpty()) {
+                        // Display a message if the fields are empty
+                        Toast.makeText(MainMenuActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                    } else {
+                        User desiredUser = Database.getUser(username);
+                        Toast.makeText(MainMenuActivity.this,"user: "+desiredUser.getName()+", pass: "+desiredUser.getPassword(),Toast.LENGTH_SHORT).show();
+                        if(desiredUser==null) {
+                            Toast.makeText(MainMenuActivity.this,"User was not found",Toast.LENGTH_SHORT).show();
+                        }
+                        else if (!desiredUser.getPassword().equals(password)) {
+                            Toast.makeText(MainMenuActivity.this,"Password does not match",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            btnUserPage.setText(username);
+                            Toast.makeText(MainMenuActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                    }
+                }
+            });
             loginDialog.show();
         }
     }
@@ -108,9 +141,10 @@ public class MainMenuActivity extends AppCompatActivity {
     public void confirmLogin(View view) {
 //        Intent intent = new Intent(this, UserPageActivity.class);
 //        startActivity(intent);
-        etUsername=view.findViewById(R.id.Login_Dialog_EditText_Username);
-        Log.i("etUsername",etUsername.toString());
-        etPassword=view.findViewById(R.id.Login_Dialog_EditText_Password);
+
+
+        etUsername=findViewById(R.id.Login_Dialog_EditText_Username);
+        etPassword=findViewById(R.id.Login_Dialog_EditText_Password);
         btnLogin=findViewById(R.id.Login_Dialog_Button_Login);
         btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
 
@@ -126,7 +160,7 @@ public class MainMenuActivity extends AppCompatActivity {
             if (desiredUser.getPassword().equals(password)) {
                 Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
                 userPage.setText(username);
-                Toast.makeText(this, "Logged in succesfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

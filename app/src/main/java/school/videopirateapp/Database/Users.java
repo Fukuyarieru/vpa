@@ -36,6 +36,7 @@ public class Users {
                         savedUser=userSnapshot.getValue(User.class);
                     }
                     else {
+                        savedUser=null;
                         // throw user not exist?
                     }
                 }
