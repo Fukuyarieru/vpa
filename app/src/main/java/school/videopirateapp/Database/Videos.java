@@ -28,6 +28,9 @@ public class Videos {
     public static Video getVideo(String videoTitle) {
         Log.i("Videos: getVideo","Fetched Video: FINISH THIS MESSAGE");
         // this function does not refresh the videos, videos get refreshed only when Refresh() is called
+        if(!Videos.containsKey(videoTitle)) {
+            return null;
+        }
         return Videos.get(videoTitle);
     }
     @Deprecated
