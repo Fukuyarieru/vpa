@@ -1,5 +1,7 @@
 package school.videopirateapp.Activities;
 
+import static school.videopirateapp.Utilities.HashMapToArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +14,12 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
+import school.videopirateapp.DataStructures.Comment;
+import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
 import school.videopirateapp.ListViewComponents.PlaylistAdapter;
@@ -23,6 +30,9 @@ public class UserPageActivity extends AppCompatActivity {
 
 
     User user;
+    ArrayList<Video>videos;
+    ArrayList<Playlist>playlists;
+    ArrayList<Comment>comments;
 
     ImageView UserImage;
     TextView UserDescription;
@@ -53,12 +63,18 @@ public class UserPageActivity extends AppCompatActivity {
         Intent intent=getIntent();
         user=Database.getUser(intent.getStringExtra("user"));
 
+        videos=HashMapToArrayList(user.getUploads().getVideos());
+        playlists=user.getOwnedPlaylists();
+        comments=user.getComments();
+
         PageInit();
+
+        ShowVideo();
 
         btnVideos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ShowVideo();
             }
         });
     }
@@ -66,6 +82,10 @@ public class UserPageActivity extends AppCompatActivity {
         // assuming "user" cannot be null
         UserName.setText(user.getName());
         UserDescription.setText("NEEDS TO BE IMPLEMENETED, IN DATABASE");
+    }
+    public void ShowVideo() {
+        VideoAdapter videoAdapter=new VideoAdapter(listView.getContext(),R.layout.activity_video_listview_component,videos);
+        listView.setAdapter(videoAdapter);
     }
     public void Close(View view) {
         finish();

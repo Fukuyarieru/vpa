@@ -1,6 +1,7 @@
 package school.videopirateapp.Database;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -19,14 +20,21 @@ public class Users {
     }
 
 
-    public static User getSavedUser() {
-        return savedUser;
-    }
-
-    public static void setSavedUser(User savedUser) {
-        Users.savedUser = savedUser;
-    }
+//    public static User getSavedUser() {
+//        return savedUser;
+//    }
+//    public static void setSavedUser(User savedUser) {
+//        Users.savedUser = savedUser;
+//    }
     public static User getUser(String userName) {
+        // TODO, half ass solution for now
+        if(savedUser==null) {
+            savedUser=User.Default();
+        }
+        if(!userName.startsWith("@")) {
+            Log.e("Users: getUser","Given username does not start with @, returning null to fix");
+            return null;
+        }
         if(savedUser.getName()!=userName) {
             DatabaseReference userRef= Database.getRef("users").child(userName);
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {

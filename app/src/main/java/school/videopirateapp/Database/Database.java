@@ -99,9 +99,14 @@ public class Database {
     }
     public static User getUser(String userName) {
         Log.i("Database: getUser","Getting user from database: "+userName);
-        return Users.getUser(userName);
+        User user=Users.getUser(userName);
+        if(user==null) {
+            Log.w("Database: getUser","Fetched user does not exist");
+        }
+        return user;
     }
     public static Playlist getPlaylist(String playlistTitle) {
+        Log.i("Database: getPlaylist","Getting playlist from database");
         return Playlists.getPlaylist(playlistTitle);
     }
     public static HashMap<String,Video> getVideos() {

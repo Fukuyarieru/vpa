@@ -6,6 +6,7 @@ import static school.videopirateapp.Utilities.openVideoPage;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -163,7 +164,10 @@ public class MainMenuActivity extends AppCompatActivity {
                     if (username.isEmpty() || password.isEmpty()) {
                         // Display a message if the fields are empty
                         Toast.makeText(MainMenuActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
-                    } else {
+                    } else if(!username.startsWith("@")) {
+                        Toast.makeText(MainMenuActivity.this,"Usernames must start with @",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
                         User desiredUser = Database.getUser(username);
 //                        Toast.makeText(MainMenuActivity.this,"user: "+desiredUser.getName()+", pass: "+desiredUser.getPassword(),Toast.LENGTH_SHORT).show();
                         if(desiredUser==null) {
@@ -195,31 +199,32 @@ public class MainMenuActivity extends AppCompatActivity {
 //        startActivity(intent);
     }
     public void confirmLogin(View view) {
-//        Intent intent = new Intent(this, UserPageActivity.class);
-//        startActivity(intent);
-
-
-        etUsername=findViewById(R.id.Login_Dialog_EditText_Username);
-        etPassword=findViewById(R.id.Login_Dialog_EditText_Password);
-        btnLogin=findViewById(R.id.Login_Dialog_Button_Login);
-        btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
-
-//        // TODO, REMAKE THIS LATER
-        String username = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
+//        etUsername=findViewById(R.id.Login_Dialog_EditText_Username);
+//        etPassword=findViewById(R.id.Login_Dialog_EditText_Password);
+//        btnLogin=findViewById(R.id.Login_Dialog_Button_Login);
+//        btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
 //
-        if (username.isEmpty() || password.isEmpty()) {
-            // Display a message if the fields are empty
-            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
-        } else {
-            User desiredUser = Database.getUser(username);
-            if (desiredUser.getPassword().equals(password)) {
-                Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
-                userPage.setText(username);
-                Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
+////        // TODO, REMAKE THIS LATER
+//        String username = etUsername.getText().toString();
+//        String password = etPassword.getText().toString();
+////
+//        if (username.isEmpty() || password.isEmpty()) {
+//            // Display a message if the fields are empty
+//            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+//        } else if(!username.startsWith("@")) {
+//            Toast.makeText(this,"Usernames must start with @",Toast.LENGTH_SHORT).show();
+//        } else {
+//            User desiredUser = Database.getUser(username);
+//            if(desiredUser==null) {
+////                Log.w("User action")
+//                Toast.makeText(this,"User does not exist",Toast.LENGTH_SHORT).show();
+//            } else if (desiredUser.getPassword().equals(password)) {
+//                Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
+//                userPage.setText(username);
+//                Toast.makeText(MainMenuActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+//        }
     }
     public void openSignupActivity(View view){
         // TODO
