@@ -8,9 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +39,9 @@ public class MainMenuActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<Video>videos;
     VideoAdapter videosAdapter;
+    String chosenTitle;
+    String loggedUser;
+    Boolean loggedIn;
 
 
     // TODO, DOES NOT WORK, TODO, FIX
@@ -57,6 +60,8 @@ public class MainMenuActivity extends AppCompatActivity {
         btnUserPage =findViewById(R.id.MainMenu_Button_UserPage);
         listView=findViewById(R.id.MainMenu_ListView);
         btnSearchVideo=findViewById(R.id.MainMenu_Button_SearchVideo);
+
+        loggedIn=false;
 
         // A bug happens here, Videos.Refresh relies on getting a reference from the database, which is an async operation, so it gets delayed and completed ONLY AFTER the adapter is set, therefore, empty listview
         // The fix to that for now is just adding a manual refresh button
@@ -89,8 +94,51 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     public void UploadVideo(View view) {
         Dialog uploadDialog=new Dialog(MainMenuActivity.this);
-        uploadDialog.setContentView(R.layout.activity_main_menu_upload_video_dialog);
+        uploadDialog.setContentView(R.layout.activity_upload_video_dialog);
         uploadDialog.show();
+
+        Button btnChooseVideo=uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_ChooseVideo);
+        Button btnUploadVideo=uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_UploadVideo);
+        ImageView thumbnail=uploadDialog.findViewById(R.id.UploadVideo_Dialog_ImageView_Thumbnail);
+        EditText etVideoTitle=uploadDialog.findViewById(R.id.UploadVideo_Dialog_EditText_VideoTitle);
+
+        btnUploadVideo.setText("Upload");
+        btnChooseVideo.setText("Choose");
+
+        btnUploadVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO, check if etVideoTitle is empty?
+                chosenTitle=etVideoTitle.getText().toString();
+//                if chosenTitle=""  // add a function named Video.IsProperName(videoName) which returns true if good and false if bad;
+                if(Database.getVideo(chosenTitle)!=null) {
+                    Toast.makeText(MainMenuActivity.this, "Video with that title already exists", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (loggedIn) {
+                        Video newVideo=new Video(chosenTitle,loggedUser);
+                        Toast.makeText(MainMenuActivity.this, "Added video named: "+newVideo.getTitle(), Toast.LENGTH_SHORT).show();
+                        Database.addVideo(newVideo);
+                    } else {
+                        Toast.makeText(MainMenuActivity.this, "Not logged in", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+        btnChooseVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+//
+//        btnChooseVideo=findViewById(R.id.UploadVideo_Dialog_Button_ChooseVideo);
+//        btnUploadVideo=findViewById(R.id.UploadVideo_Dialog_Button_UploadVideo);
+//        thumbnail=findViewById(R.id.UploadVideo_Dialog_ImageView_Thumbnail);
+//        etVideoTitle=findViewById(R.id.UploadVideo_Dialog_EditText_VideoTitle);
+//
+//        btnUploadVideo.setText("Upload");
+//        btnChooseVideo.setText("Choose");
+//        Toast.makeText(this, "THIS IS WORKING", Toast.LENGTH_SHORT).show()
     }
     public void UserPage(View view) {
         if (!btnUserPage.getText().toString().equals("Login")) {
@@ -126,6 +174,8 @@ public class MainMenuActivity extends AppCompatActivity {
                         }
                         else {
                             btnUserPage.setText(username);
+                            loggedIn=true;
+                            loggedUser=username;
                             Toast.makeText(MainMenuActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                             loginDialog.dismiss();
                         }

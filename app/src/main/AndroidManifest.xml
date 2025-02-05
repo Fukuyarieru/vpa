@@ -22,7 +22,7 @@
             android:theme="@style/Theme.AppCompat.Dialog"
             android:exported="false" />
         <activity
-            android:name=".Dialogs.MainMenu_UploadVideo_Dialog_Activity"
+            android:name=".Dialogs.UploadVideo_Dialog_Activity"
             android:exported="false" />
         <activity
             android:name=".Dialogs.MainMenu_SearchVideo_Dialog_Activity"

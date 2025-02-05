@@ -95,6 +95,14 @@
                         android:layout_weight="1"
                         android:padding="5sp"
                         android:text="Upvote" />
+
+<!--                    VIDEO DETAILS IS SUPPOSED TO WORK SO THAT A VIEWER COULD WATCH STUFF LIKE WHO LIKED ETC. BUT THE OWNER COULD LIKE REMOVE THE VIDEO AND STUFF-EDIT-->
+                    <Button
+                        android:id="@+id/Video_Page_Button_VideoDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Button" />
                 </LinearLayout>
             </LinearLayout>
 
