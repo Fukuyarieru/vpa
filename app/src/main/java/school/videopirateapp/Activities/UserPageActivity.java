@@ -71,12 +71,13 @@ public class UserPageActivity extends AppCompatActivity {
 
         ShowVideo();
 
-        btnVideos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShowVideo();
-            }
-        });
+        // TODO, FIX/REPLACE
+//        btnVideos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ShowVideo();
+//            }
+//        });
     }
     public void PageInit() {
         // assuming "user" cannot be null
@@ -89,5 +90,8 @@ public class UserPageActivity extends AppCompatActivity {
     }
     public void Close(View view) {
         finish();
+    }
+    public void ListViewVideos(View view) {
+        ShowVideo();
     }
 }

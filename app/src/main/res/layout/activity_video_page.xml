@@ -69,8 +69,15 @@
                     android:layout_height="wrap_content"
                     android:padding="5sp"
                     android:gravity="top"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:text="VideoTitle" />
+
+                <Button
+                    android:id="@+id/Video_Page_Button_VideoDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="Details" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -97,12 +104,6 @@
                         android:text="Upvote" />
 
 <!--                    VIDEO DETAILS IS SUPPOSED TO WORK SO THAT A VIEWER COULD WATCH STUFF LIKE WHO LIKED ETC. BUT THE OWNER COULD LIKE REMOVE THE VIDEO AND STUFF-EDIT-->
-                    <Button
-                        android:id="@+id/Video_Page_Button_VideoDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Details" />
                 </LinearLayout>
             </LinearLayout>
 

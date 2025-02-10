@@ -15,12 +15,15 @@
         android:theme="@style/Theme.Videopirateapp"
         tools:targetApi="31">
         <activity
+            android:name=".ListViewComponents.Playlist_ListView_Component"
+            android:exported="false" />
+        <activity
             android:name=".Activities.SignupActivity"
             android:exported="false" />
         <activity
             android:name=".Dialogs.Login_Dialog_Activity"
-            android:theme="@style/Theme.AppCompat.Dialog"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".Dialogs.UploadVideo_Dialog_Activity"
             android:exported="false" />
@@ -35,7 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".Activities.UserPageActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ListViewComponents.Video_ListView_Component"
             android:exported="false" />

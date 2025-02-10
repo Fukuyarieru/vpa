@@ -7,6 +7,9 @@ public class User {
 
     private String name;
     private Playlist Uploads;
+
+    // TODO, comments should a hashmap which takes the comment context as a key to an array of comments
+    // TODO 2, P.S, maybe not
     private ArrayList<Comment> Comments;
     private ArrayList<Playlist> ownedPlaylists;
     private String Password;

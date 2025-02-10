@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Video {
 
     private String Title;
-    private String Uploader; // pointer
+    private String Uploader;
     private ArrayList<Comment>Comments;
     private Integer Views;
     private Integer Upvotes;

@@ -62,7 +62,8 @@ public class VideoPageActivity extends AppCompatActivity {
     }
     public void openUserPage(View view) {
         Intent intent=new Intent(this, UserPageActivity.class);
-
+        intent.putExtra("user",tvUploader.getText().toString());
         startActivity(intent);
     }
+
 }

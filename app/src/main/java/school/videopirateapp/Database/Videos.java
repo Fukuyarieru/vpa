@@ -26,8 +26,8 @@ public class Videos {
         return Videos;
     }
     public static Video getVideo(String videoTitle) {
-        Log.i("Videos: getVideo","Fetched Video: FINISH THIS MESSAGE");
         // this function does not refresh the videos, videos get refreshed only when Refresh() is called
+        Log.i("Videos: getVideo","Fetched Video: FINISH THIS MESSAGE");
         if(!Videos.containsKey(videoTitle)) {
             return null;
         }
@@ -45,23 +45,22 @@ public class Videos {
             @Override
             public void onDataChange(@NonNull DataSnapshot videosSnapshot) {
                 if(videosSnapshot.exists()) {
+                    HashMap<String,Video>VideoMap=new HashMap<>();
                     Log.i("Videos: Refresh","Found videos from database");
-//                    GenericTypeIndicator<HashMap<String, Video>> typeIndicator = new GenericTypeIndicator<HashMap<String, Video>>() {};
                     for (DataSnapshot videoSnapshot : videosSnapshot.getChildren()) {
                         Video video = videoSnapshot.getValue(Video.class);
                         if (video != null) {
-                            HashMap<String,Video>VideoMap=new HashMap<>();
                             VideoMap.put(videoSnapshot.getKey(), video);
-                            Videos=VideoMap;
                             Log.i("Videos: Refresh","Fetched video: " +video.getTitle());
                         } else {
                             Log.e("Videos: Refresh","Fetched video is null");
                         }
                     }
-
+                    Videos=VideoMap;
                 } else {
                     Log.e("Videos: Refresh","Videos do not exist?");
                 }
+                Log.i("Videos: Refresh,","Finished getting videos");
             }
 
             @Override
@@ -70,12 +69,4 @@ public class Videos {
             }
         });
     }
-
-//    public Videos(HashMap<String, Video> videos) {
-//        this.Videos = videos;
-//    }
-
-//    public Videos() {
-//        this(new HashMap<>());
-//    }
 }

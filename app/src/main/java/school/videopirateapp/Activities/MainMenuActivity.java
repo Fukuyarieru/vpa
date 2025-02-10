@@ -81,6 +81,7 @@ public class MainMenuActivity extends AppCompatActivity {
         videos=HashMapToArrayList(Database.getVideos());
         videosAdapter =new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
         listView.setAdapter(videosAdapter);
+        Log.i("MainMenuActivity","Updating videos listview");
     }
     // todo, later, add the button to the menu to manually refresh the videos list
 //    public void RefreshVideosButton(View view) {
