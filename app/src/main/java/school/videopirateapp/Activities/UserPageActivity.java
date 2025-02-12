@@ -5,16 +5,15 @@ import static school.videopirateapp.Utilities.HashMapToArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
@@ -31,7 +30,7 @@ public class UserPageActivity extends AppCompatActivity {
 
     User user;
     ArrayList<Video>videos;
-    ArrayList<Playlist>playlists;
+    HashMap<String,Playlist> playlists;
     ArrayList<Comment>comments;
 
     ImageView UserImage;
@@ -69,7 +68,7 @@ public class UserPageActivity extends AppCompatActivity {
 
         PageInit();
 
-        ShowVideo();
+        ShowVideos();
 
         // TODO, FIX/REPLACE
 //        btnVideos.setOnClickListener(new View.OnClickListener() {
@@ -84,14 +83,21 @@ public class UserPageActivity extends AppCompatActivity {
         UserName.setText(user.getName());
         UserDescription.setText("NEEDS TO BE IMPLEMENETED, IN DATABASE");
     }
-    public void ShowVideo() {
-        VideoAdapter videoAdapter=new VideoAdapter(listView.getContext(),R.layout.activity_video_listview_component,videos);
+    public void ShowVideos() {
+        VideoAdapter videoAdapter=new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
         listView.setAdapter(videoAdapter);
+    }
+    public void ShowPlaylists() {
+        PlaylistAdapter playlistAdapter=new PlaylistAdapter(this,R.layout.activity_playlist_list_view_component,HashMapToArrayList(playlists));
+        listView.setAdapter(playlistAdapter);
+    }
+    public void ShowComments() {
+        CommentAdapter commentAdapter=new CommentAdapter(this,R.layout.activity_comment_listview_component,comments);
     }
     public void Close(View view) {
         finish();
     }
     public void ListViewVideos(View view) {
-        ShowVideo();
+        ShowVideos();
     }
 }

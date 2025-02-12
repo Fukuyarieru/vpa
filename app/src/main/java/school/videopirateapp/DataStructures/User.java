@@ -2,6 +2,7 @@ package school.videopirateapp.DataStructures;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
 
@@ -11,7 +12,8 @@ public class User {
     // TODO, comments should a hashmap which takes the comment context as a key to an array of comments
     // TODO 2, P.S, maybe not
     private ArrayList<Comment> Comments;
-    private ArrayList<Playlist> ownedPlaylists;
+//    private ArrayList<Playlist> ownedPlaylists;
+    private HashMap<String,Playlist> ownedPlaylists;
     private String Password;
     private byte[] image;
 
@@ -40,8 +42,12 @@ public class User {
     }
     public void addPlaylist(Playlist newPlaylist) {
         newPlaylist.setOwner(this.name);
-        if(!this.ownedPlaylists.contains(newPlaylist)) {
-            this.ownedPlaylists.add(newPlaylist);
+//        if(!this.ownedPlaylists.contains(newPlaylist)) {
+//            this.ownedPlaylists.add(newPlaylist);
+//        }
+        String newPlaylistTitle=newPlaylist.getTitle();
+        if(this.ownedPlaylists.containsKey(newPlaylistTitle)) {
+            this.ownedPlaylists.put(newPlaylistTitle,newPlaylist);
         }
     }
     public Playlist getUploads() {
@@ -59,11 +65,11 @@ public class User {
         Comments = comments;
     }
 
-    public ArrayList<Playlist> getOwnedPlaylists() {
+    public HashMap<String, Playlist> getOwnedPlaylists() {
         return ownedPlaylists;
     }
 
-    public void setOwnedPlaylists(ArrayList<Playlist> ownedPlaylists) {
+    public void setOwnedPlaylists(HashMap<String,Playlist>ownedPlaylists) {
         this.ownedPlaylists = ownedPlaylists;
     }
 
@@ -75,14 +81,23 @@ public class User {
         this.image = image;
     }
     public void addComment(Comment newComment) {
-        for(int i=0;i<this.Comments.size();i++) {
-            Comment comment=this.Comments.get(i);
-            if(comment.getComment()!=newComment.getComment()) {
-                if(comment.getContext()!=newComment.getContext()) {
-                    this.Comments.add(newComment);
-                }
+        Boolean containsComment=false;
+        for(Comment comment : this.Comments) {
+            if(comment==newComment) {
+                containsComment=true;
             }
         }
+        if(!containsComment) {
+            this.Comments.add(newComment);
+        }
+//        for(int i=0;i<this.Comments.size();i++) {
+//            Comment comment=this.Comments.get(i);
+//            if(comment.getComment()!=newComment.getComment()) {
+//                if(comment.getContext()!=newComment.getContext()) {
+//                    this.Comments.add(newComment);
+//                }
+//            }
+//        }
 //        if(!this.Comments.contains()) {
 //            this.Comments.add(newComment);
 //        }
@@ -120,9 +135,9 @@ public class User {
         this.Uploads = new Playlist("Uploads",name);  // If you want to initialize Playlist when a User is created
         this.Comments = new ArrayList<Comment>();
         this.Comments.add(Comment.Default());
-        this.ownedPlaylists=new ArrayList<Playlist>();
-        this.ownedPlaylists.add(Playlist.Default());
-//        ownedPlaylists.add(Playlist.Default());
+        this.ownedPlaylists=new HashMap<String,Playlist>();
+        // the User which we create is not initialized yet, so we cannot use some custom function we made and instead will have to put defaul playlist manually
+        this.ownedPlaylists.put(Playlist.Default().getTitle(), Playlist.Default());
         this.image=null; // TODO , do this later
         this.Password=password;
     }
