@@ -13,6 +13,14 @@ public class Comment{
     private String Author;
     private String Context;
     private String Date;
+    private byte[] Image;
+    public byte[] getImage() {
+        return Image;
+    }
+
+    public void setImage(byte[] image) {
+        Image = image;
+    }
 
     public String getDate() {
         return Date;
@@ -52,6 +60,7 @@ public class Comment{
         this.Author=author;
         this.Context=context;
         this.Date=TimeNow();
+        this.Image=new byte[]{};
     }
     public Comment(String comment, String author) {
         this(comment,author,"unset");

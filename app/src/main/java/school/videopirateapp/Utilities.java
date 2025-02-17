@@ -4,6 +4,8 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -36,5 +38,8 @@ public class Utilities {
         Intent intent=new Intent(currentActivityThis, VideoPageActivity.class);
         intent.putExtra("videoTitle",videoTitle);
         currentActivityThis.startActivity(intent);
+    }
+    public static Bitmap BytyArrayToBitmap(byte[]byteArray) {
+        return BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
     }
 }

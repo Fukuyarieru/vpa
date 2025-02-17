@@ -13,6 +13,14 @@ public class Video {
     private Integer Upvotes;
     private Integer Downvotes;
     private String UploadDate;
+    private byte[] Thumbnail;
+
+    public byte[] getThumbnail() {
+        return Thumbnail;
+    }
+    public void setThumbnail(byte[] thumbnail) {
+        Thumbnail = thumbnail;
+    }
     //TODO: VideoView videodata; (add this to constructor later)
 
     public String getUploadDate() {

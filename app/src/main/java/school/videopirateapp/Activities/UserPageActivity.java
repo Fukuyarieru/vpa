@@ -30,7 +30,8 @@ public class UserPageActivity extends AppCompatActivity {
 
     User user;
     ArrayList<Video>videos;
-    HashMap<String,Playlist> playlists;
+    ArrayList<Playlist>playlists;
+
     ArrayList<Comment>comments;
 
     ImageView UserImage;
@@ -63,20 +64,12 @@ public class UserPageActivity extends AppCompatActivity {
         user=Database.getUser(intent.getStringExtra("user"));
 
         videos=HashMapToArrayList(user.getUploads().getVideos());
-        playlists=user.getOwnedPlaylists();
+        playlists=HashMapToArrayList(user.getOwnedPlaylists());
         comments=user.getComments();
 
         PageInit();
 
         ShowVideos();
-
-        // TODO, FIX/REPLACE
-//        btnVideos.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ShowVideo();
-//            }
-//        });
     }
     public void PageInit() {
         // assuming "user" cannot be null
@@ -88,7 +81,7 @@ public class UserPageActivity extends AppCompatActivity {
         listView.setAdapter(videoAdapter);
     }
     public void ShowPlaylists() {
-        PlaylistAdapter playlistAdapter=new PlaylistAdapter(this,R.layout.activity_playlist_list_view_component,HashMapToArrayList(playlists));
+        PlaylistAdapter playlistAdapter=new PlaylistAdapter(this,R.layout.activity_playlist_list_view_component,playlists);
         listView.setAdapter(playlistAdapter);
     }
     public void ShowComments() {
@@ -99,5 +92,8 @@ public class UserPageActivity extends AppCompatActivity {
     }
     public void ListViewVideos(View view) {
         ShowVideos();
+    }
+    public void ListViewPlaylists(View view) {
+        ShowPlaylists();
     }
 }

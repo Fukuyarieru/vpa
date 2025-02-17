@@ -1,6 +1,7 @@
 package school.videopirateapp.ListViewComponents;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.R;
+import school.videopirateapp.Utilities;
 
 public class VideoAdapter extends ArrayAdapter<Video> {
 
@@ -51,7 +53,8 @@ public class VideoAdapter extends ArrayAdapter<Video> {
         tvVideoTitle.setText(video.getTitle().toString());
         tvUpvotes.setText("Upvotes: " +video.getUpvotes().toString());
         tvDownvotes.setText("Downvotes: " +video.getDownvotes().toString());
-//        uploaderImage.setImageDrawable(video.get);
+        Bitmap image= Utilities.BytyArrayToBitmap(video.getThumbnail());
+        uploaderImage.setImageBitmap(image);
         return view;
     }
 

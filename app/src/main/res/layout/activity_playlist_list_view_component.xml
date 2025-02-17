@@ -12,46 +12,76 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="openPlaylist"
         android:orientation="horizontal">
+
+<!--        FIX LAYOUT BELOWS' WEIGHT -->
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/Playlist_ListView_Component_ImageView_Image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:adjustViewBounds="true"
+                android:src="@drawable/default_video_image" />
+
+            <TextView
+                android:id="@+id/Playlist_ListView_Component_TextView_Title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:text="PlaylistTitle" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/Playlist_ListView_Component_TextView_Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Description" />
+
+            <TextView
+                android:id="@+id/Playlist_ListView_Component_TextView_Date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="Date" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/Playlist_ListView_Component_TextView_VideoCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="VideoCount" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/Playlist_ListView_Component_TextView_ViewCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="AllViews" />
+                android:text="ViewCount" />
+
+        </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="PlaylistTitle" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="PlaylistDescription" />
-        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
