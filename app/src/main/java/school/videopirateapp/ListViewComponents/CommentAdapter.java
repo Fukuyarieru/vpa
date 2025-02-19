@@ -33,10 +33,12 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         LayoutInflater layoutInflater=(LayoutInflater) this.context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 
         View view = layoutInflater.inflate(this.resource,null);
         Comment comment= comments.get(position);
+
         TextView tvUserName=view.findViewById(R.id.Comment_ListView_Component_TextView_UserName);
         TextView tvComment=view.findViewById(R.id.Comment_ListView_Component_TextView_Comment);
         ImageView userImage=view.findViewById(R.id.Comment_ListView_Component_ImageView_UserImage);
@@ -44,7 +46,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
         tvComment.setText(comment.getComment());
         tvUserName.setText(comment.getAuthor());
-        Bitmap a= Utilities.BytyArrayToBitmap(comment.getImage()); // why cant i import utilities here properly? i could fix using this var later
+        Bitmap a= Utilities.BytyArrayToBitmap(comment.getAuthorImage()); // why cant i import utilities here properly? i could fix using this var later
         userImage.setImageBitmap(a);
         tvDate.setText(comment.getDate());
 

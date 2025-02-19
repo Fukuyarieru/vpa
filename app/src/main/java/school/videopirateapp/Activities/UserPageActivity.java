@@ -1,19 +1,21 @@
 package school.videopirateapp.Activities;
 
 import static school.videopirateapp.Utilities.HashMapToArrayList;
+import static school.videopirateapp.Utilities.MapToArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
@@ -31,7 +33,6 @@ public class UserPageActivity extends AppCompatActivity {
     User user;
     ArrayList<Video>videos;
     ArrayList<Playlist>playlists;
-
     ArrayList<Comment>comments;
 
     ImageView UserImage;
@@ -63,8 +64,11 @@ public class UserPageActivity extends AppCompatActivity {
         Intent intent=getIntent();
         user=Database.getUser(intent.getStringExtra("user"));
 
-        videos=HashMapToArrayList(user.getUploads().getVideos());
-        playlists=HashMapToArrayList(user.getOwnedPlaylists());
+        videos=MapToArrayList(user.getUploads().getVideos());
+        for(Video video: videos) {
+            Log.i("TEST", video.toString());
+        }
+        playlists=MapToArrayList(user.getOwnedPlaylists());
         comments=user.getComments();
 
         PageInit();
@@ -77,15 +81,26 @@ public class UserPageActivity extends AppCompatActivity {
         UserDescription.setText("NEEDS TO BE IMPLEMENETED, IN DATABASE");
     }
     public void ShowVideos() {
+        for(Video video: videos) {
+            Log.i("TEST", video.toString());
+        }
+        Toast.makeText(this, "There are " + videos.size() +" videos", Toast.LENGTH_SHORT).show();
+
         VideoAdapter videoAdapter=new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
         listView.setAdapter(videoAdapter);
     }
     public void ShowPlaylists() {
+        Toast.makeText(this, "There are " + playlists.size() +" playlists", Toast.LENGTH_SHORT).show();
         PlaylistAdapter playlistAdapter=new PlaylistAdapter(this,R.layout.activity_playlist_list_view_component,playlists);
         listView.setAdapter(playlistAdapter);
     }
     public void ShowComments() {
+        Toast.makeText(this, "There are " + comments.size() +" comments", Toast.LENGTH_SHORT).show();
         CommentAdapter commentAdapter=new CommentAdapter(this,R.layout.activity_comment_listview_component,comments);
+        listView.setAdapter(commentAdapter);
+    }
+    public void openPlaylist(View view) {
+
     }
     public void Close(View view) {
         finish();
@@ -96,4 +111,5 @@ public class UserPageActivity extends AppCompatActivity {
     public void ListViewPlaylists(View view) {
         ShowPlaylists();
     }
+    public void ListViewComments(View view) { ShowComments();}
 }

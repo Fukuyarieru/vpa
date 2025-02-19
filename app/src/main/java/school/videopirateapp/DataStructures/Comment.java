@@ -2,8 +2,7 @@ package school.videopirateapp.DataStructures;
 
 import static school.videopirateapp.Utilities.TimeNow;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 
 public class Comment{
 
@@ -13,13 +12,13 @@ public class Comment{
     private String Author;
     private String Context;
     private String Date;
-    private byte[] Image;
-    public byte[] getImage() {
-        return Image;
+    private ArrayList<Byte> AuthorImage;
+    public ArrayList<Byte> getAuthorImage() {
+        return AuthorImage;
     }
 
-    public void setImage(byte[] image) {
-        Image = image;
+    public void setAuthorImage(ArrayList<Byte> authorImage) {
+        AuthorImage = authorImage;
     }
 
     public String getDate() {
@@ -60,7 +59,7 @@ public class Comment{
         this.Author=author;
         this.Context=context;
         this.Date=TimeNow();
-        this.Image=new byte[]{};
+        this.AuthorImage =new ArrayList<>();
     }
     public Comment(String comment, String author) {
         this(comment,author,"unset");

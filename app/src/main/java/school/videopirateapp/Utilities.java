@@ -1,7 +1,5 @@
 package school.videopirateapp;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,11 +12,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 import school.videopirateapp.Activities.VideoPageActivity;
 
 public class Utilities {
     public static<T> ArrayList<T> HashMapToArrayList(@NonNull HashMap<String,T> hashMap) {
+        Log.i("Utilities","Converting HashMap to ArrrayList");
+        // this function does not do any sorting
+        ArrayList<T> arrayList = new ArrayList<>();
+        for (T value : hashMap.values()) {
+            arrayList.add(value);
+        }
+        return arrayList;
+    }
+    public static<T> ArrayList<T> MapToArrayList(@NonNull Map<String,T> hashMap) {
         Log.i("Utilities","Converting HashMap to ArrrayList");
         // this function does not do any sorting
         ArrayList<T> arrayList = new ArrayList<>();
@@ -39,7 +47,18 @@ public class Utilities {
         intent.putExtra("videoTitle",videoTitle);
         currentActivityThis.startActivity(intent);
     }
-    public static Bitmap BytyArrayToBitmap(byte[]byteArray) {
-        return BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
+    public static Bitmap BytyArrayToBitmap(ArrayList<Byte> byteArray) {
+        // TODO, done
+        if (byteArray == null || byteArray.isEmpty()) {
+            byte[]arr=new byte[]{1};
+            return BitmapFactory.decodeByteArray(arr,0,arr.length);
+        }
+
+        byte[] bytes = new byte[byteArray.size()];
+        for (int i = 0; i < byteArray.size(); i++) {
+            bytes[i] = byteArray.get(i);
+        }
+
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }

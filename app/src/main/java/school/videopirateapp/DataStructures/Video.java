@@ -13,12 +13,12 @@ public class Video {
     private Integer Upvotes;
     private Integer Downvotes;
     private String UploadDate;
-    private byte[] Thumbnail;
+    private ArrayList<Byte> Thumbnail;
 
-    public byte[] getThumbnail() {
+    public ArrayList<Byte> getThumbnail() {
         return Thumbnail;
     }
-    public void setThumbnail(byte[] thumbnail) {
+    public void setThumbnail(ArrayList<Byte> thumbnail) {
         Thumbnail = thumbnail;
     }
     //TODO: VideoView videodata; (add this to constructor later)
@@ -104,5 +104,9 @@ public class Video {
 
     public String Context() {
         return "videos/"+this.Title+"/comments";
+    }
+    @Override
+    public String toString(){
+        return "Video\nTitle: "+this.getTitle()+"\nUploader: "+this.getUploader();
     }
 }

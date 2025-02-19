@@ -3,6 +3,7 @@ package school.videopirateapp.DataStructures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class User {
 
@@ -15,7 +16,7 @@ public class User {
 //    private ArrayList<Playlist> ownedPlaylists;
     private HashMap<String,Playlist> ownedPlaylists;
     private String Password;
-    private byte[] image;
+    private ArrayList<Byte> image;
 
 // Integer totalViews =====> TODO
     // Integer totalUpvotes ===> TODO
@@ -65,7 +66,7 @@ public class User {
         Comments = comments;
     }
 
-    public HashMap<String, Playlist> getOwnedPlaylists() {
+    public Map<String, Playlist> getOwnedPlaylists() {
         return ownedPlaylists;
     }
 
@@ -73,11 +74,11 @@ public class User {
         this.ownedPlaylists = ownedPlaylists;
     }
 
-    public byte[] getImage() {
+    public ArrayList<Byte> getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(ArrayList<Byte> image) {
         this.image = image;
     }
     public void addComment(Comment newComment) {

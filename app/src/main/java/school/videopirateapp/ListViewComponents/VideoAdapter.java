@@ -39,10 +39,12 @@ public class VideoAdapter extends ArrayAdapter<Video> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         LayoutInflater layoutInflater=(LayoutInflater) this.context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 
         View view = layoutInflater.inflate(this.resource,null);
         Video video=videos.get(position);
+
         TextView tvUploaderUserName=view.findViewById(R.id.Video_ListView_Component_TextView_UploaderUsername);
         TextView tvVideoTitle=view.findViewById(R.id.Video_ListView_Component_TextView_VideoTitle);
         TextView tvUpvotes=view.findViewById(R.id.Video_ListView_Component_TextView_Upvotes);
@@ -53,8 +55,8 @@ public class VideoAdapter extends ArrayAdapter<Video> {
         tvVideoTitle.setText(video.getTitle().toString());
         tvUpvotes.setText("Upvotes: " +video.getUpvotes().toString());
         tvDownvotes.setText("Downvotes: " +video.getDownvotes().toString());
-        Bitmap image= Utilities.BytyArrayToBitmap(video.getThumbnail());
-        uploaderImage.setImageBitmap(image);
+//        Bitmap image= Utilities.BytyArrayToBitmap(video.getThumbnail()); // TODO, BROKEN FOR NOW
+//        uploaderImage.setImageBitmap(image);
         return view;
     }
 

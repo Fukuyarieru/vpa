@@ -38,29 +38,25 @@ public class MainActivity extends AppCompatActivity {
 //        Log.v() - verbose
 //        Log.wtf() - wtf, never supposed to happen
 
+        // TODO, i noticed an inconsistency, adding a video to a playlist adds it locally to a user but not the main playlists
+
         // TODO, make all return back to page return client to the MainMenu
 
         // TODO, I can use hashmaps for User and Video and Playlist
+        // TODO 2, DO NOT USE HASHMAPS AS THEY ARE BROKEN, USE MAPS
+
+        // TODO, All Database database needs to ONLY be stored in its main directory, and "references" (unique key which is name/title) should be used to fetch locally
 
         // IDEAS
         // point system
         // watch history
         // add activity transition animation
 
+        // TODO, all images are supposed to be saved as Strings as they will be represented by a byte array "afasnfsaova", so it better be a string in database
+
         // TODO, learn about fragments, they will be useful
 
         // TODO, bug in adding comments, can create duplicate comments, not supposed to
-
-//        User myUser=new User("fukuya");
-//        Video myVideo=new Video("my video",myUser.getName());
-//        Comment myComment=new Comment("fukuya","test");
-//        Database.addUser(myUser);
-//        Database.addVideo(myVideo);
-//        Database.addComment(myComment,myVideo);
-
-        // TODO, enable later
-//        testDatabase();
-
 
         Intent intent=new Intent(this, MainMenuActivity.class);
         startActivity(intent);
@@ -88,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
+                    Log.w("MainActivity: initializeDatabase","TRYING TO CREATE VIDEOS");
+
                     Database.addVideo(Video.Default());
                 }
             }
@@ -102,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
+                    Log.w("MainActivity: initializeDatabase","TRYING TO CREATE PLAYLISTS");
                     Database.addPlaylist(Playlist.Default());
                 }
             }
@@ -116,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
+                    Log.w("MainActivity: initializeDatabase","TRYING TO CREATE USERS");
+
                     Database.addUser(User.Default());
                 }
             }
