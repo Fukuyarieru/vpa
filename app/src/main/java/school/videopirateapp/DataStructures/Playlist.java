@@ -4,12 +4,13 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Playlist {
+    private static final Playlist defaultPlaylist=new Playlist();
+
 
     // TODO, will probably need to change this to <String,String> as i want to store the names, and fetch them from database locally to the related function
-    private Map<String, Video> videos;
+    private ArrayList<String> videos;
     private String title; // Playlist names will start with a '#', just because I wanted
     private String owner;
     private String playlistDescription;
@@ -23,13 +24,12 @@ public class Playlist {
     public void setPicture(ArrayList<Byte> picture) {
         this.picture = picture;
     }
-    private static final Playlist defaultPlaylist=new Playlist();
 
-    public Map<String, Video> getVideos() {
+    public ArrayList<String> getVideos() {
         return videos;
     }
 
-    public void setVideos(HashMap<String, Video> videos) {
+    public void setVideos(ArrayList<String> videos) {
         this.videos = videos;
     }
 
@@ -57,7 +57,8 @@ public class Playlist {
         this.playlistDescription = playlistDescription;
     }
     public void addVideo(Video newVideo) {
-        this.videos.put(newVideo.getTitle(),newVideo);
+        String videoTitle= newVideo.getTitle();
+        this.videos.add(videoTitle); // todo, this looks ugly, check laters
     }
 
 
@@ -78,7 +79,7 @@ public class Playlist {
             Log.w("Playlist Contructor","Playlist Owner(name) did not start with @, automatically fixed");
         }
         this.title =playlistTitle;
-        this.videos =new HashMap<>();
+        this.videos =new ArrayList<>();
         this.playlistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
         this.owner=owner;
         Log.i("Playlist: Contructor", "Created Playlist with:\nTitle: "+title+"\nDescription: "+playlistDescription+"\nOwner: "+owner);

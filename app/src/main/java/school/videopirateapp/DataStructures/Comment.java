@@ -13,6 +13,9 @@ public class Comment{
     private String Context;
     private String Date;
     private ArrayList<Byte> AuthorImage;
+    // private ArrayList<Comment> Replies; --> TODO
+
+
     public ArrayList<Byte> getAuthorImage() {
         return AuthorImage;
     }
@@ -29,7 +32,6 @@ public class Comment{
         Date = date;
     }
 
-    // private ArrayList<Comment> Replies;
     public String getContext() {
         return Context;
     }
@@ -66,7 +68,8 @@ public class Comment{
     }
 
     public Comment() {
-        this("Lorem ipsum dolor sit amet, consectetur adipiscing elit","@Default","videos/defaultVideo/comments"); // User.Default().getName()
+        this("Lorem ipsum dolor sit amet, consectetur adipiscing elit","@Default","videos-defaultVideo-comments"); // User.Default().getName()
+        //"videos/defaultVideo/comments"
 
     }
     public static Comment Default() {

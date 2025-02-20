@@ -38,7 +38,7 @@ public class MainMenuActivity extends AppCompatActivity {
     EditText etUsername;
     EditText etPassword;
     ListView listView;
-    ArrayList<Video>videos;
+    ArrayList<Video> videos;
     VideoAdapter videosAdapter;
     String chosenTitle;
     String loggedUser;

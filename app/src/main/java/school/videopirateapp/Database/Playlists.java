@@ -10,7 +10,12 @@ import com.google.firebase.database.ValueEventListener;
 import school.videopirateapp.DataStructures.Playlist;
 
 public class Playlists {
+
+    // TODO, BIG, CONSIDER MAKING ALL THESE DATABASE HELPERS TO HANDLE THE FIREBASE TREES TOO
     private static Playlist savedPlaylist=Playlist.Default();
+    private Playlists() {
+        throw new UnsupportedOperationException("This class is not instantiable.");
+    }
 
     public static Playlist getSavedPlaylist() {
         return savedPlaylist;

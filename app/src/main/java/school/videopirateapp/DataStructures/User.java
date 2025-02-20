@@ -9,21 +9,17 @@ public class User {
 
     private String name;
     private Playlist Uploads;
-
-    // TODO, comments should a hashmap which takes the comment context as a key to an array of comments
-    // TODO 2, P.S, maybe not
-    private ArrayList<Comment> Comments;
-//    private ArrayList<Playlist> ownedPlaylists;
-    private HashMap<String,Playlist> ownedPlaylists;
+    private Map<String, ArrayList<Comment>> Comments;
+    private ArrayList<String> ownedPlaylists;
     private String Password;
-    private ArrayList<Byte> image;
+    private ArrayList<Byte> image; //TODO, change this type later
 
-// Integer totalViews =====> TODO
+    // Integer totalViews =====> TODO
     // Integer totalUpvotes ===> TODO
     // Integer totalDownvotes => TODO
     // Integer watched ========> TODO
 
-    private static User defaultUser=new User();
+    private static final User defaultUser=new User();
 
 
     public String getPassword() {
@@ -43,12 +39,9 @@ public class User {
     }
     public void addPlaylist(Playlist newPlaylist) {
         newPlaylist.setOwner(this.name);
-//        if(!this.ownedPlaylists.contains(newPlaylist)) {
-//            this.ownedPlaylists.add(newPlaylist);
-//        }
         String newPlaylistTitle=newPlaylist.getTitle();
-        if(this.ownedPlaylists.containsKey(newPlaylistTitle)) {
-            this.ownedPlaylists.put(newPlaylistTitle,newPlaylist);
+        if(!this.ownedPlaylists.contains(newPlaylistTitle)) {
+            this.ownedPlaylists.add(newPlaylistTitle);
         }
     }
     public Playlist getUploads() {
@@ -58,19 +51,19 @@ public class User {
     public void setUploads(Playlist uploads) {
         this.Uploads = uploads;
     }
-    public ArrayList<Comment> getComments() {
+    public Map<String, ArrayList<Comment>> getComments() {
         return Comments;
     }
 
-    public void setComments(ArrayList<Comment> comments) {
+    public void setComments(Map<String, ArrayList<Comment>> comments) {
         Comments = comments;
     }
 
-    public Map<String, Playlist> getOwnedPlaylists() {
+    public ArrayList<String> getOwnedPlaylists() {
         return ownedPlaylists;
     }
 
-    public void setOwnedPlaylists(HashMap<String,Playlist>ownedPlaylists) {
+    public void setOwnedPlaylists(ArrayList<String> ownedPlaylists) {
         this.ownedPlaylists = ownedPlaylists;
     }
 
@@ -82,38 +75,16 @@ public class User {
         this.image = image;
     }
     public void addComment(Comment newComment) {
-        Boolean containsComment=false;
-        for(Comment comment : this.Comments) {
-            if(comment==newComment) {
-                containsComment=true;
-            }
+        // TODO, CHECK THIS CODE LATER AS I DID NOT
+        if(!this.Comments.containsKey(newComment.getContext())) {
+            ArrayList<Comment> arrComments=new ArrayList<>();
+            arrComments.add(newComment);
+            this.Comments.put(newComment.getContext(),arrComments);
+        } else {
+            ArrayList<Comment>arrComments=this.Comments.get(newComment.getContext());
+            arrComments.add(newComment);
+            this.Comments.put(newComment.getContext(),arrComments);
         }
-        if(!containsComment) {
-            this.Comments.add(newComment);
-        }
-//        for(int i=0;i<this.Comments.size();i++) {
-//            Comment comment=this.Comments.get(i);
-//            if(comment.getComment()!=newComment.getComment()) {
-//                if(comment.getContext()!=newComment.getContext()) {
-//                    this.Comments.add(newComment);
-//                }
-//            }
-//        }
-//        if(!this.Comments.contains()) {
-//            this.Comments.add(newComment);
-//        }
-//        if(!this.Comments.contains(newComment)) {
-//            // half ass solution
-//            boolean notContain=true;
-//            for(int i=0;i<this.Comments.size();i++) {
-//                if(this.Comments.get(i).getComment()==newComment.getComment()) {
-//                    notContain=false;
-//                }
-//            }
-//            if(notContain) {
-//                this.Comments.add(newComment);
-//            }
-//        }
     }
     public void addVideo(Video newVideo) {
         this.Uploads.addVideo(newVideo);
@@ -134,12 +105,14 @@ public class User {
         }
         this.name = name;
         this.Uploads = new Playlist("Uploads",name);  // If you want to initialize Playlist when a User is created
-        this.Comments = new ArrayList<Comment>();
-        this.Comments.add(Comment.Default());
-        this.ownedPlaylists=new HashMap<String,Playlist>();
+        this.Comments = new HashMap<String,ArrayList<Comment>>();
+        ArrayList<Comment>arrComments=new ArrayList<>();
+        arrComments.add(Comment.Default());
+        this.Comments.put(Comment.Default().getContext(),arrComments);
+        this.ownedPlaylists=new ArrayList<>();
         // the User which we create is not initialized yet, so we cannot use some custom function we made and instead will have to put defaul playlist manually
-        this.ownedPlaylists.put(Playlist.Default().getTitle(), Playlist.Default());
-        this.image=null; // TODO , do this later
+        this.getOwnedPlaylists().add(Playlist.Default().getTitle());
+        this.image=new ArrayList<>(); // TODO , do this later
         this.Password=password;
     }
     public static User Default() {

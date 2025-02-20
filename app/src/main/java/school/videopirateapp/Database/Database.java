@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import school.videopirateapp.DataStructures.Comment;
@@ -117,6 +118,13 @@ public class Database {
         Log.i("Database: getVideo","Getting video from database:" + videoTitle);
         return Videos.getVideo(videoTitle);
     }
+    public static ArrayList<Video> getVideosArray(ArrayList<String>videoTitles) {
+        ArrayList<Video>videosArr=new ArrayList<>();
+        for(String vidTit : videoTitles) {
+            videosArr.add(Database.getVideo(vidTit));
+        }
+        return videosArr;
+    }
     public static void addVideo(Video newVideo) { // video already got a user ini it
         // change the unique key later to be some ID or something?
         DatabaseReference videoRef= database.getReference("videos").child(newVideo.getTitle()); // is the .child(newVideo) behavior alright?
@@ -160,7 +168,7 @@ public class Database {
     }
     public static void addPlaylist(Playlist newPlaylist) {
 
-        // TODO, redo the logic here, playlists shouldnt be a standalone object, as they need an owner, therefore this functions need to have someting that the playlist will be connected to, P.S user most likely
+        // TODO, redo the logic here, playlists shouldnt be a standalone object, as they need an owner, therefore this functions need to have something that the playlist will be connected to, P.S user most likely
         // TODO 2, or not
 
         DatabaseReference playlistRef=database.getReference("playlists").child(newPlaylist.getTitle());
@@ -199,6 +207,7 @@ public class Database {
     }
     public static void addVideoToPlaylist(Video video, Playlist targetPlaylist) {
         // TODO
+        // TODO 2, I REALLY SHOULD START USING THIS CAUSE THERE IS A BUG IN WHICH THE PLAYLISTS TREE DOES NOT UPDATE CORRECTLY
     }
     @Deprecated
     public static<T> T GetObject(String Path) {

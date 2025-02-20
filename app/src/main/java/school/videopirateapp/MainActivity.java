@@ -3,7 +3,6 @@ package school.videopirateapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +13,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import school.videopirateapp.Activities.MainMenuActivity;
-import school.videopirateapp.Activities.VideoPageActivity;
-import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;

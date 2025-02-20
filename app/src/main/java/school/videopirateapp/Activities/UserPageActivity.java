@@ -1,6 +1,5 @@
 package school.videopirateapp.Activities;
 
-import static school.videopirateapp.Utilities.HashMapToArrayList;
 import static school.videopirateapp.Utilities.MapToArrayList;
 
 import android.content.Intent;
@@ -31,9 +30,9 @@ public class UserPageActivity extends AppCompatActivity {
 
 
     User user;
-    ArrayList<Video>videos;
-    ArrayList<Playlist>playlists;
-    ArrayList<Comment>comments;
+    ArrayList<Video> videos;
+    ArrayList<Playlist> playlists;
+    ArrayList<Comment> comments;
 
     ImageView UserImage;
     TextView UserDescription;
@@ -64,12 +63,26 @@ public class UserPageActivity extends AppCompatActivity {
         Intent intent=getIntent();
         user=Database.getUser(intent.getStringExtra("user"));
 
-        videos=MapToArrayList(user.getUploads().getVideos());
+        videos=Database.getVideosArray(user.getUploads().getVideos());
         for(Video video: videos) {
             Log.i("TEST", video.toString());
         }
-        playlists=MapToArrayList(user.getOwnedPlaylists());
-        comments=user.getComments();
+
+        playlists=new ArrayList<>();
+        ArrayList<String> arrPlaylistsStr=user.getOwnedPlaylists();
+        for(String str: arrPlaylistsStr) {
+            playlists.add(Database.getPlaylist(str));
+        }
+
+        comments=new ArrayList<Comment>();
+        // todo, what a mess
+        ArrayList<ArrayList<Comment>>ArrArr=MapToArrayList(user.getComments());
+        for(ArrayList<Comment>arr:ArrArr) {
+            for(Comment comment:arr) {
+                comments.add(comment);
+            }
+        }
+//        comments=user.getComments();
 
         PageInit();
 

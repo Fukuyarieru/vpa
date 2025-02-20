@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.R;
@@ -23,7 +23,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
     private Context context;
     private int resource;
     private ArrayList<Comment> comments;
-    public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> objects) {
+    public CommentAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Comment> objects) {
         super(context, resource, objects);
         this.context=context;
         this.resource=resource;

@@ -1,8 +1,6 @@
 package school.videopirateapp.ListViewComponents;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.R;
-import school.videopirateapp.Utilities;
 
 public class VideoAdapter extends ArrayAdapter<Video> {
 
