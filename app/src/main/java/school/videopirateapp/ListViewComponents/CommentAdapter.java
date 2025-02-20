@@ -43,12 +43,15 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         TextView tvComment=view.findViewById(R.id.Comment_ListView_Component_TextView_Comment);
         ImageView userImage=view.findViewById(R.id.Comment_ListView_Component_ImageView_UserImage);
         TextView tvDate=view.findViewById(R.id.Comment_ListView_Component_TextView_Date);
+//        TextView tvContext=view.findViewById(R.id.Comment_ListView_Component_TextView_Context); // TODO REDO THIS LATER TO WORK
 
         tvComment.setText(comment.getComment());
         tvUserName.setText(comment.getAuthor());
-        Bitmap a= Utilities.BytyArrayToBitmap(comment.getAuthorImage()); // why cant i import utilities here properly? i could fix using this var later
-        userImage.setImageBitmap(a);
+        // TODO
+//        Bitmap a= Utilities.BytyArrayToBitmap(comment.getAuthorImage()); // why cant i import utilities here properly? i could fix using this var later
+//        userImage.setImageBitmap(a);
         tvDate.setText(comment.getDate());
+//        tvContext.setText(comment.getContext());
 
         return view;
     }

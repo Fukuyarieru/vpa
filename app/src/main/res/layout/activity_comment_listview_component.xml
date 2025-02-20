@@ -12,30 +12,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:onClick="CommentOptionsDialog"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:orientation="vertical">
+        <ImageView
+            android:id="@+id/Comment_ListView_Component_ImageView_UserImage"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:adjustViewBounds="true"
+            android:padding="5sp"
+            android:src="@drawable/default_user_image" />
+<!--        android:scaleType="centerInside"-->
+<!--        android:maxWidth="100sp"-->
+<!--        android:maxHeight="100sp"-->
 
-            <ImageView
-                android:id="@+id/Comment_ListView_Component_ImageView_UserImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:adjustViewBounds="true"
-                android:padding="5sp"
-                android:scaleType="centerInside"
-                android:src="@drawable/default_user_image" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_gravity="center"
             android:padding="5sp"
             android:orientation="vertical">
@@ -71,6 +66,22 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Comment" />
+
         </LinearLayout>
+
     </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="0"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/Comment_ListView_Component_TextView_Context"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Context" />-->
+<!--    </LinearLayout>-->
+
 </LinearLayout>

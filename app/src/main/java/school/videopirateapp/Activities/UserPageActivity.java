@@ -62,6 +62,7 @@ public class UserPageActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         user=Database.getUser(intent.getStringExtra("user"));
+        Toast.makeText(this,user.toString(),Toast.LENGTH_SHORT).show();
 
         videos=Database.getVideosArray(user.getUploads().getVideos());
         for(Video video: videos) {
@@ -125,4 +126,7 @@ public class UserPageActivity extends AppCompatActivity {
         ShowPlaylists();
     }
     public void ListViewComments(View view) { ShowComments();}
+    public void CommentOptionsDialog(View view) {
+
+    }
 }

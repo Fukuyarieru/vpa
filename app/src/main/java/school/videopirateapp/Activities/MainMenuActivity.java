@@ -25,6 +25,7 @@ import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.Database.Videos;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
+import school.videopirateapp.MainActivity;
 import school.videopirateapp.R;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -56,6 +57,7 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
 
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
         btnUserPage =findViewById(R.id.MainMenu_Button_UserPage);
@@ -95,6 +97,7 @@ public class MainMenuActivity extends AppCompatActivity {
         seachDialog.show();
     }
     public void UploadVideo(View view) {
+        VideosListViewInit();
         Dialog uploadDialog=new Dialog(MainMenuActivity.this);
         uploadDialog.setContentView(R.layout.activity_upload_video_dialog);
         uploadDialog.show();

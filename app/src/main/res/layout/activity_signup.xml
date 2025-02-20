@@ -9,6 +9,24 @@
     android:orientation="vertical"
     tools:context=".Activities.SignupActivity">
 
+    <EditText
+        android:id="@+id/Signup_EditText_Username"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/Signup_EditText_Password"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Password" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="CreateUser"
+        android:text="Create"/>
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"

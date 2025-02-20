@@ -1,6 +1,8 @@
 package school.videopirateapp.DataStructures;
 
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -122,4 +124,9 @@ public class User {
 //        Intent intent=new Intent(,VideoPlayerActivity.class);
 //
 //    }
+    @NonNull
+    @Override
+    public String toString() {
+        return "Username: "+this.name+"\n Password"+this.Password;
+    }
 }

@@ -74,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
 //        Intent intent=new Intent(this, MainMenuActivity.class);
 //        startActivity(intent);
+
+
+        // Shhh
+        initializeDatabase();
     }
     public void initializeDatabase() {
         DatabaseReference videosRef=Database.getRef("videos");

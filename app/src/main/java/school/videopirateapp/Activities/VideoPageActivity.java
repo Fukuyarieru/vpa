@@ -3,12 +3,20 @@ package school.videopirateapp.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
+import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
+import school.videopirateapp.ListViewComponents.CommentAdapter;
 import school.videopirateapp.R;
 
 public class VideoPageActivity extends AppCompatActivity {
@@ -19,14 +27,21 @@ public class VideoPageActivity extends AppCompatActivity {
 
     TextView tvUploader;
     TextView tvVideoTitle;
+    EditText etComment;
+    Button btnMakeComment;
+    ListView lvComments;
+    ArrayList<Comment>comments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_page);
 
-        tvUploader=findViewById(R.id.Video_Page_TextView_UserName);
         tvVideoTitle=findViewById(R.id.Video_Page_TextView_VideoTitle);
+        tvUploader=findViewById(R.id.Video_Page_TextView_UserName);
+        etComment=findViewById(R.id.Video_Page_EditText_Comment);
+        btnMakeComment=findViewById(R.id.Video_Page_Button_AddComment);
+        lvComments=findViewById(R.id.Video_Page_ListView_Comments);
 
         Intent intent=getIntent();
         String videoTitle=intent.getStringExtra("videoTitle");
@@ -35,6 +50,13 @@ public class VideoPageActivity extends AppCompatActivity {
         video= Database.getVideo(videoTitle);
         String Uploader=video.getUploader();
         tvUploader.setText(Uploader);
+
+        comments=video.getComments();
+
+        CommentAdapter adapter=new CommentAdapter(this,R.layout.activity_comment_listview_component,comments);
+        lvComments.setAdapter(adapter);
+
+
 
 
 
@@ -64,6 +86,22 @@ public class VideoPageActivity extends AppCompatActivity {
         Intent intent=new Intent(this, UserPageActivity.class);
         intent.putExtra("user",tvUploader.getText().toString());
         startActivity(intent);
+    }
+    public void makeComment(View view) {
+        if(etComment.getText().toString().isEmpty()){
+            Toast.makeText(this,"Comments cannot be empty",Toast.LENGTH_SHORT).show();
+        } else {
+            String commentStr=etComment.getText().toString();
+            Comment comment=new Comment(commentStr,"@Default",video.Context()); //@MISSING-AUTHOR-makeComment, REMAKE THIS TO FIDN AUTHOR SOMEHOW TODO
+            Database.addComment(comment,video); // logic does not work correct, TODO FIX
+            video.addComment(comment);
+            // TODO, temporary lines below, SHOULD BE TEMPORARY
+            CommentAdapter adapter=new CommentAdapter(this,R.layout.activity_comment_listview_component,comments);
+            lvComments.setAdapter(adapter);
+        }
+    }
+    public void CommentOptionsDialog(View view) {
+
     }
 
 }
