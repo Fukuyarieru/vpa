@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 import school.videopirateapp.DataStructures.Comment;
+import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
@@ -24,6 +25,7 @@ public class VideoPageActivity extends AppCompatActivity {
     // activity_video_page.xml
 
     Video video;
+    User loggedUser;
 
     TextView tvUploader;
     TextView tvVideoTitle;
@@ -45,9 +47,11 @@ public class VideoPageActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         String videoTitle=intent.getStringExtra("videoTitle");
+        String loggedUserName=intent.getStringExtra("user");
 
         tvVideoTitle.setText(videoTitle);
         video= Database.getVideo(videoTitle);
+        loggedUser=Database.getUser(loggedUserName);
         String Uploader=video.getUploader();
         tvUploader.setText(Uploader);
 
@@ -75,9 +79,6 @@ public class VideoPageActivity extends AppCompatActivity {
 //
 //        videoView.setVideoURI(videoUri);
 //
-//        // Start the video
-//        videoView.setOnPreparedListener(mp -> videoView.start());
-        // TODO
     }
     public void Close(View view) {
         finish();

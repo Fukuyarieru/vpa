@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Videopirateapp"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.PlaylistPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".ListViewComponents.Playlist_ListView_Component"
             android:exported="false" />
         <activity

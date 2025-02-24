@@ -1,6 +1,7 @@
 package school.videopirateapp.Activities;
 
 import static school.videopirateapp.Utilities.MapToArrayList;
+import static school.videopirateapp.Utilities.openVideoPage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -116,6 +117,11 @@ public class UserPageActivity extends AppCompatActivity {
     public void openPlaylist(View view) {
 
     }
+    public void openVideo(View view) {
+        TextView tvVideoTitle=view.findViewById(R.id.Video_ListView_Component_TextView_VideoTitle);
+        String videoTitle=tvVideoTitle.getText().toString();
+        openVideoPage(this,videoTitle);
+    }
     public void Close(View view) {
         finish();
     }
@@ -128,5 +134,13 @@ public class UserPageActivity extends AppCompatActivity {
     public void ListViewComments(View view) { ShowComments();}
     public void CommentOptionsDialog(View view) {
 
+    }
+    public void openUserPage(View view) {
+        // this function here is responsible for the onClick on comments in the userPage listview, no action needed
+//        Intent intent=new Intent(this, UserPageActivity.class);
+//        TextView tvUserName=view.findViewById(R.id.Comment_ListView_Component_TextView_UserName);
+//        String userName=tvUserName.getText().toString();
+//        intent.putExtra("user",userName);
+//        startActivity(intent);
     }
 }

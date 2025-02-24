@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +15,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import school.videopirateapp.Activities.CommentPageActivity;
+import school.videopirateapp.Activities.PlaylistPageActivity;
+import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
 
 public class Utilities {
@@ -47,6 +51,25 @@ public class Utilities {
         intent.putExtra("videoTitle",videoTitle);
         currentActivityThis.startActivity(intent);
     }
+    public static void openUserPage(@NonNull Context currentActivityThis, String userName) {
+        Intent intent=new Intent(currentActivityThis, UserPageActivity.class);
+        intent.putExtra("user",userName);
+        currentActivityThis.startActivity(intent);
+    }
+    public static void openCommentPage(@NonNull Context currentActivityThis, String commentContext, String loggedUsername) {
+        Intent intent=new Intent(currentActivityThis, CommentPageActivity.class);
+        intent.putExtra("context",commentContext);
+        intent.putExtra("user",loggedUsername);
+        currentActivityThis.startActivity(intent);
+    }
+    public static void openPlaylistPage(@NonNull Context currentActivityThis, String playlistTitle) {
+        Intent intent=new Intent(currentActivityThis, PlaylistPageActivity.class);
+        intent.putExtra("playlistTitle",playlistTitle);
+        currentActivityThis.startActivity(intent);
+    }
+    public static void topOptionsMenu(View view) {
+
+    }
     public static Bitmap BytyArrayToBitmap(ArrayList<Byte> byteArray) {
         // TODO, done
         if (byteArray == null || byteArray.isEmpty()) {
@@ -60,5 +83,8 @@ public class Utilities {
         }
 
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+    private Utilities() {
+        throw new UnsupportedOperationException("This class is not instantiable.");
     }
 }

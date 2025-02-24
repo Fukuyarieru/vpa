@@ -24,11 +24,13 @@ import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.Database.Videos;
+import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.MainActivity;
 import school.videopirateapp.R;
 
 public class MainMenuActivity extends AppCompatActivity {
+
 
 
     Button btnUserPage;
@@ -64,9 +66,12 @@ public class MainMenuActivity extends AppCompatActivity {
         listView=findViewById(R.id.MainMenu_ListView);
         btnSearchVideo=findViewById(R.id.MainMenu_Button_SearchVideo);
 
-        loggedIn=false;
+        loggedUser=GlobalVariables.getUser();
+        btnUserPage.setText(loggedUser); // "Not looged in";
 
-        // A bug happens here, Videos.Refresh relies on getting a reference from the database, which is an async operation, so it gets delayed and completed ONLY AFTER the adapter is set, therefore, empty listview
+        loggedIn=GlobalVariables.getIsLoggedIn();
+
+        // A bug happens here, Videos.Refresh relies on getting a reference from the database, ~which is an async operation~ TAKES A WHILE, so it gets delayed and completed ONLY AFTER the adapter is set, therefore, empty listview
         // The fix to that for now is just adding a manual refresh button
         // DO NOT USE INFINITE WHILE LOOPS
         VideosListViewInit();
@@ -146,7 +151,7 @@ public class MainMenuActivity extends AppCompatActivity {
 //        Toast.makeText(this, "THIS IS WORKING", Toast.LENGTH_SHORT).show()
     }
     public void UserPage(View view) {
-        if (!btnUserPage.getText().toString().equals("Login")) {
+        if (btnUserPage.getText().toString().startsWith("@")) {
             Intent openUserPage = new Intent(MainMenuActivity.this, UserPageActivity.class);
             openUserPage.putExtra("user", btnUserPage.getText().toString()); // sends the current signed in user's name to the new screen (userPage), that screen would search it from database from that point
             startActivity(openUserPage);
@@ -184,6 +189,7 @@ public class MainMenuActivity extends AppCompatActivity {
                             btnUserPage.setText(username);
                             loggedIn=true;
                             loggedUser=username;
+                            GlobalVariables.loggedUser=Database.getUser(loggedUser);
                             Toast.makeText(MainMenuActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                             loginDialog.dismiss();
                         }

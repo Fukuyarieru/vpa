@@ -22,6 +22,7 @@
             android:layout_height="100sp"
             android:adjustViewBounds="true"
             android:padding="5sp"
+            android:onClick="openUserPage"
             android:src="@drawable/default_user_image" />
 <!--        android:scaleType="centerInside"-->
 <!--        android:maxWidth="100sp"-->
