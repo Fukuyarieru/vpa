@@ -93,7 +93,7 @@ public class VideoPageActivity extends AppCompatActivity {
             Toast.makeText(this,"Comments cannot be empty",Toast.LENGTH_SHORT).show();
         } else {
             String commentStr=etComment.getText().toString();
-            Comment comment=new Comment(commentStr,"@Default",video.Context()); //@MISSING-AUTHOR-makeComment, REMAKE THIS TO FIDN AUTHOR SOMEHOW TODO
+            Comment comment=new Comment(commentStr,loggedUser.getName(),video.Context()); //@MISSING-AUTHOR-makeComment, REMAKE THIS TO FIDN AUTHOR SOMEHOW TODO
             Database.addComment(comment,video); // logic does not work correct, TODO FIX
             video.addComment(comment);
             // TODO, temporary lines below, SHOULD BE TEMPORARY
