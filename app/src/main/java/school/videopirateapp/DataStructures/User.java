@@ -106,7 +106,7 @@ public class User {
             name = "@" + name;
         }
         this.name = name;
-        this.Uploads = new Playlist("Uploads",name);  // If you want to initialize Playlist when a User is created
+        this.Uploads = new Playlist(name.substring(1)+"-Uploads",name);  // If you want to initialize Playlist when a User is created
         this.Comments = new HashMap<String,ArrayList<Comment>>();
         ArrayList<Comment>arrComments=new ArrayList<>();
         arrComments.add(Comment.Default());
