@@ -6,13 +6,11 @@ import android.os.Bundle;
 
 import school.videopirateapp.R;
 
-public class User_ListView_Component extends AppCompatActivity {
+public class PlaylistListViewComponent extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_listview_component);
-
-        
+        setContentView(R.layout.activity_playlist_list_view_component);
     }
 }

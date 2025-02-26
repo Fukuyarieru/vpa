@@ -7,12 +7,12 @@
     android:orientation="vertical"
     android:gravity="top"
     android:padding="5sp"
-    tools:context=".ListViewComponents.Playlist_ListView_Component">
+    tools:context=".ListViewComponents.PlaylistListViewComponent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="openPlaylist"
+        android:onClick="openPlaylistActivity"
         android:orientation="horizontal">
 
 <!--        FIX LAYOUT BELOWS' WEIGHT -->

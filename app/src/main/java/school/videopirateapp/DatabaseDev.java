@@ -1,14 +1,12 @@
 package school.videopirateapp;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Database_Dev extends AppCompatActivity {
+public class DatabaseDev extends AppCompatActivity {
 //    FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 //    DatabaseReference myRef = database.getReference();
     EditText Tree;

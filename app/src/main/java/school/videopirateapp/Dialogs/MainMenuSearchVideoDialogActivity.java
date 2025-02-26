@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import school.videopirateapp.R;
 
-public class MainMenu_SearchVideo_Dialog_Activity extends AppCompatActivity {
+public class MainMenuSearchVideoDialogActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -32,8 +32,8 @@ public class GlobalVariables {
     public static void setIsLoggedIn(Boolean loggedStatus) {
         sharedPreferences.edit().putBoolean("loggedIn",loggedStatus);
     }
-    public static SharedPreferences Init() {
-        // TODO, WHAT
-        sharedPreferences=MainActivity.this.getSharedPreferences(PREFERENCE_FILE_NAME,MainActivity.MODE_PRIVATE);
-    }
+//    public static SharedPreferences Init() {
+//        // TODO, WHAT
+//        sharedPreferences=MainActivity.this.getSharedPreferences(PREFERENCE_FILE_NAME,MainActivity.MODE_PRIVATE);
+//    }
 }

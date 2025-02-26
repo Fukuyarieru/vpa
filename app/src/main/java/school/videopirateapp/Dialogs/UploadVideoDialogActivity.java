@@ -7,13 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import school.videopirateapp.Activities.MainMenuActivity;
-import school.videopirateapp.MainActivity;
 import school.videopirateapp.R;
 
-public class UploadVideo_Dialog_Activity extends AppCompatActivity {
+public class UploadVideoDialogActivity extends AppCompatActivity {
 
     ImageView thumbnail;
     Button btnChooseVideo;

@@ -1,4 +1,4 @@
-package school.videopirateapp.ListViewComponents;
+package school.videopirateapp.Dialogs;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import school.videopirateapp.R;
 
-public class Playlist_ListView_Component extends AppCompatActivity {
+public class CommentOptionsDialogActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_playlist_list_view_component);
+        setContentView(R.layout.activity_comment_options_dialog);
     }
 }

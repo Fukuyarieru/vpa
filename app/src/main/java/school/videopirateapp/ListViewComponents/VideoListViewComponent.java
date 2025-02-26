@@ -10,7 +10,7 @@ import android.widget.TextView;
 import school.videopirateapp.Activities.VideoPageActivity;
 import school.videopirateapp.R;
 
-public class Video_ListView_Component extends AppCompatActivity {
+public class VideoListViewComponent extends AppCompatActivity {
 
     TextView uploader;
     TextView videoTitle;

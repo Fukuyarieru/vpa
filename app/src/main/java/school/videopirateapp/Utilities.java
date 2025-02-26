@@ -1,5 +1,6 @@
 package school.videopirateapp;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,10 +16,11 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import school.videopirateapp.Activities.CommentPageActivity;
+import school.videopirateapp.Activities.CommentPage_Activity;
 import school.videopirateapp.Activities.PlaylistPageActivity;
 import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
+import school.videopirateapp.DataStructures.Comment;
 
 public class Utilities {
     public static<T> ArrayList<T> HashMapToArrayList(@NonNull HashMap<String,T> hashMap) {
@@ -57,7 +59,7 @@ public class Utilities {
         currentActivityThis.startActivity(intent);
     }
     public static void openCommentPage(@NonNull Context currentActivityThis, String commentContext, String loggedUsername) {
-        Intent intent=new Intent(currentActivityThis, CommentPageActivity.class);
+        Intent intent=new Intent(currentActivityThis, CommentPage_Activity.class);
         intent.putExtra("context",commentContext);
         intent.putExtra("user",loggedUsername);
         currentActivityThis.startActivity(intent);
@@ -83,6 +85,13 @@ public class Utilities {
         }
 
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+    public static void bindLoginDialog() {}
+    public static void bindSearchDialog() {}
+    public static void dialogCommentOptions(Context contextThis, Comment comment) {
+        Dialog dialog=new Dialog(contextThis);
+        dialog.setContentView(R.layout.activity_comment_options_dialog);
+        dialog.show();
     }
     private Utilities() {
         throw new UnsupportedOperationException("This class is not instantiable.");

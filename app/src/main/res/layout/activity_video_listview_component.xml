@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="5sp"
-    tools:context=".ListViewComponents.Video_ListView_Component">
+    tools:context=".ListViewComponents.VideoListViewComponent">
 
     <LinearLayout
         android:layout_width="match_parent"

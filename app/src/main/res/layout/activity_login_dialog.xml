@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="10sp"
-    tools:context=".Dialogs.Login_Dialog_Activity">
+    tools:context=".Dialogs.LoginDialogActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

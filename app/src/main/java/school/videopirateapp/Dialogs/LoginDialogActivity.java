@@ -1,8 +1,5 @@
 package school.videopirateapp.Dialogs;
 
-import static android.icu.text.DisplayContext.LENGTH_SHORT;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,19 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-
-import school.videopirateapp.Activities.MainMenuActivity;
-import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
 import school.videopirateapp.Activities.SignupActivity;
 
-public class  Login_Dialog_Activity extends AppCompatActivity {
+public class LoginDialogActivity extends AppCompatActivity {
 
     EditText etUsername;
     EditText etPassword;

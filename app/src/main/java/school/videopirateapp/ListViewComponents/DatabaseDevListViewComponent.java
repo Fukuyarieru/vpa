@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import school.videopirateapp.R;
 
-public class Database_Dev_ListView_Component extends AppCompatActivity {
+public class DatabaseDevListViewComponent extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

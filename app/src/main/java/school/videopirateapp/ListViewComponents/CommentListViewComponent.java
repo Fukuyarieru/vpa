@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import school.videopirateapp.R;
 
-public class Comment_ListView_Component extends AppCompatActivity {
+public class CommentListViewComponent extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package school.videopirateapp.Activities;
 
 import static school.videopirateapp.Utilities.MapToArrayList;
+import static school.videopirateapp.Utilities.dialogCommentOptions;
 import static school.videopirateapp.Utilities.openVideoPage;
 
 import android.content.Intent;
@@ -114,8 +115,12 @@ public class UserPageActivity extends AppCompatActivity {
         CommentAdapter commentAdapter=new CommentAdapter(this,R.layout.activity_comment_listview_component,comments);
         listView.setAdapter(commentAdapter);
     }
-    public void openPlaylist(View view) {
-
+    public void openPlaylistActivity(View view) {
+        Intent intent=new Intent(this, PlaylistPageActivity.class);
+        startActivity(intent);
+    }
+    public void openCommentOptionsDialog(View view) {
+        dialogCommentOptions(this,Comment.Default()); //TODO, replace the default impl, change it to find the local comment
     }
     public void openVideo(View view) {
         TextView tvVideoTitle=view.findViewById(R.id.Video_ListView_Component_TextView_VideoTitle);
@@ -132,9 +137,6 @@ public class UserPageActivity extends AppCompatActivity {
         ShowPlaylists();
     }
     public void ListViewComments(View view) { ShowComments();}
-    public void CommentOptionsDialog(View view) {
-
-    }
     public void openUserPage(View view) {
         // this function here is responsible for the onClick on comments in the userPage listview, no action needed
 //        Intent intent=new Intent(this, UserPageActivity.class);
@@ -143,4 +145,10 @@ public class UserPageActivity extends AppCompatActivity {
 //        intent.putExtra("user",userName);
 //        startActivity(intent);
     }
+
+
+
+    public void editComment(View view) {}
+    public void openCommentPage(View view) {}
+    public void deleteComment(View view) {}
 }

@@ -15,44 +15,47 @@
         android:theme="@style/Theme.Videopirateapp"
         tools:targetApi="31">
         <activity
+            android:name=".Dialogs.CommentOptionsDialogActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.PlaylistPageActivity"
             android:exported="false" />
         <activity
-            android:name=".ListViewComponents.Playlist_ListView_Component"
+            android:name=".ListViewComponents.PlaylistListViewComponent"
             android:exported="false" />
         <activity
             android:name=".Activities.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".Dialogs.Login_Dialog_Activity"
+            android:name=".Dialogs.LoginDialogActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
-            android:name=".Dialogs.UploadVideo_Dialog_Activity"
+            android:name=".Dialogs.UploadVideoDialogActivity"
             android:exported="false" />
         <activity
-            android:name=".Dialogs.MainMenu_SearchVideo_Dialog_Activity"
+            android:name=".Dialogs.MainMenuSearchVideoDialogActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.VideoPlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".ListViewComponents.User_ListView_Component"
+            android:name=".ListViewComponents.UserListViewComponent"
             android:exported="false" />
         <activity
             android:name=".Activities.UserPageActivity"
             android:exported="false" />
         <activity
-            android:name=".ListViewComponents.Video_ListView_Component"
+            android:name=".ListViewComponents.VideoListViewComponent"
             android:exported="false" />
         <activity
             android:name=".Activities.VideoPageActivity"
             android:exported="false" />
         <activity
-            android:name=".ListViewComponents.Database_Dev_ListView_Component"
+            android:name=".ListViewComponents.DatabaseDevListViewComponent"
             android:exported="false" />
         <activity
-            android:name=".Database_Dev"
+            android:name=".DatabaseDev"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

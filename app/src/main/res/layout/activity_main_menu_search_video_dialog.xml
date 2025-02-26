@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Dialogs.MainMenu_SearchVideo_Dialog_Activity">
+    tools:context=".Dialogs.MainMenuSearchVideoDialogActivity">
 
     <EditText
         android:layout_width="wrap_content"

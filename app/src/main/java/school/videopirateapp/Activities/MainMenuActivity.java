@@ -24,9 +24,7 @@ import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.Database.Videos;
-import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
-import school.videopirateapp.MainActivity;
 import school.videopirateapp.R;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -66,10 +64,10 @@ public class MainMenuActivity extends AppCompatActivity {
         listView=findViewById(R.id.MainMenu_ListView);
         btnSearchVideo=findViewById(R.id.MainMenu_Button_SearchVideo);
 
-        loggedUser=GlobalVariables.getUser();
-        btnUserPage.setText(loggedUser); // "Not looged in";
+        loggedUser="Login"; // TODO, change this crap
+        btnUserPage.setText(loggedUser);
 
-        loggedIn=GlobalVariables.getIsLoggedIn();
+        loggedIn=false;
 
         // A bug happens here, Videos.Refresh relies on getting a reference from the database, ~which is an async operation~ TAKES A WHILE, so it gets delayed and completed ONLY AFTER the adapter is set, therefore, empty listview
         // The fix to that for now is just adding a manual refresh button
@@ -189,7 +187,7 @@ public class MainMenuActivity extends AppCompatActivity {
                             btnUserPage.setText(username);
                             loggedIn=true;
                             loggedUser=username;
-                            GlobalVariables.loggedUser=Database.getUser(loggedUser);
+//              TODO              GlobalVariables.loggedUser=Database.getUser(loggedUser);
                             Toast.makeText(MainMenuActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                             loginDialog.dismiss();
                         }
