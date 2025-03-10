@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -24,13 +25,17 @@ import school.videopirateapp.DataStructures.Comment;
 
 public class Utilities {
     public static<T> ArrayList<T> HashMapToArrayList(@NonNull HashMap<String,T> hashMap) {
-        Log.i("Utilities","Converting HashMap to ArrrayList");
+        Log.i("Utilities", "Converting HashMap to ArrrayList");
         // this function does not do any sorting
         ArrayList<T> arrayList = new ArrayList<>();
         for (T value : hashMap.values()) {
             arrayList.add(value);
         }
         return arrayList;
+    }
+    public static void Feedback(Context contextThis , String message) {
+        Toast.makeText(contextThis,message,Toast.LENGTH_SHORT).show();
+        Log.i("Utilities: Feedback",message);
     }
     public static<T> ArrayList<T> MapToArrayList(@NonNull Map<String,T> hashMap) {
         Log.i("Utilities","Converting HashMap to ArrrayList");
