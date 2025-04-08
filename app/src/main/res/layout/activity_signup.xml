@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".Activities.SignupActivity">
@@ -12,32 +13,50 @@
     <EditText
         android:id="@+id/Signup_EditText_Username"
         android:textSize="20sp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:padding="10sp"
         android:layout_height="wrap_content"
         android:hint="Username" />
 
     <EditText
         android:id="@+id/Signup_EditText_Password"
         android:textSize="20sp"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:padding="10sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="CreateUser"
-        android:text="Create"/>
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="Close"
-        android:text="Close" />
 
-    <TextView
-        android:id="@+id/textView"
+<!--    NO NEED TO ADD CONFIRM PASSWORD HERE, OR MAYBE YES, IDK FOR NOW, THINK LATER-->
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is empty" />
+        android:padding="10sp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/Signup_Button_CreateUser"
+            android:padding="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="CreateUser"
+            android:textSize="17sp"
+            android:layout_margin="3sp"
+            android:text="Create User" />
+
+        <Button
+            android:id="@+id/Signup_Button_Close"
+            android:padding="10sp"
+            android:layout_margin="3sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="Close"
+            android:textSize="17sp"
+            android:text="Close" />
+    </LinearLayout>
+
+
 
 </LinearLayout>

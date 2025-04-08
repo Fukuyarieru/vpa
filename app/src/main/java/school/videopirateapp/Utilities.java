@@ -53,26 +53,26 @@ public class Utilities {
         String datetime = dateformat.format(c.getTime());
         return datetime;
     }
-    public static void openVideoPage(@NonNull Context currentActivityThis, String videoTitle) {
-        Intent intent=new Intent(currentActivityThis, VideoPageActivity.class);
+    public static void openVideoPage(@NonNull Context thisCurrentActivity, String videoTitle) {
+        Intent intent=new Intent(thisCurrentActivity, VideoPageActivity.class);
         intent.putExtra("videoTitle",videoTitle);
-        currentActivityThis.startActivity(intent);
+        thisCurrentActivity.startActivity(intent);
     }
     public static void openUserPage(@NonNull Context currentActivityThis, String userName) {
         Intent intent=new Intent(currentActivityThis, UserPageActivity.class);
         intent.putExtra("user",userName);
         currentActivityThis.startActivity(intent);
     }
-    public static void openCommentPage(@NonNull Context currentActivityThis, String commentContext, String loggedUsername) {
-        Intent intent=new Intent(currentActivityThis, CommentPage_Activity.class);
+    public static void openCommentPage(@NonNull Context thisCurrentActivity, String commentContext, String loggedUsername) {
+        Intent intent=new Intent(thisCurrentActivity, CommentPage_Activity.class);
         intent.putExtra("context",commentContext);
         intent.putExtra("user",loggedUsername);
-        currentActivityThis.startActivity(intent);
+        thisCurrentActivity.startActivity(intent);
     }
-    public static void openPlaylistPage(@NonNull Context currentActivityThis, String playlistTitle) {
-        Intent intent=new Intent(currentActivityThis, PlaylistPageActivity.class);
+    public static void openPlaylistPage(@NonNull Context thisCurrentActivity, String playlistTitle) {
+        Intent intent=new Intent(thisCurrentActivity, PlaylistPageActivity.class);
         intent.putExtra("playlistTitle",playlistTitle);
-        currentActivityThis.startActivity(intent);
+        thisCurrentActivity.startActivity(intent);
     }
     public static void topOptionsMenu(View view) {
 
