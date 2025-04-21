@@ -23,7 +23,7 @@ import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
 import school.videopirateapp.DataStructures.Comment;
 
-public class Utilities {
+public abstract class Utilities {
     public static<T> ArrayList<T> HashMapToArrayList(@NonNull HashMap<String,T> hashMap) {
         Log.i("Utilities", "Converting HashMap to ArrrayList");
         // this function does not do any sorting
