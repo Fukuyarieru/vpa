@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
@@ -220,22 +221,22 @@ public abstract class Database {
         // TODO 2, I REALLY SHOULD START USING THIS CAUSE THERE IS A BUG IN WHICH THE PLAYLISTS TREE DOES NOT UPDATE CORRECTLY
     }
 
-    @Deprecated
-    public static <T> T GetObject(String Path) {
-        T val = null;
-        Database.getRef(Path).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+//    @Deprecated
+//    public static <T extends Object> T getObject(String Path) {
+//        T val = null;
+//        Database.getRef(Path).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
 //                    val=snapshot.getValue(T.class);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return val;
-    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        return val;
+//    }
 }
