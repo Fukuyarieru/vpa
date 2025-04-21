@@ -87,7 +87,7 @@ public abstract class Database {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e("Database: addComment", "Failed at the end");
+                            Log.e("Database: addComment", "Failed to add listener to userRef");
                         }
                     });
                 } else {
@@ -222,7 +222,7 @@ public abstract class Database {
     }
 
 //    @Deprecated
-//    public static <T extends Object> T getObject(String Path) {
+//    public static <T extends Object implements> T getObject(String Path) {
 //        T val = null;
 //        Database.getRef(Path).addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
