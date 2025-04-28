@@ -12,10 +12,12 @@ public class GlobalVariables {
     private static final String PREFERENCE_FILE_NAME = "VideoPiratingAppPreferences";
     private static SharedPreferences sharedPreferences;
 
+    private static User loggedUser;
+
+
     public GlobalVariables(@NonNull Context context) {
         sharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
     }
-    public static User loggedUser;
     private GlobalVariables() {
         throw new UnsupportedOperationException("This class is not instantiable.");
     }
