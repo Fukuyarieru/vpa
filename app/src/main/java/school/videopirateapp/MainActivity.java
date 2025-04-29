@@ -7,10 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.gms.common.api.Api;
+import com.google.android.gms.common.api.Result;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Optional;
 
 import school.videopirateapp.Activities.MainMenuActivity;
 import school.videopirateapp.DataStructures.Playlist;
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         initializeDatabase();
+
+        Optional<Integer> a= Optional.of(1);
+        int b=a.get();
 
 //        Log.i() - information
 //        Log.e() - error

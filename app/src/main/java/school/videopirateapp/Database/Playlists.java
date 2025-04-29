@@ -9,10 +9,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import school.videopirateapp.DataStructures.Playlist;
 
-public class Playlists {
+public abstract class Playlists {
 
     // TODO, BIG, CONSIDER MAKING ALL THESE DATABASE HELPERS TO HANDLE THE FIREBASE TREES TOO
-    private static Playlist savedPlaylist=Playlist.Default();
+    private static Playlist savedPlaylist = Playlist.Default();
+
     private Playlists() {
         throw new UnsupportedOperationException("This class is not instantiable.");
     }
@@ -24,14 +25,15 @@ public class Playlists {
     public static void setSavedPlaylist(Playlist savedPlaylist) {
         Playlists.savedPlaylist = savedPlaylist;
     }
+
     public static Playlist getPlaylist(String playlistTitle) {
-        if(savedPlaylist.getTitle()!=playlistTitle) {
-            DatabaseReference playlistRef=Database.getRef("playlists").child(playlistTitle);
+        if (savedPlaylist.getTitle() != playlistTitle) {
+            DatabaseReference playlistRef = Database.getRef("playlists").child(playlistTitle);
             playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
-                    if(playlistSnapshot.exists()) {
-                        savedPlaylist=playlistSnapshot.getValue(Playlist.class);
+                    if (playlistSnapshot.exists()) {
+                        savedPlaylist = playlistSnapshot.getValue(Playlist.class);
                     }
                     // throw exception playlist doesnt exist?
                 }
