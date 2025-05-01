@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="UserPage"
+            android:onClick="userPage"
             android:text="UserPage" />
 
         <Button
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="UploadVideo"
+            android:onClick="uploadVideo"
             android:text="UploadVideo" />
 
         <Button
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="SearchVideo"
+            android:onClick="searchVideo"
             android:text="SearchVideo" />
     </LinearLayout>
 

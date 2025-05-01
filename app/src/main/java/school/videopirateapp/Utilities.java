@@ -7,6 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -15,12 +18,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import school.videopirateapp.Activities.CommentPage_Activity;
+import school.videopirateapp.Activities.MainMenuActivity;
 import school.videopirateapp.Activities.PlaylistPageActivity;
 import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
 import school.videopirateapp.DataStructures.Comment;
+import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.Database.Database;
 
 public class Utilities {
     public static<T> ArrayList<T> HashMapToArrayList(@NonNull HashMap<String,T> hashMap) {
@@ -92,6 +99,47 @@ public class Utilities {
         Dialog dialog=new Dialog(contextThis);
         dialog.setContentView(R.layout.activity_comment_options_dialog);
         dialog.show();
+    }
+    public static void openLoginDialog(Context thisContenxt) {
+        Dialog loginDialog = new Dialog(thisContenxt); //this screen as context
+        loginDialog.setContentView(R.layout.activity_login_dialog);
+        EditText etUsername=loginDialog.findViewById(R.id.Login_Dialog_EditText_Username);
+        EditText etPassword=loginDialog.findViewById(R.id.Login_Dialog_EditText_Password);
+        Button btnLogin=loginDialog.findViewById(R.id.Login_Dialog_Button_Login);
+        Button btnSignup=loginDialog.findViewById(R.id.Login_Dialog_Button_Signup);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+
+                if (username.isEmpty() || password.isEmpty()) {
+                    // Display a message if the fields are empty
+                    Toast.makeText(thisContenxt, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                } else if(!username.startsWith("@")) {
+                    Toast.makeText(thisContenxt,"Usernames must start with @",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    User desiredUser = Database.getUser(username);
+//                        Toast.makeText(MainMenuActivity.this,"user: "+desiredUser.getName()+", pass: "+desiredUser.getPassword(),Toast.LENGTH_SHORT).show();
+                    if(desiredUser==null) {
+                        Toast.makeText(thisContenxt,"User was not found",Toast.LENGTH_SHORT).show();
+                    }
+                    else if (!desiredUser.getPassword().equals(password)) {
+                        Toast.makeText(thisContenxt,"Password does not match",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        GlobalVariables.loggedUser= Optional.of(desiredUser);
+                        Toast.makeText(thisContenxt, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                        loginDialog.dismiss();
+                    }
+
+                }
+            }
+        });
+        loginDialog.show();
     }
     private Utilities() {
         throw new UnsupportedOperationException("This class is not instantiable.");
