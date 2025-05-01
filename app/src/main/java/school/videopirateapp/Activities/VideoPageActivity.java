@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +18,7 @@ import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
 import school.videopirateapp.R;
+import school.videopirateapp.Utilities;
 
 public class VideoPageActivity extends AppCompatActivity {
 
@@ -90,12 +90,13 @@ public class VideoPageActivity extends AppCompatActivity {
     }
     public void makeComment(View view) {
         if(etComment.getText().toString().isEmpty()){
-            Toast.makeText(this,"Comments cannot be empty",Toast.LENGTH_SHORT).show();
+            Utilities.Feedback(this,"Comments cannot be empty");
         } else {
             String commentStr=etComment.getText().toString();
             Comment comment=new Comment(commentStr,loggedUser.getName(),video.Context()); //@MISSING-AUTHOR-makeComment, REMAKE THIS TO FIDN AUTHOR SOMEHOW TODO
             Database.addComment(comment,video); // logic does not work correct, TODO FIX
             video.addComment(comment);
+            Utilities.Feedback(this,"Comment added");
             // TODO, temporary lines below, SHOULD BE TEMPORARY
             CommentAdapter adapter=new CommentAdapter(this,R.layout.activity_comment_listview_component,comments);
             lvComments.setAdapter(adapter);
