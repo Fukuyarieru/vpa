@@ -1,6 +1,8 @@
 package school.videopirateapp.ListViewComponents;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,4 +25,11 @@ public class CommentListViewComponent extends AppCompatActivity {
             return insets;
         });
     }
+
+//    public void openUserPage(View view) {
+//    }
+//
+//    public void openCommentOptionsDialog(View view) {
+//        Dialog dialog=new Dialog();
+//    }
 }

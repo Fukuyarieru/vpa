@@ -26,16 +26,17 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
         // videoView
 
+
         // Set the media controller buttons
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
 
-        // Specify the URI of the video to play
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.default_video); // example for a video in raw resources
+        // Specify the URI of the video to play (using a sample video URL)
+        // Replace with your actual video URL
+        Uri videoUri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
 
-        // or a video from the web
-        // Uri videoUri = Uri.parse("http://path/to/your/video");
+
 
         videoView.setVideoURI(videoUri);
 

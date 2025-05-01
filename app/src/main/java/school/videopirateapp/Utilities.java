@@ -26,6 +26,7 @@ import school.videopirateapp.Activities.MainMenuActivity;
 import school.videopirateapp.Activities.PlaylistPageActivity;
 import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
+import school.videopirateapp.Activities.VideoPlayerActivity;
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
@@ -62,6 +63,11 @@ public class Utilities {
         intent.putExtra("videoTitle",videoTitle);
         currentActivityThis.startActivity(intent);
     }
+    public static void openVideoPlayer(@NonNull Context currentActivityThis, String videoTitle) {
+        Intent intent=new Intent(currentActivityThis, VideoPlayerActivity.class);
+        intent.putExtra("videoTitle",videoTitle);
+        currentActivityThis.startActivity(intent);
+    }
     public static void openUserPage(@NonNull Context currentActivityThis, String userName) {
         Intent intent=new Intent(currentActivityThis, UserPageActivity.class);
         intent.putExtra("user",userName);
@@ -72,6 +78,11 @@ public class Utilities {
         intent.putExtra("context",commentContext);
         intent.putExtra("user",loggedUsername);
         currentActivityThis.startActivity(intent);
+    }
+    public static void openCommentoptionsDialog(@NonNull Context currentActivityThis, Comment comment) {
+        Dialog dialog=new Dialog(currentActivityThis);
+        dialog.setContentView(R.layout.activity_comment_options_dialog);
+        dialog.show();
     }
     public static void openPlaylistPage(@NonNull Context currentActivityThis, String playlistTitle) {
         Intent intent=new Intent(currentActivityThis, PlaylistPageActivity.class);

@@ -1,5 +1,7 @@
 package school.videopirateapp.Activities;
 
+import static school.videopirateapp.Utilities.openVideoPlayer;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -47,11 +49,9 @@ public class VideoPageActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         String videoTitle=intent.getStringExtra("videoTitle");
-        String loggedUserName=intent.getStringExtra("user");
 
         tvVideoTitle.setText(videoTitle);
         video= Database.getVideo(videoTitle);
-        loggedUser=Database.getUser(loggedUserName);
         String Uploader=video.getUploader();
         tvUploader.setText(Uploader);
 
@@ -105,5 +105,7 @@ public class VideoPageActivity extends AppCompatActivity {
     public void CommentOptionsDialog(View view) {
 
     }
-
+    public void playVideo(View view) {
+        openVideoPlayer(this,video.getTitle());
+    }
 }
