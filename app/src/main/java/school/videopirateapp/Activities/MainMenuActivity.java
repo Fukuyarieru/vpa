@@ -3,6 +3,8 @@ package school.videopirateapp.Activities;
 import static school.videopirateapp.Utilities.HashMapToArrayList;
 import static school.videopirateapp.Utilities.openLoginDialog;
 import static school.videopirateapp.Utilities.openVideoPage;
+import static school.videopirateapp.Utilities.openVideoUploadDialog;
+
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -12,10 +14,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,20 +27,20 @@ import school.videopirateapp.Database.Videos;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
+import school.videopirateapp.Utilities;
 
 public class MainMenuActivity extends AppCompatActivity {
 
 
     Button btnUserPage;
     Button btnUploadVideo;
-    Button btnSearchVideo;
+    Button btnRefreshVideos;
     EditText etUsername;
     EditText etPassword;
     ListView listView;
     ArrayList<Video> videos;
     VideoAdapter videosAdapter;
     String chosenTitle;
-    String loggedUser;
     Boolean loggedIn;
 
 
@@ -60,9 +60,7 @@ public class MainMenuActivity extends AppCompatActivity {
         btnUploadVideo =findViewById(R.id.MainMenu_Button_UploadVideo);
         btnUserPage =findViewById(R.id.MainMenu_Button_UserPage);
         listView=findViewById(R.id.MainMenu_ListView);
-        btnSearchVideo=findViewById(R.id.MainMenu_Button_SearchVideo);
-
-
+        btnRefreshVideos =findViewById(R.id.MainMenu_Button_RefreshVideos);
 
         // A bug happens here, Videos.Refresh relies on getting a reference from the database, ~which is an async operation~ TAKES A WHILE, so it gets delayed and completed ONLY AFTER the adapter is set, therefore, empty listview
         // The fix to that for now is just adding a manual refresh button
@@ -73,7 +71,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 //        btnUserPage.setText("Login");
         btnUploadVideo.setText("Upload Video");
-        btnSearchVideo.setText("Search");
+        btnRefreshVideos.setText("Refresh Videos");
 
         // TOAST: YOU MUST LOGIN FIRST
 
@@ -89,52 +87,12 @@ public class MainMenuActivity extends AppCompatActivity {
 //    public void RefreshVideosButton(View view) {
 //        VideosListViewInit();
 //    }
-    public void searchVideo(View view) {
+    public void refreshVideos(View view) {
         videoListViewInit(); // TODO, TEMPORARY SOLUTION FOR THE MENU WHICH DOES NOT WORK
-        // dont do a dialog, change to a deticated screen that has an edittext and updates live
-        Dialog seachDialog=new Dialog(MainMenuActivity.this);
-        seachDialog.setContentView(R.layout.activity_main_menu_search_video_dialog);
-        seachDialog.show();
+        Utilities.Feedback(this,"Videos refreshed");
     }
     public void uploadVideo(View view) {
-        videoListViewInit();
-        Dialog uploadDialog=new Dialog(MainMenuActivity.this);
-        uploadDialog.setContentView(R.layout.activity_upload_video_dialog);
-        uploadDialog.show();
-
-        Button btnChooseVideo=uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_ChooseVideo);
-        Button btnUploadVideo=uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_UploadVideo);
-        ImageView thumbnail=uploadDialog.findViewById(R.id.UploadVideo_Dialog_ImageView_Thumbnail);
-        EditText etVideoTitle=uploadDialog.findViewById(R.id.UploadVideo_Dialog_EditText_VideoTitle);
-
-        btnUploadVideo.setText("Upload");
-        btnChooseVideo.setText("Choose");
-
-        btnUploadVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO, check if etVideoTitle is empty?
-                chosenTitle=etVideoTitle.getText().toString();
-//                if chosenTitle=""  // add a function named Video.IsProperName(videoName) which returns true if good and false if bad;
-                if(Database.getVideo(chosenTitle)!=null) {
-                    Toast.makeText(MainMenuActivity.this, "Video with that title already exists", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (loggedIn) {
-                        Video newVideo=new Video(chosenTitle,loggedUser);
-                        Toast.makeText(MainMenuActivity.this, "Added video named: "+newVideo.getTitle(), Toast.LENGTH_SHORT).show();
-                        Database.addVideo(newVideo);
-                    } else {
-                        Toast.makeText(MainMenuActivity.this, "Not logged in", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-        btnChooseVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        openVideoUploadDialog(this);
     }
     public void userPage(View view) {
         if (btnUserPage.getText().toString().equals("Login")) {

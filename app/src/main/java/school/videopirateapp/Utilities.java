@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 
 public class Utilities {
@@ -140,6 +142,48 @@ public class Utilities {
             }
         });
         loginDialog.show();
+    }
+    public static void openVideoUploadDialog(Context thisContext) {
+        Dialog uploadDialog=new Dialog(thisContext);
+        uploadDialog.setContentView(R.layout.activity_upload_video_dialog);
+        uploadDialog.show();
+
+        Button btnChooseVideo=uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_ChooseVideo);
+        Button btnUploadVideo=uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_UploadVideo);
+        ImageView thumbnail=uploadDialog.findViewById(R.id.UploadVideo_Dialog_ImageView_Thumbnail);
+        EditText etVideoTitle=uploadDialog.findViewById(R.id.UploadVideo_Dialog_EditText_VideoTitle);
+
+        btnUploadVideo.setText("Upload");
+        btnChooseVideo.setText("Choose");
+
+        btnUploadVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO, check if etVideoTitle is empty?
+                String chosenTitle=etVideoTitle.getText().toString();
+//                if chosenTitle=""  // add a function named Video.IsProperName(videoName) which returns true if good and false if bad;
+                if(Database.getVideo(chosenTitle)!=null) {
+                    Toast.makeText(thisContext, "Video with that title already exists", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (GlobalVariables.loggedUser.isPresent()) {
+                        Video newVideo=new Video(chosenTitle,GlobalVariables.loggedUser.get().getName());
+                        Toast.makeText(thisContext, "Added video named: "+newVideo.getTitle(), Toast.LENGTH_SHORT).show();
+                        Database.addVideo(newVideo);
+                    } else {
+                        Toast.makeText(thisContext, "Not logged in", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+        btnChooseVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+    public static void Feedback(Context contextThis, String message) {
+        Toast.makeText(contextThis,message,Toast.LENGTH_SHORT).show();
     }
     private Utilities() {
         throw new UnsupportedOperationException("This class is not instantiable.");

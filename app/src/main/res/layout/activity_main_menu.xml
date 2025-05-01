@@ -31,12 +31,12 @@
             android:text="UploadVideo" />
 
         <Button
-            android:id="@+id/MainMenu_Button_SearchVideo"
+            android:id="@+id/MainMenu_Button_RefreshVideos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="searchVideo"
-            android:text="SearchVideo" />
+            android:onClick="refreshVideos"
+            android:text="RefreshVideos" />
     </LinearLayout>
 
     <ListView
