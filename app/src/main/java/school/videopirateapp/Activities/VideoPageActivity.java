@@ -84,9 +84,7 @@ public class VideoPageActivity extends AppCompatActivity {
         finish();
     }
     public void openUserPage(View view) {
-        Intent intent=new Intent(this, UserPageActivity.class);
-        intent.putExtra("user",tvUploader.getText().toString());
-        startActivity(intent);
+        Utilities.openUserPage(this,video.getUploader());
     }
     public void makeComment(View view) {
         if(etComment.getText().toString().isEmpty()){

@@ -21,8 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import school.videopirateapp.Activities.CommentPage_Activity;
-import school.videopirateapp.Activities.MainMenuActivity;
+import school.videopirateapp.Activities.CommentPageActivity;
 import school.videopirateapp.Activities.PlaylistPageActivity;
 import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
@@ -73,13 +72,12 @@ public class Utilities {
         intent.putExtra("user",userName);
         currentActivityThis.startActivity(intent);
     }
-    public static void openCommentPage(@NonNull Context currentActivityThis, String commentContext, String loggedUsername) {
-        Intent intent=new Intent(currentActivityThis, CommentPage_Activity.class);
+    public static void openCommentPage(@NonNull Context currentActivityThis, String commentContext) {
+        Intent intent=new Intent(currentActivityThis, CommentPageActivity.class);
         intent.putExtra("context",commentContext);
-        intent.putExtra("user",loggedUsername);
         currentActivityThis.startActivity(intent);
     }
-    public static void openCommentoptionsDialog(@NonNull Context currentActivityThis, Comment comment) {
+    public static void openCommentOptionsDialog(@NonNull Context currentActivityThis, String commentContext) {
         Dialog dialog=new Dialog(currentActivityThis);
         dialog.setContentView(R.layout.activity_comment_options_dialog);
         dialog.show();
