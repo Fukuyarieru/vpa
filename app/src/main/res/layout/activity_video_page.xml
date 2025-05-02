@@ -47,12 +47,12 @@
                 android:src="@drawable/default_user_image" />
 
             <TextView
-                android:id="@+id/Video_Page_TextView_UserName"
+                android:id="@+id/Video_Page_TextView_Uploader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5sp"
                 android:gravity="center"
-                android:text="UserName" />
+                android:text="Uploader" />
         </LinearLayout>
 
         <LinearLayout

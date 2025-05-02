@@ -4,9 +4,7 @@ import static school.videopirateapp.Utilities.TimeNow;
 //import static school.videopirateapp.Utilities.openVideoPlayer;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +14,6 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -51,7 +48,7 @@ public class VideoPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video_page);
 
         tvVideoTitle=findViewById(R.id.Video_Page_TextView_VideoTitle);
-        tvUploader=findViewById(R.id.Video_Page_TextView_UserName);
+        tvUploader=findViewById(R.id.Video_Page_TextView_Uploader);
         etComment=findViewById(R.id.Video_Page_EditText_Comment);
         btnMakeComment=findViewById(R.id.Video_Page_Button_AddComment);
         lvComments=findViewById(R.id.Video_Page_ListView_Comments);
