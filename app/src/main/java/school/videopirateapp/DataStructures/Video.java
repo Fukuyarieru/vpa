@@ -20,6 +20,7 @@ public class Video {
     private Integer Downvotes;
     private String UploadDate;
     private ArrayList<Byte> Thumbnail;
+    private String Url;
 
     public ArrayList<Byte> getThumbnail() {
         return Thumbnail;
@@ -70,7 +71,10 @@ public class Video {
     public void setDownvotes(Integer downvotes) {
         Downvotes = downvotes;
     }
+    public String getUrl() { return Url; }
+    public void setUrl(String url) { Url = url; }
 
+    @Deprecated
     public void addComment(Comment newComment) {
         // this function adds a comment to the video's comments section, also it changes the context of the comment to be the video's path
         if(!this.Comments.contains(newComment)) {
@@ -78,14 +82,19 @@ public class Video {
             Log.w("Video: addComment","Video already contains added comment, not added");
         }
     }
-    public Video(String Title, String Uploader) {
-        this.Title =Title;
+    public Video(String title,String Uploader, ArrayList<Comment> comments, Integer views, Integer upvotes, Integer downvotes, String uploadDate, ArrayList<Byte> thumbnail, String url) {
+        this.Title=title;
         this.Uploader=Uploader;
-        this.Comments=new ArrayList<Comment>();
-        this.Views=0;
-        this.Upvotes=0;
-        this.Downvotes=0;
-        this.UploadDate= TimeNow();
+        this.Comments=comments;
+        this.Views=views;
+        this.Upvotes=upvotes;
+        this.Downvotes=downvotes;
+        this.UploadDate=uploadDate;
+        this.Thumbnail=thumbnail;
+        this.Url=url;
+    }
+    public Video(String Title, String Uploader) {
+        this(Title,Uploader,new ArrayList<Comment>(),0,0,0,TimeNow(),new ArrayList<Byte>(),"");
     }
     public Video()  {
         this("defaultVideo", User.Default().getName());

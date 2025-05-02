@@ -25,7 +25,7 @@ import school.videopirateapp.Activities.CommentPageActivity;
 import school.videopirateapp.Activities.PlaylistPageActivity;
 import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
-import school.videopirateapp.Activities.VideoPlayerActivity;
+//import school.videopirateapp.Activities.VideoPlayerActivity;
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
@@ -62,11 +62,11 @@ public class Utilities {
         intent.putExtra("videoTitle",videoTitle);
         currentActivityThis.startActivity(intent);
     }
-    public static void openVideoPlayer(@NonNull Context currentActivityThis, String videoTitle) {
-        Intent intent=new Intent(currentActivityThis, VideoPlayerActivity.class);
-        intent.putExtra("videoTitle",videoTitle);
-        currentActivityThis.startActivity(intent);
-    }
+//    public static void openVideoPlayer(@NonNull Context currentActivityThis, String videoTitle) {
+//        Intent intent=new Intent(currentActivityThis, VideoPlayerActivity.class);
+//        intent.putExtra("videoTitle",videoTitle);
+//        currentActivityThis.startActivity(intent);
+//    }
     public static void openUserPage(@NonNull Context currentActivityThis, String userName) {
         Intent intent=new Intent(currentActivityThis, UserPageActivity.class);
         intent.putExtra("user",userName);

@@ -56,19 +56,19 @@ public class Comment{
         return Author;
     }
 
-    public Comment(String Comment,String author, String context) {
+    public Comment(String Comment,String author, String context,String date) {
         this.Comment=Comment;
         this.Author=author;
         this.Context=context;
         this.Date=TimeNow();
-        this.AuthorImage =new ArrayList<>();
+        this.AuthorImage=new ArrayList<>();
     }
     public Comment(String comment, String author) {
-        this(comment,author,"unset");
+        this(comment,author,"unset","unset");
     }
 
     public Comment() {
-        this("Lorem ipsum dolor sit amet, consectetur adipiscing elit","@Default","videos-defaultVideo-comments"); // User.Default().getName()
+        this("Lorem ipsum dolor sit amet, consectetur adipiscing elit","@Default","videos-defaultVideo-comments","dd/MM/yyyy hh:mm:ss"); // User.Default().getName()
         //"videos/defaultVideo/comments"
 
     }
