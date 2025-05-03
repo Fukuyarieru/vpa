@@ -12,7 +12,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
@@ -60,6 +59,12 @@ public abstract class Database {
     }
 
     public static void addComment(@NonNull Comment newComment, @NonNull Video targetVideo) {
+
+        // i cannot do this kind of code here because Videos works like a local copy of the database, local scope. in here the Database i am supposed to check gracefully whats happening
+//        if(Videos.getVideo(targetVideo.getTitle())!=null) {
+//            targetVideo=Videos.
+//        }
+
         // first check if video exists at all
         DatabaseReference videoRef = Database.getRef("videos").child(targetVideo.getTitle());
         videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,7 +83,7 @@ public abstract class Database {
                                 User user = userSnapshot.getValue(User.class);
                                 newComment.setContext(targetVideo.Context());
                                 targetVideo.addComment(newComment); // sets the comment context to this video
-                                assert user != null;
+                                assert user != null; // TODO, Remove or Replace later, this is here because of android studio nagging
                                 user.addComment(newComment);
                                 userRef.setValue(user);
                                 videoRef.setValue(targetVideo);
@@ -103,6 +108,33 @@ public abstract class Database {
                 // some error idk
             }
         });
+    }
+
+    public static void upvoteVideo(Video targetVideo) {
+
+        DatabaseReference videoRef = Database.getRef(targetVideo.getTitle());
+        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
+                if (videoSnapshot.exists()) {
+                    Video video = videoSnapshot.getValue(Video.class);
+                    if (video != null) {
+                        targetVideo.upvote();
+                        videoRef.setValue(targetVideo);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        targetVideo.upvote();
+    }
+
+    public static void downvoteVideo(Video targetVideo) {
+        targetVideo.downvote();
     }
 
     public static User getUser(String userName) {
@@ -131,8 +163,8 @@ public abstract class Database {
 
     public static ArrayList<Video> getVideosArray(ArrayList<String> videoTitles) {
         ArrayList<Video> videosArr = new ArrayList<>();
-        for (String vidTit : videoTitles) {
-            videosArr.add(Database.getVideo(vidTit));
+        for (String videoTitle : videoTitles) {
+            videosArr.add(Database.getVideo(videoTitle));
         }
         return videosArr;
     }
@@ -165,8 +197,6 @@ public abstract class Database {
 
                         }
                     });
-                } else {
-                    // video exists
                 }
             }
 

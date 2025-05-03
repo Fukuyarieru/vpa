@@ -55,11 +55,6 @@
           <theme>@style/Theme.Videopirateapp</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_video_player.xml">
-        <config>
-          <theme>@style/Theme.Videopirateapp</theme>
-        </config>
-      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/toolbar.xml">
         <config>
           <theme>@style/Theme.Videopirateapp</theme>
@@ -71,7 +66,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d9d0df33-6a1c-4b21-bbce-55edcec8262b" name="Changes" comment="" />
+    <list default="true" id="d9d0df33-6a1c-4b21-bbce-55edcec8262b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Video.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Video.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -283,12 +283,12 @@
       <map>
         <entry key="school.videopirateapp">
           <value>
-            <CheckInfo lastCheckTimestamp="1746196550067" />
+            <CheckInfo lastCheckTimestamp="1746293234258" />
           </value>
         </entry>
         <entry key="school.videopirateapp.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1746196550066" />
+            <CheckInfo lastCheckTimestamp="1746293234258" />
           </value>
         </entry>
       </map>

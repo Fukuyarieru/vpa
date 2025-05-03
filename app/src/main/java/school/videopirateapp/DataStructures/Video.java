@@ -21,6 +21,7 @@ public class Video {
     private String UploadDate;
     private ArrayList<Byte> Thumbnail;
     private String Url;
+    private Integer Score;
 
     public ArrayList<Byte> getThumbnail() {
         return Thumbnail;
@@ -80,8 +81,27 @@ public class Video {
         if(!this.Comments.contains(newComment)) {
             this.Comments.add(newComment);
             Log.w("Video: addComment","Video already contains added comment, not added");
+            this.Score+=10;
         }
     }
+
+    @Deprecated
+    public void upvote() {
+        this.Upvotes++;
+        this.Score-=15;
+    }
+    @Deprecated
+    public void downvote() {
+        this.Downvotes++;
+        this.Score+=15;
+    }
+    @Deprecated
+    public void view() {
+        this.Views++;
+        this.Score+=1;
+    }
+
+
     public Video(String title,String Uploader, ArrayList<Comment> comments, Integer views, Integer upvotes, Integer downvotes, String uploadDate, ArrayList<Byte> thumbnail, String url) {
         this.Title=title;
         this.Uploader=Uploader;
@@ -92,6 +112,10 @@ public class Video {
         this.UploadDate=uploadDate;
         this.Thumbnail=thumbnail;
         this.Url=url;
+
+        this.Score=0;
+
+
     }
     public Video(String Title, String Uploader) {
         this(Title,Uploader,new ArrayList<Comment>(),0,0,0,TimeNow(),new ArrayList<Byte>(),"");

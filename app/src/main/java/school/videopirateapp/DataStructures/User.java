@@ -16,6 +16,17 @@ public class User {
     private String Password;
     private ArrayList<Byte> image; //TODO, change this type later
 
+    private enum Vote {
+        UPVOTE,
+        DOWNVOTE
+    }
+
+
+
+    private Map<String,Vote> Votes;
+
+
+
     // Integer totalViews =====> TODO
     // Integer totalUpvotes ===> TODO
     // Integer totalDownvotes => TODO
@@ -23,6 +34,13 @@ public class User {
 
     private static final User defaultUser=new User();
 
+    public Map<String, Vote> getVotes() {
+        return Votes;
+    }
+
+    public void setVotes(Map<String, Vote> votes) {
+        Votes = votes;
+    }
 
     public String getPassword() {
         return Password;
