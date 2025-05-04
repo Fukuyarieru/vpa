@@ -27,7 +27,7 @@ public abstract class Playlists {
     }
 
     public static Playlist getPlaylist(String playlistTitle) {
-        if (savedPlaylist.getTitle() != playlistTitle) {
+        if (!savedPlaylist.getTitle().equals(playlistTitle)) {
             DatabaseReference playlistRef = Database.getRef("playlists").child(playlistTitle);
             playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -43,6 +43,7 @@ public abstract class Playlists {
 
                 }
             });
+//            while(savedPlaylist.getTitle().equals(playlistTitle)||!savedPlaylist.getTitle().equals(Playlist.Default().getTitle())) {}
         }
         return savedPlaylist;
     }

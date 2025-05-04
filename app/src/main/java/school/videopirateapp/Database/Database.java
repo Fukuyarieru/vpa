@@ -1,5 +1,7 @@
 package school.videopirateapp.Database;
 
+import static school.videopirateapp.Utilities.Feedback;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -123,6 +125,9 @@ public abstract class Database {
                         videoRef.setValue(targetVideo);
                     }
                 }
+                else {
+                    Log.e("Database: upvoteVideo","Video does not exist");
+                }
             }
 
             @Override
@@ -144,6 +149,8 @@ public abstract class Database {
                         targetVideo.downvote();
                         videoRef.setValue(targetVideo);
                     }
+                } else {
+                    Log.e("Database: upvoteVideo","Video does not exist");
                 }
             }
 
@@ -216,6 +223,9 @@ public abstract class Database {
                         }
                     });
                 }
+                else {
+                    Log.w("Database: addVideo","Video already exists");
+                }
             }
 
             @Override
@@ -253,6 +263,7 @@ public abstract class Database {
                         }
                     });
                 } else {
+                    Log.w("Database: addPlaylist", "Playlist already exists");
                     // playlist exists
                 }
             }
