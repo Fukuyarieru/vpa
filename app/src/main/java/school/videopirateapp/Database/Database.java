@@ -134,6 +134,24 @@ public abstract class Database {
     }
 
     public static void downvoteVideo(Video targetVideo) {
+        DatabaseReference videoRef = Database.getRef(targetVideo.getTitle());
+        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
+                if (videoSnapshot.exists()) {
+                    Video video = videoSnapshot.getValue(Video.class);
+                    if (video != null) {
+                        targetVideo.downvote();
+                        videoRef.setValue(targetVideo);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         targetVideo.downvote();
     }
 
