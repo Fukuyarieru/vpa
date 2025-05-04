@@ -36,9 +36,9 @@
         <activity
             android:name=".Dialogs.MainMenuSearchVideoDialogActivity"
             android:exported="false" />
-        <activity
-            android:name=".Activities.VideoPlayerActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".Activities.VideoPlayerActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".ListViewComponents.UserListViewComponent"
             android:exported="false" />

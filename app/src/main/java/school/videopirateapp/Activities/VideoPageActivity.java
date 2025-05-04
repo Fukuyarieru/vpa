@@ -36,6 +36,7 @@ public class VideoPageActivity extends AppCompatActivity {
     TextView tvVideoTitle;
     EditText etComment;
     Button btnMakeComment;
+    Button btnBack;
     ListView lvComments;
     ArrayList<Comment>comments;
     CommentAdapter commentAdapter;
@@ -52,9 +53,16 @@ public class VideoPageActivity extends AppCompatActivity {
         etComment=findViewById(R.id.Video_Page_EditText_Comment);
         btnMakeComment=findViewById(R.id.Video_Page_Button_AddComment);
         lvComments=findViewById(R.id.Video_Page_ListView_Comments);
+        btnBack=findViewById(R.id.Video_Page_Button_Back);
 
         videoView=findViewById(R.id.Video_Page_VideoView_Video);
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
         Intent intent=getIntent();

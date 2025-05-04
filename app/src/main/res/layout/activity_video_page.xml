@@ -8,13 +8,28 @@
     android:orientation="vertical"
     tools:context=".Activities.VideoPageActivity">
 
-<!--    TODO: add onClick to play video-->
-    <Button
-        android:id="@+id/Video_Page_Button_CloseVideo"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:text="Back" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/Video_Page_Button_UserPage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="userPage" />
+
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/Video_Page_Button_Back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="back" />
+    </LinearLayout>
 
     <VideoView
         android:id="@+id/Video_Page_VideoView_Video"
@@ -52,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5sp"
                 android:gravity="center"
-                android:text="Uploader" />
+                android:text="videoUploader" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,14 +89,14 @@
                     android:padding="5sp"
                     android:gravity="top"
                     android:layout_weight="2"
-                    android:text="VideoTitle" />
+                    android:text="videoTitle" />
 
                 <Button
                     android:id="@+id/Video_Page_Button_VideoDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="Details" />
+                    android:text="videoOptions" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -132,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="makeComment"
-            android:text="Add Comment" />
+            android:text="addComment" />
     </LinearLayout>
 
     <ListView

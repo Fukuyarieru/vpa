@@ -43,6 +43,7 @@ public class UserPageActivity extends AppCompatActivity {
     Button btnVideos;
     Button btnPlaylists;
     Button btnComments;
+    Button btnBack;
 
     VideoAdapter videoAdapter;
     CommentAdapter commentAdapter;
@@ -61,6 +62,14 @@ public class UserPageActivity extends AppCompatActivity {
         btnVideos=findViewById(R.id.User_Page_Button_Videos);
         btnPlaylists=findViewById(R.id.User_Page_Button_Playlists);
         btnComments=findViewById(R.id.User_Page_Button_Comments);
+        btnBack=findViewById(R.id.User_Page_Button_Back);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         Intent intent=getIntent();
         user=Database.getUser(intent.getStringExtra("user"));
@@ -126,9 +135,6 @@ public class UserPageActivity extends AppCompatActivity {
         TextView tvVideoTitle=view.findViewById(R.id.Video_ListView_Component_TextView_VideoTitle);
         String videoTitle=tvVideoTitle.getText().toString();
         openVideoPage(this,videoTitle);
-    }
-    public void Close(View view) {
-        finish();
     }
     public void ListViewVideos(View view) {
         ShowVideos();
