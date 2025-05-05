@@ -14,7 +14,7 @@ public class Video {
 
     private String Title;
     private String Uploader;
-    private ArrayList<Comment>Comments;
+    private ArrayList<Comment>Commengit addts;
     private Integer Views;
     private Integer Upvotes;
     private Integer Downvotes;
