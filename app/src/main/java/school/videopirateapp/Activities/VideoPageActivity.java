@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,7 +89,6 @@ public class VideoPageActivity extends AppCompatActivity {
         }
 
         videoView.setVideoPath(currentVideo.getUrl());
-
 
 
 

@@ -88,13 +88,14 @@ public class Video {
     @Deprecated
     public void upvote() {
         this.Upvotes++;
-        this.Score-=15;
+        this.Score+=15;
     }
     @Deprecated
     public void downvote() {
         this.Downvotes++;
-        this.Score+=15;
+        this.Score-=15;
     }
+    // ???????
     @Deprecated
     public void view() {
         this.Views++;
@@ -114,6 +115,7 @@ public class Video {
         this.Url=url;
 
         this.Score=0;
+        this.Score+=views*1;
 
 
     }

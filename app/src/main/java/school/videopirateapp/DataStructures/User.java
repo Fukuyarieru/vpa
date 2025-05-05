@@ -14,23 +14,21 @@ public class User {
     private Map<String, ArrayList<Comment>> Comments;
     private ArrayList<String> ownedPlaylists;
     private String Password;
-    private ArrayList<Byte> image; //TODO, change this type later
-
+    private ArrayList<Byte> image;
+    // <Context,Vote>
+    private Map<String,Vote> Votes;
     private enum Vote {
         UPVOTE,
         DOWNVOTE
     }
-
-
-
-    private Map<String,Vote> Votes;
-
-
+    // String = Context
+    private ArrayList<String> upvotes;
+    private ArrayList<String> downvotes;
+    private Integer videosWatched;
 
     // Integer totalViews =====> TODO
     // Integer totalUpvotes ===> TODO
     // Integer totalDownvotes => TODO
-    // Integer watched ========> TODO
 
     private static final User defaultUser=new User();
 

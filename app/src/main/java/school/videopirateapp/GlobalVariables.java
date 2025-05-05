@@ -9,7 +9,8 @@ import java.util.Optional;
 
 import school.videopirateapp.DataStructures.User;
 
-public class GlobalVariables {
+public abstract class GlobalVariables {
+
 
     public static Optional<User> loggedUser= Optional.empty();
 
