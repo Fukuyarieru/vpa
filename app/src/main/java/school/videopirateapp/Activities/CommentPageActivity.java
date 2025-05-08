@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import school.videopirateapp.R;
 
-public class CommentPage_Activity extends AppCompatActivity {
+public class CommentPageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

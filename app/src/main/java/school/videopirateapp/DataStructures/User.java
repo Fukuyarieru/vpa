@@ -14,15 +14,31 @@ public class User {
     private Map<String, ArrayList<Comment>> Comments;
     private ArrayList<String> ownedPlaylists;
     private String Password;
-    private ArrayList<Byte> image; //TODO, change this type later
+    private ArrayList<Byte> image;
+    // <Context,Vote>
+    private Map<String,Vote> Votes;
+    private enum Vote {
+        UPVOTE,
+        DOWNVOTE
+    }
+    // String = Context
+    private ArrayList<String> upvotes;
+    private ArrayList<String> downvotes;
+    private Integer videosWatched;
 
     // Integer totalViews =====> TODO
     // Integer totalUpvotes ===> TODO
     // Integer totalDownvotes => TODO
-    // Integer watched ========> TODO
 
     private static final User defaultUser=new User();
 
+    public Map<String, Vote> getVotes() {
+        return Votes;
+    }
+
+    public void setVotes(Map<String, Vote> votes) {
+        Votes = votes;
+    }
 
     public String getPassword() {
         return Password;
