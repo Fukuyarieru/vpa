@@ -14,7 +14,7 @@ public class Video {
 
     private String Title;
     private String Uploader;
-    private ArrayList<Comment>Commengit addts;
+    private ArrayList<Comment>Comments;
     private Integer Views;
     private Integer Upvotes;
     private Integer Downvotes;
@@ -74,14 +74,21 @@ public class Video {
     }
     public String getUrl() { return Url; }
     public void setUrl(String url) { Url = url; }
+    public Integer getScore() {
+        return Score;
+    }
+    public void setScore(Integer score) {
+        Score = score;
+    }
 
     @Deprecated
     public void addComment(Comment newComment) {
         // this function adds a comment to the video's comments section, also it changes the context of the comment to be the video's path
         if(!this.Comments.contains(newComment)) {
             this.Comments.add(newComment);
-            Log.w("Video: addComment","Video already contains added comment, not added");
             this.Score+=10;
+        } else {
+            Log.w("Video: addComment","Video already contains same added comment, was not added again");
         }
     }
 

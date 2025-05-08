@@ -199,4 +199,15 @@ public class Utilities {
     public static void Feedback(Context contextThis, String message) {
         Toast.makeText(contextThis, message, Toast.LENGTH_SHORT).show();
     }
+
+    // Video may be expected in edge case to be given as null, function demands it not to be
+    public static void EvaluateVideo(@NonNull Video video) {
+        Integer score=0;
+        score+=video.getViews();
+        score+=video.getUpvotes()*15;
+        score+=video.getDownvotes()*15;
+        score+=video.getComments().size()*10;
+        video.setScore(score);
+    }
+
 }

@@ -35,7 +35,6 @@ public class LoginDialogActivity extends AppCompatActivity {
 //        Intent intent=new Intent(this, UserPageActivity.class);
 //        startActivity(intent);
 
-
 //        // TODO, REMAKE THIS LATER
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
