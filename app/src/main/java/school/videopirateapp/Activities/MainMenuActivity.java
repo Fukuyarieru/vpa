@@ -6,7 +6,6 @@ import static school.videopirateapp.Utilities.openVideoPage;
 import static school.videopirateapp.Utilities.openVideoUploadDialog;
 
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +19,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
@@ -87,10 +88,14 @@ public class MainMenuActivity extends AppCompatActivity {
 //    public void RefreshVideosButton(View view) {
 //        VideosListViewInit();
 //    }
-    public void refreshVideos(View view) {
+    public void refreshVideosButton(View view) {
+        refreshVideos();
+    }
+    public void refreshVideos() {
         videoListViewInit(); // TODO, TEMPORARY SOLUTION FOR THE MENU WHICH DOES NOT WORK
         Utilities.Feedback(this,"Videos refreshed");
     }
+
     public void uploadVideo(View view) {
         openVideoUploadDialog(this);
     }
