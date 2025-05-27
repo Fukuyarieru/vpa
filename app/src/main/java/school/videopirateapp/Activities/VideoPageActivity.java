@@ -1,5 +1,6 @@
 package school.videopirateapp.Activities;
 
+import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.TimeNow;
 //import static school.videopirateapp.Utilities.openVideoPlayer;
 
@@ -92,18 +93,36 @@ public class VideoPageActivity extends AppCompatActivity {
         btnUpvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.i("VideoPageActivity: btnUpvote", "btnUpvote clicked");
+                if(GlobalVariables.loggedUser.isEmpty()) {
+                    Feedback(VideoPageActivity.this,"You must be logged in to upvote");
+                } else {
+                    if(GlobalVariables.loggedUser.get().getUpvotes().contains(currentVideo.getTitle())) {
+                        Feedback(VideoPageActivity.this,"You have this video already upvoted");
+                    } else {
+                        Database.upvoteVideo(currentVideo, GlobalVariables.loggedUser.get());
+                        Feedback(VideoPageActivity.this,"Video upvoted");
+                    }
+                }
             }
         });
 
         btnDownvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.i("VideoPageActivity: btnDownvote", "btnDownvote clicked");
+                if(GlobalVariables.loggedUser.isEmpty()) {
+                    Feedback(VideoPageActivity.this,"You must be logged in to downvote");
+                } else {
+                    if(GlobalVariables.loggedUser.get().getUpvotes().contains(currentVideo.getTitle())) {
+                        Feedback(VideoPageActivity.this,"You have this video already downvoted");
+                    } else {
+                        Database.downvoteVideo(currentVideo, GlobalVariables.loggedUser.get());
+                        Feedback(VideoPageActivity.this,"Video downvoted");
+                    }
+                }
             }
         });
-
-
 
         videoView.setVideoPath(currentVideo.getUrl());
 
@@ -124,9 +143,6 @@ public class VideoPageActivity extends AppCompatActivity {
 //
 //        videoView.setVideoURI(videoUri);
 //
-    }
-    public void Close(View view) {
-        finish();
     }
     public void openUserPage(View view) {
         Utilities.openUserPage(this, currentVideo.getUploader());
