@@ -37,11 +37,12 @@ public class VideoPageActivity extends AppCompatActivity {
     TextView tvVideoTitle;
     EditText etComment;
     Button btnMakeComment;
+    Button btnUpvote;
+    Button btnDownvote;
     Button btnBack;
     ListView lvComments;
     ArrayList<Comment>comments;
     CommentAdapter commentAdapter;
-
     VideoView videoView;
 
     @Override
@@ -87,6 +88,22 @@ public class VideoPageActivity extends AppCompatActivity {
             Log.e("VideoPageActivit: currentVideo.getUrl()","Video URL is empty");
             currentVideo.setUrl("https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4");
         }
+
+        btnUpvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btnDownvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
 
         videoView.setVideoPath(currentVideo.getUrl());
 

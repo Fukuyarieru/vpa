@@ -77,9 +77,9 @@ public class UserPageActivity extends AppCompatActivity {
         Feedback(this, user.toString());
 
         videos = Database.getVideosArray(user.getUploads().getVideos());
-        for (Video video : videos) {
-            Log.i("TEST", video.toString());
-        }
+//        for (Video video : videos) {
+//            Log.i("TEST", video.toString());
+//        }
 
         playlists = new ArrayList<>();
         ArrayList<String> arrPlaylistsStr = user.getOwnedPlaylists();
@@ -109,9 +109,9 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
     public void ShowVideos() {
-        for (Video video : videos) {
-            Log.i("TEST", video.toString());
-        }
+//        for (Video video : videos) {
+//            Log.i("TEST", video.toString());
+//        }
         Toast.makeText(this, "There are " + videos.size() + " videos", Toast.LENGTH_SHORT).show();
 
         VideoAdapter videoAdapter = new VideoAdapter(this, R.layout.activity_video_listview_component, videos);

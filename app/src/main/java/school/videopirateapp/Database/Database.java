@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
@@ -21,11 +22,11 @@ import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
 
 public abstract class Database {
-    private static FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
+    private static final FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 
     @Deprecated
     public static DatabaseReference getRef(String ref) {
-        if (ref == "") {
+        if (ref.isEmpty()) {
             Log.e("Database: getRef", "Empty string passed to database reference");
             return database.getReference("ERROR_REF_CANNOT_BE_EMPTY");
         }
@@ -61,12 +62,6 @@ public abstract class Database {
     }
 
     public static void addComment(@NonNull Comment newComment, @NonNull Video targetVideo) {
-
-        // i cannot do this kind of code here because Videos works like a local copy of the database, local scope. in here the Database i am supposed to check gracefully whats happening
-//        if(Videos.getVideo(targetVideo.getTitle())!=null) {
-//            targetVideo=Videos.
-//        }
-
         // first check if video exists at all
         DatabaseReference videoRef = Database.getRef("videos").child(targetVideo.getTitle());
         videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -74,8 +69,6 @@ public abstract class Database {
             public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                 // video needs to exist
                 if (videoSnapshot.exists()) {
-//                    Video video=videoSnapshot.getValue(Video.class);
-
                     DatabaseReference userRef = Database.getRef("users").child(newComment.getAuthor());
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -83,12 +76,18 @@ public abstract class Database {
                             // user needs to exist
                             if (userSnapshot.exists()) {
                                 User user = userSnapshot.getValue(User.class);
+                                assert user != null; // android studio nagging
+
+                                // update locally
                                 newComment.setContext(targetVideo.Context());
                                 targetVideo.addComment(newComment); // sets the comment context to this video
-                                assert user != null; // TODO, Remove or Replace later, this is here because of android studio nagging
                                 user.addComment(newComment);
+
+                                // update database
                                 userRef.setValue(user);
                                 videoRef.setValue(targetVideo);
+
+                                Log.i("Database: addComment", "Added comment"+ newComment.getComment()+" to video "+targetVideo.getTitle());
                             }
                         }
 
@@ -108,6 +107,7 @@ public abstract class Database {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // some error idk
+                Log.e("Database: addComment", "Failed to add listener to videoRef");
             }
         });
     }
@@ -123,6 +123,7 @@ public abstract class Database {
                     if (video != null) {
                         targetVideo.upvote();
                         videoRef.setValue(targetVideo);
+                        Log.i("Database: upvoteVideo", "Upvoted video "+targetVideo.getTitle());
                     }
                 }
                 else {
@@ -132,10 +133,10 @@ public abstract class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // some error
+                Log.e("Database: upvoteVideo", "Failed to add listener to videoRef");
             }
         });
-        targetVideo.upvote();
     }
 
     public static void downvoteVideo(Video targetVideo) {
@@ -148,6 +149,7 @@ public abstract class Database {
                     if (video != null) {
                         targetVideo.downvote();
                         videoRef.setValue(targetVideo);
+                        Log.i("Database: downvoteVideo", "Downvoted video "+targetVideo.getTitle());
                     }
                 } else {
                     Log.e("Database: upvoteVideo","Video does not exist");
@@ -156,10 +158,10 @@ public abstract class Database {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // some error
+                Log.e("Database: downvoteVideo", "Failed to add listener to videoRef");
             }
         });
-        targetVideo.downvote();
     }
 
     public static User getUser(String userName) {
@@ -176,7 +178,7 @@ public abstract class Database {
         return Playlists.getPlaylist(playlistTitle);
     }
 
-    public static HashMap<String, Video> getVideos() {
+    public static Map<String, Video> getVideos() {
         Log.i("Database: getVideos", "Getting videos from database");
         return Videos.getVideos();
     }
@@ -196,30 +198,34 @@ public abstract class Database {
 
     public static void addVideo(Video newVideo) { // video already got a user ini it
         // change the unique key later to be some ID or something?
-        DatabaseReference videoRef = database.getReference("videos").child(newVideo.getTitle()); // is the .child(newVideo) behavior alright?
+
+        DatabaseReference videoRef = database.getReference("videos").child(newVideo.getTitle());
         videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
+                // check if video doesn't exist
                 if (!videoSnapshot.exists()) {
-                    // get the uploader name
                     DatabaseReference userRef = database.getReference("users").child(newVideo.getUploader());
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                            // check if user exists
                             if (userSnapshot.exists()) {
 //                                DatabaseReference videoRef=database.getReference("videos").child(newVideo.getTitle());
                                 videoRef.setValue(newVideo);
                                 User user = userSnapshot.getValue(User.class);
                                 user.getUploads().addVideo(newVideo);
                                 userRef.setValue(user);
+                                Log.i("Database: addVideo", "Added video to database: " + newVideo.getTitle());
                             } else {
                                 // user does not exist, do not add the video
+                                Log.e("Database: addVideo", "User does not exist");
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            Log.e("Database: addVideo", "Failed to add listener to userRef");
                         }
                     });
                 }
@@ -231,6 +237,7 @@ public abstract class Database {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // some error
+                Log.e("Database: addVideo", "Failed to add listener to videoRef");
             }
         });
     }
@@ -240,26 +247,33 @@ public abstract class Database {
         // TODO, redo the logic here, playlists shouldnt be a standalone object, as they need an owner, therefore this functions need to have something that the playlist will be connected to, P.S user most likely
         // TODO 2, or not
 
-        DatabaseReference playlistRef = database.getReference("playlists").child(newPlaylist.getTitle());
+        DatabaseReference playlistRef =Database.getRef("playlists").child("&"+newPlaylist.getTitle());
         playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
+                // check if playlist doesn't exist
                 if (!playlistSnapshot.exists()) {
                     DatabaseReference userRef = database.getReference("users").child(newPlaylist.getOwner());
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                            // check if associated user exists
                             if (userSnapshot.exists()) {
                                 User user = userSnapshot.getValue(User.class);
+                                assert user != null;
                                 user.addPlaylist(newPlaylist);
                                 playlistRef.setValue(newPlaylist);
                                 userRef.setValue(user);
+                                Log.i("Database: addPlaylist", "Added playlist to database: " + newPlaylist.getTitle());
+                            } else {
+                                // user does not exist, do not add the playlist
+                                Log.e("Database: addPlaylist", "User does not exist");
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            Log.e("Database: addPlaylist", "Failed to add listener to userRef");
                         }
                     });
                 } else {
@@ -271,17 +285,50 @@ public abstract class Database {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // some error
+                Log.e("Database: addPlaylist", "Failed to add listener to playlistRef");
             }
         });
     }
 
     public static void addVideoToPlaylist(Video video, Playlist targetPlaylist) {
-        // TODO
-        // TODO 2, I REALLY SHOULD START USING THIS CAUSE THERE IS A BUG IN WHICH THE PLAYLISTS TREE DOES NOT UPDATE CORRECTLY
+        DatabaseReference videoRef=Database.getRef("videos").child(video.getTitle());
+        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
+                // check if video exists
+                if(videoSnapshot.exists()) {
+                    DatabaseReference playlistRef=Database.getRef("playlists").child("&"+targetPlaylist.getTitle());
+                    playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
+                            // check if playlist exists
+                            if(playlistSnapshot.exists()) {
+                                targetPlaylist.addVideo(video);
+                                playlistRef.setValue(targetPlaylist);
+                                Log.i("Database: addVideoToPlaylist", "Added video to playlist");
+                            }
+                            else {
+                                Log.e("Database: addVideoToPlaylist", "Playlist does not exist");
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e("Database: addVideoToPlaylist", "Failed to add listener to playlistRef");
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Database: addVideoToPlaylist", "Failed to add listener to videoRef");
+            }
+        });
     }
 
 //    @Deprecated
-//    public static <T extends Object implements> T getObject(String Path) {
+//    public static <T extends Object> T getObject(String Path) {
 //        T val = null;
 //        Database.getRef(Path).addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override

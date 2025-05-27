@@ -125,6 +125,8 @@ public class Video {
         this.Score+=views*1;
 
 
+
+
     }
     public Video(String Title, String Uploader) {
         this(Title,Uploader,new ArrayList<Comment>(),0,0,0,TimeNow(),new ArrayList<Byte>(),"");

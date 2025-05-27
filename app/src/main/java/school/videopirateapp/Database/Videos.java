@@ -7,23 +7,23 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import school.videopirateapp.DataStructures.Video;
 
 public abstract class Videos {
-    private static HashMap<String, Video> Videos = new HashMap<String, Video>();
 
+    // TODO, check this interaction between the uninstantiable Map and the instantiable HashMap
+    private static Map<String, Video> Videos = new HashMap<>();
 
     private Videos() {
         throw new UnsupportedOperationException("This class is not instantiable.");
     }
 
-
-    public static HashMap<String, Video> getVideos() {
+    public static Map<String, Video> getVideos() {
         return Videos;
     }
 
@@ -49,7 +49,7 @@ public abstract class Videos {
             @Override
             public void onDataChange(@NonNull DataSnapshot videosSnapshot) {
                 if (videosSnapshot.exists()) {
-                    HashMap<String, Video> VideoMap = new HashMap<>();
+                    Map<String, Video> VideoMap = new HashMap<>();
                     Log.i("Videos: Refresh", "Found videos from database");
                     for (DataSnapshot videoSnapshot : videosSnapshot.getChildren()) {
                         Video video = videoSnapshot.getValue(Video.class);
