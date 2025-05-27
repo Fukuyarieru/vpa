@@ -38,21 +38,26 @@ public class Utilities {
     public static <T> ArrayList<T> HashMapToArrayList(@NonNull HashMap<String, T> hashMap) {
         Log.i("Utilities", "Converting HashMap to ArrrayList");
         // this function does not do any sorting
-        ArrayList<T> arrayList = new ArrayList<>();
-        for (T value : hashMap.values()) {
-            arrayList.add(value);
-        }
-        return arrayList;
+//        ArrayList<T> arrayList = new ArrayList<>();
+//        for (T value : hashMap.values()) {
+//            arrayList.add(value);
+//        }
+//        return arrayList;
+
+        return new ArrayList<>(hashMap.values());
+
     }
 
     public static <T> ArrayList<T> MapToArrayList(@NonNull Map<String, T> hashMap) {
         Log.i("Utilities", "Converting HashMap to ArrrayList");
         // this function does not do any sorting
-        ArrayList<T> arrayList = new ArrayList<>();
-        for (T value : hashMap.values()) {
-            arrayList.add(value);
-        }
-        return arrayList;
+//        ArrayList<T> arrayList = new ArrayList<>();
+//        for (T value : hashMap.values()) {
+//            arrayList.add(value);
+//        }
+//        return arrayList;
+
+        return new ArrayList<>(hashMap.values());
     }
 
     public static String TimeNow() {
@@ -202,11 +207,11 @@ public class Utilities {
 
     // Video may be expected in edge case to be given as null, function demands it not to be
     public static void EvaluateVideo(@NonNull Video video) {
-        Integer score=0;
-        score+=video.getViews();
-        score+=video.getUpvotes()*15;
-        score+=video.getDownvotes()*15;
-        score+=video.getComments().size()*10;
+        Integer score = 0;
+        score += video.getViews();
+        score += video.getUpvotes() * 15;
+        score += video.getDownvotes() * 15;
+        score += video.getComments().size() * 10;
         video.setScore(score);
     }
 

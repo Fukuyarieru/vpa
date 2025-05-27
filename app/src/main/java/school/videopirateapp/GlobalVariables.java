@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.DataStructures.Video;
 
 public abstract class GlobalVariables {
 
