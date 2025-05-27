@@ -1,6 +1,7 @@
 package school.videopirateapp.Activities;
 
 import static school.videopirateapp.Utilities.HashMapToArrayList;
+import static school.videopirateapp.Utilities.MapToArrayList;
 import static school.videopirateapp.Utilities.openLoginDialog;
 import static school.videopirateapp.Utilities.openVideoPage;
 import static school.videopirateapp.Utilities.openVideoUploadDialog;
@@ -79,7 +80,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     public void videoListViewInit() {
         Videos.Refresh(); // more strange behavior here, i think
-        videos=HashMapToArrayList(Database.getVideos());
+        videos=MapToArrayList(Database.getVideos());
         videosAdapter =new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
         listView.setAdapter(videosAdapter);
         Log.i("MainMenuActivity","Updating videos listview");

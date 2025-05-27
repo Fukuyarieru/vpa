@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Videopirateapp"
         tools:targetApi="31">
         <activity
+            android:name=".Dialogs.VideoOptionDialogActivity"
+            android:exported="false" />
+        <activity
             android:name=".Dialogs.CommentOptionsDialogActivity"
             android:exported="false" />
         <activity
@@ -35,10 +38,9 @@
             android:exported="false" />
         <activity
             android:name=".Dialogs.MainMenuSearchVideoDialogActivity"
-            android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".Activities.VideoPlayerActivity"-->
-<!--            android:exported="false" />-->
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Activities.VideoPlayerActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".ListViewComponents.UserListViewComponent"
             android:exported="false" />

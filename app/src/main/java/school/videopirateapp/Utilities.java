@@ -69,30 +69,35 @@ public class Utilities {
     }
 
     public static void openVideoPage(@NonNull Context currentActivityThis, String videoTitle) {
+        Log.i("Utilities: openVideoPage", "Video page opened");
         Intent intent = new Intent(currentActivityThis, VideoPageActivity.class);
         intent.putExtra("videoTitle", videoTitle);
         currentActivityThis.startActivity(intent);
     }
 
     public static void openUserPage(@NonNull Context currentActivityThis, String userName) {
+        Log.i("Utilities: openUserPage", "User page opened");
         Intent intent = new Intent(currentActivityThis, UserPageActivity.class);
         intent.putExtra("user", userName);
         currentActivityThis.startActivity(intent);
     }
 
     public static void openCommentPage(@NonNull Context currentActivityThis, String commentContext) {
+        Log.i("Utilities: openCommentPage", "Comment page opened");
         Intent intent = new Intent(currentActivityThis, CommentPageActivity.class);
         intent.putExtra("context", commentContext);
         currentActivityThis.startActivity(intent);
     }
 
     public static void openCommentOptionsDialog(@NonNull Context currentActivityThis, String commentContext) {
+        Log.i("Utilities: openCommentOptionsDialog", "Comment options dialog opened");
         Dialog dialog = new Dialog(currentActivityThis);
         dialog.setContentView(R.layout.activity_comment_options_dialog);
         dialog.show();
     }
 
     public static void openPlaylistPage(@NonNull Context currentActivityThis, String playlistTitle) {
+        Log.i("Utilities: openPlaylistPage", "Playlist page opened");
         Intent intent = new Intent(currentActivityThis, PlaylistPageActivity.class);
         intent.putExtra("playlistTitle", playlistTitle);
         currentActivityThis.startActivity(intent);
@@ -116,14 +121,15 @@ public class Utilities {
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
-    public static void dialogCommentOptions(Context contextThis, Comment comment) {
+    public static void openCommentOptionsDialog(Context contextThis, Comment comment) {
         Dialog dialog = new Dialog(contextThis);
         dialog.setContentView(R.layout.activity_comment_options_dialog);
         dialog.show();
+        Log.i("Utilities: openCommentOptionsDialog", "Comment options dialog opened");
     }
 
-    public static void openLoginDialog(Context thisContenxt) {
-        Dialog loginDialog = new Dialog(thisContenxt); //this screen as context
+    public static void openLoginDialog(Context thisContext) {
+        Dialog loginDialog = new Dialog(thisContext); //this screen as context
         loginDialog.setContentView(R.layout.activity_login_dialog);
         EditText etUsername = loginDialog.findViewById(R.id.Login_Dialog_EditText_Username);
         EditText etPassword = loginDialog.findViewById(R.id.Login_Dialog_EditText_Password);
@@ -139,19 +145,19 @@ public class Utilities {
 
                 if (username.isEmpty() || password.isEmpty()) {
                     // Display a message if the fields are empty
-                    Toast.makeText(thisContenxt, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(thisContext, "Please enter both username and password", Toast.LENGTH_SHORT).show();
                 } else if (!username.startsWith("@")) {
-                    Toast.makeText(thisContenxt, "Usernames must start with @", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(thisContext, "Usernames must start with @", Toast.LENGTH_SHORT).show();
                 } else {
                     User desiredUser = Database.getUser(username);
 //                        Toast.makeText(MainMenuActivity.this,"user: "+desiredUser.getName()+", pass: "+desiredUser.getPassword(),Toast.LENGTH_SHORT).show();
                     if (desiredUser == null) {
-                        Toast.makeText(thisContenxt, "User was not found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(thisContext, "User was not found", Toast.LENGTH_SHORT).show();
                     } else if (!desiredUser.getPassword().equals(password)) {
-                        Toast.makeText(thisContenxt, "Password does not match", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(thisContext, "Password does not match", Toast.LENGTH_SHORT).show();
                     } else {
                         GlobalVariables.loggedUser = Optional.of(desiredUser);
-                        Toast.makeText(thisContenxt, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(thisContext, "Logged in successfully", Toast.LENGTH_SHORT).show();
                         loginDialog.dismiss();
                     }
 
@@ -159,6 +165,7 @@ public class Utilities {
             }
         });
         loginDialog.show();
+        Log.i("Utilities: openLoginDialog", "Login dialog opened");
     }
 
     public static void openVideoUploadDialog(Context thisContext) {
@@ -199,6 +206,11 @@ public class Utilities {
 
             }
         });
+    }
+    public static void openVideoOptionsDialog(Context thisContext, Video video) {
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_video_option_dialog);
+        dialog.show();
     }
 
     public static void Feedback(Context contextThis, String message) {

@@ -2,12 +2,11 @@ package school.videopirateapp.Activities;
 
 import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.MapToArrayList;
-import static school.videopirateapp.Utilities.dialogCommentOptions;
+import static school.videopirateapp.Utilities.openCommentOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoPage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +27,7 @@ import school.videopirateapp.ListViewComponents.CommentAdapter;
 import school.videopirateapp.ListViewComponents.PlaylistAdapter;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
+import school.videopirateapp.Utilities;
 
 public class UserPageActivity extends AppCompatActivity {
 
@@ -136,7 +136,7 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
     public void openCommentOptionsDialog(View view) {
-        dialogCommentOptions(this, Comment.Default()); //TODO, replace the default impl, change it to find the local comment
+        Utilities.openCommentOptionsDialog(this, Comment.Default()); //TODO, replace the default impl, change it to find the local comment
     }
 
     public void openVideo(View view) {

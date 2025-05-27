@@ -111,6 +111,7 @@ public class Video {
 
 
     public Video(String title,String Uploader, ArrayList<Comment> comments, Integer views, Integer upvotes, Integer downvotes, String uploadDate, ArrayList<Byte> thumbnail, String url) {
+        // detailed constructor for any video
         this.Title=title;
         this.Uploader=Uploader;
         this.Comments=comments;
@@ -123,16 +124,17 @@ public class Video {
 
         this.Score=0;
         this.Score+=views*1;
-
-
-
-
+        Log.i("Video: Constructor","Video created");
     }
     public Video(String Title, String Uploader) {
+        // constructor for new videos
         this(Title,Uploader,new ArrayList<Comment>(),0,0,0,TimeNow(),new ArrayList<Byte>(),"");
+        Log.i("Video: Constructor","New video created");
     }
     public Video()  {
-        this("defaultVideo", User.Default().getName());
+        // constructor for default video
+        this("defaultVideo", User.Default().getName(),new ArrayList<Comment>(),0,0,0,"NO-DATE-SET",new ArrayList<Byte>(),"");
+        Log.i("Video: Constructor","Default video created");
     }
 
     public static Video Default() {
@@ -142,6 +144,7 @@ public class Video {
     public String Context() {
         return "videos-"+this.Title+"-comments";
     }
+
     @NonNull
     @Override
     public String toString(){
