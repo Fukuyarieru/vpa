@@ -19,11 +19,11 @@ public class CommentOptionsDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_options_dialog);
-
-        btnDeleteComment=findViewById(R.id.CommentOptions_Dialog_Button_DeleteComment);
-        btnCommentPage=findViewById(R.id.CommentOptions_Dialog_Button_CommentPage);
-        btnEditComment=findViewById(R.id.CommentOptions_Dialog_Button_EditComment);
-        tvContext=findViewById(R.id.CommentOptions_Dialog_TextView_Context);
+//
+//        btnDeleteComment=findViewById(R.id.CommentOptions_Dialog_Button_DeleteComment);
+//        btnCommentPage=findViewById(R.id.CommentOptions_Dialog_Button_CommentPage);
+//        btnEditComment=findViewById(R.id.CommentOptions_Dialog_Button_EditComment);
+//        tvContext=findViewById(R.id.CommentOptions_Dialog_TextView_Context);
 
 
 

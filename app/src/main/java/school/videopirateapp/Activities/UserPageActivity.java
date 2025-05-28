@@ -1,8 +1,11 @@
 package school.videopirateapp.Activities;
 
+import static android.view.View.INVISIBLE;
 import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.MapToArrayList;
 import static school.videopirateapp.Utilities.openCommentOptionsDialog;
+import static school.videopirateapp.Utilities.openPlaylistOptionsDialog;
+import static school.videopirateapp.Utilities.openUserOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoPage;
 
 import android.content.Intent;
@@ -17,12 +20,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
+import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
 import school.videopirateapp.ListViewComponents.PlaylistAdapter;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
@@ -45,6 +50,7 @@ public class UserPageActivity extends AppCompatActivity {
     Button btnPlaylists;
     Button btnComments;
     Button btnBack;
+    Button btnUserOptions;
 
     VideoAdapter videoAdapter;
     CommentAdapter commentAdapter;
@@ -64,7 +70,9 @@ public class UserPageActivity extends AppCompatActivity {
         btnPlaylists = findViewById(R.id.User_Page_Button_Playlists);
         btnComments = findViewById(R.id.User_Page_Button_Comments);
         btnBack = findViewById(R.id.User_Page_Button_Back);
+        btnUserOptions = findViewById(R.id.User_Page_Button_UserOptions);
 
+        btnBack.setText("Back");
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,12 +82,8 @@ public class UserPageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user = Database.getUser(intent.getStringExtra("user"));
-        Feedback(this, user.toString());
 
         videos = Database.getVideosArray(user.getUploads().getVideos());
-//        for (Video video : videos) {
-//            Log.i("TEST", video.toString());
-//        }
 
         playlists = new ArrayList<>();
         ArrayList<String> arrPlaylistsStr = user.getOwnedPlaylists();
@@ -87,26 +91,31 @@ public class UserPageActivity extends AppCompatActivity {
             playlists.add(Database.getPlaylist(str));
         }
 
-        comments = new ArrayList<Comment>();
-        // todo, what a mess
+        comments=new ArrayList<>();
         ArrayList<ArrayList<Comment>> ArrArr = MapToArrayList(user.getComments());
         for (ArrayList<Comment> arr : ArrArr) {
-            for (Comment comment : arr) {
-                comments.add(comment);
-            }
+            comments.addAll(arr);
         }
-//        comments=user.getComments();
 
-        PageInit();
+        UserName.setText(user.getName());
+        UserDescription.setText(user.getDescription());
 
         ShowVideos();
+
+
+        if(GlobalVariables.loggedUser.isEmpty() || !GlobalVariables.loggedUser.get().getName().equals(user.getName())) {
+            btnUserOptions.setVisibility(INVISIBLE);
+        } else {
+            btnUserOptions.setText("User Options");
+            btnUserOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openUserOptionsDialog(UserPageActivity.this, user);
+                }
+            });
+        }
     }
 
-    public void PageInit() {
-        // assuming "user" cannot be null
-        UserName.setText(user.getName());
-        UserDescription.setText("NEEDS TO BE IMPLEMENETED, IN DATABASE");
-    }
 
     public void ShowVideos() {
 //        for (Video video : videos) {
@@ -128,11 +137,6 @@ public class UserPageActivity extends AppCompatActivity {
         Toast.makeText(this, "There are " + comments.size() + " comments", Toast.LENGTH_SHORT).show();
         CommentAdapter commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments);
         listView.setAdapter(commentAdapter);
-    }
-
-    public void openPlaylistActivity(View view) {
-        Intent intent = new Intent(this, PlaylistPageActivity.class);
-        startActivity(intent);
     }
 
 //    public void openCommentOptionsDialog(View view) {

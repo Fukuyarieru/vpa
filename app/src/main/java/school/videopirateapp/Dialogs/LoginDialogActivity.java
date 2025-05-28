@@ -1,9 +1,13 @@
 package school.videopirateapp.Dialogs;
 
+import static school.videopirateapp.Utilities.Feedback;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +17,7 @@ import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
 import school.videopirateapp.Activities.SignupActivity;
+import school.videopirateapp.Utilities;
 
 public class LoginDialogActivity extends AppCompatActivity {
 
@@ -26,39 +31,72 @@ public class LoginDialogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_dialog);
 
-        etUsername =findViewById(R.id.Login_Dialog_EditText_Username);
-        etPassword =findViewById(R.id.Login_Dialog_EditText_Password);
-        btnLogin=findViewById(R.id.Login_Dialog_Button_Login);
-        btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
-    }
-    public void confirmLogin(View view){
-//        Intent intent=new Intent(this, UserPageActivity.class);
-//        startActivity(intent);
-
-//        // TODO, REMAKE THIS LATER
-        String username = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
+//        etUsername =findViewById(R.id.Login_Dialog_EditText_Username);
+//        etPassword =findViewById(R.id.Login_Dialog_EditText_Password);
+//        btnLogin=findViewById(R.id.Login_Dialog_Button_Login);
+//        btnSignup=findViewById(R.id.Login_Dialog_Button_Signup);
 //
-        if (username.isEmpty() || password.isEmpty()) {
-            // Display a message if the fields are empty
-            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            User desiredUser=Database.getUser(username);
-            if(desiredUser.getPassword().equals(password)){
-                Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
-                userPage.setText(username);
-                Toast.makeText(this,"Logged in succesfully",Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
+//        Context context = LoginDialogActivity.this;
+//
+//
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String username = etUsername.getText().toString();
+//                String password = etPassword.getText().toString();
+//                //
+//                if (username.isEmpty() || password.isEmpty()) {
+//                    // Display a message if the fields are empty
+//                    Feedback(context, "Please enter both username and password");
+//                }
+//                else {
+//                    User desiredUser = Database.getUser(username);
+//                    if(desiredUser.getPassword().equals(password)){
+////                        Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
+////                        userPage.setText(username);
+//                        Feedback(context,"Logged in succesfully");
+//                        finish();
+//                    }
+//                }
+//            }
+//        });
+//        btnSignup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Feedback(context,"Signup button clicked");
+//                Utilities.openSignupActivity(context);
+//            }
+//        });
+//    }
+//    public void confirmLogin(View view){
+////        Intent intent=new Intent(this, UserPageActivity.class);
+////        startActivity(intent);
+//
+////        // TODO, REMAKE THIS LATER
+//        String username = etUsername.getText().toString();
+//        String password = etPassword.getText().toString();
+////
+//        if (username.isEmpty() || password.isEmpty()) {
+//            // Display a message if the fields are empty
+//            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
 //        }
-    }
-    public void openSignupActivity(View view){
-        // TODO
-        Intent openSignupActivity=new Intent(this, SignupActivity.class);
-        openSignupActivity.putExtra("username", etUsername.getText().toString());
-        openSignupActivity.putExtra("password", etPassword.getText().toString());
-        startActivity(openSignupActivity);
+//        else {
+//            User desiredUser=Database.getUser(username);
+//            if(desiredUser.getPassword().equals(password)){
+//                Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
+//                userPage.setText(username);
+//                Toast.makeText(this,"Logged in succesfully",Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+//        }
+////        }
+//    }
+//    public void openSignupActivity(View view){
+//        // TODO
+//        Intent openSignupActivity=new Intent(this, SignupActivity.class);
+//        openSignupActivity.putExtra("username", etUsername.getText().toString());
+//        openSignupActivity.putExtra("password", etPassword.getText().toString());
+//        startActivity(openSignupActivity);
+//    }
     }
 }

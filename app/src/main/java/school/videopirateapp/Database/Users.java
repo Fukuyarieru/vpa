@@ -29,29 +29,33 @@ public abstract class Users {
 //    }
     public static User getUser(String userName) {
         // TODO, half ass solution for now
-        if (savedUser == null) {
-            savedUser = User.Default();
-        }
+//        if (savedUser == null) {
+//            savedUser = User.Default();
+//        }
         if (!userName.startsWith("@")) {
             Log.e("Users: getUser", "Given username does not start with @, returning null to fix");
             return null;
         }
-        if (savedUser.getName() != userName) {
+        if (!savedUser.getName().equals(userName)) {
             DatabaseReference userRef = Database.getRef("users").child(userName);
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                    // check if user exists
                     if (userSnapshot.exists()) {
                         savedUser = userSnapshot.getValue(User.class);
+                        assert savedUser != null;
+                        Log.i("Users: getUser", "Fetched user from database: " + savedUser.getName());
                     } else {
                         savedUser = null;
+                        Log.e("Users: getUser", "User does not exist");
                         // throw user not exist?
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    Log.e("Users: getUser", "Failed to add listener to userRef");
                 }
             });
         }

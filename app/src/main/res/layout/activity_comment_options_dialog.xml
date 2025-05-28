@@ -10,25 +10,57 @@
     tools:context=".Dialogs.CommentOptionsDialogActivity">
 
     <Button
-        android:id="@+id/CommentOptions_Dialog_Button_DeleteComment"
+        android:id="@+id/CommentOptions_Dialog_Button_Reply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="deleteComment"
-        android:text="Delete Comment" />
+        android:text="Reply" />
 
     <Button
         android:id="@+id/CommentOptions_Dialog_Button_CommentPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="openCommentPage"
-        android:text="Comment Page" />
+        android:text="commentPage" />
 
     <Button
         android:id="@+id/CommentOptions_Dialog_Button_EditComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="editComment"
-        android:text="Edit Comment" />
+        android:text="editComment" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/CommentOptions_Dialog_Button_Upvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Upvote" />
+
+        <TextView
+            android:id="@+id/CommentOptions_Dialog_TextView_Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:padding="5sp"
+            android:layout_weight="1"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/CommentOptions_Dialog_Button_Downvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Downvote" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/CommentOptions_Dialog_Button_DeleteComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="deleteComment" />
 
     <TextView
         android:id="@+id/CommentOptions_Dialog_TextView_Context"
@@ -36,4 +68,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Context" />
+
+
 </LinearLayout>

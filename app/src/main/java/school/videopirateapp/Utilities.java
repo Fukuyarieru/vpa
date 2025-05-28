@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 import school.videopirateapp.Activities.CommentPageActivity;
 import school.videopirateapp.Activities.PlaylistPageActivity;
+import school.videopirateapp.Activities.SignupActivity;
 import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
 import school.videopirateapp.DataStructures.Comment;
@@ -89,12 +91,84 @@ public class Utilities {
         currentActivityThis.startActivity(intent);
     }
 
-    @Deprecated
-    public static void openCommentOptionsDialog(@NonNull Context currentActivityThis, String commentContext) {
+    public static void openCommentOptionsDialog(Context contextThis, Comment comment) {
         Log.i("Utilities: openCommentOptionsDialog", "Comment options dialog opened");
-        Dialog dialog = new Dialog(currentActivityThis);
+        Dialog dialog = new Dialog(contextThis);
         dialog.setContentView(R.layout.activity_comment_options_dialog);
+
+        Button btnDeleteComment = dialog.findViewById(R.id.CommentOptions_Dialog_Button_DeleteComment);
+        Button btnCommentPage = dialog.findViewById(R.id.CommentOptions_Dialog_Button_CommentPage);
+        Button btnEditComment = dialog.findViewById(R.id.CommentOptions_Dialog_Button_EditComment);
+        TextView tvContext = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Context);
+        TextView tvScore = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Score);
+        Button btnDownvote = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Downvote);
+        Button btnUpvote = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Upvote);
+        Button btnReply = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Reply);
+
+        tvContext.setText(comment.getContext());
+        btnDeleteComment.setText("Delete Comment");
+        btnCommentPage.setText("Comment Page");
+        btnEditComment.setText("Edit Comment");
+        tvScore.setText("0"); // TODO, score for replies not implemented yet
+        btnDownvote.setText("\uD83D\uDC4E");
+        btnUpvote.setText("\uD83D\uDC4D");
+        btnReply.setText("Reply");
+
+        btnDeleteComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentOptionsDialog", "TODO: DELETE_COMMENT");
+                Feedback(contextThis, "TODO: DELETE_COMMENT");
+            }
+        });
+
+        btnCommentPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentOptionsDialog", "Opening comment page");
+                openCommentPage(contextThis, comment.getContext());
+            }
+        });
+
+        btnEditComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentOptionsDialog", "TODO: EDIT_COMMENT");
+                Feedback(contextThis, "TODO: EDIT_COMMENT");
+            }
+        });
+
+        btnDownvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentOptionsDialog", "TODO: DOWNVOTE");
+                Feedback(contextThis, "TODO: DOWNVOTE");
+            }
+        });
+
+        btnUpvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentOptionsDialog", "TODO: UPVOTE");
+                Feedback(contextThis, "TODO: UPVOTE");
+            }
+        });
+
+        btnReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentOptionsDialog", "TODO: REPLY");
+                Feedback(contextThis, "TODO: REPLY");
+            }
+        });
         dialog.show();
+    }
+
+
+    public static void openSignupActivity(@NonNull Context currentActivityThis) {
+        Log.i("Utilities: openSignupActivity", "Signup activity opened");
+        Intent openSignupActivity=new Intent(currentActivityThis, SignupActivity.class);
+        currentActivityThis.startActivity(openSignupActivity);
     }
 
     public static void openPlaylistPage(@NonNull Context currentActivityThis, String playlistTitle) {
@@ -108,7 +182,7 @@ public class Utilities {
 
     }
 
-    public static Bitmap BytyArrayToBitmap(ArrayList<Byte> byteArray) {
+    public static Bitmap ByteArrayToBitmap(ArrayList<Byte> byteArray) {
         if (byteArray == null || byteArray.isEmpty()) {
             byte[] arr = new byte[]{1};
             return BitmapFactory.decodeByteArray(arr, 0, arr.length);
@@ -122,14 +196,8 @@ public class Utilities {
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
-    public static void openCommentOptionsDialog(Context contextThis, Comment comment) {
-        Dialog dialog = new Dialog(contextThis);
-        dialog.setContentView(R.layout.activity_comment_options_dialog);
-        dialog.show();
-        Log.i("Utilities: openCommentOptionsDialog", "Comment options dialog opened");
-    }
 
-    public static void openLoginDialog(Context thisContext) {
+    public static void openLoginDialog(Context thisContext, Button originalLoginBtn) {
         Dialog loginDialog = new Dialog(thisContext); //this screen as context
         loginDialog.setContentView(R.layout.activity_login_dialog);
         EditText etUsername = loginDialog.findViewById(R.id.Login_Dialog_EditText_Username);
@@ -144,27 +212,38 @@ public class Utilities {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
+                Feedback(thisContext,username);
+
                 if (username.isEmpty() || password.isEmpty()) {
                     // Display a message if the fields are empty
-                    Toast.makeText(thisContext, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                    Feedback(thisContext, "Please enter both username and password");
                 } else if (!username.startsWith("@")) {
-                    Toast.makeText(thisContext, "Usernames must start with @", Toast.LENGTH_SHORT).show();
+                    Feedback(thisContext, "Usernames must start with @");
                 } else {
-                    User desiredUser = Database.getUser(username);
-//                        Toast.makeText(MainMenuActivity.this,"user: "+desiredUser.getName()+", pass: "+desiredUser.getPassword(),Toast.LENGTH_SHORT).show();
-                    if (desiredUser == null) {
-                        Toast.makeText(thisContext, "User was not found", Toast.LENGTH_SHORT).show();
+                    User desiredUser=Database.getUser(username);
+//                    Feedback(thisContext,desiredUser.toString());
+                    if (desiredUser == null) { // BUG HERE, I DONT KNOW WHY, (SKIPS CHECKING PASSWORD), desiredUser will always be default if not found
+                        Feedback(thisContext, "User was not found");
                     } else if (!desiredUser.getPassword().equals(password)) {
-                        Toast.makeText(thisContext, "Password does not match", Toast.LENGTH_SHORT).show();
+                        Feedback(thisContext, "Password does not match");
                     } else {
                         GlobalVariables.loggedUser = Optional.of(desiredUser);
-                        Toast.makeText(thisContext, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                        Feedback(thisContext, "Logged in successfully");
+                        originalLoginBtn.setText(username);
                         loginDialog.dismiss();
                     }
 
                 }
             }
         });
+
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSignupActivity(thisContext);
+            }
+        });
+
         loginDialog.show();
         Log.i("Utilities: openLoginDialog", "Login dialog opened");
     }
@@ -189,14 +268,16 @@ public class Utilities {
                 String chosenTitle = etVideoTitle.getText().toString();
 //                if chosenTitle=""  // add a function named Video.IsProperName(videoName) which returns true if good and false if bad;
                 if (Database.getVideo(chosenTitle) != null) {
-                    Toast.makeText(thisContext, "Video with that title already exists", Toast.LENGTH_SHORT).show();
+                    Feedback(thisContext, "Video with that title already exists");
                 } else {
                     if (GlobalVariables.loggedUser.isPresent()) {
                         Video newVideo = new Video(chosenTitle, GlobalVariables.loggedUser.get().getName());
-                        Toast.makeText(thisContext, "Added video named: " + newVideo.getTitle(), Toast.LENGTH_SHORT).show();
+                        Feedback(thisContext, "Added video named: " + newVideo.getTitle());
                         Database.addVideo(newVideo);
-                    } else {
-                        Toast.makeText(thisContext, "Not logged in", Toast.LENGTH_SHORT).show();
+                        uploadDialog.dismiss();
+                    } // but why?
+                    else {
+                        Feedback(thisContext, "You need to be logged in to upload videos");
                     }
                 }
             }
@@ -211,11 +292,57 @@ public class Utilities {
     public static void openVideoOptionsDialog(Context thisContext, Video video) {
         Dialog dialog = new Dialog(thisContext);
         dialog.setContentView(R.layout.activity_video_option_dialog);
+
+        Button btnDeleteVideo = dialog.findViewById(R.id.VideoOptions_Dialog_Button_DeleteVideo);
+        Button btnEditVideo = dialog.findViewById(R.id.VideoOptions_Dialog_Button_EditVideo);
+        Button btnAddVideoToPlaylist = dialog.findViewById(R.id.VideoOptions_Dialog_Button_AddVideoToPlaylist);
+
+        btnEditVideo.setText("Edit Video");
+        btnDeleteVideo.setText("Delete Video");
+        btnAddVideoToPlaylist.setText("Add Video to Playlist");
+
+        btnDeleteVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openVideoOptionsDialog", "TODO: DELETE_VIDEO");
+                Feedback(thisContext, "TODO: DELETE_VIDEO");
+            }
+        });
+
+        btnEditVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openVideoOptionsDialog", "TODO: EDIT_VIDEO");
+                Feedback(thisContext, "TODO: EDIT_VIDEO");
+            }
+        });
+
+        btnAddVideoToPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openVideoOptionsDialog", "TODO: ADD_VIDEO_TO_PLAYLIST");
+                Feedback(thisContext, "TODO: ADD_VIDEO_TO_PLAYLIST");
+            }
+        });
+
+        dialog.show();
+    }
+
+    public static void openUserOptionsDialog(Context thisContext, User user) {
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_user_options_dialog);
+        dialog.show();
+    }
+
+    public static void openPlaylistOptionsDialog(Context thisContext, String playlistTitle) {
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_playlist_options_dialog);
         dialog.show();
     }
 
     public static void Feedback(Context contextThis, String message) {
-        Log.i("Utilities: Feedback", "Feedback sent: "+message+"\n From: "+contextThis.toString());
+        Log.i("Utilities: Feedback", "Feedback sent: "+message);
+        Log.i("Utilities: Feedback", "Feedback sent from: "+contextThis.toString());
         Toast.makeText(contextThis, message, Toast.LENGTH_SHORT).show();
     }
 

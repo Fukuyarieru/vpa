@@ -1,7 +1,10 @@
 package school.videopirateapp.ListViewComponents;
 
+import static school.videopirateapp.Utilities.ByteArrayToBitmap;
+import static school.videopirateapp.Utilities.openCommentOptionsDialog;
+import static school.videopirateapp.Utilities.openUserPage;
+
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import school.videopirateapp.DataStructures.Comment;
+import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
 import school.videopirateapp.Utilities;
 
@@ -41,30 +45,32 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
         TextView tvUserName=view.findViewById(R.id.Comment_ListView_Component_TextView_UserName);
         TextView tvComment=view.findViewById(R.id.Comment_ListView_Component_TextView_Comment);
-        ImageView userImage=view.findViewById(R.id.Comment_ListView_Component_ImageView_UserImage);
+        TextView tvContext=view.findViewById(R.id.Comment_ListView_Component_TextView_Context);
         TextView tvDate=view.findViewById(R.id.Comment_ListView_Component_TextView_Date);
-//        TextView tvContext=view.findViewById(R.id.Comment_ListView_Component_TextView_Context); // TODO REDO THIS LATER TO WORK
+        ImageView userImage=view.findViewById(R.id.Comment_ListView_Component_ImageView_UserImage);
 
         tvComment.setText(comment.getComment());
         tvUserName.setText(comment.getAuthor());
-        // TODO
-//        Bitmap a= Utilities.BytyArrayToBitmap(comment.getAuthorImage()); // why cant i import utilities here properly? i could fix using this var later
-//        userImage.setImageBitmap(a);
+        tvContext.setText(comment.getContext());
         tvDate.setText(comment.getDate());
-//        tvContext.setText(comment.getContext());
 
-
+        User user= Database.getUser(comment.getAuthor());
+        try {
+            userImage.setImageBitmap(ByteArrayToBitmap(user.getImage()));
+        } catch (Exception e) {
+            userImage.setImageResource(R.drawable.default_user_image);
+        }
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utilities.openUserPage(CommentAdapter.super.getContext(),comment.getAuthor());
+                openUserPage(CommentAdapter.super.getContext(),comment.getAuthor());
             }
         });
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utilities.openCommentOptionsDialog(CommentAdapter.super.getContext(),comment);
+                openCommentOptionsDialog(CommentAdapter.super.getContext(),comment);
             }
         });
 

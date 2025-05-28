@@ -1,5 +1,6 @@
 package school.videopirateapp.Activities;
 
+import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.HashMapToArrayList;
 import static school.videopirateapp.Utilities.MapToArrayList;
 import static school.videopirateapp.Utilities.openLoginDialog;
@@ -98,11 +99,15 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void uploadVideo(View view) {
-        openVideoUploadDialog(this);
+        if(GlobalVariables.loggedUser.isEmpty()) {
+            Feedback(this,"You need to be logged in to upload videos");
+        } else {
+            openVideoUploadDialog(this);
+        }
     }
     public void userPage(View view) {
         if (btnUserPage.getText().toString().equals("Login")) {
-            openLoginDialog(this);
+            openLoginDialog(this,btnUserPage);
             updateUserPageButton();
         } else {
             Intent openUserPage = new Intent(MainMenuActivity.this, UserPageActivity.class);
@@ -115,13 +120,13 @@ public class MainMenuActivity extends AppCompatActivity {
         openVideoPage(this,tvVideoTitle.getText().toString());
     }
 
-    public void openSignupActivity(View view){
-        // TODO
-        Intent openSignupActivity=new Intent(this, SignupActivity.class);
-        openSignupActivity.putExtra("username", etUsername.getText().toString());
-        openSignupActivity.putExtra("password", etPassword.getText().toString());
-        startActivity(openSignupActivity);
-    }
+//    public void openSignupActivity(View view){
+//        // TODO
+//        Intent openSignupActivity=new Intent(this, SignupActivity.class);
+//        openSignupActivity.putExtra("username", etUsername.getText().toString());
+//        openSignupActivity.putExtra("password", etPassword.getText().toString());
+//        startActivity(openSignupActivity);
+//    }
     public void ConfirmUploadVideo(View view) {
         // TODO
     }
