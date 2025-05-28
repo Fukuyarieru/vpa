@@ -18,10 +18,11 @@ public class User {
    private Map<String, ArrayList<Comment>> Comments;
    private ArrayList<String> ownedPlaylists;
    private String Password;
-   private ArrayList<Byte> image;
+   private ArrayList<Byte> Image;
    // String = Context
-   private ArrayList<String> upvotes;
-   private ArrayList<String> downvotes;
+   // Votes could include also non videos, like playlists or comments
+   private ArrayList<String> Upvotes;
+   private ArrayList<String> Downvotes;
    private Integer videosWatched;
 
    // Integer totalViews =====> TODO
@@ -49,8 +50,11 @@ public class User {
       this.ownedPlaylists = new ArrayList<>();
       // the User which we create is not initialized yet, so we cannot use some custom function we made and instead will have to put defaul playlist manually
       this.getOwnedPlaylists().add(Playlist.Default().getTitle());
-      this.image = new ArrayList<>(); // TODO , do this later
+      this.Image = new ArrayList<>(); // TODO , do this later
       this.Password = password;
+      this.Upvotes = new ArrayList<>();
+      this.Downvotes = new ArrayList<>();
+      this.videosWatched = 0;
    }
 
    public static User Default() {
@@ -106,11 +110,11 @@ public class User {
    }
 
    public ArrayList<Byte> getImage() {
-      return image;
+      return Image;
    }
 
    public void setImage(ArrayList<Byte> image) {
-      this.image = image;
+      this.Image = image;
    }
 
    public void addComment(Comment newComment) {
@@ -131,19 +135,19 @@ public class User {
    }
 
    public ArrayList<String> getUpvotes() {
-      return upvotes;
+      return Upvotes;
    }
 
    public void setUpvotes(ArrayList<String> upvotes) {
-      this.upvotes = upvotes;
+      this.Upvotes = upvotes;
    }
 
    public ArrayList<String> getDownvotes() {
-      return downvotes;
+      return Downvotes;
    }
 
    public void setDownvotes(ArrayList<String> downvotes) {
-      this.downvotes = downvotes;
+      this.Downvotes = downvotes;
    }
 
    public Integer getVideosWatched() {
@@ -157,18 +161,22 @@ public class User {
    public void upvoteVideo(Video video) {
       if (!this.getUpvotes().contains(video.getTitle())) {
          this.getUpvotes().add(video.getTitle());
+         Log.i("User: upvoteVideo","Added upvote to "+video.getTitle());
       }
       if (this.getDownvotes().contains(video.getTitle())) {
          this.getDownvotes().remove(video.getTitle());
+         Log.i("User: upvoteVideo","Removed downvote to "+video.getTitle());
       }
    }
 
    public void downvoteVideo(Video video) {
       if (!this.getDownvotes().contains(video.getTitle())) {
          this.getDownvotes().add(video.getTitle());
+         Log.i("User: downvoteVideo","Added downvote to "+video.getTitle());
       }
       if (this.getUpvotes().contains(video.getTitle())) {
          this.getUpvotes().remove(video.getTitle());
+         Log.i("User: downvoteVideo","Removed upvote to "+video.getTitle());
       }
    }
 

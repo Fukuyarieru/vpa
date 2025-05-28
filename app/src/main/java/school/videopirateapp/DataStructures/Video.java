@@ -29,7 +29,6 @@ public class Video {
     public void setThumbnail(ArrayList<Byte> thumbnail) {
         Thumbnail = thumbnail;
     }
-    //TODO: VideoView videodata; (add this to constructor later)
     public String getUploadDate() {
         return UploadDate;
     }
@@ -94,15 +93,16 @@ public class Video {
 
     @Deprecated
     public void upvote() {
+        Log.i("Video: upvote","Upvoted video: " +this.getTitle());
         this.Upvotes++;
         this.Score+=15;
     }
     @Deprecated
     public void downvote() {
+        Log.i("Video: downvote","Downvoted video: " +this.getTitle());
         this.Downvotes++;
         this.Score-=15;
     }
-    // ???????
     @Deprecated
     public void view() {
         this.Views++;
@@ -121,9 +121,10 @@ public class Video {
         this.UploadDate=uploadDate;
         this.Thumbnail=thumbnail;
         this.Url=url;
-
         this.Score=0;
-        this.Score+=views*1;
+
+        // do not evaluate score in constructor
+//        this.Score+=views*1;
         Log.i("Video: Constructor","Video created");
     }
     public Video(String Title, String Uploader) {

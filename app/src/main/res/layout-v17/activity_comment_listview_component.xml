@@ -13,8 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:onClick="openCommentOptionsDialog"
         android:orientation="horizontal">
+<!--        android:onClick="openCommentOptionsDialog"-->
+
 
         <ImageView
             android:id="@+id/Comment_ListView_Component_ImageView_UserImage"
@@ -22,9 +23,10 @@
             android:layout_height="100sp"
             android:adjustViewBounds="true"
             android:padding="5sp"
-            android:onClick="openUserPage"
             android:src="@drawable/default_user_image" />
-<!--        android:scaleType="centerInside"-->
+<!--        android:onClick="openUserPage"-->
+
+        <!--        android:scaleType="centerInside"-->
 <!--        android:maxWidth="100sp"-->
 <!--        android:maxHeight="100sp"-->
 

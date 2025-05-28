@@ -135,9 +135,9 @@ public class UserPageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openCommentOptionsDialog(View view) {
-        Utilities.openCommentOptionsDialog(this, Comment.Default()); //TODO, replace the default impl, change it to find the local comment
-    }
+//    public void openCommentOptionsDialog(View view) {
+//        Utilities.openCommentOptionsDialog(this, Comment.Default()); //TODO, replace the default impl, change it to find the local comment
+//    }
 
     public void openVideo(View view) {
         TextView tvVideoTitle = view.findViewById(R.id.Video_ListView_Component_TextView_VideoTitle);

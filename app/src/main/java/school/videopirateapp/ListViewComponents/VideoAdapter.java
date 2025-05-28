@@ -16,6 +16,7 @@ import java.util.List;
 
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.R;
+import school.videopirateapp.Utilities;
 
 public class VideoAdapter extends ArrayAdapter<Video> {
 
@@ -52,6 +53,14 @@ public class VideoAdapter extends ArrayAdapter<Video> {
         tvDownvotes.setText("Downvotes: " +video.getDownvotes().toString());
 //        Bitmap image= Utilities.BytyArrayToBitmap(video.getThumbnail()); // TODO, BROKEN FOR NOW
 //        uploaderImage.setImageBitmap(image);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utilities.openVideoPage(VideoAdapter.super.getContext(),video.getTitle());
+            }
+        });
+
         return view;
     }
 

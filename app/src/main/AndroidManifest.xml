@@ -24,6 +24,9 @@
             android:name=".Activities.PlaylistPageActivity"
             android:exported="false" />
         <activity
+            android:name=".ListViewComponents.CommentListViewComponent"
+            android:exported="false" />
+        <activity
             android:name=".ListViewComponents.PlaylistListViewComponent"
             android:exported="false" />
         <activity

@@ -53,6 +53,21 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         tvDate.setText(comment.getDate());
 //        tvContext.setText(comment.getContext());
 
+
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utilities.openUserPage(CommentAdapter.super.getContext(),comment.getAuthor());
+            }
+        });
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utilities.openCommentOptionsDialog(CommentAdapter.super.getContext(),comment);
+            }
+        });
+
         return view;
     }
 

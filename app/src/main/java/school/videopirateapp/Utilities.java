@@ -61,7 +61,7 @@ public class Utilities {
     }
 
     public static String TimeNow() {
-        Log.i("Utilities", "Getting the time now");
+        Log.i("Utilities: TimeNow", "Getting the time now");
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         String datetime = dateformat.format(c.getTime());
@@ -89,6 +89,7 @@ public class Utilities {
         currentActivityThis.startActivity(intent);
     }
 
+    @Deprecated
     public static void openCommentOptionsDialog(@NonNull Context currentActivityThis, String commentContext) {
         Log.i("Utilities: openCommentOptionsDialog", "Comment options dialog opened");
         Dialog dialog = new Dialog(currentActivityThis);
@@ -214,6 +215,7 @@ public class Utilities {
     }
 
     public static void Feedback(Context contextThis, String message) {
+        Log.i("Utilities: Feedback", "Feedback sent: "+message+"\n From: "+contextThis.toString());
         Toast.makeText(contextThis, message, Toast.LENGTH_SHORT).show();
     }
 

@@ -122,16 +122,11 @@ public abstract class Database {
                   public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                      // check if video exists
                      if (videoSnapshot.exists()) {
-                        Video video = videoSnapshot.getValue(Video.class);
-                        if (video != null) {
                            targetVideo.upvote();
-                           user.upvoteVideo(video);
+                           user.upvoteVideo(targetVideo);
                            videoRef.setValue(targetVideo);
                            userRef.setValue(user);
                            Log.i("Database: upvoteVideo", "Upvoted video " + targetVideo.getTitle());
-                        } else {
-                           Log.e("Database: upvoteVideo", "Video does not exist");
-                        }
                      } else {
                         Log.e("Database: upvoteVideo", "Video does not exist");
                      }
@@ -143,6 +138,8 @@ public abstract class Database {
                   }
                });
             }
+            else {
+            Log.e("Database: upvoteVideo", "User does not exist"); }
          }
 
          @Override
@@ -153,11 +150,13 @@ public abstract class Database {
    }
 
    public static void downvoteVideo(Video targetVideo, User user) {
+      Log.i("TEST",user.toString());
       DatabaseReference userRef = Database.getRef("users").child(user.getName());
       userRef.addListenerForSingleValueEvent(new ValueEventListener() {
          @Override
          public void onDataChange(@NonNull DataSnapshot userSnapshot) {
             // check if user exists
+            Log.i("TEST",userSnapshot.toString());
             if (!userSnapshot.exists()) {
                DatabaseReference videoRef = Database.getRef(targetVideo.getTitle());
                videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -185,6 +184,8 @@ public abstract class Database {
                      Log.e("Database: downvoteVideo", "Failed to add listener to videoRef");
                   }
                });
+            } else {
+               Log.e("Database: downvoteVideo", "User does not exist");
             }
          }
 
