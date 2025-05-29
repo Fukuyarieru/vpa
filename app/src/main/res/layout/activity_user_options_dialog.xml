@@ -10,6 +10,12 @@
     tools:context=".Dialogs.UserOptionsDialogActivity">
 
     <Button
+        android:id="@+id/UserOptions_Dialog_Button_Logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout" />
+
+    <Button
         android:id="@+id/UserOptions_Dialog_Button_ChangeImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
