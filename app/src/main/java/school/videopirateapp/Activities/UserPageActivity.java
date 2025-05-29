@@ -1,6 +1,7 @@
 package school.videopirateapp.Activities;
 
 import static android.view.View.INVISIBLE;
+import static school.videopirateapp.Utilities.ByteArrayToBitmap;
 import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.MapToArrayList;
 import static school.videopirateapp.Utilities.openCommentOptionsDialog;
@@ -114,15 +115,13 @@ public class UserPageActivity extends AppCompatActivity {
                 }
             });
         }
+
+        UserImage.setImageBitmap(ByteArrayToBitmap(user.getImage()));
     }
 
 
     public void ShowVideos() {
-//        for (Video video : videos) {
-//            Log.i("TEST", video.toString());
-//        }
         Toast.makeText(this, "There are " + videos.size() + " videos", Toast.LENGTH_SHORT).show();
-
         VideoAdapter videoAdapter = new VideoAdapter(this, R.layout.activity_video_listview_component, videos);
         listView.setAdapter(videoAdapter);
     }

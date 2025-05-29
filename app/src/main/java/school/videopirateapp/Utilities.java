@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -178,10 +180,6 @@ public class Utilities {
         currentActivityThis.startActivity(intent);
     }
 
-    public static void topOptionsMenu(View view) {
-
-    }
-
     public static Bitmap ByteArrayToBitmap(ArrayList<Byte> byteArray) {
         if (byteArray == null || byteArray.isEmpty()) {
             byte[] arr = new byte[]{1};
@@ -198,6 +196,8 @@ public class Utilities {
 
 
     public static void openLoginDialog(Context thisContext, Button originalLoginBtn) {
+        // TODO, very stupid solutions that work
+
         Dialog loginDialog = new Dialog(thisContext); //this screen as context
         loginDialog.setContentView(R.layout.activity_login_dialog);
         EditText etUsername = loginDialog.findViewById(R.id.Login_Dialog_EditText_Username);
@@ -205,31 +205,85 @@ public class Utilities {
         Button btnLogin = loginDialog.findViewById(R.id.Login_Dialog_Button_Login);
         Button btnSignup = loginDialog.findViewById(R.id.Login_Dialog_Button_Signup);
 
+        final User[] desiredUser = {User.Default()};
+
+        final String[] username = {etUsername.getText().toString()};
+        final String[] password = {etPassword.getText().toString()};
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                password[0] =editable.toString();
+
+                if (username[0].isEmpty() || password[0].isEmpty()) {
+                } else if (!username[0].startsWith("@")) {
+                } else {
+                    desiredUser[0] =Database.getUser(username[0]);
+                }
+            }
+        });
+        etUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                username[0] =editable.toString();
+
+                if (username[0].isEmpty() || password[0].isEmpty()) {
+                } else if (!username[0].startsWith("@")) {
+                } else {
+                    desiredUser[0] =Database.getUser(username[0]);
+                }
+            }
+        });
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
+//                Feedback(thisContext,username);
 
-                Feedback(thisContext,username);
-
-                if (username.isEmpty() || password.isEmpty()) {
+                if (username[0].isEmpty() || password[0].isEmpty()) {
                     // Display a message if the fields are empty
                     Feedback(thisContext, "Please enter both username and password");
-                } else if (!username.startsWith("@")) {
+                } else if (!username[0].startsWith("@")) {
                     Feedback(thisContext, "Usernames must start with @");
                 } else {
-                    User desiredUser=Database.getUser(username);
+//                    User desiredUser=Database.getUser(username[0]);
 //                    Feedback(thisContext,desiredUser.toString());
-                    if (desiredUser == null) { // BUG HERE, I DONT KNOW WHY, (SKIPS CHECKING PASSWORD), desiredUser will always be default if not found
+                    if (desiredUser[0] == null) { // TODO, BUG HERE, I DONT KNOW WHY, (SKIPS CHECKING PASSWORD), desiredUser will always be default if not found
                         Feedback(thisContext, "User was not found");
-                    } else if (!desiredUser.getPassword().equals(password)) {
+                    } else if (!desiredUser[0].getPassword().equals(password[0])) {
                         Feedback(thisContext, "Password does not match");
                     } else {
-                        GlobalVariables.loggedUser = Optional.of(desiredUser);
+                        GlobalVariables.loggedUser = Optional.of(desiredUser[0]);
                         Feedback(thisContext, "Logged in successfully");
-                        originalLoginBtn.setText(username);
+                        originalLoginBtn.setText(username[0]);
+
+                        originalLoginBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                openUserPage(thisContext, username[0]);
+                            }
+                        });
                         loginDialog.dismiss();
                     }
 
@@ -332,18 +386,40 @@ public class Utilities {
         Dialog dialog = new Dialog(thisContext);
         dialog.setContentView(R.layout.activity_user_options_dialog);
         dialog.show();
+        // TODO, add dialog logic
     }
 
     public static void openPlaylistOptionsDialog(Context thisContext, String playlistTitle) {
         Dialog dialog = new Dialog(thisContext);
         dialog.setContentView(R.layout.activity_playlist_options_dialog);
         dialog.show();
+        // TODO, add dialog logic
     }
 
     public static void Feedback(Context contextThis, String message) {
         Log.i("Utilities: Feedback", "Feedback sent: "+message);
         Log.i("Utilities: Feedback", "Feedback sent from: "+contextThis.toString());
         Toast.makeText(contextThis, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void updateUserPageButton(Context thisContext ,Button btnUserPage) {
+        if(GlobalVariables.loggedUser.isEmpty()) {
+            btnUserPage.setText("Login");
+            btnUserPage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openLoginDialog(thisContext,btnUserPage);
+                }
+            });
+        } else {
+            btnUserPage.setText(GlobalVariables.loggedUser.get().getName());
+            btnUserPage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Utilities.openUserPage(thisContext, GlobalVariables.loggedUser.get().getName());
+                }
+            });
+        }
     }
 
     // Video may be expected in edge case to be given as null, function demands it not to be

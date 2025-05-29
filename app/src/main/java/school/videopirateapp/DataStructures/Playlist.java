@@ -110,6 +110,7 @@ public class Playlist {
         this.videos = new ArrayList<>();
         this.playlistDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
         this.owner = owner;
+        this.score=0;
         Log.i("Playlist: Contructor", "Created Playlist with:\nTitle: " + title + "\nDescription: " + playlistDescription + "\nOwner: " + owner);
     }
 

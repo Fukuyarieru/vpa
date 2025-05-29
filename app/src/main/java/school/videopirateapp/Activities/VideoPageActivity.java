@@ -7,6 +7,7 @@ import static school.videopirateapp.Utilities.TimeNow;
 import static school.videopirateapp.Utilities.openLoginDialog;
 import static school.videopirateapp.Utilities.openUserPage;
 import static school.videopirateapp.Utilities.openVideoOptionsDialog;
+import static school.videopirateapp.Utilities.updateUserPageButton;
 //import static school.videopirateapp.Utilities.openVideoPlayer;
 
 import android.content.Intent;
@@ -164,23 +165,7 @@ public class VideoPageActivity extends AppCompatActivity {
             }
         });
 
-        if(GlobalVariables.loggedUser.isEmpty()) {
-            btnUserPage.setText("Login");
-            btnUserPage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openLoginDialog(VideoPageActivity.this,btnUserPage);
-                }
-            });
-        } else {
-            btnUserPage.setText(GlobalVariables.loggedUser.get().getName());
-            btnUserPage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Utilities.openUserPage(VideoPageActivity.this, currentVideo.getUploader());
-                }
-            });
-        }
+        Utilities.updateUserPageButton(this,btnUserPage);
 
         // TODO, replace later
         try {
