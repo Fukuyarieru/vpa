@@ -46,7 +46,7 @@ public class User {
         this.Comments.put(Comment.Default().getContext(), arrComments);
         this.ownedPlaylists = new ArrayList<>();
         // the User which we create is not initialized yet, so we cannot use some custom function we made and instead will have to put defaul playlist manually
-        this.getOwnedPlaylists().add(Playlist.Default().getTitle());
+        this.getOwnedPlaylists().add(new Playlist("&Uploads-"+name.substring(1),name).getTitle());
         this.Image = new ArrayList<>(); // TODO , do this later
         this.Password = password;
         this.Upvotes = new ArrayList<>();

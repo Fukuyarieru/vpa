@@ -92,7 +92,7 @@ public class Playlist {
     // TODO figure out how to work showing the videos in the database
 
     public Playlist() {
-        // TODO, here is a bug, @Default is assosiated as a video
+        // TODO, here is a bug, @Default is associated as a video
         this("&defaultPlaylist", "@Default");
     }
 

@@ -171,6 +171,7 @@ public class VideoPageActivity extends AppCompatActivity {
         try {
             tvScore.setText(currentVideo.getScore());
         } catch (Exception e) {
+            Log.e("tvScore",e.toString());
             tvScore.setVisibility(INVISIBLE);
         }
 
@@ -183,6 +184,7 @@ public class VideoPageActivity extends AppCompatActivity {
         uploaderImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Feedback(VideoPageActivity.this,"Failed to load uploader's image");
                 openUserPage(VideoPageActivity.this,UploaderName);
             }
         });
