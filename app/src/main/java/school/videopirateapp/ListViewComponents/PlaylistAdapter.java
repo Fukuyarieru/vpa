@@ -1,6 +1,5 @@
 package school.videopirateapp.ListViewComponents;
 
-import static school.videopirateapp.Utilities.openPlaylistOptionsDialog;
 import static school.videopirateapp.Utilities.openPlaylistPage;
 
 import android.content.Context;
@@ -54,7 +53,7 @@ public class PlaylistAdapter extends ArrayAdapter<Playlist> {
         tvDate.setText("DATE NOT IMPLEMENTED YET");
         tvViews.setText("VIEWS NOT IMPLEMENTED YET");
         tvVideosCount.setText("Video Count: "+playlist.getVideos().size());
-        tvDescription.setText(playlist.getPlaylistDescription());
+        tvDescription.setText(playlist.getDescription());
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,23 +9,6 @@ public class Comment {
     private static final Comment defaultComment = new Comment();
 
     // An Idea
-    public class Context {
-        String str;
-
-        public Context(String context) {
-            this.str =context;
-        }
-
-        public String getContext() {
-            return str;
-        }
-
-        public void setContext(String context) {
-            this.str = context;
-        }
-
-    }
-
     private String Comment;
     private String Author;
     private String Context;

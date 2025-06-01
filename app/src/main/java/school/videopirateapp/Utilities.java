@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -192,6 +193,33 @@ public class Utilities {
         }
 
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+    public static ArrayList<Byte> BitmapToByteArray(Bitmap bitmap) {
+        if (bitmap == null) {
+            return new ArrayList<>();
+        }
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        ArrayList<Byte> byteArrayList = new ArrayList<>();
+        for (byte b : byteArray) {
+            byteArrayList.add(b);
+        }
+        try {
+            stream.close();
+        } catch (java.io.IOException e) {
+            Log.e("Utilities: BitmapToByteArray", "Error closing ByteArrayOutputStream", e);
+        }
+        return byteArrayList;
+    }
+    public static ArrayList<Byte> getDefaultUserImage() {
+       return BitmapToByteArray(BitmapFactory.decodeResource(null, R.drawable.default_user_image));
+    }
+    public static ArrayList<Byte> getDefaultVideoImage() {
+        return BitmapToByteArray(BitmapFactory.decodeResource(null, R.drawable.default_video_image));
+    }
+    public static ArrayList<Byte> getDefaultPlaylistImage() {
+        return BitmapToByteArray(BitmapFactory.decodeResource(null, R.drawable.default_playlist_image));
     }
 
 

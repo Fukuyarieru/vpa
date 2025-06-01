@@ -122,7 +122,7 @@ public abstract class Database {
                   public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                      // check if video exists
                      if (videoSnapshot.exists()) {
-                           targetVideo.upvote();
+                           targetVideo.Upvote();
                            user.upvoteVideo(targetVideo);
                            videoRef.setValue(targetVideo);
                            userRef.setValue(user);
@@ -166,7 +166,7 @@ public abstract class Database {
                      if (videoSnapshot.exists()) {
                         Video video = videoSnapshot.getValue(Video.class);
                         if (video != null) {
-                           targetVideo.downvote();
+                           targetVideo.Downvote();
                            user.downvoteVideo(targetVideo);
                            videoRef.setValue(targetVideo);
                            userRef.setValue(user);

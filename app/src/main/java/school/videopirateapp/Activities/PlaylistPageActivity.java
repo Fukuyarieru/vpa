@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
-import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
 import school.videopirateapp.Utilities;
@@ -60,7 +59,7 @@ public class PlaylistPageActivity extends AppCompatActivity {
         btnUpvote.setText("Upvote");
         btnDownvote.setText("Downvote");
         tvPlaylistTitle.setText(playlist.getTitle());
-        tvPlaylistDescription.setText(playlist.getPlaylistDescription());
+        tvPlaylistDescription.setText(playlist.getDescription());
         tvPlaylistSCore.setText(playlist.getScore().toString());
         playlistImage.setImageResource(R.drawable.default_playlist_image);
 

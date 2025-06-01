@@ -1,125 +1,128 @@
 package school.videopirateapp.DataStructures;
 
+import static school.videopirateapp.Utilities.getDefaultPlaylistImage;
+
 import android.util.Log;
 
 import java.util.ArrayList;
 
 public class Playlist {
-    private static final Playlist defaultPlaylist = new Playlist();
+   private static final Playlist defaultPlaylist = new Playlist();
 
 
-    // TODO, will probably need to change this to <String,String> as i want to store the names, and fetch them from database locally to the related function
-    private ArrayList<String> videos;
-    private String title; // Playlist names will start with a '#', just because I wanted
-    private String owner;
-    private String playlistDescription;
-    private ArrayList<Byte> picture;
-    private Integer score;
-    private Integer upvotes;
-    private Integer downvotes;
+   // TODO, will probably need to change this to <String,String> as i want to store the names, and fetch them from database locally to the related function
+   private ArrayList<String> Videos;
+   private String Title; // Playlist names will start with a '#', just because I wanted
+   private String Owner;
+   private String Description;
+   private ArrayList<Byte> Image;
+   private Integer Score;
+   private Integer Upvotes;
+   private Integer Downvotes;
 
 
-    public ArrayList<Byte> getPicture() {
-        return picture;
-    }
+   public Playlist() {
+      // TODO, here is a bug, @Default is associated as a video
+      this("&defaultPlaylist", "@Default");
+   }
 
-    public void setPicture(ArrayList<Byte> picture) {
-        this.picture = picture;
-    }
+   public Playlist(String playlistTitle, String owner) {
+      // no need to check database here, because database checks itself
+      if (!playlistTitle.startsWith("&")) {
+         playlistTitle = "&" + playlistTitle;
+         Log.w("Playlist Constructor", "Playlist Title did not start with &, automatically fixed");
+      }
+      if (!owner.startsWith("@")) {
+         owner = "@" + owner;
+         Log.w("Playlist Constructor", "Playlist Owner(name) did not start with @, automatically fixed");
+      }
+      this.Title = playlistTitle;
+      this.Videos = new ArrayList<>();
+      this.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
+      this.Owner = owner;
+      this.Score = 0;
+      this.Image = getDefaultPlaylistImage();
+      Log.i("Playlist: Constructor", "Created Playlist with:\nTitle: " + Title + "\nDescription: " + Description + "\nOwner: " + owner);
+   }
 
-    public ArrayList<String> getVideos() {
-        return videos;
-    }
+   public static Playlist Default() {
+      return defaultPlaylist;
+   }
 
-    public void setVideos(ArrayList<String> videos) {
-        this.videos = videos;
-    }
+   public ArrayList<Byte> getImage() {
+      return Image;
+   }
 
-    public String getTitle() {
-        return title;
-    }
+   public void setImage(ArrayList<Byte> image) {
+      this.Image = image;
+   }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+   public ArrayList<String> getVideos() {
+      return Videos;
+   }
 
-    public String getOwner() {
-        return owner;
-    }
+   public void setVideos(ArrayList<String> videos) {
+      this.Videos = videos;
+   }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
+   public String getTitle() {
+      return Title;
+   }
 
-    public String getPlaylistDescription() {
-        return playlistDescription;
-    }
+   public void setTitle(String title) {
+      this.Title = title;
+   }
 
-    public void setPlaylistDescription(String playlistDescription) {
-        this.playlistDescription = playlistDescription;
-    }
+   public String getOwner() {
+      return Owner;
+   }
 
-    public Integer getScore() {
-        return score;
-    }
+   public void setOwner(String owner) {
+      this.Owner = owner;
+   }
 
-    public void setScore(Integer score) {
-        this.score = score;
-    }
+   public String getDescription() {
+      return Description;
+   }
 
-    public Integer getUpvotes() {
-        return upvotes;
-    }
+   public void setDescription(String description) {
+      this.Description = description;
+   }
 
-    public void setUpvotes(Integer upvotes) {
-        this.upvotes = upvotes;
-    }
+   public Integer getScore() {
+      return Score;
+   }
 
-    public Integer getDownvotes() {
-        return downvotes;
-    }
+   public void setScore(Integer score) {
+      this.Score = score;
+   }
 
-    public void setDownvotes(Integer downvotes) {
-        this.downvotes = downvotes;
-    }
+   public Integer getUpvotes() {
+      return Upvotes;
+   }
 
-    public void addVideo(Video newVideo) {
-        String videoTitle = newVideo.getTitle();
-        this.videos.add(videoTitle); // todo, this looks ugly, check laters
-    }
+   public void setUpvotes(Integer upvotes) {
+      this.Upvotes = upvotes;
+   }
 
 
-    // TODO figure out how to work showing the videos in the database
+   // TODO figure out how to work showing the videos in the database
 
-    public Playlist() {
-        // TODO, here is a bug, @Default is associated as a video
-        this("&defaultPlaylist", "@Default");
-    }
+   public Integer getDownvotes() {
+      return Downvotes;
+   }
 
-    public Playlist(String playlistTitle, String owner) {
-        // no need to check database here, because database checks itself
-        if (!playlistTitle.startsWith("&")) {
-            playlistTitle = "&" + playlistTitle;
-            Log.w("Playlist Contructor", "Playlist Title did not start with &, automatically fixed");
-        }
-        if (!owner.startsWith("@")) {
-            owner = "@" + owner;
-            Log.w("Playlist Contructor", "Playlist Owner(name) did not start with @, automatically fixed");
-        }
-        this.title = playlistTitle;
-        this.videos = new ArrayList<>();
-        this.playlistDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
-        this.owner = owner;
-        this.score=0;
-        Log.i("Playlist: Contructor", "Created Playlist with:\nTitle: " + title + "\nDescription: " + playlistDescription + "\nOwner: " + owner);
-    }
+   public void setDownvotes(Integer downvotes) {
+      this.Downvotes = downvotes;
+   }
 
-    public static Playlist Default() {
-        return defaultPlaylist;
-    }
+   public void addVideo(Video newVideo) {
+      String videoTitle = newVideo.getTitle();
+      this.Videos.add(videoTitle); // todo, this looks ugly, check laters
+   }
 
-    @Override
-    public String toString() {
-        return "Playlist\n Title: " + this.title + "\nDescription: " + this.playlistDescription + "\nOwner: " + this.owner;
-    }
+   @Override
+   public String toString() {
+      return "Playlist\n Title: " + this.Title + "\nDescription: " + this.Description + "\nOwner: " + this.Owner;
+   }
 }
