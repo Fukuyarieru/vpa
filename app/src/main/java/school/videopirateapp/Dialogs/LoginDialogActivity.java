@@ -21,15 +21,17 @@ import school.videopirateapp.Utilities;
 
 public class LoginDialogActivity extends AppCompatActivity {
 
-    EditText etUsername;
-    EditText etPassword;
-    Button btnLogin;
-    Button btnSignup;
+//    EditText etUsername;
+//    EditText etPassword;
+//    Button btnLogin;
+//    Button btnSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_dialog);
+    }
+}
 
 //        etUsername =findViewById(R.id.Login_Dialog_EditText_Username);
 //        etPassword =findViewById(R.id.Login_Dialog_EditText_Password);
@@ -98,5 +100,3 @@ public class LoginDialogActivity extends AppCompatActivity {
 //        openSignupActivity.putExtra("password", etPassword.getText().toString());
 //        startActivity(openSignupActivity);
 //    }
-    }
-}

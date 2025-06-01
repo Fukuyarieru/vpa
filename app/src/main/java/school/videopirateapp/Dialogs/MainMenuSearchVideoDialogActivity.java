@@ -14,6 +14,5 @@ public class MainMenuSearchVideoDialogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu_search_video_dialog);
-
     }
 }
