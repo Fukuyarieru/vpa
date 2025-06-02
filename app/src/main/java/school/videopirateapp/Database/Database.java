@@ -130,6 +130,10 @@ public abstract class Database {
                   public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                      // check if video exists
                      if (videoSnapshot.exists()) {
+                        // Check if user previously downvoted
+                        if (user.getDownvotes().contains(targetVideo.getTitle())) {
+                           targetVideo.setDownvotes(targetVideo.getDownvotes() - 1);
+                        }
                         // Use the User class's upvoteVideo method
                         user.upvoteVideo(targetVideo);
                         targetVideo.setUpvotes(targetVideo.getUpvotes() + 1);
@@ -173,6 +177,10 @@ public abstract class Database {
                   public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                      // check if video exists
                      if (videoSnapshot.exists()) {
+                        // Check if user previously upvoted
+                        if (user.getUpvotes().contains(targetVideo.getTitle())) {
+                           targetVideo.setUpvotes(targetVideo.getUpvotes() - 1);
+                        }
                         // Use the User class's downvoteVideo method
                         user.downvoteVideo(targetVideo);
                         targetVideo.setDownvotes(targetVideo.getDownvotes() + 1);
