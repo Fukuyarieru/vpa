@@ -94,8 +94,8 @@ public class Utilities {
         currentActivityThis.startActivity(intent);
     }
 
-    public static void openCommentOptionsDialog(Context contextThis, Comment comment) {
-        Log.i("Utilities: openCommentOptionsDialog", "Comment options dialog opened");
+    public static void openCommentOwnerOptionsDialog(Context contextThis, Comment comment) {
+        Log.i("Utilities: openCommentOwnerOptionsDialog", "Comment owner options dialog opened");
         Dialog dialog = new Dialog(contextThis);
         dialog.setContentView(R.layout.activity_comment_options_dialog);
 
@@ -117,10 +117,14 @@ public class Utilities {
         btnUpvote.setText("\uD83D\uDC4D");
         btnReply.setText("Reply");
 
+        // Show owner-specific buttons
+        btnDeleteComment.setVisibility(View.VISIBLE);
+        btnEditComment.setVisibility(View.VISIBLE);
+
         btnDeleteComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOptionsDialog", "TODO: DELETE_COMMENT");
+                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: DELETE_COMMENT");
                 Feedback(contextThis, "TODO: DELETE_COMMENT");
             }
         });
@@ -128,7 +132,7 @@ public class Utilities {
         btnCommentPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOptionsDialog", "Opening comment page");
+                Log.i("Utilities: openCommentOwnerOptionsDialog", "Opening comment page");
                 openCommentPage(contextThis, comment.getContext());
             }
         });
@@ -136,7 +140,7 @@ public class Utilities {
         btnEditComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOptionsDialog", "TODO: EDIT_COMMENT");
+                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: EDIT_COMMENT");
                 Feedback(contextThis, "TODO: EDIT_COMMENT");
             }
         });
@@ -144,7 +148,7 @@ public class Utilities {
         btnDownvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOptionsDialog", "TODO: DOWNVOTE");
+                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: DOWNVOTE");
                 Feedback(contextThis, "TODO: DOWNVOTE");
             }
         });
@@ -152,7 +156,7 @@ public class Utilities {
         btnUpvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOptionsDialog", "TODO: UPVOTE");
+                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: UPVOTE");
                 Feedback(contextThis, "TODO: UPVOTE");
             }
         });
@@ -160,13 +164,179 @@ public class Utilities {
         btnReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOptionsDialog", "TODO: REPLY");
+                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: REPLY");
                 Feedback(contextThis, "TODO: REPLY");
             }
         });
         dialog.show();
     }
 
+    public static void openCommentViewerOptionsDialog(Context contextThis, Comment comment) {
+        Log.i("Utilities: openCommentViewerOptionsDialog", "Comment viewer options dialog opened");
+        Dialog dialog = new Dialog(contextThis);
+        dialog.setContentView(R.layout.activity_comment_options_dialog);
+
+        Button btnDeleteComment = dialog.findViewById(R.id.CommentOptions_Dialog_Button_DeleteComment);
+        Button btnCommentPage = dialog.findViewById(R.id.CommentOptions_Dialog_Button_CommentPage);
+        Button btnEditComment = dialog.findViewById(R.id.CommentOptions_Dialog_Button_EditComment);
+        TextView tvContext = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Context);
+        TextView tvScore = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Score);
+        Button btnDownvote = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Downvote);
+        Button btnUpvote = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Upvote);
+        Button btnReply = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Reply);
+
+        tvContext.setText(comment.getContext());
+        btnCommentPage.setText("Comment Page");
+        tvScore.setText("0"); // TODO, score for replies not implemented yet
+        btnDownvote.setText("\uD83D\uDC4E");
+        btnUpvote.setText("\uD83D\uDC4D");
+        btnReply.setText("Reply");
+
+        // Hide owner-specific buttons
+        btnDeleteComment.setVisibility(View.GONE);
+        btnEditComment.setVisibility(View.GONE);
+
+        btnCommentPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentViewerOptionsDialog", "Opening comment page");
+                openCommentPage(contextThis, comment.getContext());
+            }
+        });
+
+        btnDownvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentViewerOptionsDialog", "TODO: DOWNVOTE");
+                Feedback(contextThis, "TODO: DOWNVOTE");
+            }
+        });
+
+        btnUpvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentViewerOptionsDialog", "TODO: UPVOTE");
+                Feedback(contextThis, "TODO: UPVOTE");
+            }
+        });
+
+        btnReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openCommentViewerOptionsDialog", "TODO: REPLY");
+                Feedback(contextThis, "TODO: REPLY");
+            }
+        });
+        dialog.show();
+    }
+
+    public static void openVideoOwnerOptionsDialog(Context thisContext, Video video) {
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_video_option_dialog);
+
+        Button btnDeleteVideo = dialog.findViewById(R.id.VideoOptions_Dialog_Button_DeleteVideo);
+        Button btnEditVideo = dialog.findViewById(R.id.VideoOptions_Dialog_Button_EditVideo);
+        Button btnAddVideoToPlaylist = dialog.findViewById(R.id.VideoOptions_Dialog_Button_AddVideoToPlaylist);
+
+        btnEditVideo.setText("Edit Video");
+        btnDeleteVideo.setText("Delete Video");
+        btnAddVideoToPlaylist.setText("Add Video to Playlist");
+
+        // Show owner-specific buttons
+        btnDeleteVideo.setVisibility(View.VISIBLE);
+        btnEditVideo.setVisibility(View.VISIBLE);
+
+        btnDeleteVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openVideoOwnerOptionsDialog", "TODO: DELETE_VIDEO");
+                Feedback(thisContext, "TODO: DELETE_VIDEO");
+            }
+        });
+
+        btnEditVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openVideoOwnerOptionsDialog", "TODO: EDIT_VIDEO");
+                Feedback(thisContext, "TODO: EDIT_VIDEO");
+            }
+        });
+
+        btnAddVideoToPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openVideoOwnerOptionsDialog", "TODO: ADD_VIDEO_TO_PLAYLIST");
+                Feedback(thisContext, "TODO: ADD_VIDEO_TO_PLAYLIST");
+            }
+        });
+
+        dialog.show();
+    }
+
+    public static void openVideoViewerOptionsDialog(Context thisContext, Video video) {
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_video_option_dialog);
+
+        Button btnDeleteVideo = dialog.findViewById(R.id.VideoOptions_Dialog_Button_DeleteVideo);
+        Button btnEditVideo = dialog.findViewById(R.id.VideoOptions_Dialog_Button_EditVideo);
+        Button btnAddVideoToPlaylist = dialog.findViewById(R.id.VideoOptions_Dialog_Button_AddVideoToPlaylist);
+
+        btnAddVideoToPlaylist.setText("Add Video to Playlist");
+
+        // Hide owner-specific buttons
+        btnDeleteVideo.setVisibility(View.GONE);
+        btnEditVideo.setVisibility(View.GONE);
+
+        btnAddVideoToPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openVideoViewerOptionsDialog", "TODO: ADD_VIDEO_TO_PLAYLIST");
+                Feedback(thisContext, "TODO: ADD_VIDEO_TO_PLAYLIST");
+            }
+        });
+
+        dialog.show();
+    }
+
+    public static void openUserOwnerOptionsDialog(Context thisContext, User user) {
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_user_options_dialog);
+        
+        // Add owner-specific options here
+        // TODO: Implement owner-specific user options
+        
+        dialog.show();
+    }
+
+    public static void openUserViewerOptionsDialog(Context thisContext, User user) {
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_user_options_dialog);
+        
+        // Add viewer-specific options here
+        // TODO: Implement viewer-specific user options
+        
+        dialog.show();
+    }
+
+    public static void openPlaylistOwnerOptionsDialog(Context thisContext, String playlistTitle) {
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_playlist_options_dialog);
+        
+        // Add owner-specific options here
+        // TODO: Implement owner-specific playlist options
+        
+        dialog.show();
+    }
+
+    public static void openPlaylistViewerOptionsDialog(Context thisContext, String playlistTitle) {
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_playlist_options_dialog);
+        
+        // Add viewer-specific options here
+        // TODO: Implement viewer-specific playlist options
+        
+        dialog.show();
+    }
 
     public static void openSignupActivity(@NonNull Context currentActivityThis) {
         Log.i("Utilities: openSignupActivity", "Signup activity opened");

@@ -8,6 +8,8 @@ import static school.videopirateapp.Utilities.openLoginDialog;
 import static school.videopirateapp.Utilities.openUserPage;
 import static school.videopirateapp.Utilities.openVideoOptionsDialog;
 import static school.videopirateapp.Utilities.updateUserPageButton;
+import static school.videopirateapp.Utilities.openVideoOwnerOptionsDialog;
+import static school.videopirateapp.Utilities.openVideoViewerOptionsDialog;
 //import static school.videopirateapp.Utilities.openVideoPlayer;
 
 import android.content.Intent;
@@ -143,7 +145,11 @@ public class VideoPageActivity extends AppCompatActivity {
         btnVideoOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openVideoOptionsDialog(VideoPageActivity.this, currentVideo);
+                if (GlobalVariables.loggedUser.isPresent() && GlobalVariables.loggedUser.get().getName().equals(currentVideo.getUploader())) {
+                    openVideoOwnerOptionsDialog(VideoPageActivity.this, currentVideo);
+                } else {
+                    openVideoViewerOptionsDialog(VideoPageActivity.this, currentVideo);
+                }
             }
         });
 

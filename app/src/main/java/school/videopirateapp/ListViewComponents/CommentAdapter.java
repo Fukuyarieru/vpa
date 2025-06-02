@@ -1,8 +1,9 @@
 package school.videopirateapp.ListViewComponents;
 
 import static school.videopirateapp.Utilities.ByteArrayToBitmap;
-import static school.videopirateapp.Utilities.openCommentOptionsDialog;
 import static school.videopirateapp.Utilities.openUserPage;
+import static school.videopirateapp.Utilities.openCommentOwnerOptionsDialog;
+import static school.videopirateapp.Utilities.openCommentViewerOptionsDialog;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
 import school.videopirateapp.Utilities;
+import school.videopirateapp.GlobalVariables;
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
     private Context context;
@@ -70,7 +72,11 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openCommentOptionsDialog(CommentAdapter.super.getContext(),comment);
+                if (GlobalVariables.loggedUser.isPresent() && GlobalVariables.loggedUser.get().getName().equals(comment.getAuthor())) {
+                    openCommentOwnerOptionsDialog(CommentAdapter.super.getContext(), comment);
+                } else {
+                    openCommentViewerOptionsDialog(CommentAdapter.super.getContext(), comment);
+                }
             }
         });
 

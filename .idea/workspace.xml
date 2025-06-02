@@ -138,19 +138,15 @@
   <component name="ChangeListManager">
     <list default="true" id="d9d0df33-6a1c-4b21-bbce-55edcec8262b" name="Changes" comment="sch update">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.buildship.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.buildship.core.prefs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/PlaylistPageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/PlaylistPageActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/VideoPlayerActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Playlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Video.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Video.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/ListViewComponents/PlaylistAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/ListViewComponents/PlaylistAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/UserPageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/UserPageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/VideoPageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/VideoPageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/ListViewComponents/CommentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/ListViewComponents/CommentAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Utilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Utilities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +156,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\arick\.android\avd\Pixel_8.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -248,10 +244,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/WaiterProject1/WaiterProject1&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -388,12 +381,12 @@
       <map>
         <entry key="school.videopirateapp">
           <value>
-            <CheckInfo lastCheckTimestamp="1748795029346" />
+            <CheckInfo lastCheckTimestamp="1748818442141" />
           </value>
         </entry>
         <entry key="school.videopirateapp.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1748795029347" />
+            <CheckInfo lastCheckTimestamp="1748818442146" />
           </value>
         </entry>
       </map>

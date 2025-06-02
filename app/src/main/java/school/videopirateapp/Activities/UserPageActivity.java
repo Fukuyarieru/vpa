@@ -4,9 +4,9 @@ import static android.view.View.INVISIBLE;
 import static school.videopirateapp.Utilities.ByteArrayToBitmap;
 import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.MapToArrayList;
-import static school.videopirateapp.Utilities.openCommentOptionsDialog;
 import static school.videopirateapp.Utilities.openPlaylistOptionsDialog;
-import static school.videopirateapp.Utilities.openUserOptionsDialog;
+import static school.videopirateapp.Utilities.openUserOwnerOptionsDialog;
+import static school.videopirateapp.Utilities.openUserViewerOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoPage;
 
 import android.content.Intent;
@@ -111,7 +111,11 @@ public class UserPageActivity extends AppCompatActivity {
             btnUserOptions.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    openUserOptionsDialog(UserPageActivity.this, user);
+                    if (GlobalVariables.loggedUser.isPresent() && GlobalVariables.loggedUser.get().getName().equals(user.getName())) {
+                        openUserOwnerOptionsDialog(UserPageActivity.this, user);
+                    } else {
+                        openUserViewerOptionsDialog(UserPageActivity.this, user);
+                    }
                 }
             });
         }

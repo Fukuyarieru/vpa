@@ -15,9 +15,12 @@ import java.util.ArrayList;
 import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
+import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
 import school.videopirateapp.Utilities;
+import static school.videopirateapp.Utilities.openPlaylistOwnerOptionsDialog;
+import static school.videopirateapp.Utilities.openPlaylistViewerOptionsDialog;
 
 public class PlaylistPageActivity extends AppCompatActivity {
 
@@ -83,7 +86,11 @@ public class PlaylistPageActivity extends AppCompatActivity {
         btnPlaylistOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utilities.openPlaylistOptionsDialog(PlaylistPageActivity.this,playlistTitle);
+                if (GlobalVariables.loggedUser.isPresent() && GlobalVariables.loggedUser.get().getName().equals(playlist.getOwner())) {
+                    openPlaylistOwnerOptionsDialog(PlaylistPageActivity.this, playlistTitle);
+                } else {
+                    openPlaylistViewerOptionsDialog(PlaylistPageActivity.this, playlistTitle);
+                }
             }
         });
 
