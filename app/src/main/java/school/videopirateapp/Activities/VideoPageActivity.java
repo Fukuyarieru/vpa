@@ -115,8 +115,7 @@ public class VideoPageActivity extends AppCompatActivity {
                         Feedback(VideoPageActivity.this, "You have this video already upvoted");
                     } else {
                         Database.upvoteVideo(currentVideo, GlobalVariables.loggedUser.get());
-                        Utilities.EvaluateVideo(currentVideo);
-                        tvScore.setText(String.valueOf(currentVideo.getScore()));
+                        tvScore.setText(String.valueOf(currentVideo.getVoteScore()));
                         Feedback(VideoPageActivity.this, "Video upvoted");
                     }
                 }
@@ -134,8 +133,7 @@ public class VideoPageActivity extends AppCompatActivity {
                         Feedback(VideoPageActivity.this, "You have this video already downvoted");
                     } else {
                         Database.downvoteVideo(currentVideo, GlobalVariables.loggedUser.get());
-                        Utilities.EvaluateVideo(currentVideo);
-                        tvScore.setText(String.valueOf(currentVideo.getScore()));
+                        tvScore.setText(String.valueOf(currentVideo.getVoteScore()));
                         Feedback(VideoPageActivity.this, "Video downvoted");
                     }
                 }
@@ -168,9 +166,8 @@ public class VideoPageActivity extends AppCompatActivity {
                     String commentStr = etComment.getText().toString();
                     Comment newComment = new Comment(commentStr, GlobalVariables.loggedUser.get().getName(), currentVideo.Context());
                     Database.addComment(newComment, currentVideo);
-                    Utilities.EvaluateVideo(currentVideo);
                     Database.updateVideo(currentVideo);
-                    tvScore.setText(String.valueOf(currentVideo.getScore()));
+                    tvScore.setText(String.valueOf(currentVideo.getVoteScore()));
                     Utilities.Feedback(VideoPageActivity.this, "Comment added");
                     commentAdapter.add(newComment);
                     etComment.setText("");
@@ -179,11 +176,6 @@ public class VideoPageActivity extends AppCompatActivity {
         });
 
         Utilities.updateUserPageButton(this,btnUserPage);
-
-        // Evaluate and display video score
-        Utilities.EvaluateVideo(currentVideo);
-        tvScore.setText(String.valueOf(currentVideo.getScore()));
-        tvScore.setVisibility(View.VISIBLE);
 
         User uploader=Database.getUser(UploaderName);
         try {

@@ -13,9 +13,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
+import school.videopirateapp.ListViewComponents.PlaylistAdapter;
 
 public class Utilities {
     private Utilities() {
@@ -149,6 +152,7 @@ public class Utilities {
             @Override
             public void onClick(View view) {
                 Log.i("Utilities: openCommentOwnerOptionsDialog", "Opening comment page");
+                dialog.dismiss();
                 openCommentPage(contextThis, comment.getContext());
             }
         });
@@ -305,6 +309,7 @@ public class Utilities {
             @Override
             public void onClick(View view) {
                 Log.i("Utilities: openCommentViewerOptionsDialog", "Opening comment page");
+                dialog.dismiss();
                 openCommentPage(contextThis, comment.getContext());
             }
         });
@@ -461,8 +466,8 @@ public class Utilities {
         btnAddVideoToPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Implement add to playlist functionality
-                Feedback(thisContext, "Add to playlist functionality coming soon");
+                dialog.dismiss();
+                openPlaylistSelectionDialog(thisContext, video);
             }
         });
 
@@ -486,8 +491,56 @@ public class Utilities {
         btnAddVideoToPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Implement add to playlist functionality
-                Feedback(thisContext, "Add to playlist functionality coming soon");
+                dialog.dismiss();
+                openPlaylistSelectionDialog(thisContext, video);
+            }
+        });
+
+        dialog.show();
+    }
+
+    public static void openPlaylistSelectionDialog(Context thisContext, Video video) {
+        if (GlobalVariables.loggedUser.isEmpty()) {
+            Feedback(thisContext, "You must be logged in to add videos to playlists");
+            return;
+        }
+
+        Dialog dialog = new Dialog(thisContext);
+        dialog.setContentView(R.layout.activity_playlist_selection_dialog);
+
+        ListView listView = dialog.findViewById(R.id.PlaylistSelection_Dialog_ListView_Playlists);
+        Button btnCancel = dialog.findViewById(R.id.PlaylistSelection_Dialog_Button_Cancel);
+
+        // Get user's playlists
+        ArrayList<Playlist> userPlaylists = new ArrayList<>();
+        User user = GlobalVariables.loggedUser.get();
+        for (String playlistTitle : user.getOwnedPlaylists()) {
+            Playlist playlist = Database.getPlaylist(playlistTitle);
+            if (playlist != null) {
+                userPlaylists.add(playlist);
+            }
+        }
+
+        // Create and set adapter
+        PlaylistAdapter adapter = new PlaylistAdapter(thisContext, R.layout.activity_playlist_list_view_component, userPlaylists);
+        listView.setAdapter(adapter);
+
+        // Handle playlist selection
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Playlist selectedPlaylist = userPlaylists.get(position);
+                Database.addVideoToPlaylist(video, selectedPlaylist);
+                Feedback(thisContext, "Video added to playlist: " + selectedPlaylist.getTitle());
+                dialog.dismiss();
+            }
+        });
+
+        // Handle cancel button
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
 
@@ -626,7 +679,7 @@ public class Utilities {
             return;
         }
 
-        tvScore.setText(String.valueOf(playlist.getScore()));
+        tvScore.setText(String.valueOf(playlist.getVoteScore()));
         
         btnEditPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -671,7 +724,7 @@ public class Utilities {
                     } else {
                         Database.upvotePlaylist(playlist, GlobalVariables.loggedUser.get());
                         EvaluatePlaylist(playlist);
-                        tvScore.setText(String.valueOf(playlist.getScore()));
+                        tvScore.setText(String.valueOf(playlist.getVoteScore()));
                         Feedback(thisContext, "Playlist upvoted");
                     }
                 }
@@ -689,7 +742,7 @@ public class Utilities {
                     } else {
                         Database.downvotePlaylist(playlist, GlobalVariables.loggedUser.get());
                         EvaluatePlaylist(playlist);
-                        tvScore.setText(String.valueOf(playlist.getScore()));
+                        tvScore.setText(String.valueOf(playlist.getVoteScore()));
                         Feedback(thisContext, "Playlist downvoted");
                     }
                 }
@@ -718,7 +771,7 @@ public class Utilities {
             return;
         }
 
-        tvScore.setText(String.valueOf(playlist.getScore()));
+        tvScore.setText(String.valueOf(playlist.getVoteScore()));
         
         // Hide owner-specific buttons
         btnEditPlaylist.setVisibility(View.GONE);
@@ -753,7 +806,7 @@ public class Utilities {
                     } else {
                         Database.upvotePlaylist(playlist, GlobalVariables.loggedUser.get());
                         EvaluatePlaylist(playlist);
-                        tvScore.setText(String.valueOf(playlist.getScore()));
+                        tvScore.setText(String.valueOf(playlist.getVoteScore()));
                         Feedback(thisContext, "Playlist upvoted");
                     }
                 }
@@ -771,7 +824,7 @@ public class Utilities {
                     } else {
                         Database.downvotePlaylist(playlist, GlobalVariables.loggedUser.get());
                         EvaluatePlaylist(playlist);
-                        tvScore.setText(String.valueOf(playlist.getScore()));
+                        tvScore.setText(String.valueOf(playlist.getVoteScore()));
                         Feedback(thisContext, "Playlist downvoted");
                     }
                 }
@@ -837,61 +890,55 @@ public class Utilities {
 
 
     public static void openLoginDialog(Context thisContext, Button originalLoginBtn) {
-        // TODO, very stupid solutions that work
-
-        Dialog loginDialog = new Dialog(thisContext); //this screen as context
+        Dialog loginDialog = new Dialog(thisContext);
         loginDialog.setContentView(R.layout.activity_login_dialog);
         EditText etUsername = loginDialog.findViewById(R.id.Login_Dialog_EditText_Username);
         EditText etPassword = loginDialog.findViewById(R.id.Login_Dialog_EditText_Password);
         Button btnLogin = loginDialog.findViewById(R.id.Login_Dialog_Button_Login);
         Button btnSignup = loginDialog.findViewById(R.id.Login_Dialog_Button_Signup);
 
-        final User[] desiredUser = {User.Default()};
-
-        final String[] username = {etUsername.getText().toString()};
-        final String[] password = {etPassword.getText().toString()};
+        final User[] desiredUser = {null};
+        final String[] username = {""};
+        final String[] password = {""};
 
         etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                password[0] =editable.toString();
-
-                if (username[0].isEmpty() || password[0].isEmpty()) {
-                } else if (!username[0].startsWith("@")) {
+                password[0] = editable.toString();
+                // Only try to get user if we have both username and password
+                if (!username[0].isEmpty() && !password[0].isEmpty() && username[0].startsWith("@")) {
+                    desiredUser[0] = Database.getUser(username[0]);
                 } else {
-                    desiredUser[0] =Database.getUser(username[0]);
+                    desiredUser[0] = null;
                 }
             }
         });
+
         etUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                username[0] =editable.toString();
-
-                if (username[0].isEmpty() || password[0].isEmpty()) {
-                } else if (!username[0].startsWith("@")) {
+                username[0] = editable.toString();
+                // Only try to get user if we have both username and password
+                if (!username[0].isEmpty() && !password[0].isEmpty() && username[0].startsWith("@")) {
+                    desiredUser[0] = Database.getUser(username[0]);
                 } else {
-                    desiredUser[0] =Database.getUser(username[0]);
+                    desiredUser[0] = null;
                 }
             }
         });
@@ -899,19 +946,16 @@ public class Utilities {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Feedback(thisContext,username);
-
                 if (username[0].isEmpty() || password[0].isEmpty()) {
-                    // Display a message if the fields are empty
                     Feedback(thisContext, "Please enter both username and password");
                 } else if (!username[0].startsWith("@")) {
                     Feedback(thisContext, "Usernames must start with @");
                 } else {
-//                    User desiredUser=Database.getUser(username[0]);
-//                    Feedback(thisContext,desiredUser.toString());
-                    if (desiredUser[0] == null) { // TODO, BUG HERE, I DONT KNOW WHY, (SKIPS CHECKING PASSWORD), desiredUser will always be default if not found
-                        Feedback(thisContext, "User was not found");
+                    // Get fresh user data when login is attempted
+                    desiredUser[0] = Database.getUser(username[0]);
+                    
+                    if (desiredUser[0] == null) {
+                        Feedback(thisContext, "User not found");
                     } else if (!desiredUser[0].getPassword().equals(password[0])) {
                         Feedback(thisContext, "Password does not match");
                     } else {
@@ -927,7 +971,6 @@ public class Utilities {
                         });
                         loginDialog.dismiss();
                     }
-
                 }
             }
         });
@@ -985,20 +1028,12 @@ public class Utilities {
 
     // Video may be expected in edge case to be given as null, function demands it not to be
     public static void EvaluateVideo(@NonNull Video video) {
-        Integer score = 0;
-        score += video.getViews();
-        score += video.getUpvotes() * 15;
-        score += video.getDownvotes() * 15;
-        score += video.getComments().size() * 10;
+        Integer score = video.getUpvotes() - video.getDownvotes();
         video.setScore(score);
     }
 
     public static void EvaluatePlaylist(@NonNull Playlist playlist) {
-        Integer score = 0;
-        score += playlist.getViews();
-        score += playlist.getUpvotes() * 15;
-        score += playlist.getDownvotes() * 15;
-        score += playlist.getVideos().size() * 10;
+        Integer score = playlist.getUpvotes() - playlist.getDownvotes();
         playlist.setScore(score);
     }
 

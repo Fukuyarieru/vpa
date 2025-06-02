@@ -109,24 +109,35 @@ public abstract class Database {
       });
    }
 
+   public static void evaluateVideo(@NonNull Video video) {
+      // Calculate score based on upvotes minus downvotes
+      int score = video.getUpvotes() - video.getDownvotes();
+      video.setScore(score);
+      updateVideo(video);
+      Log.i("Database: evaluateVideo", "Updated score for video " + video.getTitle() + " to " + score);
+   }
+
    public static void upvoteVideo(Video targetVideo, User user) {
       DatabaseReference userRef = Database.getRef("users").child(user.getName());
       userRef.addListenerForSingleValueEvent(new ValueEventListener() {
          @Override
          public void onDataChange(@NonNull DataSnapshot userSnapshot) {
             // check if user exists
-            if (!userSnapshot.exists()) {
-               DatabaseReference videoRef = Database.getRef(targetVideo.getTitle());
+            if (userSnapshot.exists()) {
+               DatabaseReference videoRef = Database.getRef("videos").child(targetVideo.getTitle());
                videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
                   @Override
                   public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                      // check if video exists
                      if (videoSnapshot.exists()) {
-                           targetVideo.Upvote();
-                           user.upvoteVideo(targetVideo);
-                           videoRef.setValue(targetVideo);
-                           userRef.setValue(user);
-                           Log.i("Database: upvoteVideo", "Upvoted video " + targetVideo.getTitle());
+                        // Use the User class's upvoteVideo method
+                        user.upvoteVideo(targetVideo);
+                        targetVideo.setUpvotes(targetVideo.getUpvotes() + 1);
+                        evaluateVideo(targetVideo);
+                        
+                        videoRef.setValue(targetVideo);
+                        userRef.setValue(user);
+                        Log.i("Database: upvoteVideo", "Upvoted video " + targetVideo.getTitle());
                      } else {
                         Log.e("Database: upvoteVideo", "Video does not exist");
                      }
@@ -137,9 +148,9 @@ public abstract class Database {
                      Log.e("Database: upvoteVideo", "Failed to add listener to videoRef");
                   }
                });
+            } else {
+               Log.e("Database: upvoteVideo", "User does not exist");
             }
-            else {
-            Log.e("Database: upvoteVideo", "User does not exist"); }
          }
 
          @Override
@@ -150,30 +161,26 @@ public abstract class Database {
    }
 
    public static void downvoteVideo(Video targetVideo, User user) {
-      Log.i("TEST",user.toString());
       DatabaseReference userRef = Database.getRef("users").child(user.getName());
       userRef.addListenerForSingleValueEvent(new ValueEventListener() {
          @Override
          public void onDataChange(@NonNull DataSnapshot userSnapshot) {
             // check if user exists
-            Log.i("TEST",userSnapshot.toString());
-            if (!userSnapshot.exists()) {
-               DatabaseReference videoRef = Database.getRef(targetVideo.getTitle());
+            if (userSnapshot.exists()) {
+               DatabaseReference videoRef = Database.getRef("videos").child(targetVideo.getTitle());
                videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
                   @Override
                   public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                      // check if video exists
                      if (videoSnapshot.exists()) {
-                        Video video = videoSnapshot.getValue(Video.class);
-                        if (video != null) {
-                           targetVideo.Downvote();
-                           user.downvoteVideo(targetVideo);
-                           videoRef.setValue(targetVideo);
-                           userRef.setValue(user);
-                           Log.i("Database: downvoteVideo", "Downvoted video " + targetVideo.getTitle());
-                        } else {
-                           Log.e("Database: downvoteVideo", "Video does not exist");
-                        }
+                        // Use the User class's downvoteVideo method
+                        user.downvoteVideo(targetVideo);
+                        targetVideo.setDownvotes(targetVideo.getDownvotes() + 1);
+                        evaluateVideo(targetVideo);
+                        
+                        videoRef.setValue(targetVideo);
+                        userRef.setValue(user);
+                        Log.i("Database: downvoteVideo", "Downvoted video " + targetVideo.getTitle());
                      } else {
                         Log.e("Database: downvoteVideo", "Video does not exist");
                      }
@@ -448,20 +455,62 @@ public abstract class Database {
 
    public static void updateUser(@NonNull User user) {
       DatabaseReference userRef = database.getReference("users").child(user.getName());
-      userRef.setValue(user);
-      Log.i("Database: updateUser", "Updated user in database: " + user.getName());
+      userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+            if (userSnapshot.exists()) {
+               userRef.setValue(user);
+               Log.i("Database: updateUser", "Updated user in database: " + user.getName());
+            } else {
+               Log.e("Database: updateUser", "User does not exist: " + user.getName());
+            }
+         }
+
+         @Override
+         public void onCancelled(@NonNull DatabaseError error) {
+            Log.e("Database: updateUser", "Failed to check if user exists: " + error.getMessage());
+         }
+      });
    }
 
    public static void updateVideo(@NonNull Video video) {
       DatabaseReference videoRef = database.getReference("videos").child(video.getTitle());
-      videoRef.setValue(video);
-      Log.i("Database: updateVideo", "Updated video in database: " + video.getTitle());
+      videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
+            if (videoSnapshot.exists()) {
+               videoRef.setValue(video);
+               Log.i("Database: updateVideo", "Updated video in database: " + video.getTitle());
+            } else {
+               Log.e("Database: updateVideo", "Video does not exist: " + video.getTitle());
+            }
+         }
+
+         @Override
+         public void onCancelled(@NonNull DatabaseError error) {
+            Log.e("Database: updateVideo", "Failed to check if video exists: " + error.getMessage());
+         }
+      });
    }
 
    public static void updatePlaylist(@NonNull Playlist playlist) {
       DatabaseReference playlistRef = database.getReference("playlists").child(playlist.getTitle());
-      playlistRef.setValue(playlist);
-      Log.i("Database: updatePlaylist", "Updated playlist in database: " + playlist.getTitle());
+      playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
+            if (playlistSnapshot.exists()) {
+               playlistRef.setValue(playlist);
+               Log.i("Database: updatePlaylist", "Updated playlist in database: " + playlist.getTitle());
+            } else {
+               Log.e("Database: updatePlaylist", "Playlist does not exist: " + playlist.getTitle());
+            }
+         }
+
+         @Override
+         public void onCancelled(@NonNull DatabaseError error) {
+            Log.e("Database: updatePlaylist", "Failed to check if playlist exists: " + error.getMessage());
+         }
+      });
    }
 
    public static void updateComment(@NonNull Comment comment, @NonNull Video video) {
@@ -485,11 +534,18 @@ public abstract class Database {
 
          // Find and update the comment in the video's comments list
          ArrayList<Comment> comments = currentVideo.getComments();
+         boolean commentFound = false;
          for (int i = 0; i < comments.size(); i++) {
             if (comments.get(i).getContext().equals(comment.getContext())) {
                comments.set(i, comment);
+               commentFound = true;
                break;
             }
+         }
+
+         if (!commentFound) {
+            Log.e("Database: updateComment", "Comment not found in video: " + video.getTitle());
+            return;
          }
 
          // Update the video in the database
@@ -498,6 +554,13 @@ public abstract class Database {
       } catch (Exception e) {
          Log.e("Database: updateComment", "Error updating comment: " + e.getMessage());
       }
+   }
+
+   public static void initialize() {
+      Log.i("Database: initialize", "Initializing database");
+      Users.initialize();
+      Videos.initialize();
+      Playlists.initialize();
    }
 
 //    @Deprecated

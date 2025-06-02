@@ -142,12 +142,14 @@ public class Video {
       Score = score;
    }
 
-   @Deprecated
+   public Integer getVoteScore() {
+      return this.Upvotes - this.Downvotes;
+   }
+
    public void addComment(Comment newComment) {
       // this function adds a comment to the video's comments section, also it changes the context of the comment to be the video's path
       if (!this.Comments.contains(newComment)) {
          this.Comments.add(newComment);
-         this.Score += 10;
       } else {
          Log.w("Video: addComment", "Video already contains same added comment, was not added again");
       }

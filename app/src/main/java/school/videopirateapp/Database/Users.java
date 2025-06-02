@@ -28,15 +28,11 @@ public abstract class Users {
 //        Users.savedUser = savedUser;
 //    }
     public static User getUser(String userName) {
-        // TODO, half ass solution for now
-//        if (savedUser == null) {
-//            savedUser = User.Default();
-//        }
         if (!userName.startsWith("@")) {
             Log.e("Users: getUser", "Given username does not start with @, returning null to fix");
             return null;
         }
-        if (!savedUser.getName().equals(userName)) {
+        if (savedUser == null || !savedUser.getName().equals(userName)) {
             DatabaseReference userRef = Database.getRef("users").child(userName);
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -49,7 +45,6 @@ public abstract class Users {
                     } else {
                         savedUser = null;
                         Log.e("Users: getUser", "User does not exist");
-                        // throw user not exist?
                     }
                 }
 
@@ -60,6 +55,24 @@ public abstract class Users {
             });
         }
         return savedUser;
+    }
+
+    public static void initialize() {
+        DatabaseReference usersRef = Database.getRef("users");
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    Log.w("Users: initialize", "Creating default user");
+                    Database.addUser(User.Default());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Users: initialize", "Failed to initialize users: " + error.getMessage());
+            }
+        });
     }
 
 }

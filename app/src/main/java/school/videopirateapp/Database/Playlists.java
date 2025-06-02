@@ -1,5 +1,6 @@
 package school.videopirateapp.Database;
 
+import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -35,17 +36,33 @@ public abstract class Playlists {
                     if (playlistSnapshot.exists()) {
                         savedPlaylist = playlistSnapshot.getValue(Playlist.class);
                     }
-                    // throw exception playlist doesnt exist?
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    Log.e("Playlists: getPlaylist", "Failed to get playlist: " + error.getMessage());
                 }
             });
-//            while(savedPlaylist.getTitle().equals(playlistTitle)||!savedPlaylist.getTitle().equals(Playlist.Default().getTitle())) {}
         }
         return savedPlaylist;
+    }
+
+    public static void initialize() {
+        DatabaseReference playlistsRef = Database.getRef("playlists");
+        playlistsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    Log.w("Playlists: initialize", "Creating default playlist");
+                    Database.addPlaylist(Playlist.Default());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Playlists: initialize", "Failed to initialize playlists: " + error.getMessage());
+            }
+        });
     }
 
 }

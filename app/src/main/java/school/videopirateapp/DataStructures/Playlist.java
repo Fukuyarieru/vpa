@@ -101,6 +101,10 @@ public class Playlist {
       this.Score = score;
    }
 
+   public Integer getVoteScore() {
+      return this.Upvotes - this.Downvotes;
+   }
+
    public Integer getUpvotes() {
       return Upvotes;
    }
@@ -136,25 +140,5 @@ public class Playlist {
    @Override
    public String toString() {
       return "Playlist\n Title: " + this.Title + "\nDescription: " + this.Description + "\nOwner: " + this.Owner;
-   }
-
-   @Deprecated
-   public void Upvote() {
-      Log.i("Playlist: upvote", "Upvoted playlist: " + this.getTitle());
-      this.Upvotes++;
-      this.Score = this.Upvotes - this.Downvotes;
-   }
-
-   @Deprecated
-   public void Downvote() {
-      Log.i("Playlist: downvote", "Downvoted playlist: " + this.getTitle());
-      this.Downvotes++;
-      this.Score = this.Upvotes - this.Downvotes;
-   }
-
-   @Deprecated
-   public void View() {
-      // this.Views++;
-      // this.Score += 1;
    }
 }

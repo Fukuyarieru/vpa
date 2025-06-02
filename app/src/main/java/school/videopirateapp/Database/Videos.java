@@ -73,4 +73,42 @@ public abstract class Videos {
             }
         });
     }
+
+    public static void initialize() {
+        Log.i("Videos: initialize", "Starting video initialization");
+        DatabaseReference videosRef = Database.getRef("videos");
+        
+        // Check if videos tree exists and initialize if needed
+        videosRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    Log.w("Videos: initialize", "Videos tree does not exist, creating it");
+                    // Create empty tree without clearing existing data
+                    videosRef.setValue(new HashMap<String, Video>()).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.i("Videos: initialize", "Videos tree created");
+                            // Add default video to new tree
+                            Database.addVideo(Video.Default());
+                            Refresh();
+                        } else {
+                            Log.e("Videos: initialize", "Failed to create videos tree: " + task.getException());
+                        }
+                    });
+                } else if (!snapshot.hasChildren()) {
+                    Log.w("Videos: initialize", "Videos tree is empty, adding default video");
+                    Database.addVideo(Video.Default());
+                    Refresh();
+                } else {
+                    Log.i("Videos: initialize", "Videos tree exists with data, refreshing");
+                    Refresh();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Videos: initialize", "Failed to initialize videos: " + error.getMessage());
+            }
+        });
+    }
 }
