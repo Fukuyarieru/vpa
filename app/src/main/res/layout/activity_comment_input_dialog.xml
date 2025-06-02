@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".Dialogs.CommentInputDialogActivity">
+
+    <EditText
+        android:id="@+id/CommentInput_Dialog_EditText_Comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your reply"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:gravity="top|start"
+        android:padding="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/CommentInput_Dialog_Button_Cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/CommentInput_Dialog_Button_Submit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Submit" />
+
+    </LinearLayout>
+
+</LinearLayout> 

@@ -24,12 +24,9 @@ import static school.videopirateapp.Utilities.openPlaylistViewerOptionsDialog;
 
 public class PlaylistPageActivity extends AppCompatActivity {
 
-
     Button btnPlaylistOptions;
     Button btnUserPage;
     Button btnBack;
-    Button btnUpvote;
-    Button btnDownvote;
     TextView tvPlaylistTitle;
     TextView tvPlaylistDescription;
     TextView tvPlaylistSCore;
@@ -44,8 +41,6 @@ public class PlaylistPageActivity extends AppCompatActivity {
         btnPlaylistOptions=findViewById(R.id.Playlist_Page_Button_Options);
         btnUserPage=findViewById(R.id.Playlist_Page_Button_UserPage);
         btnBack=findViewById(R.id.Playlist_Page_Button_Back);
-        btnUpvote=findViewById(R.id.Playlist_Page_Button_Upvote);
-        btnDownvote=findViewById(R.id.Playlist_Page_Button_Downvote);
         tvPlaylistTitle=findViewById(R.id.Playlist_Page_TextView_Title);
         tvPlaylistDescription =findViewById(R.id.Playlist_Page_TextView_Description);
         tvPlaylistSCore=findViewById(R.id.Playlist_Page_TextView_Score);
@@ -56,11 +51,8 @@ public class PlaylistPageActivity extends AppCompatActivity {
         String playlistTitle=intent.getStringExtra("playlistTitle");
         Playlist playlist= Database.getPlaylist(playlistTitle);
 
-
         btnPlaylistOptions.setText("Playlist Options");
         btnBack.setText("Back");
-        btnUpvote.setText("Upvote");
-        btnDownvote.setText("Downvote");
         tvPlaylistTitle.setText(playlist.getTitle());
         tvPlaylistDescription.setText(playlist.getDescription());
         tvPlaylistSCore.setText(playlist.getScore().toString());
@@ -93,7 +85,5 @@ public class PlaylistPageActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 }

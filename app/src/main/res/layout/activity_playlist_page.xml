@@ -79,34 +79,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/Playlist_Page_TextView_Score"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/Playlist_Page_Button_Downvote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Downvote" />
-
-            <TextView
-                android:id="@+id/Playlist_Page_TextView_Score"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Score" />
-
-            <Button
-                android:id="@+id/Playlist_Page_Button_Upvote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Upvote" />
-        </LinearLayout>
+            android:gravity="center"
+            android:text="Score" />
 
         <ListView
             android:id="@+id/Playlist_Page_ListView"

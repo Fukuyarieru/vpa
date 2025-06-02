@@ -124,15 +124,47 @@ public class User {
    }
 
    public void addComment(Comment newComment) {
-      // TODO, CHECK THIS CODE LATER AS I DID NOT
-      if (!this.Comments.containsKey(newComment.getContext())) {
+      String context = newComment.getContext();
+      if (!this.Comments.containsKey(context)) {
          ArrayList<Comment> arrComments = new ArrayList<>();
          arrComments.add(newComment);
-         this.Comments.put(newComment.getContext(), arrComments);
+         this.Comments.put(context, arrComments);
+         Log.i("User: addComment", "Added first comment to context: " + context);
       } else {
-         ArrayList<Comment> arrComments = this.Comments.get(newComment.getContext());
-         arrComments.add(newComment);
-         this.Comments.put(newComment.getContext(), arrComments);
+         ArrayList<Comment> arrComments = this.Comments.get(context);
+         // Check for duplicate comments
+         boolean isDuplicate = false;
+         for (Comment existingComment : arrComments) {
+            if (existingComment.getAuthor().equals(newComment.getAuthor()) && 
+                existingComment.getComment().equals(newComment.getComment())) {
+               isDuplicate = true;
+               Log.w("User: addComment", "Duplicate comment detected and prevented");
+               break;
+            }
+         }
+         if (!isDuplicate) {
+            arrComments.add(newComment);
+            this.Comments.put(context, arrComments);
+            Log.i("User: addComment", "Added comment to existing context: " + context);
+         }
+      }
+   }
+
+   public void addReplyToComment(Comment parentComment, Comment reply) {
+      String context = parentComment.getContext();
+      if (this.Comments.containsKey(context)) {
+         ArrayList<Comment> arrComments = this.Comments.get(context);
+         // Find the parent comment and add the reply
+         for (Comment comment : arrComments) {
+            if (comment.equals(parentComment)) {
+               if (comment.getReplies() == null) {
+                  comment.setReplies(new ArrayList<>());
+               }
+               comment.getReplies().add(reply);
+               Log.i("User: addReplyToComment", "Added reply to comment in context: " + context);
+               break;
+            }
+         }
       }
    }
 

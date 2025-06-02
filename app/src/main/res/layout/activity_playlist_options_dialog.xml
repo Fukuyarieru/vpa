@@ -7,11 +7,62 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".Dialogs.PlaylistOptionsDialogActivity">
 
     <Button
-        android:id="@+id/PlaylistOptions_Dialog_Button_playlistPage"
+        android:id="@+id/PlaylistOptions_Dialog_Button_EditPlaylist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="playlistPage" />
+        android:layout_marginBottom="8dp"
+        android:text="Edit Playlist" />
+
+    <Button
+        android:id="@+id/PlaylistOptions_Dialog_Button_DeletePlaylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Delete Playlist" />
+
+    <Button
+        android:id="@+id/PlaylistOptions_Dialog_Button_SharePlaylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Share Playlist" />
+
+    <Button
+        android:id="@+id/PlaylistOptions_Dialog_Button_PlaylistPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="View Playlist" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/PlaylistOptions_Dialog_Button_Downvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="👎" />
+
+        <TextView
+            android:id="@+id/PlaylistOptions_Dialog_TextView_Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:text="Score" />
+
+        <Button
+            android:id="@+id/PlaylistOptions_Dialog_Button_Upvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="👍" />
+    </LinearLayout>
 </LinearLayout>

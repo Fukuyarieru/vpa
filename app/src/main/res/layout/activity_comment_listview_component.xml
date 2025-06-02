@@ -14,8 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:orientation="horizontal">
-<!--        android:onClick="openCommentOptionsDialog"-->
-
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,13 +35,6 @@
                 android:padding="5sp"
                 android:text="UserName" />
         </LinearLayout>
-
-        <!--        android:onClick="openUserPage"-->
-
-        <!--        android:scaleType="centerInside"-->
-<!--        android:maxWidth="100sp"-->
-<!--        android:maxHeight="100sp"-->
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0"
                     android:padding="5sp"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:text="Date" />
             </LinearLayout>
 
@@ -85,21 +76,15 @@
                 android:layout_weight="1"
                 android:text="Comment" />
 
+            <TextView
+                android:id="@+id/Comment_ListView_Component_TextView_Replies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="5sp"
+                android:visibility="gone"
+                android:text="0 replies" />
         </LinearLayout>
-
     </LinearLayout>
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_weight="0"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/Comment_ListView_Component_TextView_Context"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Context" />-->
-<!--    </LinearLayout>-->
 
 </LinearLayout>

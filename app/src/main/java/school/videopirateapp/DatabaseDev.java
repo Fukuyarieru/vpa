@@ -30,24 +30,28 @@ public class DatabaseDev extends AppCompatActivity {
 //        String treeStr=Tree.getText().toString();
 //        String messageStr=Message.getText().toString();
 //        Database.GetRef(treeStr).setValue(messageStr);
-//        Toast.makeText(Database_Dev.this, "Added " + Message.getText().toString(), Toast.LENGTH_SHORT).show();
+//        Log.i("DatabaseDev: Add", "Added: " + Message.getText().toString());
+//        Feedback(this, "Added: " + Message.getText().toString());
 //    }
 //    public void Get(View view) {
 ////        myRef=database.getReference(Tree.getText().toString());
 //        String treeStr=Tree.getText().toString();
 //        Database.GetRef(treeStr).get().addOnSuccessListener(dataSnapshot -> {
 //            Message.setText(dataSnapshot.getValue(String.class));
-//            Toast.makeText(this, Message.getText().toString(), Toast.LENGTH_SHORT).show();
+//            Log.i("DatabaseDev: Get", "Retrieved: " + Message.getText().toString());
+//            Feedback(this, Message.getText().toString());
 //        }).addOnFailureListener(dataSnapshot -> {
 //            Message.setText("ERROR");
-//            Toast.makeText(Database_Dev.this, "Not Found", Toast.LENGTH_SHORT).show();
+//            Log.e("DatabaseDev: Get", "Not Found");
+//            Feedback(this, "Not Found");
 //        });
 //    }
 //    public void Remove(View view) {
 //        String treeStr=Tree.getText().toString();
 //        Database.GetRef(treeStr).get().addOnSuccessListener(dataSnapshot -> {
 //            Message.setText("Removed: " + dataSnapshot.getValue(String.class));
-//            Toast.makeText(Database_Dev.this, "Removed " + Message.getText().toString(), Toast.LENGTH_SHORT).show();
+//            Log.i("DatabaseDev: Remove", "Removed: " + Message.getText().toString());
+//            Feedback(this, "Removed: " + Message.getText().toString());
 //            Database.Remove(treeStr);
 //        });
 //    }

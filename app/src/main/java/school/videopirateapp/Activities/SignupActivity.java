@@ -1,6 +1,9 @@
 package school.videopirateapp.Activities;
 
+import static school.videopirateapp.Utilities.Feedback;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
+import school.videopirateapp.Utilities;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -33,11 +37,11 @@ public class SignupActivity extends AppCompatActivity {
         String name=etName.getText().toString();
         String password=etPassword.getText().toString();
         if(name.isEmpty()||password.isEmpty()) {
-            Toast.makeText(this,"Please fill in both username and password",Toast.LENGTH_SHORT).show();
+            Feedback(this, "Please fill in both username and password");
         } else {
             User newUser=new User(name,password);
             Database.addUser(newUser);
-            Toast.makeText(this,"Created user successfully:\n"+newUser.toString(),Toast.LENGTH_SHORT).show();
+            Feedback(this, "User created successfully");
             finish();
         }
     }

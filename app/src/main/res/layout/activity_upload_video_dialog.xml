@@ -20,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
         app:srcCompat="@drawable/default_video_image" />
 
     <LinearLayout

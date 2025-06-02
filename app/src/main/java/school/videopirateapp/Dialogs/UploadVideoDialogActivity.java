@@ -29,7 +29,7 @@ public class UploadVideoDialogActivity extends AppCompatActivity {
 //
 //        btnUploadVideo.setText("Upload");
 //        btnChooseVideo.setText("Choose");
-//        Toast.makeText(this, "THIS IS WORKING", Toast.LENGTH_SHORT).show();
+//        Feedback(this, "Activity initialized successfully");
 
         // TODO, finish this
     }

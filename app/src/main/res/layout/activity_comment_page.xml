@@ -4,14 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".Activities.CommentPageActivity">
 
     <TextView
-        android:id="@+id/textView"
-        android:textSize="30sp"
-        android:layout_width="wrap_content"
+        android:id="@+id/CommentPage_TextView_NoComments"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="UNINMPLEMENTED YET" />
+        android:text="No comments yet. Be the first to comment!"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="16dp" />
+
+    <ListView
+        android:id="@+id/CommentPage_ListView_Comments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/CommentPage_EditText_NewComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Write a comment..."
+            android:inputType="textMultiLine"
+            android:minLines="2"
+            android:gravity="top|start"
+            android:padding="8dp"
+            android:background="@android:drawable/editbox_background" />
+
+        <Button
+            android:id="@+id/CommentPage_Button_AddComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Post"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
 </LinearLayout>

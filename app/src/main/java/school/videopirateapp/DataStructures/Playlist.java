@@ -19,6 +19,7 @@ public class Playlist {
    private Integer Score;
    private Integer Upvotes;
    private Integer Downvotes;
+   private Integer Views;
 
 
    public Playlist() {
@@ -41,6 +42,9 @@ public class Playlist {
       this.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus congue velit vel lacus blandit dignissim.";
       this.Owner = owner;
       this.Score = 0;
+      this.Upvotes = 0;
+      this.Downvotes = 0;
+      this.Views = 0;
       this.Image = getDefaultPlaylistImage();
       Log.i("Playlist: Constructor", "Created Playlist with:\nTitle: " + Title + "\nDescription: " + Description + "\nOwner: " + owner);
    }
@@ -116,6 +120,14 @@ public class Playlist {
       this.Downvotes = downvotes;
    }
 
+   public Integer getViews() {
+      return Views;
+   }
+
+   public void setViews(Integer views) {
+      this.Views = views;
+   }
+
    public void addVideo(Video newVideo) {
       String videoTitle = newVideo.getTitle();
       this.Videos.add(videoTitle); // todo, this looks ugly, check laters
@@ -124,5 +136,25 @@ public class Playlist {
    @Override
    public String toString() {
       return "Playlist\n Title: " + this.Title + "\nDescription: " + this.Description + "\nOwner: " + this.Owner;
+   }
+
+   @Deprecated
+   public void Upvote() {
+      Log.i("Playlist: upvote", "Upvoted playlist: " + this.getTitle());
+      this.Upvotes++;
+      this.Score = this.Upvotes - this.Downvotes;
+   }
+
+   @Deprecated
+   public void Downvote() {
+      Log.i("Playlist: downvote", "Downvoted playlist: " + this.getTitle());
+      this.Downvotes++;
+      this.Score = this.Upvotes - this.Downvotes;
+   }
+
+   @Deprecated
+   public void View() {
+      // this.Views++;
+      // this.Score += 1;
    }
 }

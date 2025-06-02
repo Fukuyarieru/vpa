@@ -1,44 +1,40 @@
 package school.videopirateapp.DataStructures;
 
-import static school.videopirateapp.Utilities.TimeNow;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Comment {
-
     private static final Comment defaultComment = new Comment();
-
-    // An Idea
     private String Comment;
     private String Author;
     private String Context;
-    private String Date;
-    private ArrayList<Byte> AuthorImage;
     private ArrayList<Comment> Replies;
+    private Date Timestamp;
+    private Integer Upvotes;
+    private Integer Downvotes;
+    private String ParentCommentId; // For replies
+    private Integer Score;
 
-
-    public ArrayList<Byte> getAuthorImage() {
-        return AuthorImage;
+    public Comment() {
+        this("Default Comment", "@Default", "default-context");
     }
 
-    public void setAuthorImage(ArrayList<Byte> authorImage) {
-        AuthorImage = authorImage;
+    public Comment(String comment, String author, String context) {
+        this.Comment = comment;
+        this.Author = author;
+        this.Context = context;
+        this.Replies = new ArrayList<>();
+        this.Timestamp = new Date();
+        this.Upvotes = 0;
+        this.Downvotes = 0;
+        this.ParentCommentId = null;
+        this.Score = 0;
     }
 
-    public String getDate() {
-        return Date;
-    }
-
-    public void setDate(String date) {
-        Date = date;
-    }
-
-    public String getContext() {
-        return Context;
-    }
-
-    public void setContext(String context) {
-        Context = context;
+    public static Comment Default() {
+        return defaultComment;
     }
 
     public String getComment() {
@@ -49,41 +45,102 @@ public class Comment {
         Comment = comment;
     }
 
-    public void setAuthor(String author) {
-        Author = author;
-    }
-
     public String getAuthor() {
         return Author;
     }
 
-    public ArrayList<school.videopirateapp.DataStructures.Comment> getReplies() {
+    public void setAuthor(String author) {
+        Author = author;
+    }
+
+    public String getContext() {
+        return Context;
+    }
+
+    public void setContext(String context) {
+        Context = context;
+    }
+
+    public ArrayList<Comment> getReplies() {
         return Replies;
     }
 
-    public void setReplies(ArrayList<school.videopirateapp.DataStructures.Comment> replies) {
+    public void setReplies(ArrayList<Comment> replies) {
         Replies = replies;
     }
 
-    public Comment(String Comment, String author, String context, String date) {
-        this.Comment = Comment;
-        this.Author = author;
-        this.Context = context;
-        this.Date = TimeNow();
-        this.AuthorImage = new ArrayList<>();
+    public Date getTimestamp() {
+        return Timestamp;
     }
 
-    public Comment(String comment, String author) {
-        this(comment, author, "unset", "unset");
+    public void setTimestamp(Date timestamp) {
+        Timestamp = timestamp;
     }
 
-    public Comment() {
-        this("Lorem ipsum dolor sit amet, consectetur adipiscing elit", "@Default", "videos-defaultVideo-comments", "dd/MM/yyyy hh:mm:ss"); // User.Default().getName()
-        //"videos/defaultVideo/comments"
-
+    public Integer getUpvotes() {
+        return Upvotes;
     }
 
-    public static Comment Default() {
-        return defaultComment;
+    public void setUpvotes(Integer upvotes) {
+        Upvotes = upvotes;
+    }
+
+    public Integer getDownvotes() {
+        return Downvotes;
+    }
+
+    public void setDownvotes(Integer downvotes) {
+        Downvotes = downvotes;
+    }
+
+    public String getParentCommentId() {
+        return ParentCommentId;
+    }
+
+    public void setParentCommentId(String parentCommentId) {
+        ParentCommentId = parentCommentId;
+    }
+
+    public void addReply(Comment reply) {
+        reply.setParentCommentId(this.toString());
+        this.Replies.add(reply);
+        Log.i("Comment: addReply", "Added reply to comment: " + this.Comment);
+    }
+
+    public Integer getScore() {
+        return this.Upvotes - this.Downvotes;
+    }
+
+    public void upvote() {
+        Log.i("Comment: upvote", "Upvoted comment by: " + this.Author);
+        this.Upvotes++;
+    }
+
+    public void downvote() {
+        Log.i("Comment: downvote", "Downvoted comment by: " + this.Author);
+        this.Downvotes++;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Comment other = (Comment) obj;
+        return Comment.equals(other.Comment) && 
+               Author.equals(other.Author) && 
+               Context.equals(other.Context) &&
+               Timestamp.equals(other.Timestamp);
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "text='" + Comment + '\'' +
+                ", author='" + Author + '\'' +
+                ", context='" + Context + '\'' +
+                ", timestamp=" + Timestamp +
+                ", upvotes=" + Upvotes +
+                ", downvotes=" + Downvotes +
+                '}';
     }
 }

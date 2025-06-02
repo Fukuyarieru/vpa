@@ -358,6 +358,148 @@ public abstract class Database {
       });
    }
 
+   public static void upvotePlaylist(Playlist targetPlaylist, User user) {
+      DatabaseReference userRef = Database.getRef("users").child(user.getName());
+      userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+            // check if user exists
+            if (!userSnapshot.exists()) {
+               DatabaseReference playlistRef = Database.getRef("playlists").child(targetPlaylist.getTitle());
+               playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
+                     // check if playlist exists
+                     if (playlistSnapshot.exists()) {
+                        targetPlaylist.setUpvotes(targetPlaylist.getUpvotes() + 1);
+                        user.getUpvotes().add(targetPlaylist.getTitle());
+                        if (user.getDownvotes().contains(targetPlaylist.getTitle())) {
+                           user.getDownvotes().remove(targetPlaylist.getTitle());
+                           targetPlaylist.setDownvotes(targetPlaylist.getDownvotes() - 1);
+                        }
+                        playlistRef.setValue(targetPlaylist);
+                        userRef.setValue(user);
+                        Log.i("Database: upvotePlaylist", "Upvoted playlist " + targetPlaylist.getTitle());
+                     } else {
+                        Log.e("Database: upvotePlaylist", "Playlist does not exist");
+                     }
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+                     Log.e("Database: upvotePlaylist", "Failed to add listener to playlistRef");
+                  }
+               });
+            } else {
+               Log.e("Database: upvotePlaylist", "User does not exist");
+            }
+         }
+
+         @Override
+         public void onCancelled(@NonNull DatabaseError error) {
+            Log.e("Database: upvotePlaylist", "Failed to add listener to userRef");
+         }
+      });
+   }
+
+   public static void downvotePlaylist(Playlist targetPlaylist, User user) {
+      DatabaseReference userRef = Database.getRef("users").child(user.getName());
+      userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+            // check if user exists
+            if (!userSnapshot.exists()) {
+               DatabaseReference playlistRef = Database.getRef("playlists").child(targetPlaylist.getTitle());
+               playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
+                     // check if playlist exists
+                     if (playlistSnapshot.exists()) {
+                        targetPlaylist.setDownvotes(targetPlaylist.getDownvotes() + 1);
+                        user.getDownvotes().add(targetPlaylist.getTitle());
+                        if (user.getUpvotes().contains(targetPlaylist.getTitle())) {
+                           user.getUpvotes().remove(targetPlaylist.getTitle());
+                           targetPlaylist.setUpvotes(targetPlaylist.getUpvotes() - 1);
+                        }
+                        playlistRef.setValue(targetPlaylist);
+                        userRef.setValue(user);
+                        Log.i("Database: downvotePlaylist", "Downvoted playlist " + targetPlaylist.getTitle());
+                     } else {
+                        Log.e("Database: downvotePlaylist", "Playlist does not exist");
+                     }
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+                     Log.e("Database: downvotePlaylist", "Failed to add listener to playlistRef");
+                  }
+               });
+            } else {
+               Log.e("Database: downvotePlaylist", "User does not exist");
+            }
+         }
+
+         @Override
+         public void onCancelled(@NonNull DatabaseError error) {
+            Log.e("Database: downvotePlaylist", "Failed to add listener to userRef");
+         }
+      });
+   }
+
+   public static void updateUser(@NonNull User user) {
+      DatabaseReference userRef = database.getReference("users").child(user.getName());
+      userRef.setValue(user);
+      Log.i("Database: updateUser", "Updated user in database: " + user.getName());
+   }
+
+   public static void updateVideo(@NonNull Video video) {
+      DatabaseReference videoRef = database.getReference("videos").child(video.getTitle());
+      videoRef.setValue(video);
+      Log.i("Database: updateVideo", "Updated video in database: " + video.getTitle());
+   }
+
+   public static void updatePlaylist(@NonNull Playlist playlist) {
+      DatabaseReference playlistRef = database.getReference("playlists").child(playlist.getTitle());
+      playlistRef.setValue(playlist);
+      Log.i("Database: updatePlaylist", "Updated playlist in database: " + playlist.getTitle());
+   }
+
+   public static void updateComment(@NonNull Comment comment, @NonNull Video video) {
+      if (video == null) {
+         Log.e("Database: updateComment", "Video is null");
+         return;
+      }
+      
+      if (comment == null) {
+         Log.e("Database: updateComment", "Comment is null");
+         return;
+      }
+
+      try {
+         // Get the video from the database to ensure we have the latest version
+         Video currentVideo = getVideo(video.getTitle());
+         if (currentVideo == null) {
+            Log.e("Database: updateComment", "Video not found in database: " + video.getTitle());
+            return;
+         }
+
+         // Find and update the comment in the video's comments list
+         ArrayList<Comment> comments = currentVideo.getComments();
+         for (int i = 0; i < comments.size(); i++) {
+            if (comments.get(i).getContext().equals(comment.getContext())) {
+               comments.set(i, comment);
+               break;
+            }
+         }
+
+         // Update the video in the database
+         updateVideo(currentVideo);
+         Log.i("Database: updateComment", "Comment updated successfully");
+      } catch (Exception e) {
+         Log.e("Database: updateComment", "Error updating comment: " + e.getMessage());
+      }
+   }
+
 //    @Deprecated
 //    public static <T extends Object> T getObject(String Path) {
 //        T val = null;

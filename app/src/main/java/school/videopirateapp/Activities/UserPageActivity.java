@@ -10,7 +10,10 @@ import static school.videopirateapp.Utilities.openUserViewerOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoPage;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -125,19 +128,19 @@ public class UserPageActivity extends AppCompatActivity {
 
 
     public void ShowVideos() {
-        Toast.makeText(this, "There are " + videos.size() + " videos", Toast.LENGTH_SHORT).show();
+        Log.i("UserPageActivity: ShowVideos", "Showing " + videos.size() + " videos for user: " + user.getName());
         VideoAdapter videoAdapter = new VideoAdapter(this, R.layout.activity_video_listview_component, videos);
         listView.setAdapter(videoAdapter);
     }
 
     public void ShowPlaylists() {
-        Toast.makeText(this, "There are " + playlists.size() + " playlists", Toast.LENGTH_SHORT).show();
+        Log.i("UserPageActivity: ShowPlaylists", "Showing " + playlists.size() + " playlists for user: " + user.getName());
         PlaylistAdapter playlistAdapter = new PlaylistAdapter(this, R.layout.activity_playlist_list_view_component, playlists);
         listView.setAdapter(playlistAdapter);
     }
 
     public void ShowComments() {
-        Toast.makeText(this, "There are " + comments.size() + " comments", Toast.LENGTH_SHORT).show();
+        Log.i("UserPageActivity: ShowComments", "Showing " + comments.size() + " comments for user: " + user.getName());
         CommentAdapter commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments);
         listView.setAdapter(commentAdapter);
     }
@@ -164,15 +167,6 @@ public class UserPageActivity extends AppCompatActivity {
         ShowComments();
     }
 
-    public void openUserPage(View view) {
-        // this function here is responsible for the onClick on comments in the userPage listview, no action needed
-//        Intent intent=new Intent(this, UserPageActivity.class);
-//        TextView tvUserName=view.findViewById(R.id.Comment_ListView_Component_TextView_UserName);
-//        String userName=tvUserName.getText().toString();
-//        intent.putExtra("user",userName);
-//        startActivity(intent);
-    }
-
 
     public void editComment(View view) {
     }
@@ -181,5 +175,38 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
     public void deleteComment(View view) {
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            try {
+                Bitmap bitmap = null;
+                if (requestCode == 1 && data != null && data.getData() != null) {
+                    // Gallery image
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                } else if (requestCode == 2 && data != null && data.getExtras() != null) {
+                    // Camera image
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                }
+
+                if (bitmap != null) {
+                    // Resize bitmap to a reasonable size
+                    bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+                    // Convert bitmap to byte array
+                    ArrayList<Byte> imageBytes = Utilities.BitmapToByteArray(bitmap);
+                    // Update user's profile picture
+                    user.setImage(imageBytes);
+                    Database.updateUser(user);
+                    // Update the image view
+                    UserImage.setImageBitmap(bitmap);
+                    Feedback(this, "Profile picture updated successfully");
+                }
+            } catch (Exception e) {
+                Log.e("UserPageActivity", "Error loading image", e);
+                Feedback(this, "Error loading image");
+            }
+        }
     }
 }

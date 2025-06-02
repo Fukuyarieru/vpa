@@ -80,14 +80,16 @@ public class LoginDialogActivity extends AppCompatActivity {
 ////
 //        if (username.isEmpty() || password.isEmpty()) {
 //            // Display a message if the fields are empty
-//            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+//            Log.i("LoginDialogActivity: confirmLogin", "Login attempt with empty fields");
+//            Feedback(this, "Please enter both username and password");
 //        }
 //        else {
 //            User desiredUser=Database.getUser(username);
 //            if(desiredUser.getPassword().equals(password)){
 //                Button userPage = findViewById(R.id.MainMenu_Button_UserPage);
 //                userPage.setText(username);
-//                Toast.makeText(this,"Logged in succesfully",Toast.LENGTH_SHORT).show();
+//                Log.i("LoginDialogActivity: confirmLogin", "User logged in successfully: " + username);
+//                Feedback(this, "Logged in successfully");
 //                finish();
 //            }
 //        }

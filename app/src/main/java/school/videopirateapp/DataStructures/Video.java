@@ -157,20 +157,19 @@ public class Video {
    public void Upvote() {
       Log.i("Video: upvote", "Upvoted video: " + this.getTitle());
       this.Upvotes++;
-      this.Score += 15;
+      this.Score = this.Upvotes - this.Downvotes;
    }
 
    @Deprecated
    public void Downvote() {
       Log.i("Video: downvote", "Downvoted video: " + this.getTitle());
       this.Downvotes++;
-      this.Score -= 15;
+      this.Score = this.Upvotes - this.Downvotes;
    }
 
    @Deprecated
    public void View() {
       this.Views++;
-      this.Score += 1;
    }
 
    public String Context() {

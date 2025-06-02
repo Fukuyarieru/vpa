@@ -1,10 +1,14 @@
 package school.videopirateapp;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -31,6 +35,7 @@ import school.videopirateapp.Activities.SignupActivity;
 import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
 import school.videopirateapp.DataStructures.Comment;
+import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
@@ -87,10 +92,10 @@ public class Utilities {
         currentActivityThis.startActivity(intent);
     }
 
-    public static void openCommentPage(@NonNull Context currentActivityThis, String commentContext) {
+    public static void openCommentPage(@NonNull Context currentActivityThis, String videoTitle) {
         Log.i("Utilities: openCommentPage", "Comment page opened");
         Intent intent = new Intent(currentActivityThis, CommentPageActivity.class);
-        intent.putExtra("context", commentContext);
+        intent.putExtra("videoTitle", videoTitle);
         currentActivityThis.startActivity(intent);
     }
 
@@ -112,7 +117,7 @@ public class Utilities {
         btnDeleteComment.setText("Delete Comment");
         btnCommentPage.setText("Comment Page");
         btnEditComment.setText("Edit Comment");
-        tvScore.setText("0"); // TODO, score for replies not implemented yet
+        tvScore.setText(String.valueOf(comment.getScore()));
         btnDownvote.setText("\uD83D\uDC4E");
         btnUpvote.setText("\uD83D\uDC4D");
         btnReply.setText("Reply");
@@ -124,8 +129,19 @@ public class Utilities {
         btnDeleteComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: DELETE_COMMENT");
-                Feedback(contextThis, "TODO: DELETE_COMMENT");
+                if (GlobalVariables.loggedUser.isPresent() && GlobalVariables.loggedUser.get().getName().equals(comment.getAuthor())) {
+                    Video video = Database.getVideo(comment.getContext());
+                    if (video != null) {
+                        video.getComments().remove(comment);
+                        Database.updateVideo(video);
+                        dialog.dismiss();
+                        Feedback(contextThis, "Comment deleted successfully");
+                    } else {
+                        Feedback(contextThis, "Error: Video not found");
+                    }
+                } else {
+                    Feedback(contextThis, "You can only delete your own comments");
+                }
             }
         });
 
@@ -140,32 +156,121 @@ public class Utilities {
         btnEditComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: EDIT_COMMENT");
-                Feedback(contextThis, "TODO: EDIT_COMMENT");
+                if (GlobalVariables.loggedUser.isPresent() && GlobalVariables.loggedUser.get().getName().equals(comment.getAuthor())) {
+                    // Create a dialog for editing the comment
+                    Dialog editDialog = new Dialog(contextThis);
+                    editDialog.setContentView(R.layout.activity_comment_input_dialog);
+                    
+                    EditText etEditComment = editDialog.findViewById(R.id.CommentInput_Dialog_EditText_Comment);
+                    Button btnSubmit = editDialog.findViewById(R.id.CommentInput_Dialog_Button_Submit);
+                    Button btnCancel = editDialog.findViewById(R.id.CommentInput_Dialog_Button_Cancel);
+                    
+                    // Set the current comment text
+                    etEditComment.setText(comment.getComment());
+                    
+                    btnSubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String newCommentText = etEditComment.getText().toString().trim();
+                            if (!newCommentText.isEmpty()) {
+                                comment.setComment(newCommentText);
+                                Video video = Database.getVideo(comment.getContext());
+                                if (video != null) {
+                                    Database.updateComment(comment, video);
+                                    editDialog.dismiss();
+                                    dialog.dismiss();
+                                    Feedback(contextThis, "Comment edited successfully");
+                                } else {
+                                    Feedback(contextThis, "Error: Video not found");
+                                }
+                            } else {
+                                Feedback(contextThis, "Comment cannot be empty");
+                            }
+                        }
+                    });
+                    
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            editDialog.dismiss();
+                        }
+                    });
+                    
+                    editDialog.show();
+                } else {
+                    Feedback(contextThis, "You can only edit your own comments");
+                }
             }
         });
 
         btnDownvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: DOWNVOTE");
-                Feedback(contextThis, "TODO: DOWNVOTE");
+                if (GlobalVariables.loggedUser.isPresent()) {
+                    comment.downvote();
+                    tvScore.setText(String.valueOf(comment.getScore()));
+                    Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                    Feedback(contextThis, "Comment downvoted");
+                } else {
+                    Feedback(contextThis, "Please log in to vote");
+                }
             }
         });
 
         btnUpvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: UPVOTE");
-                Feedback(contextThis, "TODO: UPVOTE");
+                if (GlobalVariables.loggedUser.isPresent()) {
+                    comment.upvote();
+                    tvScore.setText(String.valueOf(comment.getScore()));
+                    Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                    Feedback(contextThis, "Comment upvoted");
+                } else {
+                    Feedback(contextThis, "Please log in to vote");
+                }
             }
         });
 
         btnReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentOwnerOptionsDialog", "TODO: REPLY");
-                Feedback(contextThis, "TODO: REPLY");
+                if (GlobalVariables.loggedUser.isPresent()) {
+                    // Create a dialog for reply input
+                    Dialog replyDialog = new Dialog(contextThis);
+                    replyDialog.setContentView(R.layout.activity_comment_input_dialog);
+                    
+                    EditText etReply = replyDialog.findViewById(R.id.CommentInput_Dialog_EditText_Comment);
+                    Button btnSubmit = replyDialog.findViewById(R.id.CommentInput_Dialog_Button_Submit);
+                    Button btnCancel = replyDialog.findViewById(R.id.CommentInput_Dialog_Button_Cancel);
+                    
+                    btnSubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String replyText = etReply.getText().toString().trim();
+                            if (!replyText.isEmpty()) {
+                                Comment reply = new Comment(replyText, GlobalVariables.loggedUser.get().getName(), comment.getContext());
+                                comment.addReply(reply);
+                                Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                                replyDialog.dismiss();
+                                dialog.dismiss();
+                                Feedback(contextThis, "Reply added successfully");
+                            } else {
+                                Feedback(contextThis, "Reply cannot be empty");
+                            }
+                        }
+                    });
+                    
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replyDialog.dismiss();
+                        }
+                    });
+                    
+                    replyDialog.show();
+                } else {
+                    Feedback(contextThis, "Please log in to reply");
+                }
             }
         });
         dialog.show();
@@ -187,7 +292,7 @@ public class Utilities {
 
         tvContext.setText(comment.getContext());
         btnCommentPage.setText("Comment Page");
-        tvScore.setText("0"); // TODO, score for replies not implemented yet
+        tvScore.setText(String.valueOf(comment.getScore()));
         btnDownvote.setText("\uD83D\uDC4E");
         btnUpvote.setText("\uD83D\uDC4D");
         btnReply.setText("Reply");
@@ -207,27 +312,118 @@ public class Utilities {
         btnDownvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentViewerOptionsDialog", "TODO: DOWNVOTE");
-                Feedback(contextThis, "TODO: DOWNVOTE");
+                if (GlobalVariables.loggedUser.isPresent()) {
+                    comment.downvote();
+                    tvScore.setText(String.valueOf(comment.getScore()));
+                    Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                    Feedback(contextThis, "Comment downvoted");
+                } else {
+                    Feedback(contextThis, "Please log in to vote");
+                }
             }
         });
 
         btnUpvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentViewerOptionsDialog", "TODO: UPVOTE");
-                Feedback(contextThis, "TODO: UPVOTE");
+                if (GlobalVariables.loggedUser.isPresent()) {
+                    comment.upvote();
+                    tvScore.setText(String.valueOf(comment.getScore()));
+                    Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                    Feedback(contextThis, "Comment upvoted");
+                } else {
+                    Feedback(contextThis, "Please log in to vote");
+                }
             }
         });
 
         btnReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openCommentViewerOptionsDialog", "TODO: REPLY");
-                Feedback(contextThis, "TODO: REPLY");
+                if (GlobalVariables.loggedUser.isPresent()) {
+                    // Create a dialog for reply input
+                    Dialog replyDialog = new Dialog(contextThis);
+                    replyDialog.setContentView(R.layout.activity_comment_input_dialog);
+                    
+                    EditText etReply = replyDialog.findViewById(R.id.CommentInput_Dialog_EditText_Comment);
+                    Button btnSubmit = replyDialog.findViewById(R.id.CommentInput_Dialog_Button_Submit);
+                    Button btnCancel = replyDialog.findViewById(R.id.CommentInput_Dialog_Button_Cancel);
+                    
+                    btnSubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String replyText = etReply.getText().toString().trim();
+                            if (!replyText.isEmpty()) {
+                                Comment reply = new Comment(replyText, GlobalVariables.loggedUser.get().getName(), comment.getContext());
+                                comment.addReply(reply);
+                                Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                                replyDialog.dismiss();
+                                dialog.dismiss();
+                                Feedback(contextThis, "Reply added successfully");
+                            } else {
+                                Feedback(contextThis, "Reply cannot be empty");
+                            }
+                        }
+                    });
+                    
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            replyDialog.dismiss();
+                        }
+                    });
+                    
+                    replyDialog.show();
+                } else {
+                    Feedback(contextThis, "Please log in to reply");
+                }
             }
         });
         dialog.show();
+    }
+
+    public static void openVideoUploadDialog(Context thisContext) {
+        Dialog uploadDialog = new Dialog(thisContext);
+        uploadDialog.setContentView(R.layout.activity_upload_video_dialog);
+        uploadDialog.show();
+
+        Button btnChooseVideo = uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_ChooseVideo);
+        Button btnUploadVideo = uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_UploadVideo);
+        ImageView thumbnail = uploadDialog.findViewById(R.id.UploadVideo_Dialog_ImageView_Thumbnail);
+        EditText etVideoTitle = uploadDialog.findViewById(R.id.UploadVideo_Dialog_EditText_VideoTitle);
+
+        btnUploadVideo.setText("Upload");
+        btnChooseVideo.setText("Choose");
+
+        btnUploadVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String chosenTitle = etVideoTitle.getText().toString();
+                if (chosenTitle.isEmpty()) {
+                    Feedback(thisContext, "Please enter a video title");
+                    return;
+                }
+                if (Database.getVideo(chosenTitle) != null) {
+                    Feedback(thisContext, "Video with that title already exists");
+                    return;
+                }
+                if (!GlobalVariables.loggedUser.isPresent()) {
+                    Feedback(thisContext, "You need to be logged in to upload videos");
+                    return;
+                }
+
+                Video newVideo = new Video(chosenTitle, GlobalVariables.loggedUser.get().getName());
+                Database.addVideo(newVideo);
+                Feedback(thisContext, "Added video named: " + newVideo.getTitle());
+                uploadDialog.dismiss();
+            }
+        });
+        btnChooseVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     public static void openVideoOwnerOptionsDialog(Context thisContext, Video video) {
@@ -249,24 +445,24 @@ public class Utilities {
         btnDeleteVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openVideoOwnerOptionsDialog", "TODO: DELETE_VIDEO");
-                Feedback(thisContext, "TODO: DELETE_VIDEO");
+                // TODO: Implement delete video functionality
+                Feedback(thisContext, "Delete video functionality coming soon");
             }
         });
 
         btnEditVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openVideoOwnerOptionsDialog", "TODO: EDIT_VIDEO");
-                Feedback(thisContext, "TODO: EDIT_VIDEO");
+                // TODO: Implement edit video functionality
+                Feedback(thisContext, "Edit video functionality coming soon");
             }
         });
 
         btnAddVideoToPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openVideoOwnerOptionsDialog", "TODO: ADD_VIDEO_TO_PLAYLIST");
-                Feedback(thisContext, "TODO: ADD_VIDEO_TO_PLAYLIST");
+                // TODO: Implement add to playlist functionality
+                Feedback(thisContext, "Add to playlist functionality coming soon");
             }
         });
 
@@ -290,8 +486,8 @@ public class Utilities {
         btnAddVideoToPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Utilities: openVideoViewerOptionsDialog", "TODO: ADD_VIDEO_TO_PLAYLIST");
-                Feedback(thisContext, "TODO: ADD_VIDEO_TO_PLAYLIST");
+                // TODO: Implement add to playlist functionality
+                Feedback(thisContext, "Add to playlist functionality coming soon");
             }
         });
 
@@ -302,8 +498,86 @@ public class Utilities {
         Dialog dialog = new Dialog(thisContext);
         dialog.setContentView(R.layout.activity_user_options_dialog);
         
-        // Add owner-specific options here
-        // TODO: Implement owner-specific user options
+        Button btnLogout = dialog.findViewById(R.id.UserOptions_Dialog_Button_Logout);
+        Button btnChangeImage = dialog.findViewById(R.id.UserOptions_Dialog_Button_ChangeImage);
+        Button btnChangeDescription = dialog.findViewById(R.id.UserOptions_Dialog_Button_ChangeDescription);
+        Button btnCreatePlaylist = dialog.findViewById(R.id.UserOptions_Dialog_Button_CreatePlaylist);
+
+        btnLogout.setText("Logout");
+        btnChangeImage.setText("Change Profile Picture");
+        btnChangeDescription.setText("Change Description");
+        btnCreatePlaylist.setText("Create Playlist");
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalVariables.loggedUser = Optional.empty();
+                Feedback(thisContext, "Logged out successfully");
+                dialog.dismiss();
+            }
+        });
+
+        btnChangeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create a dialog for image source selection
+                Dialog imageSourceDialog = new Dialog(thisContext);
+                imageSourceDialog.setContentView(R.layout.activity_image_source_dialog);
+                
+                Button btnTakePhoto = imageSourceDialog.findViewById(R.id.ImageSource_Dialog_Button_TakePhoto);
+                Button btnChooseGallery = imageSourceDialog.findViewById(R.id.ImageSource_Dialog_Button_ChooseGallery);
+                
+                btnTakePhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        if (takePictureIntent.resolveActivity(((Activity) thisContext).getPackageManager()) != null) {
+                            ((Activity) thisContext).startActivityForResult(takePictureIntent, 2);
+                        } else {
+                            Feedback(thisContext, "No camera app found");
+                        }
+                        imageSourceDialog.dismiss();
+                    }
+                });
+                
+                btnChooseGallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        try {
+                            ((Activity) thisContext).startActivityForResult(
+                                Intent.createChooser(intent, "Select Profile Picture"),
+                                1
+                            );
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Feedback(thisContext, "Please install a File Manager.");
+                        }
+                        imageSourceDialog.dismiss();
+                    }
+                });
+                
+                imageSourceDialog.show();
+                dialog.dismiss();
+            }
+        });
+
+        btnChangeDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement change description functionality
+                Feedback(thisContext, "Change description functionality coming soon");
+            }
+        });
+
+        btnCreatePlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement create playlist functionality
+                Feedback(thisContext, "Create playlist functionality coming soon");
+            }
+        });
         
         dialog.show();
     }
@@ -312,18 +586,115 @@ public class Utilities {
         Dialog dialog = new Dialog(thisContext);
         dialog.setContentView(R.layout.activity_user_options_dialog);
         
-        // Add viewer-specific options here
-        // TODO: Implement viewer-specific user options
+        Button btnLogout = dialog.findViewById(R.id.UserOptions_Dialog_Button_Logout);
+        Button btnChangeImage = dialog.findViewById(R.id.UserOptions_Dialog_Button_ChangeImage);
+        Button btnChangeDescription = dialog.findViewById(R.id.UserOptions_Dialog_Button_ChangeDescription);
+        Button btnCreatePlaylist = dialog.findViewById(R.id.UserOptions_Dialog_Button_CreatePlaylist);
+
+        // Hide owner-specific buttons
+        btnLogout.setVisibility(View.GONE);
+        btnChangeImage.setVisibility(View.GONE);
+        btnChangeDescription.setVisibility(View.GONE);
+        btnCreatePlaylist.setVisibility(View.GONE);
         
         dialog.show();
     }
 
+    /**
+     * Opens a dialog for playlist owner options with optional source button state management.
+     * The source button will be updated to reflect the selected operation's state if provided.
+     * 
+     * @param thisContext The context in which the dialog is shown
+     * @param playlistTitle The title of the playlist
+     */
     public static void openPlaylistOwnerOptionsDialog(Context thisContext, String playlistTitle) {
         Dialog dialog = new Dialog(thisContext);
         dialog.setContentView(R.layout.activity_playlist_options_dialog);
         
-        // Add owner-specific options here
-        // TODO: Implement owner-specific playlist options
+        Button btnEditPlaylist = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_EditPlaylist);
+        Button btnDeletePlaylist = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_DeletePlaylist);
+        Button btnSharePlaylist = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_SharePlaylist);
+        Button btnPlaylistPage = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_PlaylistPage);
+        Button btnUpvote = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_Upvote);
+        Button btnDownvote = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_Downvote);
+        TextView tvScore = dialog.findViewById(R.id.PlaylistOptions_Dialog_TextView_Score);
+        
+        Playlist playlist = Database.getPlaylist(playlistTitle);
+        if (playlist == null) {
+            Feedback(thisContext, "Playlist not found");
+            dialog.dismiss();
+            return;
+        }
+
+        tvScore.setText(String.valueOf(playlist.getScore()));
+        
+        btnEditPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement edit playlist functionality
+                Feedback(thisContext, "Edit playlist functionality coming soon");
+            }
+        });
+        
+        btnDeletePlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement delete playlist functionality
+                Feedback(thisContext, "Delete playlist functionality coming soon");
+            }
+        });
+        
+        btnSharePlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement share playlist functionality
+                Feedback(thisContext, "Share playlist functionality coming soon");
+            }
+        });
+
+        btnPlaylistPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPlaylistPage(thisContext, playlistTitle);
+                dialog.dismiss();
+            }
+        });
+
+        btnUpvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalVariables.loggedUser.isEmpty()) {
+                    Feedback(thisContext, "You must be logged in to upvote");
+                } else {
+                    if (GlobalVariables.loggedUser.get().getUpvotes().contains(playlist.getTitle())) {
+                        Feedback(thisContext, "You have this playlist already upvoted");
+                    } else {
+                        Database.upvotePlaylist(playlist, GlobalVariables.loggedUser.get());
+                        EvaluatePlaylist(playlist);
+                        tvScore.setText(String.valueOf(playlist.getScore()));
+                        Feedback(thisContext, "Playlist upvoted");
+                    }
+                }
+            }
+        });
+
+        btnDownvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalVariables.loggedUser.isEmpty()) {
+                    Feedback(thisContext, "You must be logged in to downvote");
+                } else {
+                    if (GlobalVariables.loggedUser.get().getDownvotes().contains(playlist.getTitle())) {
+                        Feedback(thisContext, "You have this playlist already downvoted");
+                    } else {
+                        Database.downvotePlaylist(playlist, GlobalVariables.loggedUser.get());
+                        EvaluatePlaylist(playlist);
+                        tvScore.setText(String.valueOf(playlist.getScore()));
+                        Feedback(thisContext, "Playlist downvoted");
+                    }
+                }
+            }
+        });
         
         dialog.show();
     }
@@ -332,8 +703,80 @@ public class Utilities {
         Dialog dialog = new Dialog(thisContext);
         dialog.setContentView(R.layout.activity_playlist_options_dialog);
         
-        // Add viewer-specific options here
-        // TODO: Implement viewer-specific playlist options
+        Button btnEditPlaylist = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_EditPlaylist);
+        Button btnDeletePlaylist = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_DeletePlaylist);
+        Button btnSharePlaylist = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_SharePlaylist);
+        Button btnPlaylistPage = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_PlaylistPage);
+        Button btnUpvote = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_Upvote);
+        Button btnDownvote = dialog.findViewById(R.id.PlaylistOptions_Dialog_Button_Downvote);
+        TextView tvScore = dialog.findViewById(R.id.PlaylistOptions_Dialog_TextView_Score);
+        
+        Playlist playlist = Database.getPlaylist(playlistTitle);
+        if (playlist == null) {
+            Feedback(thisContext, "Playlist not found");
+            dialog.dismiss();
+            return;
+        }
+
+        tvScore.setText(String.valueOf(playlist.getScore()));
+        
+        // Hide owner-specific buttons
+        btnEditPlaylist.setVisibility(View.GONE);
+        btnDeletePlaylist.setVisibility(View.GONE);
+        
+        btnSharePlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openPlaylistViewerOptionsDialog", "Share playlist clicked");
+                // TODO: Implement share playlist functionality
+                Feedback(thisContext, "Share playlist functionality coming soon");
+            }
+        });
+
+        btnPlaylistPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Utilities: openPlaylistViewerOptionsDialog", "Opening playlist page");
+                openPlaylistPage(thisContext, playlistTitle);
+                dialog.dismiss();
+            }
+        });
+
+        btnUpvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalVariables.loggedUser.isEmpty()) {
+                    Feedback(thisContext, "You must be logged in to upvote");
+                } else {
+                    if (GlobalVariables.loggedUser.get().getUpvotes().contains(playlist.getTitle())) {
+                        Feedback(thisContext, "You have this playlist already upvoted");
+                    } else {
+                        Database.upvotePlaylist(playlist, GlobalVariables.loggedUser.get());
+                        EvaluatePlaylist(playlist);
+                        tvScore.setText(String.valueOf(playlist.getScore()));
+                        Feedback(thisContext, "Playlist upvoted");
+                    }
+                }
+            }
+        });
+
+        btnDownvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalVariables.loggedUser.isEmpty()) {
+                    Feedback(thisContext, "You must be logged in to downvote");
+                } else {
+                    if (GlobalVariables.loggedUser.get().getDownvotes().contains(playlist.getTitle())) {
+                        Feedback(thisContext, "You have this playlist already downvoted");
+                    } else {
+                        Database.downvotePlaylist(playlist, GlobalVariables.loggedUser.get());
+                        EvaluatePlaylist(playlist);
+                        tvScore.setText(String.valueOf(playlist.getScore()));
+                        Feedback(thisContext, "Playlist downvoted");
+                    }
+                }
+            }
+        });
         
         dialog.show();
     }
@@ -500,86 +943,6 @@ public class Utilities {
         Log.i("Utilities: openLoginDialog", "Login dialog opened");
     }
 
-    public static void openVideoUploadDialog(Context thisContext) {
-        Dialog uploadDialog = new Dialog(thisContext);
-        uploadDialog.setContentView(R.layout.activity_upload_video_dialog);
-        uploadDialog.show();
-
-        Button btnChooseVideo = uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_ChooseVideo);
-        Button btnUploadVideo = uploadDialog.findViewById(R.id.UploadVideo_Dialog_Button_UploadVideo);
-        ImageView thumbnail = uploadDialog.findViewById(R.id.UploadVideo_Dialog_ImageView_Thumbnail);
-        EditText etVideoTitle = uploadDialog.findViewById(R.id.UploadVideo_Dialog_EditText_VideoTitle);
-
-        btnUploadVideo.setText("Upload");
-        btnChooseVideo.setText("Choose");
-
-        btnUploadVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO, check if etVideoTitle is empty?
-                String chosenTitle = etVideoTitle.getText().toString();
-//                if chosenTitle=""  // add a function named Video.IsProperName(videoName) which returns true if good and false if bad;
-                if (Database.getVideo(chosenTitle) != null) {
-                    Feedback(thisContext, "Video with that title already exists");
-                } else {
-                    if (GlobalVariables.loggedUser.isPresent()) {
-                        Video newVideo = new Video(chosenTitle, GlobalVariables.loggedUser.get().getName());
-                        Feedback(thisContext, "Added video named: " + newVideo.getTitle());
-                        Database.addVideo(newVideo);
-                        uploadDialog.dismiss();
-                    } // but why?
-                    else {
-                        Feedback(thisContext, "You need to be logged in to upload videos");
-                    }
-                }
-            }
-        });
-        btnChooseVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-    public static void openVideoOptionsDialog(Context thisContext, Video video) {
-        Dialog dialog = new Dialog(thisContext);
-        dialog.setContentView(R.layout.activity_video_option_dialog);
-
-        Button btnDeleteVideo = dialog.findViewById(R.id.VideoOptions_Dialog_Button_DeleteVideo);
-        Button btnEditVideo = dialog.findViewById(R.id.VideoOptions_Dialog_Button_EditVideo);
-        Button btnAddVideoToPlaylist = dialog.findViewById(R.id.VideoOptions_Dialog_Button_AddVideoToPlaylist);
-
-        btnEditVideo.setText("Edit Video");
-        btnDeleteVideo.setText("Delete Video");
-        btnAddVideoToPlaylist.setText("Add Video to Playlist");
-
-        btnDeleteVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("Utilities: openVideoOptionsDialog", "TODO: DELETE_VIDEO");
-                Feedback(thisContext, "TODO: DELETE_VIDEO");
-            }
-        });
-
-        btnEditVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("Utilities: openVideoOptionsDialog", "TODO: EDIT_VIDEO");
-                Feedback(thisContext, "TODO: EDIT_VIDEO");
-            }
-        });
-
-        btnAddVideoToPlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("Utilities: openVideoOptionsDialog", "TODO: ADD_VIDEO_TO_PLAYLIST");
-                Feedback(thisContext, "TODO: ADD_VIDEO_TO_PLAYLIST");
-            }
-        });
-
-        dialog.show();
-    }
-
     public static void openUserOptionsDialog(Context thisContext, User user) {
         Dialog dialog = new Dialog(thisContext);
         dialog.setContentView(R.layout.activity_user_options_dialog);
@@ -628,6 +991,15 @@ public class Utilities {
         score += video.getDownvotes() * 15;
         score += video.getComments().size() * 10;
         video.setScore(score);
+    }
+
+    public static void EvaluatePlaylist(@NonNull Playlist playlist) {
+        Integer score = 0;
+        score += playlist.getViews();
+        score += playlist.getUpvotes() * 15;
+        score += playlist.getDownvotes() * 15;
+        score += playlist.getVideos().size() * 10;
+        playlist.setScore(score);
     }
 
 }

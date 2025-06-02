@@ -6,7 +6,6 @@ import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.TimeNow;
 import static school.videopirateapp.Utilities.openLoginDialog;
 import static school.videopirateapp.Utilities.openUserPage;
-import static school.videopirateapp.Utilities.openVideoOptionsDialog;
 import static school.videopirateapp.Utilities.updateUserPageButton;
 import static school.videopirateapp.Utilities.openVideoOwnerOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoViewerOptionsDialog;
@@ -116,6 +115,8 @@ public class VideoPageActivity extends AppCompatActivity {
                         Feedback(VideoPageActivity.this, "You have this video already upvoted");
                     } else {
                         Database.upvoteVideo(currentVideo, GlobalVariables.loggedUser.get());
+                        Utilities.EvaluateVideo(currentVideo);
+                        tvScore.setText(String.valueOf(currentVideo.getScore()));
                         Feedback(VideoPageActivity.this, "Video upvoted");
                     }
                 }
@@ -129,10 +130,12 @@ public class VideoPageActivity extends AppCompatActivity {
                 if (GlobalVariables.loggedUser.isEmpty()) {
                     Feedback(VideoPageActivity.this, "You must be logged in to downvote");
                 } else {
-                    if (GlobalVariables.loggedUser.get().getUpvotes().contains(currentVideo.getTitle())) {
+                    if (GlobalVariables.loggedUser.get().getDownvotes().contains(currentVideo.getTitle())) {
                         Feedback(VideoPageActivity.this, "You have this video already downvoted");
                     } else {
                         Database.downvoteVideo(currentVideo, GlobalVariables.loggedUser.get());
+                        Utilities.EvaluateVideo(currentVideo);
+                        tvScore.setText(String.valueOf(currentVideo.getScore()));
                         Feedback(VideoPageActivity.this, "Video downvoted");
                     }
                 }
@@ -163,23 +166,24 @@ public class VideoPageActivity extends AppCompatActivity {
                     Utilities.Feedback(VideoPageActivity.this, "You must be logged in to add comments");
                 } else {
                     String commentStr = etComment.getText().toString();
-                    Comment newComment = new Comment(commentStr, GlobalVariables.loggedUser.get().getName(), currentVideo.Context(), TimeNow()); //@MISSING-AUTHOR-makeComment, REMAKE THIS TO FIDN AUTHOR SOMEHOW TODO
-                    Database.addComment(newComment, currentVideo); // logic does not work correct, TODO FIX
+                    Comment newComment = new Comment(commentStr, GlobalVariables.loggedUser.get().getName(), currentVideo.Context());
+                    Database.addComment(newComment, currentVideo);
+                    Utilities.EvaluateVideo(currentVideo);
+                    Database.updateVideo(currentVideo);
+                    tvScore.setText(String.valueOf(currentVideo.getScore()));
                     Utilities.Feedback(VideoPageActivity.this, "Comment added");
                     commentAdapter.add(newComment);
+                    etComment.setText("");
                 }
             }
         });
 
         Utilities.updateUserPageButton(this,btnUserPage);
 
-        // TODO, replace later
-        try {
-            tvScore.setText(currentVideo.getScore());
-        } catch (Exception e) {
-            Log.e("tvScore",e.toString());
-            tvScore.setVisibility(INVISIBLE);
-        }
+        // Evaluate and display video score
+        Utilities.EvaluateVideo(currentVideo);
+        tvScore.setText(String.valueOf(currentVideo.getScore()));
+        tvScore.setVisibility(View.VISIBLE);
 
         User uploader=Database.getUser(UploaderName);
         try {
