@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +52,21 @@ public abstract class Comments {
             Refresh();
         }
         return Comments.get(commentContext);
+    }
+    public static ArrayList<Comment> getCommentsFromVideo() {
+        return null;
+        // probably wrong to do
+    }
+    public static ArrayList<Comment> getCommentsFromComment() {
+        return null;
+        // probably wrong to do
+    }
+    public static ArrayList<Comment> getCommentsFromContexts(ArrayList<String> contexts) {
+        ArrayList<Comment> comments=new ArrayList<>();
+        for (String context : contexts) {
+            comments.add(Database.getComment(context));
+        }
+        return comments;
     }
 
     public static void addComment(Comment comment) {
@@ -126,7 +142,7 @@ public abstract class Comments {
                                     comment.setScore(comment.getUpvotes() - comment.getDownvotes());
 
                                     // Update database
-                                    Database.updateComment(comment, video);
+                                    Database.updateComment(comment);
                                     userRef.setValue(user);
                                     Log.i("Database: downvoteComment", "Downvoted comment by: " + comment.getAuthor());
                                 }
@@ -183,7 +199,7 @@ public abstract class Comments {
                                     comment.setScore(comment.getUpvotes() - comment.getDownvotes());
 
                                     // Update database
-                                    Database.updateComment(comment, video);
+                                    Database.updateComment(comment);
                                     userRef.setValue(user);
                                     Log.i("Database: upvoteComment", "Upvoted comment by: " + comment.getAuthor());
                                 }
@@ -234,28 +250,19 @@ public abstract class Comments {
     }
 
     public static void initialize() {
-        DatabaseReference videosRef = Database.getRef("videos");
-        videosRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference commentRef=Database.getRef("comments");
+        commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()) {
-                    Log.w("Comments: initialize", "No videos found in database");
-                    return;
+                if(!snapshot.exists()) {
+                    commentRef.setValue(new HashMap<String, Comment>().put("defaultComment", Comment.Default()));
+                    Refresh();
                 }
-
-                // Initialize comments cache for all videos
-                for (DataSnapshot videoSnapshot : snapshot.getChildren()) {
-                    Video video = videoSnapshot.getValue(Video.class);
-                    if (video != null) {
-                        Comments.put(video.getTitle(), video.getCommentContextes());
-                    }
-                }
-                Log.i("Comments: initialize", "Initialized comments cache for " + Comments.size() + " videos");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Comments: initialize", "Failed to initialize comments: " + error.getMessage());
+
             }
         });
     }

@@ -212,7 +212,7 @@ public class Utilities {
                 if (GlobalVariables.loggedUser.isPresent()) {
                     comment.downvote();
                     tvScore.setText(String.valueOf(comment.getScore()));
-                    Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                    Database.updateComment(comment);
                     Feedback(contextThis, "Comment downvoted");
                 } else {
                     Feedback(contextThis, "Please log in to vote");
@@ -226,7 +226,7 @@ public class Utilities {
                 if (GlobalVariables.loggedUser.isPresent()) {
                     comment.upvote();
                     tvScore.setText(String.valueOf(comment.getScore()));
-                    Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                    Database.updateComment(comment);
                     Feedback(contextThis, "Comment upvoted");
                 } else {
                     Feedback(contextThis, "Please log in to vote");
@@ -321,7 +321,7 @@ public class Utilities {
                 if (GlobalVariables.loggedUser.isPresent()) {
                     comment.downvote();
                     tvScore.setText(String.valueOf(comment.getScore()));
-                    Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                    Database.updateComment(comment);
                     Feedback(contextThis, "Comment downvoted");
                 } else {
                     Feedback(contextThis, "Please log in to vote");
@@ -335,7 +335,7 @@ public class Utilities {
                 if (GlobalVariables.loggedUser.isPresent()) {
                     comment.upvote();
                     tvScore.setText(String.valueOf(comment.getScore()));
-                    Database.updateComment(comment, Database.getVideo(comment.getContext()));
+                    Database.updateComment(comment);
                     Feedback(contextThis, "Comment upvoted");
                 } else {
                     Feedback(contextThis, "Please log in to vote");

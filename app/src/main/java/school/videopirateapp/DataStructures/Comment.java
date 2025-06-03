@@ -41,7 +41,7 @@ public class Comment {
     }
 
     public String getContext() {
-        return Context+this.getComment();
+        return Context;
     }
 
     public void setContext(String context) {

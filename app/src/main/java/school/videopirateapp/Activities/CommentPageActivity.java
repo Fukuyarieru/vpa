@@ -10,8 +10,11 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.Database.Comments;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
@@ -46,7 +49,8 @@ public class CommentPageActivity extends AppCompatActivity {
         video = Database.getVideo(inVideo);
 
         // Create adapter without reply functionality
-        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, video.getCommentContextes(), true);  // Set isReplyView to true to disable reply functionality
+        ArrayList<Comment>comments= Comments.getCommentsFromContexts(video.getCommentContextes());
+        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments, true);  // Set isReplyView to true to disable reply functionality
         lvComments.setAdapter(commentAdapter);
 
         btnAddComment.setOnClickListener(new View.OnClickListener() {

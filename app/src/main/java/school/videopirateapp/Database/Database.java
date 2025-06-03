@@ -93,6 +93,14 @@ public abstract class Database {
         });
     }
 
+    public static Comment getComment(String commentContext) {
+        return Comments.getComment(commentContext);
+    }
+
+    public static void addComment(@NonNull Comment newComment) {
+        Comments.addComment(newComment);
+    }
+
     public static void upvoteVideo(Video targetVideo, User user) {
         Videos.upvoteVideo(targetVideo, user);
     }

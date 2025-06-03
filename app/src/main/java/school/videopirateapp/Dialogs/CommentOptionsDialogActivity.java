@@ -50,13 +50,7 @@ public class CommentOptionsDialogActivity extends AppCompatActivity {
 
         video = Database.getVideo(videoTitle);
 
-        // Find the comment in the video's comments
-        for (Comment c : video.getCommentContextes()) {
-            if (c.getComment().equals(commentText) && c.getAuthor().equals(commentAuthor)) {
-                comment = c;
-                break;
-            }
-        }
+        comment=new Comment();
 
         tvContext.setText(comment.getComment());
         tvScore.setText(String.valueOf(comment.getScore()));
@@ -116,9 +110,9 @@ public class CommentOptionsDialogActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (Database.upvoteComment(comment)) {
-                    tvScore.setText(String.valueOf(comment.getScore()));
-                }
+                Database.upvoteComment(comment);
+                tvScore.setText(String.valueOf(comment.getScore()));
+
             }
         });
 
@@ -130,9 +124,8 @@ public class CommentOptionsDialogActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (Database.downvoteComment(comment)) {
-                    tvScore.setText(String.valueOf(comment.getScore()));
-                }
+                Database.downvoteComment(comment);
+                tvScore.setText(String.valueOf(comment.getScore()));
             }
         });
 

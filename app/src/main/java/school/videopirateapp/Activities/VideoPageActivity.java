@@ -21,9 +21,12 @@ import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.Database.Comments;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
@@ -87,7 +90,8 @@ public class VideoPageActivity extends AppCompatActivity {
         String UploaderName = currentVideo.getUploader();
         tvUploader.setText(UploaderName);
 
-        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, currentVideo.getCommentContextes());
+        ArrayList<Comment>comments=Comments.getCommentsFromContexts(currentVideo.getCommentContextes());
+        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments);
         lvComments.setAdapter(commentAdapter);
 
 
