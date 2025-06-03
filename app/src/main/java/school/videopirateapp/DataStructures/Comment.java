@@ -10,7 +10,7 @@ public class Comment {
     private String Comment;
     private String Author;
     // private String Context;  // Commented out to disable comment-to-comment functionality
-    private ArrayList<Comment> Replies;
+    private ArrayList<String> replyContextes;
     private Date Timestamp;
     private Integer Upvotes;
     private Integer Downvotes;
@@ -24,7 +24,7 @@ public class Comment {
         this.Comment = comment;
         this.Author = author;
         // this.Context = context;  // Commented out
-        this.Replies = new ArrayList<>();
+        this.replyContextes = new ArrayList<>();
         this.Timestamp = new Date();
         this.Upvotes = 0;
         this.Downvotes = 0;
@@ -64,12 +64,12 @@ public class Comment {
         Author = author;
     }
 
-    public ArrayList<Comment> getReplies() {
-        return Replies;
+    public ArrayList<String> getReplyContextes() {
+        return replyContextes;
     }
 
-    public void setReplies(ArrayList<Comment> replies) {
-        Replies = replies;
+    public void setReplyContextes(ArrayList<String> replyContextes) {
+        this.replyContextes = replyContextes;
     }
 
     public Date getTimestamp() {
@@ -96,9 +96,9 @@ public class Comment {
         Downvotes = downvotes;
     }
 
-    public void addReply(Comment reply) {
+    public void addReply(String replyContext) {
         // reply.setParentCommentId(this.toString());  // Commented out
-        this.Replies.add(reply);
+        this.replyContextes.add(replyContext);
         Log.i("Comment: addReply", "Added reply to comment: " + this.Comment);
     }
 

@@ -53,63 +53,48 @@ public abstract class Comments {
         }
         return Comments.get(commentContext);
     }
+
     public static ArrayList<Comment> getCommentsFromVideo() {
         return null;
         // probably wrong to do
     }
+
     public static ArrayList<Comment> getCommentsFromComment() {
         return null;
         // probably wrong to do
     }
+
     public static ArrayList<Comment> getCommentsFromContexts(ArrayList<String> contexts) {
-        ArrayList<Comment> comments=new ArrayList<>();
+        ArrayList<Comment> comments = new ArrayList<>();
         for (String context : contexts) {
             comments.add(Database.getComment(context));
         }
         return comments;
     }
 
-    public static void addComment(Comment comment) {
-        DatabaseReference videoRef = Database.getRef("videos").child(comment.getVideoTitle());
-        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void addComment(Comment comment, String targetContextSection) {
+
+        DatabaseReference commentRef = Database.getRef(comment.getContext());
+        commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
-                if (videoSnapshot.exists()) {
-                    DatabaseReference commentRef = Database.getRef(comment.getContext());
-                    commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot commentSnapshot) {
-                            if (!commentSnapshot.exists()) {
-                                Video video = videoSnapshot.getValue(Video.class);
-                                assert video != null;
-                                video.addComment(comment.getContext());
-                                videoRef.setValue(video);
+            public void onDataChange(@NonNull DataSnapshot commentSnapshot) {
+                if (!commentSnapshot.exists()) {
+                    comment.setContext(targetContextSection + comment.getComment());
 
-                                commentRef.setValue(comment);
-                                Comments.put(comment.getContext(), comment);
-                                Log.i("Comments: addComment", "Added comment: " + comment.getContext());
-                            } else {
-                                Log.w("Comments: addComment", "Comment already exists: " + comment.getContext());
-                            }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e("Comments: addComment", "Failed to add listener to commentRef: " + error.getMessage());
-                        }
-                    });
+                    commentRef.setValue(comment);
+                    Comments.put(comment.getContext(), comment);
+                    Log.i("Comments: addComment", "Added comment: " + comment.getContext());
                 } else {
-                    Log.w("Comments: addComment", "Video does not exist: " + comment.getVideoTitle());
+                    Log.w("Comments: addComment", "Comment already exists: " + comment.getContext());
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Comments: addComment", "Failed to add listener to videoRef: " + error.getMessage());
+                Log.e("Comments: addComment", "Failed to add listener to commentRef: " + error.getMessage());
             }
         });
-
-
     }
 
     public static void downvoteComment(Comment comment) {
@@ -250,11 +235,11 @@ public abstract class Comments {
     }
 
     public static void initialize() {
-        DatabaseReference commentRef=Database.getRef("comments");
+        DatabaseReference commentRef = Database.getRef("comments");
         commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(!snapshot.exists()) {
+                if (!snapshot.exists()) {
                     commentRef.setValue(new HashMap<String, Comment>().put("defaultComment", Comment.Default()));
                     Refresh();
                 }
