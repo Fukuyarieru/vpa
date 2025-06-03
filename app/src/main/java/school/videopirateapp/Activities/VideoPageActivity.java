@@ -1,12 +1,8 @@
 package school.videopirateapp.Activities;
 
-import static android.view.View.INVISIBLE;
 import static school.videopirateapp.Utilities.ByteArrayToBitmap;
 import static school.videopirateapp.Utilities.Feedback;
-import static school.videopirateapp.Utilities.TimeNow;
-import static school.videopirateapp.Utilities.openLoginDialog;
 import static school.videopirateapp.Utilities.openUserPage;
-import static school.videopirateapp.Utilities.updateUserPageButton;
 import static school.videopirateapp.Utilities.openVideoOwnerOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoViewerOptionsDialog;
 //import static school.videopirateapp.Utilities.openVideoPlayer;
@@ -91,7 +87,7 @@ public class VideoPageActivity extends AppCompatActivity {
         String UploaderName = currentVideo.getUploader();
         tvUploader.setText(UploaderName);
 
-        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, currentVideo.getComments());
+        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, currentVideo.getCommentContextes());
         lvComments.setAdapter(commentAdapter);
 
 

@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -95,10 +93,11 @@ public class Utilities {
         currentActivityThis.startActivity(intent);
     }
 
-    public static void openCommentPage(@NonNull Context currentActivityThis, String videoTitle) {
+    public static void openCommentPage(@NonNull Context currentActivityThis, String inVideo, String commentText) {
         Log.i("Utilities: openCommentPage", "Comment page opened");
         Intent intent = new Intent(currentActivityThis, CommentPageActivity.class);
-        intent.putExtra("videoTitle", videoTitle);
+        intent.putExtra("inVideo", inVideo);
+        intent.putExtra("commentText", commentText);
         currentActivityThis.startActivity(intent);
     }
 
@@ -110,20 +109,20 @@ public class Utilities {
         Button btnDeleteComment = dialog.findViewById(R.id.CommentOptions_Dialog_Button_DeleteComment);
         Button btnCommentPage = dialog.findViewById(R.id.CommentOptions_Dialog_Button_CommentPage);
         Button btnEditComment = dialog.findViewById(R.id.CommentOptions_Dialog_Button_EditComment);
-        TextView tvContext = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Context);
+//        TextView tvContext = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Context);
         TextView tvScore = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Score);
         Button btnDownvote = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Downvote);
         Button btnUpvote = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Upvote);
-        Button btnReply = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Reply);
+//        Button btnReply = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Reply);
 
-        tvContext.setText(comment.getContext());
+        // tvContext.setText(comment.getContext());  // Commented out
         btnDeleteComment.setText("Delete Comment");
         btnCommentPage.setText("Comment Page");
         btnEditComment.setText("Edit Comment");
         tvScore.setText(String.valueOf(comment.getScore()));
         btnDownvote.setText("\uD83D\uDC4E");
         btnUpvote.setText("\uD83D\uDC4D");
-        btnReply.setText("Reply");
+//        btnReply.setText("Reply");
 
         // Show owner-specific buttons
         btnDeleteComment.setVisibility(View.VISIBLE);
@@ -135,7 +134,7 @@ public class Utilities {
                 if (GlobalVariables.loggedUser.isPresent() && GlobalVariables.loggedUser.get().getName().equals(comment.getAuthor())) {
                     Video video = Database.getVideo(comment.getContext());
                     if (video != null) {
-                        video.getComments().remove(comment);
+                        video.getCommentContextes().remove(comment);
                         Database.updateVideo(video);
                         dialog.dismiss();
                         Feedback(contextThis, "Comment deleted successfully");
@@ -153,7 +152,7 @@ public class Utilities {
             public void onClick(View view) {
                 Log.i("Utilities: openCommentOwnerOptionsDialog", "Opening comment page");
                 dialog.dismiss();
-                openCommentPage(contextThis, comment.getContext());
+                openCommentPage(contextThis, comment.getContext(), comment.getComment());
             }
         });
 
@@ -180,7 +179,7 @@ public class Utilities {
                                 comment.setComment(newCommentText);
                                 Video video = Database.getVideo(comment.getContext());
                                 if (video != null) {
-                                    Database.updateComment(comment, video);
+                                    Database.updateComment(comment);
                                     editDialog.dismiss();
                                     dialog.dismiss();
                                     Feedback(contextThis, "Comment edited successfully");
@@ -235,6 +234,7 @@ public class Utilities {
             }
         });
 
+        /* Commented out reply functionality
         btnReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -277,6 +277,7 @@ public class Utilities {
                 }
             }
         });
+        */
         dialog.show();
     }
 
@@ -288,18 +289,18 @@ public class Utilities {
         Button btnDeleteComment = dialog.findViewById(R.id.CommentOptions_Dialog_Button_DeleteComment);
         Button btnCommentPage = dialog.findViewById(R.id.CommentOptions_Dialog_Button_CommentPage);
         Button btnEditComment = dialog.findViewById(R.id.CommentOptions_Dialog_Button_EditComment);
-        TextView tvContext = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Context);
+//        TextView tvContext = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Context);
         TextView tvScore = dialog.findViewById(R.id.CommentOptions_Dialog_TextView_Score);
         Button btnDownvote = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Downvote);
         Button btnUpvote = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Upvote);
-        Button btnReply = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Reply);
+//        Button btnReply = dialog.findViewById(R.id.CommentOptions_Dialog_Button_Reply);
 
-        tvContext.setText(comment.getContext());
+        // tvContext.setText(comment.getContext());  // Commented out
         btnCommentPage.setText("Comment Page");
         tvScore.setText(String.valueOf(comment.getScore()));
         btnDownvote.setText("\uD83D\uDC4E");
         btnUpvote.setText("\uD83D\uDC4D");
-        btnReply.setText("Reply");
+//        btnReply.setText("Reply");
 
         // Hide owner-specific buttons
         btnDeleteComment.setVisibility(View.GONE);
@@ -310,7 +311,7 @@ public class Utilities {
             public void onClick(View view) {
                 Log.i("Utilities: openCommentViewerOptionsDialog", "Opening comment page");
                 dialog.dismiss();
-                openCommentPage(contextThis, comment.getContext());
+                openCommentPage(contextThis, comment.getContext(), comment.getComment());
             }
         });
 
@@ -342,6 +343,7 @@ public class Utilities {
             }
         });
 
+        /* Commented out reply functionality
         btnReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -384,6 +386,7 @@ public class Utilities {
                 }
             }
         });
+        */
         dialog.show();
     }
 
@@ -583,11 +586,21 @@ public class Utilities {
                 btnTakePhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if (takePictureIntent.resolveActivity(((Activity) thisContext).getPackageManager()) != null) {
-                            ((Activity) thisContext).startActivityForResult(takePictureIntent, 2);
-                        } else {
-                            Feedback(thisContext, "No camera app found");
+                        try {
+                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            // Set high quality for camera
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, 
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            takePictureIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                            
+                            if (takePictureIntent.resolveActivity(((Activity) thisContext).getPackageManager()) != null) {
+                                ((Activity) thisContext).startActivityForResult(takePictureIntent, 2);
+                            } else {
+                                Feedback(thisContext, "No camera app found");
+                            }
+                        } catch (Exception e) {
+                            Log.e("Utilities", "Error launching camera", e);
+                            Feedback(thisContext, "Error launching camera: " + e.getMessage());
                         }
                         imageSourceDialog.dismiss();
                     }
@@ -596,16 +609,22 @@ public class Utilities {
                 btnChooseGallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image/*");
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
                         try {
+                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                            intent.setType("image/*");
+                            intent.addCategory(Intent.CATEGORY_OPENABLE);
+                            intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/jpeg", "image/png"});
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+                            
                             ((Activity) thisContext).startActivityForResult(
                                 Intent.createChooser(intent, "Select Profile Picture"),
                                 1
                             );
                         } catch (android.content.ActivityNotFoundException ex) {
                             Feedback(thisContext, "Please install a File Manager.");
+                        } catch (Exception e) {
+                            Log.e("Utilities", "Error launching gallery", e);
+                            Feedback(thisContext, "Error accessing gallery: " + e.getMessage());
                         }
                         imageSourceDialog.dismiss();
                     }
@@ -864,19 +883,21 @@ public class Utilities {
         if (bitmap == null) {
             return new ArrayList<>();
         }
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        ArrayList<Byte> byteArrayList = new ArrayList<>();
-        for (byte b : byteArray) {
-            byteArrayList.add(b);
-        }
         try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            // Compress with quality 85 for good balance of quality and size
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, stream);
+            byte[] byteArray = stream.toByteArray();
+            ArrayList<Byte> byteArrayList = new ArrayList<>();
+            for (byte b : byteArray) {
+                byteArrayList.add(b);
+            }
             stream.close();
-        } catch (java.io.IOException e) {
-            Log.e("Utilities: BitmapToByteArray", "Error closing ByteArrayOutputStream", e);
+            return byteArrayList;
+        } catch (Exception e) {
+            Log.e("Utilities", "Error converting bitmap to byte array", e);
+            return new ArrayList<>();
         }
-        return byteArrayList;
     }
     public static ArrayList<Byte> getDefaultUserImage() {
        return BitmapToByteArray(BitmapFactory.decodeResource(null, R.drawable.default_user_image));
@@ -1035,6 +1056,34 @@ public class Utilities {
     public static void EvaluatePlaylist(@NonNull Playlist playlist) {
         Integer score = playlist.getUpvotes() - playlist.getDownvotes();
         playlist.setScore(score);
+    }
+
+    public static Bitmap processAndCompressImage(Bitmap originalBitmap, int maxWidth, int maxHeight) {
+        if (originalBitmap == null) return null;
+        
+        try {
+            int width = originalBitmap.getWidth();
+            int height = originalBitmap.getHeight();
+            
+            // Calculate scaling factor
+            float scale = Math.min(
+                (float) maxWidth / width,
+                (float) maxHeight / height
+            );
+            
+            // Only scale down if needed
+            if (scale < 1) {
+                int newWidth = Math.round(width * scale);
+                int newHeight = Math.round(height * scale);
+                
+                return Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+            }
+            
+            return originalBitmap;
+        } catch (Exception e) {
+            Log.e("Utilities", "Error processing image", e);
+            return originalBitmap;
+        }
     }
 
 }

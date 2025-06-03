@@ -9,6 +9,7 @@ import static school.videopirateapp.Utilities.openUserOwnerOptionsDialog;
 import static school.videopirateapp.Utilities.openUserViewerOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoPage;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -168,15 +169,6 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
 
-    public void editComment(View view) {
-    }
-
-    public void openCommentPage(View view) {
-    }
-
-    public void deleteComment(View view) {
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -192,20 +184,46 @@ public class UserPageActivity extends AppCompatActivity {
                 }
 
                 if (bitmap != null) {
-                    // Resize bitmap to a reasonable size
-                    bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
-                    // Convert bitmap to byte array
-                    ArrayList<Byte> imageBytes = Utilities.BitmapToByteArray(bitmap);
-                    // Update user's profile picture
-                    user.setImage(imageBytes);
-                    Database.updateUser(user);
-                    // Update the image view
-                    UserImage.setImageBitmap(bitmap);
-                    Feedback(this, "Profile picture updated successfully");
+                    // Process and compress the image
+                    bitmap = Utilities.processAndCompressImage(bitmap, 800, 800);
+                    
+                    // Show preview dialog
+                    Dialog previewDialog = new Dialog(this);
+                    previewDialog.setContentView(R.layout.activity_image_preview_dialog);
+                    
+                    ImageView previewImage = previewDialog.findViewById(R.id.ImagePreview_Dialog_ImageView);
+                    Button btnConfirm = previewDialog.findViewById(R.id.ImagePreview_Dialog_Button_Confirm);
+                    Button btnCancel = previewDialog.findViewById(R.id.ImagePreview_Dialog_Button_Cancel);
+                    
+                    previewImage.setImageBitmap(bitmap);
+
+                    Bitmap finalBitmap = bitmap;
+                    btnConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Convert bitmap to byte array and update user
+                            ArrayList<Byte> imageBytes = Utilities.BitmapToByteArray(finalBitmap);
+                            user.setImage(imageBytes);
+                            Database.updateUser(user);
+                            // Update the image view
+                            UserImage.setImageBitmap(finalBitmap);
+                            Feedback(UserPageActivity.this, "Profile picture updated successfully");
+                            previewDialog.dismiss();
+                        }
+                    });
+                    
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            previewDialog.dismiss();
+                        }
+                    });
+                    
+                    previewDialog.show();
                 }
             } catch (Exception e) {
                 Log.e("UserPageActivity", "Error loading image", e);
-                Feedback(this, "Error loading image");
+                Feedback(this, "Error loading image: " + e.getMessage());
             }
         }
     }

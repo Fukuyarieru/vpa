@@ -67,20 +67,21 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         TextView tvComment = view.findViewById(R.id.Comment_ListView_Component_TextView_Comment);
         TextView tvAuthor = view.findViewById(R.id.Comment_ListView_Component_TextView_UserName);
         TextView tvDate = view.findViewById(R.id.Comment_ListView_Component_TextView_Date);
-        TextView tvContext = view.findViewById(R.id.Comment_ListView_Component_TextView_Context);
+//        TextView tvContext = view.findViewById(R.id.Comment_ListView_Component_TextView_Context);
         ImageView userImage = view.findViewById(R.id.Comment_ListView_Component_ImageView_UserImage);
-        TextView tvReplies = view.findViewById(R.id.Comment_ListView_Component_TextView_Replies);
+//        TextView tvReplies = view.findViewById(R.id.Comment_ListView_Component_TextView_Replies);
 
         tvComment.setText(comment.getComment());
         tvAuthor.setText(comment.getAuthor());
         tvDate.setText(dateFormat.format(comment.getTimestamp()));
-        tvContext.setText(comment.getContext());
+        // tvContext.setText(comment.getContext());  // Commented out
 
         User author = Database.getUser(comment.getAuthor());
         if (author != null) {
             userImage.setImageBitmap(ByteArrayToBitmap(author.getImage()));
         }
 
+        /* Commented out reply functionality
         // Show replies if any and not in reply view
         if (!isReplyView && comment.getReplies() != null && !comment.getReplies().isEmpty()) {
             tvReplies.setVisibility(View.VISIBLE);
@@ -88,6 +89,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         } else {
             tvReplies.setVisibility(View.GONE);
         }
+        */
 
         // Add click listener for user image to open user page
         userImage.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +111,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
             }
         });
 
+        /* Commented out reply functionality
         // Add click listener for replies text to show replies
         if (!isReplyView) {
             tvReplies.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +132,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
                 }
             });
         }
+        */
 
         return view;
     }

@@ -9,32 +9,43 @@ public class Comment {
     private static final Comment defaultComment = new Comment();
     private String Comment;
     private String Author;
-    private String Context;
+    // private String Context;  // Commented out to disable comment-to-comment functionality
     private ArrayList<Comment> Replies;
     private Date Timestamp;
     private Integer Upvotes;
     private Integer Downvotes;
-    private String ParentCommentId; // For replies
+    private String Context;
     private Integer Score;
 
     public Comment() {
-        this("Default Comment", "@Default", "default-context");
+        this("Default Comment", "@Default", "defaultVideo");
     }
-
-    public Comment(String comment, String author, String context) {
+    public Comment(String comment, String author, String video) {
         this.Comment = comment;
         this.Author = author;
-        this.Context = context;
+        // this.Context = context;  // Commented out
         this.Replies = new ArrayList<>();
         this.Timestamp = new Date();
         this.Upvotes = 0;
         this.Downvotes = 0;
-        this.ParentCommentId = null;
         this.Score = 0;
+        this.Context =video;
     }
 
     public static Comment Default() {
         return defaultComment;
+    }
+
+    public String getVideoTitle() {
+        return this.getComment().split("-")[1];
+    }
+
+    public String getContext() {
+        return Context+this.getComment();
+    }
+
+    public void setContext(String context) {
+        this.Context = context;
     }
 
     public String getComment() {
@@ -51,14 +62,6 @@ public class Comment {
 
     public void setAuthor(String author) {
         Author = author;
-    }
-
-    public String getContext() {
-        return Context;
-    }
-
-    public void setContext(String context) {
-        Context = context;
     }
 
     public ArrayList<Comment> getReplies() {
@@ -93,22 +96,18 @@ public class Comment {
         Downvotes = downvotes;
     }
 
-    public String getParentCommentId() {
-        return ParentCommentId;
-    }
-
-    public void setParentCommentId(String parentCommentId) {
-        ParentCommentId = parentCommentId;
-    }
-
     public void addReply(Comment reply) {
-        reply.setParentCommentId(this.toString());
+        // reply.setParentCommentId(this.toString());  // Commented out
         this.Replies.add(reply);
         Log.i("Comment: addReply", "Added reply to comment: " + this.Comment);
     }
 
     public Integer getScore() {
         return this.Upvotes - this.Downvotes;
+    }
+
+    public void setScore(Integer score) {
+        Score = score;
     }
 
     public void upvote() {
@@ -122,25 +121,9 @@ public class Comment {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Comment other = (Comment) obj;
-        return Comment.equals(other.Comment) && 
-               Author.equals(other.Author) && 
-               Context.equals(other.Context) &&
-               Timestamp.equals(other.Timestamp);
-    }
-
-    @Override
     public String toString() {
-        return "Comment{" +
-                "text='" + Comment + '\'' +
-                ", author='" + Author + '\'' +
-                ", context='" + Context + '\'' +
-                ", timestamp=" + Timestamp +
-                ", upvotes=" + Upvotes +
-                ", downvotes=" + Downvotes +
-                '}';
+        return "Comment{" + "text='" + Comment + '\'' + ", author='" + Author + '\'' +
+                // ", context='" + Context + '\'' +  // Commented out
+                ", timestamp=" + Timestamp + ", upvotes=" + Upvotes + ", downvotes=" + Downvotes + '}';
     }
 }

@@ -124,7 +124,8 @@ public class User {
    }
 
    public void addComment(Comment newComment) {
-      String context = newComment.getContext();
+      // String context = newComment.getContext();  // Commented out
+      String context = "videos";  // Use a default context since we're disabling comment-to-comment
       if (!this.Comments.containsKey(context)) {
          ArrayList<Comment> arrComments = new ArrayList<>();
          arrComments.add(newComment);
@@ -150,6 +151,7 @@ public class User {
       }
    }
 
+   /* Commented out to disable comment-to-comment functionality
    public void addReplyToComment(Comment parentComment, Comment reply) {
       String context = parentComment.getContext();
       if (this.Comments.containsKey(context)) {
@@ -167,6 +169,7 @@ public class User {
          }
       }
    }
+   */
 
    public void addVideo(Video newVideo) {
       this.Uploads.addVideo(newVideo);

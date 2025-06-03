@@ -9,11 +9,13 @@
     android:layout_gravity="center"
     tools:context=".Dialogs.CommentOptionsDialogActivity">
 
+    <!-- Commented out reply button
     <Button
         android:id="@+id/CommentOptions_Dialog_Button_Reply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Reply" />
+    -->
 
     <Button
         android:id="@+id/CommentOptions_Dialog_Button_CommentPage"
@@ -62,12 +64,13 @@
         android:layout_height="wrap_content"
         android:text="deleteComment" />
 
+    <!-- Commented out context TextView
     <TextView
         android:id="@+id/CommentOptions_Dialog_TextView_Context"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Context" />
-
+    -->
 
 </LinearLayout>

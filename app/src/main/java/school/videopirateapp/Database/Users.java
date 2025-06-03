@@ -1,6 +1,5 @@
 package school.videopirateapp.Database;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,13 +19,26 @@ public abstract class Users {
         throw new UnsupportedOperationException("This class is not instantiable.");
     }
 
+    public static void updateUser(@NonNull User user) {
+        DatabaseReference userRef = Database.getRef("users").child(user.getName());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                if (userSnapshot.exists()) {
+                    userRef.setValue(user);
+                    Log.i("Database: updateUser", "Updated user in database: " + user.getName());
+                } else {
+                    Log.e("Database: updateUser", "User does not exist: " + user.getName());
+                }
+            }
 
-    //    public static User getSavedUser() {
-//        return savedUser;
-//    }
-//    public static void setSavedUser(User savedUser) {
-//        Users.savedUser = savedUser;
-//    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Database: updateUser", "Failed to check if user exists: " + error.getMessage());
+            }
+        });
+    }
+
     public static User getUser(String userName) {
         if (!userName.startsWith("@")) {
             Log.e("Users: getUser", "Given username does not start with @, returning null to fix");
@@ -64,7 +76,7 @@ public abstract class Users {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
                     Log.w("Users: initialize", "Creating default user");
-                    Database.addUser(User.Default());
+                    addUser(User.Default());
                 }
             }
 
@@ -75,4 +87,25 @@ public abstract class Users {
         });
     }
 
+    public static void addUser(@NonNull User newUser) {
+        DatabaseReference userRef = Database.getRef("users").child(newUser.getName());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                if (!userSnapshot.exists()) {
+                    userRef.setValue(newUser);
+                    savedUser = newUser;
+                    Log.i("Users: addUser", "Added user to database: " + newUser.getName());
+                } else {
+                    // User already exists
+                    Log.w("Users: addUser", "Tried to add user to database, but it already existed, so nothing happened");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Users: addUser", "Listener error?");
+            }
+        });
+    }
 }

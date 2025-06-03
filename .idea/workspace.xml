@@ -5,26 +5,6 @@
       <config />
     </shared>
     <layouts>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout-v17/activity_comment_listview_component.xml">
-        <config>
-          <theme>@style/Theme.Videopirateapp</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout-v17/activity_login_dialog.xml">
-        <config>
-          <theme>@style/Theme.AppCompat.Dialog</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout-v17/activity_upload_video_dialog.xml">
-        <config>
-          <theme>@style/Theme.Videopirateapp</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout-v17/activity_video_listview_component.xml">
-        <config>
-          <theme>@style/Theme.Videopirateapp</theme>
-        </config>
-      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_comment_input_dialog.xml">
         <config>
           <theme>@style/Theme.Videopirateapp</theme>
@@ -147,8 +127,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9d0df33-6a1c-4b21-bbce-55edcec8262b" name="Changes" comment="sch update">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Comments.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/CommentPageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/CommentPageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/UserPageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/UserPageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/VideoPageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/VideoPageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Video.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Video.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Playlists.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Playlists.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Videos.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Videos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Dialogs/CommentOptionsDialogActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Dialogs/CommentOptionsDialogActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/ListViewComponents/CommentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/ListViewComponents/CommentAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Utilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Utilities.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_comment_listview_component.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_comment_listview_component.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_comment_options_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_comment_options_dialog.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_comment_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_comment_page.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -383,12 +380,12 @@
       <map>
         <entry key="school.videopirateapp">
           <value>
-            <CheckInfo lastCheckTimestamp="1748818442141" />
+            <CheckInfo lastCheckTimestamp="1748942004620" />
           </value>
         </entry>
         <entry key="school.videopirateapp.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1748818442146" />
+            <CheckInfo lastCheckTimestamp="1748942004620" />
           </value>
         </entry>
       </map>

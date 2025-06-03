@@ -15,7 +15,7 @@ public class Video {
 
    private String Title;
    private String Uploader;
-   private ArrayList<Comment> Comments;
+   private ArrayList<String> commentContextes;
    private Integer Views;
    private Integer Upvotes;
    private Integer Downvotes;
@@ -28,7 +28,7 @@ public class Video {
       // constructor for new videos
       this.Title = Title;
       this.Uploader = Uploader;
-      this.Comments = new ArrayList<Comment>();
+      this.commentContextes = new ArrayList<>();
       this.Views = 0;
       this.Upvotes = 0;
       this.Downvotes = 0;
@@ -45,7 +45,7 @@ public class Video {
       // constructor for default video, mainly firebase use
       this.Title = "defaultVideo";
       this.Uploader = User.Default().getName();
-      this.Comments = new ArrayList<Comment>();
+      this.commentContextes = new ArrayList<>();
       this.Views = 0;
       this.Upvotes = 0;
       this.Downvotes = 0;
@@ -94,12 +94,12 @@ public class Video {
       Uploader = uploader;
    }
 
-   public ArrayList<Comment> getComments() {
-      return Comments;
+   public ArrayList<String> getCommentContextes() {
+      return commentContextes;
    }
 
-   public void setComments(ArrayList<Comment> comments) {
-      Comments = comments;
+   public void setCommentContextes(ArrayList<String> commentContextes) {
+      this.commentContextes = commentContextes;
    }
 
    public Integer getViews() {
@@ -146,10 +146,10 @@ public class Video {
       return this.Upvotes - this.Downvotes;
    }
 
-   public void addComment(Comment newComment) {
+   public void addComment(String newCommentContext) {
       // this function adds a comment to the video's comments section, also it changes the context of the comment to be the video's path
-      if (!this.Comments.contains(newComment)) {
-         this.Comments.add(newComment);
+      if (!this.commentContextes.contains(newCommentContext)) {
+         this.commentContextes.add(newCommentContext);
       } else {
          Log.w("Video: addComment", "Video already contains same added comment, was not added again");
       }
