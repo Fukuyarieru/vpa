@@ -50,7 +50,7 @@ public class CommentPageActivity extends AppCompatActivity {
                 String newCommentText = etNewComment.getText().toString().trim();
                 if (!newCommentText.isEmpty()) {
                     if (GlobalVariables.loggedUser.isPresent()) {
-                        Comment newComment = new Comment(newCommentText, GlobalVariables.loggedUser.get().getName(), "videos");  // Use default context
+                        Comment newComment = new Comment(newCommentText, GlobalVariables.loggedUser.get().getName(), "comments");  // Use default context
                         assert commentContext != null;
                         Database.addComment(newComment, commentContext);
                         etNewComment.setText("");

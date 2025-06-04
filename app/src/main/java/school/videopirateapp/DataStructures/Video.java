@@ -154,54 +154,6 @@ public class Video {
       return this.Upvotes - this.Downvotes;
    }
 
-//   public void addComment(String newCommentContext) {
-//      // this function adds a comment to the video's comments section, also it changes the context of the comment to be the video's path
-//      if (!this.commentContextes.contains(newCommentContext)) {
-//         this.commentContextes.add(newCommentContext);if (GlobalVariables.loggedUser.isEmpty()) {
-//            Log.e("Database: downvoteComment", "No user logged in");
-//         }
-//
-//         User user = GlobalVariables.loggedUser.get();
-//         DatabaseReference userRef = Database.getRef("users").child(user.getName());
-//         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-//
-//               // check if user exists in database
-//               if(userSnapshot.exists()) {
-//
-//                  DatabaseReference commentRef=Database.getRef(comment.getContext());
-//                  commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                     @Override
-//                     public void onDataChange(@NonNull DataSnapshot commentSnapshot) {
-//                        if(commentSnapshot.exists()) {
-//                           comment.downvote();
-//                           commentRef.setValue(comment);
-//                           user.downvoteComment(comment);
-//                           userRef.setValue(user);
-//                           Log.i("Database: downvoteComment", "Downvoted comment by: " + comment.getAuthor());
-//                        }
-//                     }
-//
-//                     @Override
-//                     public void onCancelled(@NonNull DatabaseError error) {
-//
-//                     }
-//                  });
-//               } else {
-//                  Log.e("Database: downvoteComment", "User does not exist in database");
-//               }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//         } else {
-//         Log.w("Video: addComment", "Video already contains same added comment, was not added again");
-//      }
-//   }
-
    @Deprecated
    public void Upvote() {
       Log.i("Video: upvote", "Upvoted video: " + this.getTitle());
@@ -222,7 +174,7 @@ public class Video {
    }
 
    public String getContext() {
-      return "videos-" + this.Title + "-comments";
+      return "videos-" + this.Title;
    }
 
    @NonNull

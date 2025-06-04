@@ -9,8 +9,8 @@ public class Comment {
     private static final Comment defaultComment = new Comment();
     private String Comment;
     private String Author;
-    private ArrayList<String> replyContextes;
-    private Date Timestamp;
+    private ArrayList<String> replyContexts;
+    private String Timestamp;
     private Integer Upvotes;
     private Integer Downvotes;
     private String Context;
@@ -21,8 +21,8 @@ public class Comment {
     public Comment(String comment, String author, String context) {
         this.Comment = comment;
         this.Author = author;
-        this.replyContextes = new ArrayList<>();
-        this.Timestamp = new Date();
+        this.replyContexts = new ArrayList<>();
+        this.Timestamp = "NO-DATE-SET";
         this.Upvotes = 0;
         this.Downvotes = 0;
         this.Context =context;
@@ -32,12 +32,12 @@ public class Comment {
         return defaultComment;
     }
 
-    public String getVideoTitle() {
-        return this.getComment().split("-")[1];
-    }
+//    public String getVideoTitle() {
+//        return this.getComment().split("-")[1];
+//    }
 
     public String getContext() {
-        return Context;
+        return Context+this.Comment;
     }
 
     public void setContext(String context) {
@@ -61,18 +61,18 @@ public class Comment {
     }
 
     public ArrayList<String> getReplyContexts() {
-        return replyContextes;
+        return replyContexts;
     }
 
-    public void setReplyContextes(ArrayList<String> replyContextes) {
-        this.replyContextes = replyContextes;
+    public void setReplyContexts(ArrayList<String> replyContexts) {
+        this.replyContexts = replyContexts;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return Timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         Timestamp = timestamp;
     }
 
@@ -98,7 +98,7 @@ public class Comment {
 
     public void addReply(String replyContext) {
         // reply.setParentCommentId(this.toString());  // Commented out
-        this.replyContextes.add(replyContext);
+        this.replyContexts.add(replyContext);
         Log.i("Comment: addReply", "Added reply to comment: " + this.Comment);
     }
 

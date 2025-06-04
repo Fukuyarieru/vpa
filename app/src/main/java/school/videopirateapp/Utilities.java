@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -916,10 +918,33 @@ public class Utilities {
         EditText etPassword = loginDialog.findViewById(R.id.Login_Dialog_EditText_Password);
         Button btnLogin = loginDialog.findViewById(R.id.Login_Dialog_Button_Login);
         Button btnSignup = loginDialog.findViewById(R.id.Login_Dialog_Button_Signup);
+        CheckBox cbRememberPassword = loginDialog.findViewById(R.id.checkBox);
+        CheckBox cbRememberUsername = loginDialog.findViewById(R.id.checkBox2);
 
         final User[] desiredUser = {null};
         final String[] username = {""};
         final String[] password = {""};
+
+        // Load saved credentials from SharedPreferences
+        SharedPreferences prefs = thisContext.getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
+        String savedUsername = prefs.getString("username", "");
+        String savedPassword = prefs.getString("password", "");
+        boolean rememberUsername = prefs.getBoolean("remember_username", false);
+        boolean rememberPassword = prefs.getBoolean("remember_password", false);
+
+        // Set saved values
+        if (rememberUsername && !savedUsername.isEmpty()) {
+            etUsername.setText(savedUsername);
+            username[0] = savedUsername;
+            cbRememberUsername.setChecked(true);
+        }
+        if (rememberPassword && !savedPassword.isEmpty()) {
+            etPassword.setText(savedPassword);
+            password[0] = savedPassword;
+            cbRememberPassword.setChecked(true);
+        }
+
+        desiredUser[0]= Database.getUser(username[0]);
 
         etPassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -979,6 +1004,27 @@ public class Utilities {
                     } else if (!desiredUser[0].getPassword().equals(password[0])) {
                         Feedback(thisContext, "Password does not match");
                     } else {
+                        // Save credentials if checkboxes are checked
+                        SharedPreferences.Editor editor = prefs.edit();
+                        
+                        if (cbRememberUsername.isChecked()) {
+                            editor.putString("username", username[0]);
+                            editor.putBoolean("remember_username", true);
+                        } else {
+                            editor.remove("username");
+                            editor.putBoolean("remember_username", false);
+                        }
+                        
+                        if (cbRememberPassword.isChecked()) {
+                            editor.putString("password", password[0]);
+                            editor.putBoolean("remember_password", true);
+                        } else {
+                            editor.remove("password");
+                            editor.putBoolean("remember_password", false);
+                        }
+                        
+                        editor.apply();
+
                         GlobalVariables.loggedUser = Optional.of(desiredUser[0]);
                         Feedback(thisContext, "Logged in successfully");
                         originalLoginBtn.setText(username[0]);
