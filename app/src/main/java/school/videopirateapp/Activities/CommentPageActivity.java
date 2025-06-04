@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Comments;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.GlobalVariables;
@@ -22,45 +21,38 @@ import school.videopirateapp.R;
 
 public class CommentPageActivity extends AppCompatActivity {
 
-    String inVideo;
-    String commentText;
-    Video video;
     ListView lvComments;
     CommentAdapter commentAdapter;
     EditText etNewComment;
-    Button btnAddComment;
+    Button btnAddReply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_page);
 
-        lvComments = findViewById(R.id.CommentPage_ListView_Comments);
-        etNewComment = findViewById(R.id.CommentPage_EditText_NewComment);
-        btnAddComment = findViewById(R.id.CommentPage_Button_AddComment);
+        String commentContext = getIntent().getStringExtra("commentContext");
 
-        inVideo = getIntent().getStringExtra("inVideo");
-        commentText = getIntent().getStringExtra("commentText");
+        Comment comment =Database.getComment(commentContext);
 
         lvComments = findViewById(R.id.CommentPage_ListView_Comments);
         etNewComment = findViewById(R.id.CommentPage_EditText_NewComment);
-        btnAddComment = findViewById(R.id.CommentPage_Button_AddComment);
+        btnAddReply = findViewById(R.id.CommentPage_Button_AddReply);
 
-        video = Database.getVideo(inVideo);
 
-        // Create adapter without reply functionality
-        ArrayList<Comment>comments= Comments.getCommentsFromContexts(video.getCommentContextes());
-        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments, true);  // Set isReplyView to true to disable reply functionality
+        ArrayList<Comment>insideComments= Comments.getCommentsFromContexts(comment.getReplyContexts());
+        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, insideComments);  // Set isReplyView to true to disable reply functionality
         lvComments.setAdapter(commentAdapter);
 
-        btnAddComment.setOnClickListener(new View.OnClickListener() {
+        btnAddReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String newCommentText = etNewComment.getText().toString().trim();
                 if (!newCommentText.isEmpty()) {
                     if (GlobalVariables.loggedUser.isPresent()) {
                         Comment newComment = new Comment(newCommentText, GlobalVariables.loggedUser.get().getName(), "videos");  // Use default context
-                        Database.addComment(newComment, video);
+                        assert commentContext != null;
+                        Database.addComment(newComment, commentContext);
                         etNewComment.setText("");
                         commentAdapter.notifyDataSetChanged();
                         Feedback(CommentPageActivity.this, "Comment added successfully");

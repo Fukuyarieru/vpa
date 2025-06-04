@@ -9,27 +9,23 @@ public class Comment {
     private static final Comment defaultComment = new Comment();
     private String Comment;
     private String Author;
-    // private String Context;  // Commented out to disable comment-to-comment functionality
     private ArrayList<String> replyContextes;
     private Date Timestamp;
     private Integer Upvotes;
     private Integer Downvotes;
     private String Context;
-    private Integer Score;
 
     public Comment() {
         this("Default Comment", "@Default", "defaultVideo");
     }
-    public Comment(String comment, String author, String video) {
+    public Comment(String comment, String author, String context) {
         this.Comment = comment;
         this.Author = author;
-        // this.Context = context;  // Commented out
         this.replyContextes = new ArrayList<>();
         this.Timestamp = new Date();
         this.Upvotes = 0;
         this.Downvotes = 0;
-        this.Score = 0;
-        this.Context =video;
+        this.Context =context;
     }
 
     public static Comment Default() {
@@ -64,7 +60,7 @@ public class Comment {
         Author = author;
     }
 
-    public ArrayList<String> getReplyContextes() {
+    public ArrayList<String> getReplyContexts() {
         return replyContextes;
     }
 
@@ -82,6 +78,10 @@ public class Comment {
 
     public Integer getUpvotes() {
         return Upvotes;
+    }
+
+    public Integer getScore() {
+        return this.Upvotes - this.Downvotes;
     }
 
     public void setUpvotes(Integer upvotes) {
@@ -102,13 +102,6 @@ public class Comment {
         Log.i("Comment: addReply", "Added reply to comment: " + this.Comment);
     }
 
-    public Integer getScore() {
-        return this.Upvotes - this.Downvotes;
-    }
-
-    public void setScore(Integer score) {
-        Score = score;
-    }
 
     public void upvote() {
         Log.i("Comment: upvote", "Upvoted comment by: " + this.Author);

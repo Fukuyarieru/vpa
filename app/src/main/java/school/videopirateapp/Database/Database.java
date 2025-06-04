@@ -2,6 +2,7 @@ package school.videopirateapp.Database;
 
 import android.util.Log;
 
+import androidx.annotation.DoNotInline;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -40,65 +41,12 @@ public abstract class Database {
         Users.addUser(newUser);
     }
 
-    public static void addComment(@NonNull Comment newComment, @NonNull Video targetVideo) {
-        // first check if video exists at all
-
-        Comments.addComment(newComment);
-
-        DatabaseReference videoRef = Database.getRef("videos").child(targetVideo.getTitle());
-        videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
-                // video needs to exist
-                if (videoSnapshot.exists()) {
-                    DatabaseReference userRef = Database.getRef("users").child(newComment.getAuthor());
-                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-                            // user needs to exist
-                            if (userSnapshot.exists()) {
-                                User user = userSnapshot.getValue(User.class);
-                                assert user != null; // android studio nagging
-
-                                // update locally
-                                targetVideo.addComment(newComment.getContext());
-                                user.addComment(newComment);
-
-                                // update database
-                                userRef.setValue(user);
-                                videoRef.setValue(targetVideo);
-
-                                Log.i("Database: addComment", "Added comment" + newComment.getComment() + " to video " + targetVideo.getTitle());
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e("Database: addComment", "Failed to add listener to userRef");
-                        }
-                    });
-                } else {
-                    // video does not exist
-                    Log.e("Database: addComment", "Video does not exist");
-                    // TODO
-//                    throw new RuntimeException("video does not exist");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // some error idk
-                Log.e("Database: addComment", "Failed to add listener to videoRef");
-            }
-        });
+    public static void addComment(@NonNull Comment newComment, @NonNull String targetContextSection) {
+        Comments.addComment(newComment,targetContextSection);
     }
 
     public static Comment getComment(String commentContext) {
         return Comments.getComment(commentContext);
-    }
-
-    public static void addComment(@NonNull Comment newComment) {
-        Comments.addComment(newComment);
     }
 
     public static void upvoteVideo(Video targetVideo, User user) {
@@ -219,6 +167,7 @@ public abstract class Database {
         Users.initialize();
         Videos.initialize();
         Playlists.initialize();
+        Comments.initialize();
     }
 
     public static void upvoteComment(Comment comment) {

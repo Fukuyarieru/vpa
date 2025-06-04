@@ -164,8 +164,8 @@ public class VideoPageActivity extends AppCompatActivity {
                     Utilities.Feedback(VideoPageActivity.this, "You must be logged in to add comments");
                 } else {
                     String commentStr = etComment.getText().toString();
-                    Comment newComment = new Comment(commentStr, GlobalVariables.loggedUser.get().getName(), currentVideo.Context());
-                    Database.addComment(newComment, currentVideo);
+                    Comment newComment = new Comment(commentStr, GlobalVariables.loggedUser.get().getName(), currentVideo.getContext());
+                    Database.addComment(newComment, currentVideo.getContext());
                     Database.updateVideo(currentVideo);
                     tvScore.setText(String.valueOf(currentVideo.getVoteScore()));
                     Utilities.Feedback(VideoPageActivity.this, "Comment added");

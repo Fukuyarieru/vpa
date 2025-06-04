@@ -13,143 +13,142 @@ import java.util.Map;
 
 public class User {
 
-   private static final User defaultUser = new User();
-   private String name;
-   // TODO, consider removing this field because upload management turns out to be a pain paired together with playlist management
-   private Playlist Uploads;
-   private Map<String, ArrayList<Comment>> Comments;
-   private ArrayList<String> ownedPlaylists;
-   private String Password;
-   private ArrayList<Byte> Image;
-   // Votes could include also non videos, like playlists or comments
-   private ArrayList<String> Upvotes;
-   private ArrayList<String> Downvotes;
-   private Integer videosWatched;
-   private String Description;
+    private static final User defaultUser = new User();
+    private String name;
+    // TODO, consider removing this field because upload management turns out to be a pain paired together with playlist management
+    private Playlist Uploads;
+    private Map<String, ArrayList<Comment>> Comments;
+    private ArrayList<String> ownedPlaylists;
+    private String Password;
+    private ArrayList<Byte> Image;
+    // Votes could include also non videos, like playlists or comments
+    private ArrayList<String> Upvotes;
+    private ArrayList<String> Downvotes;
+    private Integer videosWatched;
+    private String Description;
 
-   // Default constructor required for Firebase
-   public User() {
-      // Empty constructor for Firebase
-      this("@Default", "123");
-   }
+    // Default constructor required for Firebase
+    public User() {
+        // Empty constructor for Firebase
+        this("@Default", "123");
+    }
 
-   // Constructor with parameters
-   public User(String Name, String password) {
-      if (!Name.startsWith("@")) {
-         Log.w("User: User(name,password)", "Entered name did not start with @, implicitly added it");
-         Name = "@" + Name;
-      }
-      this.name = Name;
-      this.Uploads = new Playlist("Uploads-" + Name, Name);
-      this.Comments = new HashMap<String, ArrayList<Comment>>();
-      ArrayList<Comment> arrComments = new ArrayList<>();
-      arrComments.add(Comment.Default());
-      this.Comments.put(Comment.Default().getContext(), arrComments);
-      this.ownedPlaylists = new ArrayList<>();
-      this.getOwnedPlaylists().add(this.Uploads.getTitle());
-      this.Image = getDefaultUserImage();
-      this.Password = password;
-      this.Upvotes = new ArrayList<>();
-      this.Downvotes = new ArrayList<>();
-      this.videosWatched = 0;
-      this.Description = "(Empty description)";
-   }
+    // Constructor with parameters
+    public User(String Name, String password) {
+        if (!Name.startsWith("@")) {
+            Log.w("User: User(name,password)", "Entered name did not start with @, implicitly added it");
+            Name = "@" + Name;
+        }
+        this.name = Name;
+        this.Uploads = new Playlist("Uploads-" + Name, Name);
+        this.Comments = new HashMap<String, ArrayList<Comment>>();
+        ArrayList<Comment> arrComments = new ArrayList<>();
+        arrComments.add(Comment.Default());
+        this.Comments.put(Comment.Default().getContext(), arrComments);
+        this.ownedPlaylists = new ArrayList<>();
+        this.getOwnedPlaylists().add(this.Uploads.getTitle());
+        this.Image = getDefaultUserImage();
+        this.Password = password;
+        this.Upvotes = new ArrayList<>();
+        this.Downvotes = new ArrayList<>();
+        this.videosWatched = 0;
+        this.Description = "(Empty description)";
+    }
 
-   public static User Default() {
-      return defaultUser;
-   }
+    public static User Default() {
+        return defaultUser;
+    }
 
-   public String getDescription() {
-      return Description;
-   }
+    public String getDescription() {
+        return Description;
+    }
 
-   public void setDescription(String description) {
-      Description = description;
-   }
+    public void setDescription(String description) {
+        Description = description;
+    }
 
-   public String getPassword() {
-      return Password;
-   }
+    public String getPassword() {
+        return Password;
+    }
 
-   public void setPassword(String password) {
-      Password = password;
-   }
+    public void setPassword(String password) {
+        Password = password;
+    }
 
-   public String getName() {
-      return name;
-   }
+    public String getName() {
+        return name;
+    }
 
-   public void setName(String name) {
-      this.name = name;
-   }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-   public void addPlaylist(Playlist newPlaylist) {
-      newPlaylist.setOwner(this.name);
-      String newPlaylistTitle = newPlaylist.getTitle();
-      if (!this.ownedPlaylists.contains(newPlaylistTitle)) {
-         this.ownedPlaylists.add(newPlaylistTitle);
-      }
-   }
+    public void addPlaylist(Playlist newPlaylist) {
+        newPlaylist.setOwner(this.name);
+        String newPlaylistTitle = newPlaylist.getTitle();
+        if (!this.ownedPlaylists.contains(newPlaylistTitle)) {
+            this.ownedPlaylists.add(newPlaylistTitle);
+        }
+    }
 
-   public Playlist getUploads() {
-      return Uploads;
-   }
+    public Playlist getUploads() {
+        return Uploads;
+    }
 
-   public void setUploads(Playlist uploads) {
-      this.Uploads = uploads;
-   }
+    public void setUploads(Playlist uploads) {
+        this.Uploads = uploads;
+    }
 
-   public Map<String, ArrayList<Comment>> getComments() {
-      return Comments;
-   }
+    public Map<String, ArrayList<Comment>> getComments() {
+        return Comments;
+    }
 
-   public void setComments(Map<String, ArrayList<Comment>> comments) {
-      Comments = comments;
-   }
+    public void setComments(Map<String, ArrayList<Comment>> comments) {
+        Comments = comments;
+    }
 
-   public ArrayList<String> getOwnedPlaylists() {
-      return ownedPlaylists;
-   }
+    public ArrayList<String> getOwnedPlaylists() {
+        return ownedPlaylists;
+    }
 
-   public void setOwnedPlaylists(ArrayList<String> ownedPlaylists) {
-      this.ownedPlaylists = ownedPlaylists;
-   }
+    public void setOwnedPlaylists(ArrayList<String> ownedPlaylists) {
+        this.ownedPlaylists = ownedPlaylists;
+    }
 
-   public ArrayList<Byte> getImage() {
-      return Image;
-   }
+    public ArrayList<Byte> getImage() {
+        return Image;
+    }
 
-   public void setImage(ArrayList<Byte> image) {
-      this.Image = image;
-   }
+    public void setImage(ArrayList<Byte> image) {
+        this.Image = image;
+    }
 
-   public void addComment(Comment newComment) {
-      // String context = newComment.getContext();  // Commented out
-      String context = "videos";  // Use a default context since we're disabling comment-to-comment
-      if (!this.Comments.containsKey(context)) {
-         ArrayList<Comment> arrComments = new ArrayList<>();
-         arrComments.add(newComment);
-         this.Comments.put(context, arrComments);
-         Log.i("User: addComment", "Added first comment to context: " + context);
-      } else {
-         ArrayList<Comment> arrComments = this.Comments.get(context);
-         // Check for duplicate comments
-         boolean isDuplicate = false;
-         for (Comment existingComment : arrComments) {
-            if (existingComment.getAuthor().equals(newComment.getAuthor()) && 
-                existingComment.getComment().equals(newComment.getComment())) {
-               isDuplicate = true;
-               Log.w("User: addComment", "Duplicate comment detected and prevented");
-               break;
-            }
-         }
-         if (!isDuplicate) {
+    public void addComment(Comment newComment) {
+        // String context = newComment.getContext();  // Commented out
+        String context = "videos";  // Use a default context since we're disabling comment-to-comment
+        if (!this.Comments.containsKey(context)) {
+            ArrayList<Comment> arrComments = new ArrayList<>();
             arrComments.add(newComment);
             this.Comments.put(context, arrComments);
-            Log.i("User: addComment", "Added comment to existing context: " + context);
-         }
-      }
-   }
+            Log.i("User: addComment", "Added first comment to context: " + context);
+        } else {
+            ArrayList<Comment> arrComments = this.Comments.get(context);
+            // Check for duplicate comments
+            boolean isDuplicate = false;
+            for (Comment existingComment : arrComments) {
+                if (existingComment.getAuthor().equals(newComment.getAuthor()) && existingComment.getComment().equals(newComment.getComment())) {
+                    isDuplicate = true;
+                    Log.w("User: addComment", "Duplicate comment detected and prevented");
+                    break;
+                }
+            }
+            if (!isDuplicate) {
+                arrComments.add(newComment);
+                this.Comments.put(context, arrComments);
+                Log.i("User: addComment", "Added comment to existing context: " + context);
+            }
+        }
+    }
 
    /* Commented out to disable comment-to-comment functionality
    public void addReplyToComment(Comment parentComment, Comment reply) {
@@ -171,59 +170,82 @@ public class User {
    }
    */
 
-   public void addVideo(Video newVideo) {
-      this.Uploads.addVideo(newVideo);
-   }
+    public void addVideo(Video newVideo) {
+        this.Uploads.addVideo(newVideo);
+    }
 
-   public ArrayList<String> getUpvotes() {
-      return Upvotes;
-   }
+    public ArrayList<String> getUpvotes() {
+        return Upvotes;
+    }
 
-   public void setUpvotes(ArrayList<String> upvotes) {
-      this.Upvotes = upvotes;
-   }
+    public void setUpvotes(ArrayList<String> upvotes) {
+        this.Upvotes = upvotes;
+    }
 
-   public ArrayList<String> getDownvotes() {
-      return Downvotes;
-   }
+    public ArrayList<String> getDownvotes() {
+        return Downvotes;
+    }
 
-   public void setDownvotes(ArrayList<String> downvotes) {
-      this.Downvotes = downvotes;
-   }
+    public void setDownvotes(ArrayList<String> downvotes) {
+        this.Downvotes = downvotes;
+    }
 
-   public Integer getVideosWatched() {
-      return videosWatched;
-   }
+    public Integer getVideosWatched() {
+        return videosWatched;
+    }
 
-   public void setVideosWatched(Integer videosWatched) {
-      this.videosWatched = videosWatched;
-   }
+    public void setVideosWatched(Integer videosWatched) {
+        this.videosWatched = videosWatched;
+    }
 
-   public void upvoteVideo(Video video) {
-      if (!this.getUpvotes().contains(video.getTitle())) {
-         this.getUpvotes().add(video.getTitle());
-         Log.i("User: upvoteVideo", "Added upvote to " + video.getTitle());
-      }
-      if (this.getDownvotes().contains(video.getTitle())) {
-         this.getDownvotes().remove(video.getTitle());
-         Log.i("User: upvoteVideo", "Removed downvote to " + video.getTitle());
-      }
-   }
+    public void upvoteVideo(Video video) {
+        if (!this.getUpvotes().contains(video.getTitle())) {
+            this.getUpvotes().add(video.getTitle());
+            Log.i("User: upvoteVideo", "Added upvote to " + video.getTitle());
+        }
+        if (this.getDownvotes().contains(video.getTitle())) {
+            this.getDownvotes().remove(video.getTitle());
+            Log.i("User: upvoteVideo", "Removed downvote to " + video.getTitle());
+        }
+    }
 
-   public void downvoteVideo(Video video) {
-      if (!this.getDownvotes().contains(video.getTitle())) {
-         this.getDownvotes().add(video.getTitle());
-         Log.i("User: downvoteVideo", "Added downvote to " + video.getTitle());
-      }
-      if (this.getUpvotes().contains(video.getTitle())) {
-         this.getUpvotes().remove(video.getTitle());
-         Log.i("User: downvoteVideo", "Removed upvote to " + video.getTitle());
-      }
-   }
+    public void downvoteVideo(Video video) {
+        if (!this.getDownvotes().contains(video.getTitle())) {
+            this.getDownvotes().add(video.getTitle());
+            Log.i("User: downvoteVideo", "Added downvote to " + video.getTitle());
+        }
+        if (this.getUpvotes().contains(video.getTitle())) {
+            this.getUpvotes().remove(video.getTitle());
+            Log.i("User: downvoteVideo", "Removed upvote to " + video.getTitle());
+        }
+    }
 
-   @NonNull
-   @Override
-   public String toString() {
-      return "Username: " + this.getName() + "\nPassword" + this.getPassword();
-   }
+    public void upvoteComment(Comment comment) {
+        if (!this.getUpvotes().contains(comment.getContext())) {
+            this.getUpvotes().add(comment.getContext());
+            Log.i("User: upvoteComment", "Added upvote to " + comment.getContext());
+        }
+        if (this.getDownvotes().contains(comment.getContext())) {
+            this.getDownvotes().remove(comment.getContext());
+            Log.i("User: upvoteComment", "Removed downvote to " + comment.getContext());
+        }
+    }
+
+    public void downvoteComment(Comment comment) {
+        if (!this.getDownvotes().contains(comment.getContext())) {
+            this.getDownvotes().add(comment.getContext());
+            Log.i("User: downvoteComment", "Added downvote to " + comment.getContext());
+        }
+
+        if (this.getUpvotes().contains(comment.getContext())) {
+            this.getUpvotes().remove(comment.getContext());
+            Log.i("User: downvoteComment", "Removed upvote to " + comment.getContext());
+        }
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Username: " + this.getName() + "\nPassword" + this.getPassword();
+    }
 }

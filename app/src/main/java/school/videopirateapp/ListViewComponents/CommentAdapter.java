@@ -47,15 +47,6 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         this.isReplyView = false;
     }
 
-    public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> objects, boolean isReplyView) {
-        super(context, resource, objects);
-        this.context = context;
-        this.resource = resource;
-        this.comments = (ArrayList<Comment>) objects;
-        this.dateFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault());
-        this.isReplyView = isReplyView;
-    }
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

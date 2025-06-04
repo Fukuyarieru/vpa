@@ -93,11 +93,10 @@ public class Utilities {
         currentActivityThis.startActivity(intent);
     }
 
-    public static void openCommentPage(@NonNull Context currentActivityThis, String inVideo, String commentText) {
+    public static void openCommentPage(@NonNull Context currentActivityThis, String commentContext) {
         Log.i("Utilities: openCommentPage", "Comment page opened");
         Intent intent = new Intent(currentActivityThis, CommentPageActivity.class);
-        intent.putExtra("inVideo", inVideo);
-        intent.putExtra("commentText", commentText);
+        intent.putExtra("commentContext", commentContext);
         currentActivityThis.startActivity(intent);
     }
 
@@ -152,7 +151,7 @@ public class Utilities {
             public void onClick(View view) {
                 Log.i("Utilities: openCommentOwnerOptionsDialog", "Opening comment page");
                 dialog.dismiss();
-                openCommentPage(contextThis, comment.getContext(), comment.getComment());
+                openCommentPage(contextThis, comment.getContext());
             }
         });
 
@@ -311,7 +310,7 @@ public class Utilities {
             public void onClick(View view) {
                 Log.i("Utilities: openCommentViewerOptionsDialog", "Opening comment page");
                 dialog.dismiss();
-                openCommentPage(contextThis, comment.getContext(), comment.getComment());
+                openCommentPage(contextThis, comment.getContext());
             }
         });
 

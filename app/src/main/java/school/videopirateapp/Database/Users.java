@@ -28,7 +28,7 @@ public abstract class Users {
                     userRef.setValue(user);
                     Log.i("Database: updateUser", "Updated user in database: " + user.getName());
                 } else {
-                    Log.e("Database: updateUser", "User does not exist: " + user.getName());
+                    Log.e("Database: updateUser", "User does not exist in database: " + user.getName());
                 }
             }
 

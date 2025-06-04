@@ -329,43 +329,4 @@ public abstract class Playlists {
             }
         });
     }
-
-//    public static void addPlaylist(Playlist newPlaylist) {
-//        DatabaseReference playlistRef = Database.getRef("playlists").child("&" + newPlaylist.getTitle());
-//        playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
-//                // check if playlist doesn't exist
-//                if (!playlistSnapshot.exists()) {
-//                    DatabaseReference userRef = Database.getRef("users").child(newPlaylist.getOwner());
-//                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-//                            // check if associated user exists
-//                            if (userSnapshot.exists()) {
-//                                playlistRef.setValue(newPlaylist);
-//                                savedPlaylist = newPlaylist;
-//                                Log.i("Playlists: addPlaylist", "Added playlist to database: " + newPlaylist.getTitle());
-//                            } else {
-//                                // user does not exist, do not add the playlist
-//                                Log.e("Playlists: addPlaylist", "User does not exist");
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//                            Log.e("Playlists: addPlaylist", "Failed to add listener to userRef");
-//                        }
-//                    });
-//                } else {
-//                    Log.w("Playlists: addPlaylist", "Playlist already exists");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("Playlists: addPlaylist", "Failed to add listener to playlistRef");
-//            }
-//        });
-//    }
 }
