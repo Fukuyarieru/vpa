@@ -79,12 +79,26 @@ public abstract class Comments {
             @Override
             public void onDataChange(@NonNull DataSnapshot commentSnapshot) {
                 if (!commentSnapshot.exists()) {
-                    comment.setContext(targetContextSection + comment.getComment());
+
+                    DatabaseReference targetContextSectionRef=Database.getRef(targetContextSection);
+                    targetContextSectionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            comment.setContext(targetContextSection + comment.getComment());
+                            targetContextSectionRef.setValue(comment.getContext());
+
+                            commentRef.setValue(comment);
+                            Comments.put(comment.getContext(), comment);
+                            Log.i("Comments: addComment", "Added comment: " + comment.getContext());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
 
 
-                    commentRef.setValue(comment);
-                    Comments.put(comment.getContext(), comment);
-                    Log.i("Comments: addComment", "Added comment: " + comment.getContext());
                 } else {
                     Log.w("Comments: addComment", "Comment already exists: " + comment.getContext());
                 }
