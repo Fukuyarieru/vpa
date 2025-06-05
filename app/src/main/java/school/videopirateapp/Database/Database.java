@@ -101,6 +101,26 @@ public abstract class Database {
         Playlists.addPlaylist(newPlaylist);
     }
 
+    public static void updateUser(User user) {
+        DatabaseReference userRef = Database.getRef("users").child(user.getName());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                if (userSnapshot.exists()) {
+                    userRef.setValue(user);
+                    Log.i("Database: updateUser", "Updated user in database: " + user.getName());
+                } else {
+                    Log.e("Database: updateUser", "User does not exist: " + user.getName());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Database: updateUser", "Failed to check if user exists: " + error.getMessage());
+            }
+        });
+    }
+
     public static void addVideoToPlaylist(Video video, Playlist targetPlaylist) {
         DatabaseReference videoRef = Database.getRef("videos").child(video.getTitle());
         videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -144,10 +164,6 @@ public abstract class Database {
 
     public static void downvotePlaylist(Playlist targetPlaylist, User user) {
         Playlists.downvotePlaylist(targetPlaylist, user);
-    }
-
-    public static void updateUser(@NonNull User user) {
-        Users.updateUser(user);
     }
 
     public static void updateVideo(@NonNull Video video) {

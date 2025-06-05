@@ -26,15 +26,15 @@ public abstract class Users {
             public void onDataChange(@NonNull DataSnapshot userSnapshot) {
                 if (userSnapshot.exists()) {
                     userRef.setValue(user);
-                    Log.i("Database: updateUser", "Updated user in database: " + user.getName());
+                    Log.i("Users: updateUser", "Updated user in database: " + user.getName());
                 } else {
-                    Log.e("Database: updateUser", "User does not exist in database: " + user.getName());
+                    Log.e("Users: updateUser", "User does not exist: " + user.getName());
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Database: updateUser", "Failed to check if user exists: " + error.getMessage());
+                Log.e("Users: updateUser", "Failed to check if user exists: " + error.getMessage());
             }
         });
     }
@@ -92,19 +92,18 @@ public abstract class Users {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                // check if user doesn't exist
                 if (!userSnapshot.exists()) {
                     userRef.setValue(newUser);
-                    savedUser = newUser;
-                    Log.i("Users: addUser", "Added user to database: " + newUser.getName());
+                    Log.i("Database: addUser", "Added user to database: " + newUser.getName());
                 } else {
-                    // User already exists
-                    Log.w("Users: addUser", "Tried to add user to database, but it already existed, so nothing happened");
+                    Log.w("Database: addUser", "User already exists");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Users: addUser", "Listener error?");
+                Log.e("Database: addUser", "Failed to add listener to userRef");
             }
         });
     }

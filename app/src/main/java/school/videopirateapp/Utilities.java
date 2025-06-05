@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -525,20 +527,27 @@ public class Utilities {
             }
         }
 
-        // Create and set adapter
-        PlaylistAdapter adapter = new PlaylistAdapter(thisContext, R.layout.activity_playlist_list_view_component, userPlaylists);
-        listView.setAdapter(adapter);
-
-        // Handle playlist selection
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Create a custom adapter for playlist selection that overrides the click behavior
+        PlaylistAdapter adapter = new PlaylistAdapter(thisContext, R.layout.activity_playlist_list_view_component, userPlaylists) {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Playlist selectedPlaylist = userPlaylists.get(position);
-                Database.addVideoToPlaylist(video, selectedPlaylist);
-                Feedback(thisContext, "Video added to playlist: " + selectedPlaylist.getTitle());
-                dialog.dismiss();
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                
+                // Override the click listener set in the parent adapter
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Playlist selectedPlaylist = userPlaylists.get(position);
+                        Database.addVideoToPlaylist(video, selectedPlaylist);
+                        Feedback(thisContext, "Video added to playlist: " + selectedPlaylist.getTitle());
+                        dialog.dismiss();
+                    }
+                });
+                
+                return view;
             }
-        });
+        };
+        listView.setAdapter(adapter);
 
         // Handle cancel button
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -647,8 +656,52 @@ public class Utilities {
         btnCreatePlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Implement create playlist functionality
-                Feedback(thisContext, "Create playlist functionality coming soon");
+                dialog.dismiss();
+                Dialog createPlaylistDialog = new Dialog(thisContext);
+                createPlaylistDialog.setContentView(R.layout.activity_create_playlist_dialog);
+
+                EditText etTitle = createPlaylistDialog.findViewById(R.id.CreatePlaylist_Dialog_EditText_Title);
+                EditText etDescription = createPlaylistDialog.findViewById(R.id.CreatePlaylist_Dialog_EditText_Description);
+                Button btnCreate = createPlaylistDialog.findViewById(R.id.CreatePlaylist_Dialog_Button_Create);
+                Button btnCancel = createPlaylistDialog.findViewById(R.id.CreatePlaylist_Dialog_Button_Cancel);
+
+                btnCreate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String title = etTitle.getText().toString().trim();
+                        String description = etDescription.getText().toString().trim();
+
+                        if (title.isEmpty()) {
+                            Feedback(thisContext, "Please enter a playlist title");
+                            return;
+                        }
+
+                        if (!title.startsWith("&")) {
+                            title = "&" + title;
+                        }
+
+                        Playlist newPlaylist = new Playlist(title, user.getName());
+                        if (!description.isEmpty()) {
+                            newPlaylist.setDescription(description);
+                        }
+
+                        Database.addPlaylist(newPlaylist);
+                        user.addPlaylist(newPlaylist);
+                        Database.updateUser(user);
+                        
+                        Feedback(thisContext, "Playlist created successfully");
+                        createPlaylistDialog.dismiss();
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        createPlaylistDialog.dismiss();
+                    }
+                });
+
+                createPlaylistDialog.show();
             }
         });
         
