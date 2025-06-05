@@ -40,7 +40,7 @@ public class CommentPageActivity extends AppCompatActivity {
         btnAddReply = findViewById(R.id.CommentPage_Button_AddReply);
 
 
-        ArrayList<Comment>insideComments= Comments.getCommentsFromContexts(comment.getReplyContexts());
+        ArrayList<Comment>insideComments= Comments.getCommentsFromContexts(comment.getComments());
         commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, insideComments);  // Set isReplyView to true to disable reply functionality
         lvComments.setAdapter(commentAdapter);
 

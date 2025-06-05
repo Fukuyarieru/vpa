@@ -10,11 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.app.Dialog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +25,6 @@ import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
-import school.videopirateapp.Utilities;
 import school.videopirateapp.GlobalVariables;
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
@@ -64,7 +60,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
         tvComment.setText(comment.getComment());
         tvAuthor.setText(comment.getAuthor());
-        tvDate.setText(dateFormat.format(comment.getTimestamp()));
+        tvDate.setText(dateFormat.format(comment.getDate()));
         // tvContext.setText(comment.getContext());  // Commented out
 
         User author = Database.getUser(comment.getAuthor());
