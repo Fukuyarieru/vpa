@@ -81,22 +81,21 @@ public abstract class Comments {
          public void onDataChange(@NonNull DataSnapshot commentSnapshot) {
             if (!commentSnapshot.exists()) {
 
-               DatabaseReference targetContextSectionRef = Database.getRef(targetContextSection);
+               String targetContextSectionAsPath=targetContextSection.replace("-","/");
+               DatabaseReference targetContextSectionRef = Database.getRef(targetContextSectionAsPath);
                targetContextSectionRef.addListenerForSingleValueEvent(new ValueEventListener() {
                   @Override
                   public void onDataChange(@NonNull DataSnapshot snapshot) {
-                     comment.setContext(targetContextSection +"/"+ comment.getComment());
+                     // comment already got the correct context
+//                     comment.setContext(targetContextSection +"-"+ comment.getComment());
 
-
-                     String tCS=targetContextSection.replaceAll("\\s+","/");
-                     Log.i("TEST",tCS);
-                     Database.getRef(tCS).child("comments").child(comment.getComment()).setValue(0);
-
-                     targetContextSectionRef.child("comments").child(comment.getComment()).setValue(1);
+                     // given context is already correct
+//                     targetContextSectionRef.child("comments").child(comment.getComment()).setValue(1);
 //                     targetContextSectionRef.child("comments").child(comment.getContext()).setValue(comment.getContext());
 
-                     // this works correctlyx
+                     // this works correctly
                      commentRef.setValue(comment);
+                     targetContextSectionRef.child(comment.getContext()).setValue("something");
                      Comments.put(comment.getContext(), comment);
                      Log.i("Comments: addComment", "Added comment: " + comment.getContext());
                   }
@@ -122,7 +121,7 @@ public abstract class Comments {
 
    public static void downvoteComment(Comment comment) {
       if (GlobalVariables.loggedUser.isEmpty()) {
-         Log.e("Database: downvoteComment", "No user logged in");
+         Log.e("Comments: downvoteComment", "No user logged in");
       }
 
       User user = GlobalVariables.loggedUser.get();
@@ -143,7 +142,7 @@ public abstract class Comments {
                         commentRef.setValue(comment);
                         user.downvoteComment(comment);
                         userRef.setValue(user);
-                        Log.i("Database: downvoteComment", "Downvoted comment by: " + comment.getAuthor());
+                        Log.i("Comments: downvoteComment", "Downvoted comment by: " + comment.getAuthor());
                      }
                   }
 
@@ -153,7 +152,7 @@ public abstract class Comments {
                   }
                });
             } else {
-               Log.e("Database: downvoteComment", "User does not exist in database");
+               Log.e("Comments: downvoteComment", "User does not exist in database");
             }
          }
 

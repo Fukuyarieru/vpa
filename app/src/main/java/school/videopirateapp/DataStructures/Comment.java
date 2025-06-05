@@ -1,5 +1,7 @@
 package school.videopirateapp.DataStructures;
 
+import static school.videopirateapp.Utilities.TimeNow;
+
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,13 +18,13 @@ public class Comment {
     private String Context;
 
     public Comment() {
-        this("Default Comment", "@Default", "defaultVideo");
+        this("Default Comment", "@Default", "videos-defaultVideo-comments");
     }
     public Comment(String comment, String author, String context) {
         this.Comment = comment;
         this.Author = author;
         this.replyContexts = new ArrayList<>();
-        this.Timestamp = "NO-DATE-SET";
+        this.Timestamp = TimeNow();
         this.Upvotes = 0;
         this.Downvotes = 0;
         this.Context =context;
@@ -37,7 +39,10 @@ public class Comment {
 //    }
 
     public String getContext() {
-        return Context+this.Comment;
+        return Context+"-"+this.Comment;
+    }
+    public String getCommentsContext() {
+        return this.getContext()+"-comments";
     }
 
     public void setContext(String context) {
