@@ -9,48 +9,31 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.GlobalVariables;
 
 public abstract class Playlists {
-
-    // TODO, BIG, CONSIDER MAKING ALL THESE DATABASE HELPERS TO HANDLE THE FIREBASE TREES TOO
-    private static Playlist savedPlaylist = Playlist.Default();
+    private static final Map<String, Playlist> Playlists = new HashMap<>();
 
     private Playlists() {
         throw new UnsupportedOperationException("This class is not instantiable.");
     }
 
-    public static Playlist getSavedPlaylist() {
-        return savedPlaylist;
-    }
-
-    public static void setSavedPlaylist(Playlist savedPlaylist) {
-        Playlists.savedPlaylist = savedPlaylist;
+    public static Map<String,Playlist> getPlaylists() {
+        return Playlists;
     }
 
     public static Playlist getPlaylist(String playlistTitle) {
-        if (!savedPlaylist.getTitle().equals(playlistTitle)) {
-            DatabaseReference playlistRef = Database.getRef("playlists").child(playlistTitle);
-            playlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
-                    if (playlistSnapshot.exists()) {
-                        savedPlaylist = playlistSnapshot.getValue(Playlist.class);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e("Playlists: getPlaylist", "Failed to get playlist: " + error.getMessage());
-                }
-            });
-        }
-        return savedPlaylist;
+        Log.i("Playlists: getPlaylist", "Getting playlist for title: " + playlistTitle);
+        return Playlists.get(playlistTitle);
     }
 
     public static void upvotePlaylist(Playlist targetPlaylist, User user) {
+
         DatabaseReference userRef = Database.getRef("users").child(user.getName());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -71,6 +54,7 @@ public abstract class Playlists {
                                 }
                                 playlistRef.setValue(targetPlaylist);
                                 userRef.setValue(user);
+                                Playlists.put(targetPlaylist.getTitle(), targetPlaylist);
                                 Log.i("Database: upvotePlaylist", "Upvoted playlist " + targetPlaylist.getTitle());
                             } else {
                                 Log.e("Database: upvotePlaylist", "Playlist does not exist");
@@ -94,10 +78,10 @@ public abstract class Playlists {
         });
     }
 
-    public static boolean downvotePlaylist(Playlist playlist) {
+    public static void downvotePlaylist(Playlist playlist) {
         if (!GlobalVariables.loggedUser.isPresent()) {
             Log.e("Database: downvotePlaylist", "No user logged in");
-            return false;
+            return;
         }
 
         User user = GlobalVariables.loggedUser.get();
@@ -125,6 +109,7 @@ public abstract class Playlists {
                                 // Update database
                                 Database.updatePlaylist(playlist);
                                 userRef.setValue(user);
+                                Playlists.put(playlist.getTitle(), playlist);
                                 Log.i("Database: downvotePlaylist", "Downvoted playlist: " + playlist.getTitle());
                             } else {
                                 Log.e("Database: downvotePlaylist", "Playlist does not exist");
@@ -146,13 +131,12 @@ public abstract class Playlists {
                 Log.e("Database: downvotePlaylist", "Failed to add listener to userRef");
             }
         });
-        return true;
     }
 
-    public static boolean upvotePlaylist(Playlist playlist) {
+    public static void upvotePlaylist(Playlist playlist) {
         if (!GlobalVariables.loggedUser.isPresent()) {
             Log.e("Database: upvotePlaylist", "No user logged in");
-            return false;
+            return;
         }
 
         User user = GlobalVariables.loggedUser.get();
@@ -180,6 +164,7 @@ public abstract class Playlists {
                                 // Update database
                                 Database.updatePlaylist(playlist);
                                 userRef.setValue(user);
+                                Playlists.put(playlist.getTitle(), playlist);
                                 Log.i("Database: upvotePlaylist", "Upvoted playlist: " + playlist.getTitle());
                             } else {
                                 Log.e("Database: upvotePlaylist", "Playlist does not exist");
@@ -201,7 +186,6 @@ public abstract class Playlists {
                 Log.e("Database: upvotePlaylist", "Failed to add listener to userRef");
             }
         });
-        return true;
     }
 
     public static void updatePlaylist(@NonNull Playlist playlist) {
@@ -211,6 +195,7 @@ public abstract class Playlists {
             public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
                 if (playlistSnapshot.exists()) {
                     playlistRef.setValue(playlist);
+                    Playlists.put(playlist.getTitle(), playlist);
                     Log.i("Database: updatePlaylist", "Updated playlist in database: " + playlist.getTitle());
                 } else {
                     Log.e("Database: updatePlaylist", "Playlist does not exist: " + playlist.getTitle());
@@ -245,6 +230,7 @@ public abstract class Playlists {
                                 }
                                 playlistRef.setValue(targetPlaylist);
                                 userRef.setValue(user);
+                                Playlists.put(targetPlaylist.getTitle(), targetPlaylist);
                                 Log.i("Database: downvotePlaylist", "Downvoted playlist " + targetPlaylist.getTitle());
                             } else {
                                 Log.e("Database: downvotePlaylist", "Playlist does not exist");
@@ -286,6 +272,7 @@ public abstract class Playlists {
                                 user.addPlaylist(newPlaylist);
                                 playlistRef.setValue(newPlaylist);
                                 userRef.setValue(user);
+                                Playlists.put(newPlaylist.getTitle(), newPlaylist);
                                 Log.i("Database: addPlaylist", "Added playlist to database: " + newPlaylist.getTitle());
                             } else {
                                 // user does not exist, do not add the playlist
@@ -312,7 +299,41 @@ public abstract class Playlists {
         });
     }
 
+    public static void Refresh() {
+        Log.i("Playlists: Refresh", "Refreshing Playlists");
+        DatabaseReference playlistsRef = Database.getRef("playlists");
+        playlistsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot playlistsSnapshot) {
+                if (playlistsSnapshot.exists()) {
+                    Map<String, Playlist> PlaylistMap = new HashMap<>();
+                    Log.i("Playlists: Refresh", "Found playlists from database");
+                    for (DataSnapshot playlistSnapshot : playlistsSnapshot.getChildren()) {
+                        Playlist playlist = playlistSnapshot.getValue(Playlist.class);
+                        if (playlist != null) {
+                            PlaylistMap.put(playlistSnapshot.getKey(), playlist);
+                            Log.i("Playlists: Refresh", "Fetched playlist: " + playlist.getTitle());
+                        } else {
+                            Log.e("Playlists: Refresh", "Fetched playlist is null");
+                        }
+                    }
+                    Playlists.clear();
+                    Playlists.putAll(PlaylistMap);
+                } else {
+                    Log.e("Playlists: Refresh", "Playlists do not exist?");
+                }
+                Log.i("Playlists: Refresh", "Finished getting playlists");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Playlists: Refresh", "DatabaseError Failed to fetch playlists: " + error.getMessage());
+            }
+        });
+    }
+
     public static void initialize() {
+        Log.i("Playlists: initialize", "Starting playlist initialization");
         DatabaseReference playlistsRef = Database.getRef("playlists");
         playlistsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -320,6 +341,14 @@ public abstract class Playlists {
                 if (!snapshot.exists()) {
                     Log.w("Playlists: initialize", "Creating default playlist");
                     addPlaylist(Playlist.Default());
+                    Refresh();
+                } else if (!snapshot.hasChildren()) {
+                    Log.w("Playlists: initialize", "Playlists tree is empty, adding default playlist");
+                    addPlaylist(Playlist.Default());
+                    Refresh();
+                } else {
+                    Log.i("Playlists: initialize", "Playlists tree exists with data, refreshing");
+                    Refresh();
                 }
             }
 

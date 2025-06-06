@@ -36,7 +36,7 @@ public class PlaylistAdapter extends ArrayAdapter<Playlist> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater layoutInflater=(LayoutInflater) this.context.getSystemService(context.LAYOUT_INFLATER_SERVICE); // SO THIS PIECE OF SHIT OF LINE DID ALL THE MAGIC WORK WHICH I COULDNT SEE
+        LayoutInflater layoutInflater=(LayoutInflater) this.context.getSystemService(context.LAYOUT_INFLATER_SERVICE); // SO THIS PIECE OF SHIT OF LINE DID ALL THE MAGIC WORK WHICH I COULDN'T SEE
 
         View view = layoutInflater.inflate(this.resource,null);
         Playlist playlist= playlists.get(position);

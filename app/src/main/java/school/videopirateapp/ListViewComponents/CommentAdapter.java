@@ -31,16 +31,12 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
     private Context context;
     private int resource;
     private ArrayList<Comment> comments;
-    private SimpleDateFormat dateFormat;
-    private boolean isReplyView;
 
     public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
         this.comments = (ArrayList<Comment>) objects;
-        this.dateFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault());
-        this.isReplyView = false;
     }
 
     @NonNull
@@ -60,7 +56,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
         tvComment.setText(comment.getComment());
         tvAuthor.setText(comment.getAuthor());
-        tvDate.setText(dateFormat.format(comment.getDate()));
+        tvDate.setText(comment.getDate());
         // tvContext.setText(comment.getContext());  // Commented out
 
         User author = Database.getUser(comment.getAuthor());
@@ -68,17 +64,6 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
             userImage.setImageBitmap(ByteArrayToBitmap(author.getImage()));
         }
 
-        /* Commented out reply functionality
-        // Show replies if any and not in reply view
-        if (!isReplyView && comment.getReplies() != null && !comment.getReplies().isEmpty()) {
-            tvReplies.setVisibility(View.VISIBLE);
-            tvReplies.setText(String.format(Locale.getDefault(), "%d replies", comment.getReplies().size()));
-        } else {
-            tvReplies.setVisibility(View.GONE);
-        }
-        */
-
-        // Add click listener for user image to open user page
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,29 +82,6 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
                 }
             }
         });
-
-        /* Commented out reply functionality
-        // Add click listener for replies text to show replies
-        if (!isReplyView) {
-            tvReplies.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (comment.getReplies() != null && !comment.getReplies().isEmpty()) {
-                        // Create a new adapter for replies
-                        CommentAdapter repliesAdapter = new CommentAdapter(context, resource, comment.getReplies(), true);
-                        ListView repliesListView = new ListView(context);
-                        repliesListView.setAdapter(repliesAdapter);
-
-                        // Create a dialog to show replies
-                        Dialog repliesDialog = new Dialog(context);
-                        repliesDialog.setContentView(repliesListView);
-                        repliesDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        repliesDialog.show();
-                    }
-                }
-            });
-        }
-        */
 
         return view;
     }

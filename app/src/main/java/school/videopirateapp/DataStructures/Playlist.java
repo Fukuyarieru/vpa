@@ -46,7 +46,7 @@ public class Playlist {
       this.Downvotes = 0;
       this.Views = 0;
       this.Image = getDefaultPlaylistImage();
-      Log.i("Playlist: Constructor", "Created Playlist with:\nTitle: " + Title + "\nDescription: " + Description + "\nOwner: " + owner);
+//      Log.i("Playlist: Constructor", "Created Playlist with:\nTitle: " + Title + "\nDescription: " + Description + "\nOwner: " + owner);
    }
 
    public static Playlist Default() {

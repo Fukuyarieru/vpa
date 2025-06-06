@@ -13,7 +13,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -140,7 +139,7 @@ public class Utilities {
                 if (GlobalVariables.loggedUser.isPresent() && GlobalVariables.loggedUser.get().getName().equals(comment.getAuthor())) {
                     Video video = Database.getVideo(comment.getContext());
                     if (video != null) {
-                        video.getCommentContextes().remove(comment);
+                        video.getComments().remove(comment);
                         Database.updateVideo(video);
                         dialog.dismiss();
                         Feedback(contextThis, "Comment deleted successfully");

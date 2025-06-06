@@ -26,53 +26,60 @@ public abstract class Comments {
         throw new UnsupportedOperationException("This class is not instantiable.");
     }
 
+    public static Map<String,Comment> getComments() {
+        return Comments;
+    }
+
     public static Comment getComment(String commentContext) {
-        if (!Comments.containsKey(commentContext)) {
-            Refresh();
+        Log.i("Comments: getComment", "Getting comment for context: " + commentContext);
+        if(!Comments.containsKey(commentContext)) {
+            return null;
         }
         return Comments.get(commentContext);
     }
 
     public static void Refresh() {
+        Log.i("Comments: Refresh", "Refreshing comments");
         Database.getRef("comments").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    Comments.clear();
+                    HashMap<String, Comment> comments = new HashMap<>();
                     for (DataSnapshot commentSnapshot : snapshot.getChildren()) {
                         Comment comment = commentSnapshot.getValue(Comment.class);
                         if (comment != null) {
-                            Comments.put(comment.getContext(), comment);
+                            comments.put(comment.getContext(), comment);
+                            Log.i("Comments: Refresh", "Fetched comment: " + comment.getContext());
                         }
                     }
+//                    Comments.clear();
+                    Comments.putAll(comments);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("Comments: Refresh", "Failed to refresh comments: " + error.getMessage());
             }
         });
     }
 
     public static ArrayList<Comment> getCommentsFromContexts(ArrayList<String> contexts) {
+//        Refresh();
         ArrayList<Comment> comments = new ArrayList<>();
         Log.i("Comments: getCommentsFromContexts", "Getting comments from " + contexts.size() + " contexts");
 
         for (String context : contexts) {
-            Log.d("Comments: getCommentsFromContexts", "Processing context: " + context);
             Comment comment = getComment(context);
             if (comment != null) {
                 comments.add(comment);
-                Log.d("Comments: getCommentsFromContexts", "Added comment: " + comment.getComment());
+//                Log.d("Comments: getCommentsFromContexts", "Added comment: " + comment.getContext());
             } else {
-                Log.w("Comments: getCommentsFromContexts", "Comment not found for context: " + context);
-                // Try to refresh the comments cache and try again
-                Refresh();
+//                Log.w("Comments: getCommentsFromContexts", "Comment not found for context: " + context);
                 comment = getComment(context);
                 if (comment != null) {
                     comments.add(comment);
-                    Log.d("Comments: getCommentsFromContexts", "Added comment after refresh: " + comment.getComment());
+//                    Log.d("Comments: getCommentsFromContexts", "Added comment after refresh: " + comment.getComment());
                 }
             }
         }
@@ -80,7 +87,7 @@ public abstract class Comments {
         return comments;
     }
 
-    public void addComment(Comment comment, String targetContextSection) {
+    public static void addComment(Comment comment, String targetContextSection) {
         DatabaseReference commentRef = Database.getRef("comments").child(comment.getContext());
         commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -90,23 +97,20 @@ public abstract class Comments {
                     DatabaseReference targetContextSectionRef = Database.getRef(targetContextSectionAsPath);
                     targetContextSectionRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        public void onDataChange(@NonNull DataSnapshot sectionSnapshot) {
                             // Store the comment in the main comments collection
                             commentRef.setValue(comment);
 
-                            // Get existing comments array or create new one
-                            ArrayList<String> commentsList;
-                            if (snapshot.exists() && snapshot.hasChild("commentContextes")) {
-                                commentsList = (ArrayList<String>) snapshot.child("commentContextes").getValue();
+                            ArrayList<String> existingCommentsContexts;
+                            if (sectionSnapshot.exists()) {
+                                existingCommentsContexts=new ArrayList<String>(sectionSnapshot.getValue(ArrayList.class));
                             } else {
-                                commentsList = new ArrayList<>();
+                                existingCommentsContexts = new ArrayList<>();
                             }
 
-                            // Add new comment context to the list
-                            commentsList.add(comment.getContext());
+                            existingCommentsContexts.add(comment.getContext());
 
-                            // Update the comments list in the target context
-                            targetContextSectionRef.child("comments").setValue(commentsList);
+                            targetContextSectionRef.setValue(existingCommentsContexts);
                             Comments.put(comment.getContext(), comment);
                             Log.i("Comments: addComment", "Added comment: " + comment.getContext());
                         }
@@ -128,95 +132,98 @@ public abstract class Comments {
         });
     }
 
-    public void downvoteComment(Comment comment) {
+    public static void downvoteComment(Comment comment) {
         if (GlobalVariables.loggedUser.isEmpty()) {
             Log.e("Comments: downvoteComment", "No user logged in");
+            return;
         }
-
         User user = GlobalVariables.loggedUser.get();
+        String commentContext=comment.getContext();
+
         DatabaseReference userRef = Database.getRef("users").child(user.getName());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-
-                // check if user exists in database
-                if (userSnapshot.exists()) {
-
-                    DatabaseReference commentRef = Database.getRef(comment.getContext());
-                    commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot commentSnapshot) {
-                            if (commentSnapshot.exists()) {
-                                comment.downvote();
-                                commentRef.setValue(comment);
-                                user.downvoteComment(comment);
-                                userRef.setValue(user);
-                                Log.i("Comments: downvoteComment", "Downvoted comment by: " + comment.getAuthor());
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                } else {
-                    Log.e("Comments: downvoteComment", "User does not exist in database");
+                if(!userSnapshot.exists()) {
+                    Log.w("Comments: downvoteComment", "User does not exist: " + user.getName());
+                    return;
                 }
+                DatabaseReference commentRef = Database.getRef("comments").child(commentContext);
+                commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot commentSnapshot) {
+                        if (!commentSnapshot.exists()) {
+                            Log.w("Comments: downvoteComment", "Comment does not exist: " + commentContext);
+                            return;
+                        }
+                        GlobalVariables.loggedUser.get().downvoteComment(comment);
+                        commentRef.setValue(comment);
+                        Comments.put(commentContext, comment);
+                        Database.updateUser(user);
+                        Log.i("Comments: downvoteComment", "Downvoted comment: " + commentContext);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Comments: downvoteComment", "Failed to downvote comment: " + error.getMessage());
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Database: downvoteComment", "Failed to add listener to userRef");
+                Log.e("Comments: downvoteComment", "Failed to check if user exists: " + error.getMessage());
             }
         });
     }
 
-    public void upvoteComment(Comment comment) {
+
+    public static void upvoteComment(Comment comment) {
         if (GlobalVariables.loggedUser.isEmpty()) {
             Log.e("Comments: upvoteComment", "No user logged in");
+            return;
         }
-
         User user = GlobalVariables.loggedUser.get();
+        String commentContext=comment.getContext();
+
         DatabaseReference userRef = Database.getRef("users").child(user.getName());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-
-                // check if user exists in database
-                if (userSnapshot.exists()) {
-
-                    DatabaseReference commentRef = Database.getRef(comment.getContext());
-                    commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot commentSnapshot) {
-                            if (commentSnapshot.exists()) {
-                                comment.upvote();
-                                commentRef.setValue(comment);
-                                user.upvoteComment(comment);
-                                userRef.setValue(user);
-                                Log.i("Comments: downvoteComment", "Downvoted comment by: " + comment.getAuthor());
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                } else {
-                    Log.e("Comments: downvoteComment", "User does not exist in database");
+                if(!userSnapshot.exists()) {
+                    Log.w("Comments: upvoteComment", "User does not exist: " + user.getName());
+                    return;
                 }
+                DatabaseReference commentRef = Database.getRef("comments").child(commentContext);
+                commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot commentSnapshot) {
+                        if (!commentSnapshot.exists()) {
+                            Log.w("Comments: upvoteComment", "Comment does not exist: " + commentContext);
+                            return;
+                        }
+                        GlobalVariables.loggedUser.get().upvoteComment(comment);
+                        commentRef.setValue(comment);
+                        Comments.put(commentContext, comment);
+                        Database.updateUser(user);
+                        Log.i("Comments: upvoteComment", "Upvoted comment: " + commentContext);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Comments: upvoteComment", "Failed to upvote comment: " + error.getMessage());
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Comments: upvoteComment", "Failed to add listener to userRef");
+                Log.e("Comments: upvoteComment", "Failed to check if user exists: " + error.getMessage());
             }
         });
     }
 
-    public void updateComment(Comment comment) {
+    public static void updateComment(Comment comment) {
         DatabaseReference commentRef = Database.getRef(comment.getContext());
         commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -230,33 +237,27 @@ public abstract class Comments {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("Comments: updateComment", "Failed to update comment: " + error.getMessage());
             }
         });
     }
 
-    public void deleteComment(Comment comment) {
-
-    }
-
-    public void initialize() {
+    public static void initialize() {
         DatabaseReference commentRef = Database.getRef("comments");
         commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
-                    // First ensure the default video exists
-                    DatabaseReference videoRef = Database.getRef("videos/defaultVideo");
+                    DatabaseReference videoRef = Database.getRef("videos").child("defaultVideo");
                     videoRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                             if (!videoSnapshot.exists()) {
-                                // Create default video first
                                 Video defaultVideo = Video.Default();
                                 videoRef.setValue(defaultVideo);
                             }
-                            // Now add the default comment
-                            addComment(Comment.Default(), "videos/defaultVideo");
+                            addComment(Comment.Default(), Video.Default().getCommentsContext());
+                            Refresh();
                         }
 
                         @Override
@@ -272,5 +273,9 @@ public abstract class Comments {
                 Log.e("Comments: initialize", "Failed to check comments collection: " + error.getMessage());
             }
         });
+    }
+
+    public void deleteComment(Comment comment) {
+
     }
 }

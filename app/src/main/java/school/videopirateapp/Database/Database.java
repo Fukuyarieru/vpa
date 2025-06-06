@@ -184,6 +184,16 @@ public abstract class Database {
         Videos.initialize();
         Playlists.initialize();
         Comments.initialize();
+        Refresh();
+    }
+    public static void Refresh() {
+        Log.i("Database: Refresh", "Refreshing database");
+        Log.i("Database: Refresh, Videos", Videos.getVideos().toString());
+        Log.i("Database: Refresh, Comments", Comments.getComments().toString());
+        Log.i("Database: Refresh, Playlists", Playlists.getPlaylists().toString());
+        Videos.Refresh();
+        Comments.Refresh();
+        Playlists.Refresh();
     }
 
     public static void upvoteComment(Comment comment) {

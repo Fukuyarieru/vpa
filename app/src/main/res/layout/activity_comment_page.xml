@@ -8,6 +8,12 @@
     android:padding="16dp"
     tools:context=".Activities.CommentPageActivity">
 
+    <Button
+        android:id="@+id/CommentPage_Button_UserPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="userPage" />
+
     <ListView
         android:id="@+id/CommentPage_ListView_Comments"
         android:layout_width="match_parent"
@@ -38,7 +44,7 @@
             android:id="@+id/CommentPage_Button_AddReply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Post"
+            android:text="reply"
             android:layout_marginStart="8dp" />
 
     </LinearLayout>

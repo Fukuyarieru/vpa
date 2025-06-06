@@ -7,15 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-
-import school.videopirateapp.Database.Database;
-import school.videopirateapp.GlobalVariables;
 
 public class Video {
 
@@ -23,7 +15,7 @@ public class Video {
 
    private String Title;
    private String Uploader;
-   private ArrayList<String> commentContextes;
+   private ArrayList<String> Comments;
    private Integer Views;
    private Integer Upvotes;
    private Integer Downvotes;
@@ -36,7 +28,7 @@ public class Video {
       // constructor for new videos
       this.Title = Title;
       this.Uploader = Uploader;
-      this.commentContextes = new ArrayList<>();
+      this.Comments = new ArrayList<>();
       this.Views = 0;
       this.Upvotes = 0;
       this.Downvotes = 0;
@@ -45,7 +37,6 @@ public class Video {
       this.Url = "";
       this.Score = 0;
 
-//        this(Title,Uploader,new ArrayList<Comment>(),0,0,0,TimeNow(),new ArrayList<Byte>(),"");
       Log.i("Video: Constructor", "New video created");
    }
 
@@ -53,7 +44,7 @@ public class Video {
       // constructor for default video, mainly firebase use
       this.Title = "defaultVideo";
       this.Uploader = User.Default().getName();
-      this.commentContextes = new ArrayList<>();
+      this.Comments = new ArrayList<>();
       this.Views = 0;
       this.Upvotes = 0;
       this.Downvotes = 0;
@@ -62,7 +53,6 @@ public class Video {
       this.Url = "";
       this.Score = 0;
 
-//        this("defaultVideo", User.Default().getName(),new ArrayList<Comment>(),0,0,0,"NO-DATE-SET",new ArrayList<Byte>(),"");
       Log.i("Video: Constructor", "Default video created");
    }
 
@@ -102,12 +92,12 @@ public class Video {
       Uploader = uploader;
    }
 
-   public ArrayList<String> getCommentContextes() {
-      return commentContextes;
+   public ArrayList<String> getComments() {
+      return Comments;
    }
 
-   public void setCommentContextes(ArrayList<String> commentContextes) {
-      this.commentContextes = commentContextes;
+   public void setComments(ArrayList<String> comments) {
+      this.Comments = comments;
    }
 
    public Integer getViews() {
@@ -181,14 +171,14 @@ public class Video {
    }
 
    public void addCommentContext(String commentContext) {
-      if (!this.commentContextes.contains(commentContext)) {
-         this.commentContextes.add(commentContext);
+      if (!this.Comments.contains(commentContext)) {
+         this.Comments.add(commentContext);
          Log.i("Video: addCommentContext", "Added comment context: " + commentContext);
       }
    }
 
    public void removeCommentContext(String commentContext) {
-      if (this.commentContextes.remove(commentContext)) {
+      if (this.Comments.remove(commentContext)) {
          Log.i("Video: removeCommentContext", "Removed comment context: " + commentContext);
       }
    }
@@ -196,6 +186,6 @@ public class Video {
    @NonNull
    @Override
    public String toString() {
-      return "Video\nTitle: " + this.getTitle() + "\nUploader: " + this.getUploader();
+      return "Video\nTitle: " + this.getTitle() + "\nUploader: " + this.getUploader()+"\nComments"+this.getComments().toString();
    }
 }

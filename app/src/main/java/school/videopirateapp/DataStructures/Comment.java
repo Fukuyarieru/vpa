@@ -105,11 +105,13 @@ public class Comment {
     }
 
 
+    @Deprecated
     public void upvote() {
         Log.i("Comment: upvote", "Upvoted comment by: " + this.Author);
         this.Upvotes++;
     }
 
+    @Deprecated
     public void downvote() {
         Log.i("Comment: downvote", "Downvoted comment by: " + this.Author);
         this.Downvotes++;

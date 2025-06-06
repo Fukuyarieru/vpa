@@ -47,13 +47,6 @@ public class MainMenuActivity extends AppCompatActivity {
     Boolean loggedIn;
 
 
-    // TODO, DOES NOT WORK, TODO, FIX
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar,menu);
-        return true;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,17 +63,17 @@ public class MainMenuActivity extends AppCompatActivity {
         // DO NOT USE INFINITE WHILE LOOPS
         videoListViewInit();
 
-        updateUserPageButton();
 
-//        btnUserPage.setText("Login");
+
+        updateUserPageButton();
         btnUploadVideo.setText("Upload Video");
         btnRefreshVideos.setText("Refresh Videos");
 
-        // TOAST: YOU MUST LOGIN FIRST
 
+        Database.Refresh();
     }
     public void videoListViewInit() {
-        Videos.Refresh(); // more strange behavior here, i think
+        Database.Refresh(); // more strange behavior here, i think
         videos=MapToArrayList(Database.getVideos());
         videosAdapter =new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
         listView.setAdapter(videosAdapter);

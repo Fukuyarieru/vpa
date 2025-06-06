@@ -81,19 +81,34 @@ public class VideoPageActivity extends AppCompatActivity {
             }
         });
 
-
         Intent intent = getIntent();
         String videoTitle = intent.getStringExtra("videoTitle");
 
         tvVideoTitle.setText(videoTitle);
-        currentVideo = Database.getVideo(videoTitle);
-        String UploaderName = currentVideo.getUploader();
-        tvUploader.setText(UploaderName);
+        
+        // Show loading indicator or disable UI elements here
+        
+        // Refresh database and load data only after refresh is complete
+        Database.Refresh(() -> {
+            runOnUiThread(() -> {
+                currentVideo = Database.getVideo(videoTitle);
+                if (currentVideo != null) {
+                    Log.e("CURRENT VIDEO", currentVideo.getComments().toString());
+                    String UploaderName = currentVideo.getUploader();
+                    tvUploader.setText(UploaderName);
 
-        ArrayList<Comment>comments=Comments.getCommentsFromContexts(currentVideo.getCommentContextes());
-        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments);
-        lvComments.setAdapter(commentAdapter);
-
+                    // Get fresh comments from database
+                    ArrayList<Comment> comments = Comments.getCommentsFromContexts(currentVideo.getComments());
+                    commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments);
+                    lvComments.setAdapter(commentAdapter);
+                    
+                    // Enable UI elements or hide loading indicator here
+                } else {
+                    Utilities.Feedback(this, "Failed to load video");
+                    finish();
+                }
+            });
+        });
 
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
@@ -166,9 +181,9 @@ public class VideoPageActivity extends AppCompatActivity {
                     String commentStr = etComment.getText().toString().trim();
                     Comment newComment = new Comment(commentStr, GlobalVariables.loggedUser.get().getName(), currentVideo.getCommentsContext());
                     Database.addComment(newComment, currentVideo.getCommentsContext());
-                    tvScore.setText(String.valueOf(currentVideo.getVoteScore()));
-                    Utilities.Feedback(VideoPageActivity.this, "Comment added");
                     commentAdapter.add(newComment);
+//                    tvScore.setText(String.valueOf(currentVideo.getVoteScore()));
+                    Utilities.Feedback(VideoPageActivity.this, "Comment added");
                     etComment.setText("");
                 }
             }
@@ -189,6 +204,16 @@ public class VideoPageActivity extends AppCompatActivity {
                 openUserPage(VideoPageActivity.this,UploaderName);
             }
         });
+    }
+
+    public void refreshComments() {
+        Database.Refresh();
+        currentVideo = Database.getVideo(currentVideo.getTitle());
+        ArrayList<Comment> comments = Comments.getCommentsFromContexts(currentVideo.getComments());
+        commentAdapter.clear();
+        commentAdapter.addAll(comments);
+        commentAdapter.notifyDataSetChanged();
+        Utilities.Feedback(this, "Comments refreshed");
     }
 }
 

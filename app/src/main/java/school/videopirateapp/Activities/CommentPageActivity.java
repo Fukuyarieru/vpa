@@ -1,6 +1,7 @@
 package school.videopirateapp.Activities;
 
 import static school.videopirateapp.Utilities.Feedback;
+import static school.videopirateapp.Utilities.updateUserPageButton;
 
 import android.os.Bundle;
 import android.view.View;
@@ -25,11 +26,14 @@ public class CommentPageActivity extends AppCompatActivity {
     CommentAdapter commentAdapter;
     EditText etNewComment;
     Button btnAddReply;
+    Button btnUserPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_page);
+
+        Database.Refresh();
 
         String commentContext = getIntent().getStringExtra("commentContext");
 
@@ -38,11 +42,15 @@ public class CommentPageActivity extends AppCompatActivity {
         lvComments = findViewById(R.id.CommentPage_ListView_Comments);
         etNewComment = findViewById(R.id.CommentPage_EditText_NewComment);
         btnAddReply = findViewById(R.id.CommentPage_Button_AddReply);
+        btnUserPage = findViewById(R.id.CommentPage_Button_UserPage);
 
 
         ArrayList<Comment>insideComments= Comments.getCommentsFromContexts(comment.getComments());
         commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, insideComments);  // Set isReplyView to true to disable reply functionality
         lvComments.setAdapter(commentAdapter);
+
+        updateUserPageButton(this,btnUserPage);
+
 
         btnAddReply.setOnClickListener(new View.OnClickListener() {
             @Override

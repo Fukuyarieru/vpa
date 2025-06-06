@@ -71,7 +71,7 @@ public class CommentOptionsDialogActivity extends AppCompatActivity {
                 }
 
                 // Remove the comment from the video's comments
-                if (video.getCommentContextes().remove(comment)) {
+                if (video.getComments().remove(comment)) {
                     // Update the video in the database
                     Database.updateVideo(video);
                     Feedback(CommentOptionsDialogActivity.this, "Comment deleted successfully");
