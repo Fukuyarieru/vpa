@@ -53,6 +53,7 @@ public class Utilities {
     public static <T> ArrayList<T> HashMapToArrayList(@NonNull HashMap<String, T> hashMap) {
         Log.i("Utilities", "Converting HashMap to ArrrayList");
         // this function does not do any sorting
+        // existing code equals to this
 //        ArrayList<T> arrayList = new ArrayList<>();
 //        for (T value : hashMap.values()) {
 //            arrayList.add(value);
@@ -66,6 +67,7 @@ public class Utilities {
     public static <T> ArrayList<T> MapToArrayList(@NonNull Map<String, T> hashMap) {
         Log.i("Utilities", "Converting HashMap to ArrrayList");
         // this function does not do any sorting
+        // existing code equals to this
 //        ArrayList<T> arrayList = new ArrayList<>();
 //        for (T value : hashMap.values()) {
 //            arrayList.add(value);
@@ -76,7 +78,8 @@ public class Utilities {
     }
 
     public static String TimeNow() {
-        Log.i("Utilities: TimeNow", "Getting the time now");
+        // logging time makes us get SPAM
+//        Log.i("Utilities: TimeNow", "Getting the time now");
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         String datetime = dateformat.format(c.getTime());

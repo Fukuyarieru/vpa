@@ -180,6 +180,19 @@ public class Video {
       return this.getContext()+"-comments";
    }
 
+   public void addCommentContext(String commentContext) {
+      if (!this.commentContextes.contains(commentContext)) {
+         this.commentContextes.add(commentContext);
+         Log.i("Video: addCommentContext", "Added comment context: " + commentContext);
+      }
+   }
+
+   public void removeCommentContext(String commentContext) {
+      if (this.commentContextes.remove(commentContext)) {
+         Log.i("Video: removeCommentContext", "Removed comment context: " + commentContext);
+      }
+   }
+
    @NonNull
    @Override
    public String toString() {
