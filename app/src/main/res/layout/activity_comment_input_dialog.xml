@@ -1,44 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".Dialogs.CommentInputDialogActivity">
+    android:background="@drawable/ic_launcher_background">
+
+    <TextView
+        android:id="@+id/CommentInput_Dialog_TextView_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Comment"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textColor="#FFFFFF"/>
 
     <EditText
         android:id="@+id/CommentInput_Dialog_EditText_Comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your reply"
-        android:inputType="textMultiLine"
-        android:minLines="3"
+        android:minHeight="100dp"
         android:gravity="top|start"
-        android:padding="8dp" />
+        android:inputType="textMultiLine"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:hint="Enter your comment..."
+        android:layout_marginBottom="16dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:gravity="end">
 
         <Button
             android:id="@+id/CommentInput_Dialog_Button_Cancel"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:text="Cancel"
             android:layout_marginEnd="8dp"
-            android:text="Cancel" />
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
         <Button
             android:id="@+id/CommentInput_Dialog_Button_Submit"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="Submit" />
+            android:text="Submit"
+            style="@style/Widget.MaterialComponents.Button"/>
 
     </LinearLayout>
 

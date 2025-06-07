@@ -1,539 +1,96 @@
 @startuml
-class school.videopirateapp.ListViewComponents.VideoAdapter {
-- Context context
-- int resource
-- ArrayList<Video> videos
-+ <<Create>> VideoAdapter(Context,int,List<Video>)
-+ View getView(int,View,ViewGroup)
-+ int getCount()
+class CreatePlaylistDialogActivity {
+}
+class PlaylistListViewComponent {
+}
+class User {
+}
+class LoginDialogActivity {
+}
+class MainActivity {
+}
+class Video {
+}
+class PlaylistOptionsDialogActivity {
+}
+class UserOptionsDialogActivity {
+}
+class UserPageActivity {
+}
+class VideoAdapter {
+}
+abstract class Playlists {
+}
+class Playlist {
+}
+class CommentListViewComponent {
+}
+abstract class Users {
+}
+abstract class Videos {
+}
+class VideoListViewComponent {
+}
+abstract class Utilities {
+}
+class SignupActivity {
+}
+class CommentOptionsDialogActivity {
+}
+class CommentPageActivity {
+}
+class PlaylistAdapter {
+}
+class MainMenuSearchVideoDialogActivity {
+}
+class MainMenuActivity {
+}
+class ExampleInstrumentedTest {
+}
+class CommentAdapter {
+}
+class Comment {
+}
+abstract class GlobalVariables {
+}
+abstract class Database {
+}
+class UploadVideoDialogActivity {
+}
+class ExampleUnitTest {
+}
+abstract class Comments {
+}
+class VideoOptionsDialogActivity {
+}
+class PlaylistPageActivity {
+}
+class UserListViewComponent {
+}
+class VideoPageActivity {
 }
 
 
-abstract class school.videopirateapp.Database.Playlists {
-- {static} Playlist savedPlaylist
-- <<Create>> Playlists()
-+ {static} Playlist getSavedPlaylist()
-+ {static} void setSavedPlaylist(Playlist)
-+ {static} Playlist getPlaylist(String)
-+ {static} void upvotePlaylist(Playlist,User)
-+ {static} boolean downvotePlaylist(Playlist)
-+ {static} boolean upvotePlaylist(Playlist)
-+ {static} void updatePlaylist(Playlist)
-+ {static} void downvotePlaylist(Playlist,User)
-+ {static} void addPlaylist(Playlist)
-+ {static} void initialize()
-}
-
-
-class school.videopirateapp.DatabaseDev {
-~ EditText Tree
-~ EditText Message
-# void onCreate(Bundle)
-}
-
-
-class school.videopirateapp.MainActivity {
-# void onCreate(Bundle)
-}
-
-class school.videopirateapp.Dialogs.CommentOptionsDialogActivity {
-- Button btnDeleteComment
-- Button btnCommentPage
-- Button btnEditComment
-- Button btnUpvote
-- Button btnDownvote
-- TextView tvContext
-- TextView tvScore
-- Comment comment
-- Video video
-# void onCreate(Bundle)
-}
-
-
-class school.videopirateapp.Dialogs.PlaylistOptionsDialogActivity {
-# void onCreate(Bundle)
-}
-
-abstract class school.videopirateapp.Database.Videos {
-- {static} Map<String,Video> Videos
-- <<Create>> Videos()
-+ {static} Map<String,Video> getVideos()
-+ {static} void setVideos(HashMap<String,Video>)
-+ {static} Video getVideo(String)
-+ {static} void downvoteVideo(Video,User)
-+ {static} void updateVideo(Video)
-+ {static} void upvoteVideo(Video,User)
-+ {static} void Refresh()
-+ {static} void initialize()
-+ {static} void addVideo(Video)
-}
-
-
-class school.videopirateapp.Dialogs.MainMenuSearchVideoDialogActivity {
-# void onCreate(Bundle)
-}
-
-class school.videopirateapp.ListViewComponents.CommentListViewComponent {
-# void onCreate(Bundle)
-}
-
-class school.videopirateapp.Activities.VideoPageActivity {
-~ Video currentVideo
-~ TextView tvUploader
-~ TextView tvVideoTitle
-~ TextView tvScore
-~ EditText etComment
-~ Button btnAddComment
-~ Button btnUpvote
-~ Button btnDownvote
-~ Button btnBack
-~ Button btnVideoOptions
-~ Button btnUserPage
-~ ListView lvComments
-~ CommentAdapter commentAdapter
-~ VideoView videoView
-~ ImageView uploaderImage
-# void onCreate(Bundle)
-}
-
-
-class school.videopirateapp.Dialogs.UserOptionsDialogActivity {
-# void onCreate(Bundle)
-}
-
-class school.videopirateapp.ListViewComponents.PlaylistAdapter {
-- Context context
-- int resource
-- ArrayList<Playlist> playlists
-+ <<Create>> PlaylistAdapter(Context,int,List<Playlist>)
-+ View getView(int,View,ViewGroup)
-+ int getCount()
-}
-
-
-abstract class school.videopirateapp.Database.Users {
-- {static} User savedUser
-- <<Create>> Users()
-+ {static} void updateUser(User)
-+ {static} User getUser(String)
-+ {static} void initialize()
-+ {static} void addUser(User)
-}
-
-
-class school.videopirateapp.Activities.CommentPageActivity {
-~ ListView lvComments
-~ CommentAdapter commentAdapter
-~ EditText etNewComment
-~ Button btnAddReply
-# void onCreate(Bundle)
-}
-
-
-class school.videopirateapp.Activities.UserPageActivity {
-~ User user
-~ ArrayList<Video> videos
-~ ArrayList<Playlist> playlists
-~ ArrayList<Comment> comments
-~ ImageView UserImage
-~ TextView UserDescription
-~ TextView UserName
-~ ListView listView
-~ Button btnVideos
-~ Button btnPlaylists
-~ Button btnComments
-~ Button btnBack
-~ Button btnUserOptions
-~ VideoAdapter videoAdapter
-~ CommentAdapter commentAdapter
-~ PlaylistAdapter playlistAdapter
-# void onCreate(Bundle)
-+ void ShowVideos()
-+ void ShowPlaylists()
-+ void ShowComments()
-+ void openVideo(View)
-+ void ListViewVideos(View)
-+ void ListViewPlaylists(View)
-+ void ListViewComments(View)
-# void onActivityResult(int,int,Intent)
-}
-
-
-class school.videopirateapp.Dialogs.CreatePlaylistDialogActivity {
-# void onCreate(Bundle)
-}
-
-class school.videopirateapp.Dialogs.UploadVideoDialogActivity {
-~ ImageView thumbnail
-~ Button btnChooseVideo
-~ Button btnUploadVideo
-~ EditText etVideoTitle
-# void onCreate(Bundle)
-+ void ChooseVideo(View)
-+ void ConfirmUploadVideo(View)
-}
-
-
-abstract class school.videopirateapp.Database.Database {
-- {static} FirebaseDatabase database
-+ {static} DatabaseReference getRef(String)
-+ {static} FirebaseDatabase getDatabase()
-+ {static} void addUser(User)
-+ {static} void addComment(Comment,String)
-+ {static} Comment getComment(String)
-+ {static} void upvoteVideo(Video,User)
-+ {static} void downvoteVideo(Video,User)
-+ {static} User getUser(String)
-+ {static} Playlist getPlaylist(String)
-+ {static} Map<String,Video> getVideos()
-+ {static} Video getVideo(String)
-+ {static} ArrayList<Video> getVideosArray(ArrayList<String>)
-+ {static} void addVideo(Video)
-+ {static} void addPlaylist(Playlist)
-+ {static} void updateUser(User)
-+ {static} void addVideoToPlaylist(Video,Playlist)
-+ {static} void upvotePlaylist(Playlist,User)
-+ {static} void downvotePlaylist(Playlist,User)
-+ {static} void updateVideo(Video)
-+ {static} void updatePlaylist(Playlist)
-+ {static} void updateComment(Comment)
-+ {static} void initialize()
-+ {static} void upvoteComment(Comment)
-+ {static} void downvoteComment(Comment)
-+ {static} void upvotePlaylist(Playlist)
-+ {static} void downvotePlaylist(Playlist)
-}
-
-
-class school.videopirateapp.ListViewComponents.DatabaseDevListViewComponent {
-# void onCreate(Bundle)
-}
-
-class school.videopirateapp.ListViewComponents.PlaylistListViewComponent {
-# void onCreate(Bundle)
-}
-
-abstract class school.videopirateapp.Database.Comments {
-- {static} Map<String,Comment> Comments
-- <<Create>> Comments()
-+ {static} void Refresh()
-+ {static} Comment getComment(String)
-+ {static} ArrayList<Comment> getCommentsFromVideo()
-+ {static} ArrayList<Comment> getCommentsFromComment()
-+ {static} ArrayList<Comment> getCommentsFromContexts(ArrayList<String>)
-+ {static} void addComment(Comment,String)
-+ {static} void downvoteComment(Comment)
-+ {static} void upvoteComment(Comment)
-+ {static} void updateComment(Comment)
-+ {static} void deleteComment(Comment)
-+ {static} void initialize()
-}
-
-
-class school.videopirateapp.DataStructures.User {
-- {static} User defaultUser
-- String name
-- Playlist Uploads
-- Map<String,ArrayList<Comment>> Comments
-- ArrayList<String> ownedPlaylists
-- String Password
-- ArrayList<Byte> Image
-- ArrayList<String> Upvotes
-- ArrayList<String> Downvotes
-- Integer videosWatched
-- String Description
-+ <<Create>> User()
-+ <<Create>> User(String,String)
-+ {static} User Default()
-+ String getDescription()
-+ void setDescription(String)
-+ String getPassword()
-+ void setPassword(String)
-+ String getName()
-+ void setName(String)
-+ void addPlaylist(Playlist)
-+ Playlist getUploads()
-+ void setUploads(Playlist)
-+ Map<String,ArrayList<Comment>> getComments()
-+ void setComments(Map<String,ArrayList<Comment>>)
-+ ArrayList<String> getOwnedPlaylists()
-+ void setOwnedPlaylists(ArrayList<String>)
-+ ArrayList<Byte> getImage()
-+ void setImage(ArrayList<Byte>)
-+ void addComment(Comment)
-+ void addVideo(Video)
-+ ArrayList<String> getUpvotes()
-+ void setUpvotes(ArrayList<String>)
-+ ArrayList<String> getDownvotes()
-+ void setDownvotes(ArrayList<String>)
-+ Integer getVideosWatched()
-+ void setVideosWatched(Integer)
-+ void upvoteVideo(Video)
-+ void downvoteVideo(Video)
-+ void upvoteComment(Comment)
-+ void downvoteComment(Comment)
-+ String toString()
-}
-
-
-class school.videopirateapp.Dialogs.LoginDialogActivity {
-# void onCreate(Bundle)
-}
-
-class school.videopirateapp.Activities.PlaylistPageActivity {
-~ Button btnPlaylistOptions
-~ Button btnUserPage
-~ Button btnBack
-~ TextView tvPlaylistTitle
-~ TextView tvPlaylistDescription
-~ TextView tvPlaylistSCore
-~ ImageView playlistImage
-~ ListView listView
-# void onCreate(Bundle)
-}
-
-
-class school.videopirateapp.ListViewComponents.VideoListViewComponent {
-~ TextView uploader
-~ TextView videoTitle
-~ TextView upvotes
-~ TextView downvotes
-# void onCreate(Bundle)
-+ void openVideo(View)
-}
-
-
-class school.videopirateapp.DataStructures.Comment {
-- {static} Comment defaultComment
-- String Comment
-- String Author
-- ArrayList<String> replyContexts
-- String Timestamp
-- Integer Upvotes
-- Integer Downvotes
-- String Context
-+ <<Create>> Comment()
-+ <<Create>> Comment(String,String,String)
-+ {static} Comment Default()
-+ String getContext()
-+ void setContext(String)
-+ String getComment()
-+ void setComment(String)
-+ String getAuthor()
-+ void setAuthor(String)
-+ ArrayList<String> getReplyContexts()
-+ void setReplyContexts(ArrayList<String>)
-+ String getTimestamp()
-+ void setTimestamp(String)
-+ Integer getUpvotes()
-+ Integer getScore()
-+ void setUpvotes(Integer)
-+ Integer getDownvotes()
-+ void setDownvotes(Integer)
-+ void addReply(String)
-+ void upvote()
-+ void downvote()
-+ String toString()
-}
-
-
-abstract class school.videopirateapp.GlobalVariables {
-+ {static} Optional<User> loggedUser
-- {static} String PREFERENCE_FILE_NAME
-- {static} SharedPreferences sharedPreferences
-+ <<Create>> GlobalVariables(Context)
-- <<Create>> GlobalVariables()
-}
-
-
-class school.videopirateapp.Utilities {
-- <<Create>> Utilities()
-+ {static} ArrayList<T> HashMapToArrayList(HashMap<String,T>)
-+ {static} ArrayList<T> MapToArrayList(Map<String,T>)
-+ {static} String TimeNow()
-+ {static} void openVideoPage(Context,String)
-+ {static} void openUserPage(Context,String)
-+ {static} void openCommentPage(Context,String)
-+ {static} void openCommentOwnerOptionsDialog(Context,Comment)
-+ {static} void openCommentViewerOptionsDialog(Context,Comment)
-+ {static} void openVideoUploadDialog(Context)
-+ {static} void openVideoOwnerOptionsDialog(Context,Video)
-+ {static} void openVideoViewerOptionsDialog(Context,Video)
-+ {static} void openPlaylistSelectionDialog(Context,Video)
-+ {static} void openUserOwnerOptionsDialog(Context,User)
-+ {static} void openUserViewerOptionsDialog(Context,User)
-+ {static} void openPlaylistOwnerOptionsDialog(Context,String)
-+ {static} void openPlaylistViewerOptionsDialog(Context,String)
-+ {static} void openSignupActivity(Context)
-+ {static} void openPlaylistPage(Context,String)
-+ {static} Bitmap ByteArrayToBitmap(ArrayList<Byte>)
-+ {static} ArrayList<Byte> BitmapToByteArray(Bitmap)
-+ {static} ArrayList<Byte> getDefaultUserImage()
-+ {static} ArrayList<Byte> getDefaultVideoImage()
-+ {static} ArrayList<Byte> getDefaultPlaylistImage()
-+ {static} void openLoginDialog(Context,Button)
-+ {static} void openUserOptionsDialog(Context,User)
-+ {static} void openPlaylistOptionsDialog(Context,String)
-+ {static} void Feedback(Context,String)
-+ {static} void updateUserPageButton(Context,Button)
-+ {static} void EvaluateVideo(Video)
-+ {static} void EvaluatePlaylist(Playlist)
-+ {static} Bitmap processAndCompressImage(Bitmap,int,int)
-}
-
-class school.videopirateapp.DataStructures.Playlist {
-- {static} Playlist defaultPlaylist
-- ArrayList<String> Videos
-- String Title
-- String Owner
-- String Description
-- ArrayList<Byte> Image
-- Integer Score
-- Integer Upvotes
-- Integer Downvotes
-- Integer Views
-+ <<Create>> Playlist()
-+ <<Create>> Playlist(String,String)
-+ {static} Playlist Default()
-+ ArrayList<Byte> getImage()
-+ void setImage(ArrayList<Byte>)
-+ ArrayList<String> getVideos()
-+ void setVideos(ArrayList<String>)
-+ String getTitle()
-+ void setTitle(String)
-+ String getOwner()
-+ void setOwner(String)
-+ String getDescription()
-+ void setDescription(String)
-+ Integer getScore()
-+ void setScore(Integer)
-+ Integer getVoteScore()
-+ Integer getUpvotes()
-+ void setUpvotes(Integer)
-+ Integer getDownvotes()
-+ void setDownvotes(Integer)
-+ Integer getViews()
-+ void setViews(Integer)
-+ void addVideo(Video)
-+ String toString()
-}
-
-
-class school.videopirateapp.DataStructures.Video {
-- {static} Video defaultVideo
-- String Title
-- String Uploader
-- ArrayList<String> commentContextes
-- Integer Views
-- Integer Upvotes
-- Integer Downvotes
-- String UploadDate
-- ArrayList<Byte> Image
-- String Url
-- Integer Score
-+ <<Create>> Video(String,String)
-+ <<Create>> Video()
-+ {static} Video Default()
-+ ArrayList<Byte> getImage()
-+ void setImage(ArrayList<Byte>)
-+ String getUploadDate()
-+ void setUploadDate(String)
-+ String getTitle()
-+ void setTitle(String)
-+ String getUploader()
-+ void setUploader(String)
-+ ArrayList<String> getCommentContextes()
-+ void setCommentContextes(ArrayList<String>)
-+ Integer getViews()
-+ void setViews(Integer)
-+ Integer getUpvotes()
-+ void setUpvotes(Integer)
-+ Integer getDownvotes()
-+ void setDownvotes(Integer)
-+ String getUrl()
-+ void setUrl(String)
-+ Integer getScore()
-+ void setScore(Integer)
-+ Integer getVoteScore()
-+ void Upvote()
-+ void Downvote()
-+ void View()
-+ String getContext()
-+ String toString()
-}
-
-
-class school.videopirateapp.ListViewComponents.CommentAdapter {
-- Context context
-- int resource
-- ArrayList<Comment> comments
-- SimpleDateFormat dateFormat
-- boolean isReplyView
-+ <<Create>> CommentAdapter(Context,int,List<Comment>)
-+ View getView(int,View,ViewGroup)
-+ int getCount()
-}
-
-
-
-class school.videopirateapp.Activities.SignupActivity {
-~ EditText etName
-~ EditText etPassword
-# void onCreate(Bundle)
-+ void Close(View)
-+ void CreateUser(View)
-}
-
-
-class school.videopirateapp.Activities.MainMenuActivity {
-~ Button btnUserPage
-~ Button btnUploadVideo
-~ Button btnRefreshVideos
-~ EditText etUsername
-~ EditText etPassword
-~ ListView listView
-~ ArrayList<Video> videos
-~ VideoAdapter videosAdapter
-~ String chosenTitle
-~ Boolean loggedIn
-+ boolean onCreateOptionsMenu(Menu)
-# void onCreate(Bundle)
-+ void videoListViewInit()
-+ void refreshVideosButton(View)
-+ void refreshVideos()
-+ void uploadVideo(View)
-+ void userPage(View)
-+ void openVideo(View)
-+ void ConfirmUploadVideo(View)
-+ void ChooseVideo(View)
-+ void updateUserPageButton()
-}
-
-
-
-
-android.widget.ArrayAdapter <|-- school.videopirateapp.ListViewComponents.VideoAdapter
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.DatabaseDev
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.MainActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Dialogs.CommentOptionsDialogActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Dialogs.PlaylistOptionsDialogActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Dialogs.MainMenuSearchVideoDialogActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.ListViewComponents.CommentListViewComponent
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Activities.VideoPageActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Dialogs.UserOptionsDialogActivity
-android.widget.ArrayAdapter <|-- school.videopirateapp.ListViewComponents.PlaylistAdapter
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Activities.CommentPageActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Activities.UserPageActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Dialogs.CreatePlaylistDialogActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Dialogs.UploadVideoDialogActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.ListViewComponents.DatabaseDevListViewComponent
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.ListViewComponents.PlaylistListViewComponent
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Dialogs.LoginDialogActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Activities.PlaylistPageActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.ListViewComponents.VideoListViewComponent
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Dialogs.VideoOptionsDialogActivity
-android.widget.ArrayAdapter <|-- school.videopirateapp.ListViewComponents.CommentAdapter
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.ListViewComponents.UserListViewComponent
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Activities.SignupActivity
-androidx.appcompat.app.AppCompatActivity <|-- school.videopirateapp.Activities.MainMenuActivity
+AppCompatActivity <|-- CreatePlaylistDialogActivity
+AppCompatActivity <|-- PlaylistListViewComponent
+AppCompatActivity <|-- LoginDialogActivity
+AppCompatActivity <|-- MainActivity
+AppCompatActivity <|-- PlaylistOptionsDialogActivity
+AppCompatActivity <|-- UserOptionsDialogActivity
+AppCompatActivity <|-- UserPageActivity
+ArrayAdapter <|-- VideoAdapter
+AppCompatActivity <|-- CommentListViewComponent
+AppCompatActivity <|-- VideoListViewComponent
+AppCompatActivity <|-- SignupActivity
+AppCompatActivity <|-- CommentOptionsDialogActivity
+AppCompatActivity <|-- CommentPageActivity
+ArrayAdapter <|-- PlaylistAdapter
+AppCompatActivity <|-- MainMenuSearchVideoDialogActivity
+AppCompatActivity <|-- MainMenuActivity
+ArrayAdapter <|-- CommentAdapter
+AppCompatActivity <|-- UploadVideoDialogActivity
+AppCompatActivity <|-- VideoOptionsDialogActivity
+AppCompatActivity <|-- PlaylistPageActivity
+AppCompatActivity <|-- UserListViewComponent
+AppCompatActivity <|-- VideoPageActivity
 @enduml

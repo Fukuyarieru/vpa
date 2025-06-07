@@ -71,12 +71,6 @@
             android:name=".Activities.VideoPageActivity"
             android:exported="false" />
         <activity
-            android:name=".ListViewComponents.DatabaseDevListViewComponent"
-            android:exported="false" />
-        <activity
-            android:name=".DatabaseDev"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

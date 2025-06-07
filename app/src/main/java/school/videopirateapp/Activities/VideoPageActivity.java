@@ -5,7 +5,6 @@ import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.openUserPage;
 import static school.videopirateapp.Utilities.openVideoOwnerOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoViewerOptionsDialog;
-//import static school.videopirateapp.Utilities.openVideoPlayer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -85,30 +84,29 @@ public class VideoPageActivity extends AppCompatActivity {
         String videoTitle = intent.getStringExtra("videoTitle");
 
         tvVideoTitle.setText(videoTitle);
-        
-        // Show loading indicator or disable UI elements here
-        
-        // Refresh database and load data only after refresh is complete
-        Database.Refresh(() -> {
-            runOnUiThread(() -> {
-                currentVideo = Database.getVideo(videoTitle);
-                if (currentVideo != null) {
-                    Log.e("CURRENT VIDEO", currentVideo.getComments().toString());
-                    String UploaderName = currentVideo.getUploader();
-                    tvUploader.setText(UploaderName);
 
-                    // Get fresh comments from database
-                    ArrayList<Comment> comments = Comments.getCommentsFromContexts(currentVideo.getComments());
-                    commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments);
-                    lvComments.setAdapter(commentAdapter);
-                    
-                    // Enable UI elements or hide loading indicator here
-                } else {
-                    Utilities.Feedback(this, "Failed to load video");
-                    finish();
-                }
-            });
-        });
+        // Show loading indicator or disable UI elements here
+
+        // Refresh database and load data only after refresh is complete
+        Database.Refresh();
+        currentVideo = Database.getVideo(videoTitle);
+        if (currentVideo != null) {
+            Log.e("CURRENT VIDEO", currentVideo.getComments().toString());
+            String UploaderName = currentVideo.getUploader();
+            tvUploader.setText(UploaderName);
+
+            // Get fresh comments from database
+            ArrayList<Comment> comments = Comments.getCommentsFromContexts(currentVideo.getComments());
+            commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments);
+            lvComments.setAdapter(commentAdapter);
+
+            // Enable UI elements or hide loading indicator here
+        } else {
+            Utilities.Feedback(this, "Failed to load video");
+            finish();
+        }
+
+        String UploaderName=currentVideo.getUploader();
 
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
@@ -189,19 +187,19 @@ public class VideoPageActivity extends AppCompatActivity {
             }
         });
 
-        Utilities.updateUserPageButton(this,btnUserPage);
+        Utilities.updateUserPageButton(this, btnUserPage);
 
-        User uploader=Database.getUser(UploaderName);
+        User uploader = Database.getUser(UploaderName);
         try {
-            uploaderImage.setImageBitmap( ByteArrayToBitmap(uploader.getImage())); }
-        catch (Exception e) {
+            uploaderImage.setImageBitmap(ByteArrayToBitmap(uploader.getImage()));
+        } catch (Exception e) {
             uploaderImage.setImageResource(R.drawable.default_user_image);
         }
         uploaderImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Feedback(VideoPageActivity.this,"Failed to load uploader's image");
-                openUserPage(VideoPageActivity.this,UploaderName);
+                Feedback(VideoPageActivity.this, "Failed to load uploader's image");
+                openUserPage(VideoPageActivity.this, UploaderName);
             }
         });
     }

@@ -94,31 +94,11 @@ public abstract class Database {
     }
 
     public static void addPlaylist(Playlist newPlaylist) {
-
-        // TODO, redo the logic here, playlists shouldnt be a standalone object, as they need an owner, therefore this functions need to have something that the playlist will be connected to, P.S user most likely
-        // TODO 2, or not
-
         Playlists.addPlaylist(newPlaylist);
     }
 
     public static void updateUser(User user) {
-        DatabaseReference userRef = Database.getRef("users").child(user.getName());
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-                if (userSnapshot.exists()) {
-                    userRef.setValue(user);
-                    Log.i("Database: updateUser", "Updated user in database: " + user.getName());
-                } else {
-                    Log.e("Database: updateUser", "User does not exist: " + user.getName());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Database: updateUser", "Failed to check if user exists: " + error.getMessage());
-            }
-        });
+        Users.updateUser(user);
     }
 
     public static void addVideoToPlaylist(Video video, Playlist targetPlaylist) {

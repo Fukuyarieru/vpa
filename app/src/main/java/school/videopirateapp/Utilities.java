@@ -44,7 +44,7 @@ import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.ListViewComponents.PlaylistAdapter;
 
-public class Utilities {
+public abstract class Utilities {
     private Utilities() {
         throw new UnsupportedOperationException("This class is not instantiable.");
     }
@@ -165,13 +165,12 @@ public class Utilities {
             @Override
             public void onClick(View view) {
                 if (GlobalVariables.loggedUser.isPresent() && GlobalVariables.loggedUser.get().getName().equals(comment.getAuthor())) {
-                    // Create a dialog for editing the comment
-                    Dialog editDialog = new Dialog(contextThis);
-                    editDialog.setContentView(R.layout.activity_comment_input_dialog);
+                    Dialog dialog = new Dialog(contextThis);
+                    dialog.setContentView(R.layout.activity_comment_input_dialog);
                     
-                    EditText etEditComment = editDialog.findViewById(R.id.CommentInput_Dialog_EditText_Comment);
-                    Button btnSubmit = editDialog.findViewById(R.id.CommentInput_Dialog_Button_Submit);
-                    Button btnCancel = editDialog.findViewById(R.id.CommentInput_Dialog_Button_Cancel);
+                    EditText etEditComment = dialog.findViewById(R.id.CommentInput_Dialog_EditText_Comment);
+                    Button btnSubmit = dialog.findViewById(R.id.CommentInput_Dialog_Button_Submit);
+                    Button btnCancel = dialog.findViewById(R.id.CommentInput_Dialog_Button_Cancel);
                     
                     // Set the current comment text
                     etEditComment.setText(comment.getComment());
@@ -185,7 +184,7 @@ public class Utilities {
                                 Video video = Database.getVideo(comment.getContext());
                                 if (video != null) {
                                     Database.updateComment(comment);
-                                    editDialog.dismiss();
+                                    dialog.dismiss();
                                     dialog.dismiss();
                                     Feedback(contextThis, "Comment edited successfully");
                                 } else {
@@ -200,11 +199,11 @@ public class Utilities {
                     btnCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            editDialog.dismiss();
+                            dialog.dismiss();
                         }
                     });
                     
-                    editDialog.show();
+                    dialog.show();
                 } else {
                     Feedback(contextThis, "You can only edit your own comments");
                 }
