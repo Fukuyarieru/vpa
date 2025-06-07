@@ -45,8 +45,6 @@ class MainMenuSearchVideoDialogActivity {
 }
 class MainMenuActivity {
 }
-class ExampleInstrumentedTest {
-}
 class CommentAdapter {
 }
 class Comment {
@@ -56,8 +54,6 @@ abstract class GlobalVariables {
 abstract class Database {
 }
 class UploadVideoDialogActivity {
-}
-class ExampleUnitTest {
 }
 abstract class Comments {
 }

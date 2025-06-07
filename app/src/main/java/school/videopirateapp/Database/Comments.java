@@ -73,13 +73,10 @@ public abstract class Comments {
             Comment comment = getComment(context);
             if (comment != null) {
                 comments.add(comment);
-//                Log.d("Comments: getCommentsFromContexts", "Added comment: " + comment.getContext());
             } else {
-//                Log.w("Comments: getCommentsFromContexts", "Comment not found for context: " + context);
                 comment = getComment(context);
                 if (comment != null) {
                     comments.add(comment);
-//                    Log.d("Comments: getCommentsFromContexts", "Added comment after refresh: " + comment.getComment());
                 }
             }
         }
