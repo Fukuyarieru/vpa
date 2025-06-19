@@ -1,5 +1,6 @@
 package school.videopirateapp.ListViewComponents;
 
+import static school.videopirateapp.Utilities.ByteArrayToBitmap;
 import static school.videopirateapp.Utilities.openPlaylistPage;
 
 import android.content.Context;
@@ -41,7 +42,6 @@ public class PlaylistAdapter extends ArrayAdapter<Playlist> {
         View view = layoutInflater.inflate(this.resource,null);
         Playlist playlist= playlists.get(position);
 
-        // TEXTVIEWS ASSEMBLE
         TextView tvTitle=view.findViewById(R.id.Playlist_ListView_Component_TextView_Title);
         TextView tvDate=view.findViewById(R.id.Playlist_ListView_Component_TextView_Date);
         TextView tvViews=view.findViewById(R.id.Playlist_ListView_Component_TextView_ViewCount);
@@ -50,10 +50,11 @@ public class PlaylistAdapter extends ArrayAdapter<Playlist> {
         ImageView image=view.findViewById(R.id.Playlist_ListView_Component_ImageView_Image);
 
         tvTitle.setText(playlist.getTitle());
-        tvDate.setText("DATE NOT IMPLEMENTED YET");
+        tvDate.setText("NO-DATE-SET");
         tvViews.setText("VIEWS NOT IMPLEMENTED YET");
         tvVideosCount.setText("Video Count: "+playlist.getVideos().size());
         tvDescription.setText(playlist.getDescription());
+        image.setImageBitmap(ByteArrayToBitmap(playlist.getImage()));
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

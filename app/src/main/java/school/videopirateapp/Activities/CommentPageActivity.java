@@ -44,13 +44,11 @@ public class CommentPageActivity extends AppCompatActivity {
         btnAddReply = findViewById(R.id.CommentPage_Button_AddReply);
         btnUserPage = findViewById(R.id.CommentPage_Button_UserPage);
 
-
-        ArrayList<Comment>insideComments= Comments.getCommentsFromContexts(comment.getComments());
-        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, insideComments);  // Set isReplyView to true to disable reply functionality
-        lvComments.setAdapter(commentAdapter);
+//        ArrayList<Comment>insideComments= Comments.getCommentsFromContexts(comment.getComments());
+//        commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, insideComments);  // Set isReplyView to true to disable reply functionality
+//        lvComments.setAdapter(commentAdapter);
 
         updateUserPageButton(this,btnUserPage);
-
 
         btnAddReply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,11 +56,11 @@ public class CommentPageActivity extends AppCompatActivity {
                 String newCommentText = etNewComment.getText().toString().trim();
                 if (!newCommentText.isEmpty()) {
                     if (GlobalVariables.loggedUser.isPresent()) {
-                        Comment newComment = new Comment(newCommentText, GlobalVariables.loggedUser.get().getName(), "comments");  // Use default context
-                        assert commentContext != null;
-                        Database.addComment(newComment, commentContext);
+                        Comment newComment = new Comment(newCommentText, GlobalVariables.loggedUser.get().getName(), comment.getCommentsContext());  // Use default context
+                        Database.addComment(newComment, newComment.getContext());
+                        Database.addCommentToUser(newComment, GlobalVariables.loggedUser.get());
                         etNewComment.setText("");
-                        commentAdapter.notifyDataSetChanged();
+                        commentAdapter.add(newComment);
                         Feedback(CommentPageActivity.this, "Comment added successfully");
                     } else {
                         Feedback(CommentPageActivity.this, "Please log in to comment");

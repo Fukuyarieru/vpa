@@ -2,7 +2,6 @@ package school.videopirateapp.Database;
 
 import android.util.Log;
 
-import androidx.annotation.DoNotInline;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +17,7 @@ import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.Playlist;
 import school.videopirateapp.DataStructures.User;
 import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.GlobalVariables;
 
 public abstract class Database {
     private static final FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -41,8 +41,16 @@ public abstract class Database {
         Users.addUser(newUser);
     }
 
+    public static void addComment(@NonNull Comment newComment, @NonNull String targetContextSection, User user) {
+        Comments.addComment(newComment, targetContextSection, user);
+    }
+
     public static void addComment(@NonNull Comment newComment, @NonNull String targetContextSection) {
-        Comments.addComment(newComment,targetContextSection);
+        Comments.addComment(newComment, targetContextSection, GlobalVariables.loggedUser.get());
+    }
+
+    public static void addCommentToUser(@NonNull Comment newComment, @NonNull User user) {
+        Users.addComment(newComment, user);
     }
 
     public static Comment getComment(String commentContext) {
@@ -164,8 +172,26 @@ public abstract class Database {
         Videos.initialize();
         Playlists.initialize();
         Comments.initialize();
+
+        // Wait for initialization to complete
+        int attempts = 0;
+        while (attempts < 10) {
+            Log.i("Database: initialize", "Waiting for initialization to complete");
+            if (Comments.getComments().isEmpty() || Playlists.getPlaylists().isEmpty()) {
+                try {
+                    Thread.sleep(100);
+                    attempts++;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                break;
+            }
+        }
+
         Refresh();
     }
+
     public static void Refresh() {
         Log.i("Database: Refresh", "Refreshing database");
         Log.i("Database: Refresh, Videos", Videos.getVideos().toString());

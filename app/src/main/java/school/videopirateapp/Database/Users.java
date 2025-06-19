@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.User;
 
 public abstract class Users {
@@ -104,6 +105,23 @@ public abstract class Users {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("Database: addUser", "Failed to add listener to userRef");
+            }
+        });
+    }
+    public static void addComment(Comment comment, User user) {
+        DatabaseReference userRef = Database.getRef("users").child(user.getName());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                if (userSnapshot.exists()) {
+                    Log.i("Users: addComment", "Adding comment to user: " + user.getName());
+                    userRef.child("comments").child(comment.getContext()).setValue(comment);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Users: addComment", "Failed to add listener to userRef");
             }
         });
     }

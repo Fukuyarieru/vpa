@@ -338,14 +338,17 @@ public abstract class Playlists {
         playlistsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()) {
+                if (!snapshot.exists() || !snapshot.hasChildren()) {
                     Log.w("Playlists: initialize", "Creating default playlist");
-                    addPlaylist(Playlist.Default());
-                    Refresh();
-                } else if (!snapshot.hasChildren()) {
-                    Log.w("Playlists: initialize", "Playlists tree is empty, adding default playlist");
-                    addPlaylist(Playlist.Default());
-                    Refresh();
+                    Playlist defaultPlaylist = Playlist.Default();
+                    DatabaseReference playlistRef = Database.getRef("playlists").child(defaultPlaylist.getTitle());
+                    playlistRef.setValue(defaultPlaylist).addOnSuccessListener(aVoid -> {
+                        Log.i("Playlists: initialize", "Default playlist added successfully");
+                        Playlists.put(defaultPlaylist.getTitle(), defaultPlaylist);
+                        Refresh();
+                    }).addOnFailureListener(e -> {
+                        Log.e("Playlists: initialize", "Failed to add default playlist: " + e.getMessage());
+                    });
                 } else {
                     Log.i("Playlists: initialize", "Playlists tree exists with data, refreshing");
                     Refresh();

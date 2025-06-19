@@ -65,11 +65,6 @@
           <theme>@style/Theme.Videopirateapp</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_playlist_viewer_options_dialog.xml">
-        <config>
-          <theme>@style/Theme.Videopirateapp</theme>
-        </config>
-      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_signup.xml">
         <config>
           <theme>@style/Theme.Videopirateapp</theme>
@@ -122,10 +117,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9d0df33-6a1c-4b21-bbce-55edcec8262b" name="Changes" comment="sch update">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/DatabaseDataStructure.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/CommentPageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Activities/CommentPageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/DataStructures/Comment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Comments.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Comments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/GlobalVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/GlobalVariables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Playlists.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Playlists.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/Database/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/ListViewComponents/PlaylistAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/school/videopirateapp/ListViewComponents/PlaylistAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uml.puml" beforeDir="false" afterPath="$PROJECT_DIR$/uml.puml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,8 +185,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="resourceFile" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -224,7 +225,7 @@
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/WaiterProject1/WaiterProject1&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/vpa&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
@@ -369,12 +370,12 @@
       <map>
         <entry key="school.videopirateapp">
           <value>
-            <CheckInfo lastCheckTimestamp="1749234575844" />
+            <CheckInfo lastCheckTimestamp="1749401727409" />
           </value>
         </entry>
         <entry key="school.videopirateapp.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1749234575717" />
+            <CheckInfo lastCheckTimestamp="1749401727409" />
           </value>
         </entry>
       </map>

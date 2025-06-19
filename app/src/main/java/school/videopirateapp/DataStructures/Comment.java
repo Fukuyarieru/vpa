@@ -35,7 +35,7 @@ public class Comment {
     }
 
     public String getContext() {
-        return Context + "-" + this.Comment;
+        return Context + "-" + this.getComment();
     }
 
     public void setContext(String context) {

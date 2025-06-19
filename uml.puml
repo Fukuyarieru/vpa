@@ -1,92 +1,25 @@
 @startuml
-class CreatePlaylistDialogActivity {
-}
-class PlaylistListViewComponent {
-}
-class User {
-}
-class LoginDialogActivity {
-}
-class MainActivity {
-}
-class Video {
-}
-class PlaylistOptionsDialogActivity {
-}
-class UserOptionsDialogActivity {
-}
-class UserPageActivity {
-}
-class VideoAdapter {
-}
+
 abstract class Playlists {
 }
-class Playlist {
-}
-class CommentListViewComponent {
-}
+
 abstract class Users {
 }
 abstract class Videos {
 }
-class VideoListViewComponent {
-}
+
 abstract class Utilities {
 }
-class SignupActivity {
-}
-class CommentOptionsDialogActivity {
-}
-class CommentPageActivity {
-}
-class PlaylistAdapter {
-}
-class MainMenuSearchVideoDialogActivity {
-}
-class MainMenuActivity {
-}
-class CommentAdapter {
-}
-class Comment {
-}
+
+
 abstract class GlobalVariables {
 }
 abstract class Database {
 }
-class UploadVideoDialogActivity {
-}
+
 abstract class Comments {
 }
-class VideoOptionsDialogActivity {
-}
-class PlaylistPageActivity {
-}
-class UserListViewComponent {
-}
-class VideoPageActivity {
-}
 
 
-AppCompatActivity <|-- CreatePlaylistDialogActivity
-AppCompatActivity <|-- PlaylistListViewComponent
-AppCompatActivity <|-- LoginDialogActivity
-AppCompatActivity <|-- MainActivity
-AppCompatActivity <|-- PlaylistOptionsDialogActivity
-AppCompatActivity <|-- UserOptionsDialogActivity
-AppCompatActivity <|-- UserPageActivity
-ArrayAdapter <|-- VideoAdapter
-AppCompatActivity <|-- CommentListViewComponent
-AppCompatActivity <|-- VideoListViewComponent
-AppCompatActivity <|-- SignupActivity
-AppCompatActivity <|-- CommentOptionsDialogActivity
-AppCompatActivity <|-- CommentPageActivity
-ArrayAdapter <|-- PlaylistAdapter
-AppCompatActivity <|-- MainMenuSearchVideoDialogActivity
-AppCompatActivity <|-- MainMenuActivity
-ArrayAdapter <|-- CommentAdapter
-AppCompatActivity <|-- UploadVideoDialogActivity
-AppCompatActivity <|-- VideoOptionsDialogActivity
-AppCompatActivity <|-- PlaylistPageActivity
-AppCompatActivity <|-- UserListViewComponent
-AppCompatActivity <|-- VideoPageActivity
+
 @enduml
