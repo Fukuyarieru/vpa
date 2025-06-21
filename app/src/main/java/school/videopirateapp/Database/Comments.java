@@ -67,23 +67,12 @@ public abstract class Comments {
         });
     }
 
-    public static ArrayList<Comment> getCommentsFromContexts(ArrayList<String> contexts) {
-//        Refresh();
-        ArrayList<Comment> comments = new ArrayList<>();
-        Log.i("Comments: getCommentsFromContexts", "Getting comments from " + contexts.size() + " contexts");
-
-        for (String context : contexts) {
-            Comment comment = getComment(context);
-            if (comment != null) {
-                comments.add(comment);
-            } else {
-                comment = getComment(context);
-                if (comment != null) {
-                    comments.add(comment);
-                }
-            }
+    public static ArrayList<Comment> getComments(ArrayList<String> contexts) {
+         Log.i("Comments: getComments", "Getting comments from contexts: " + contexts);
+        ArrayList<Comment>comments= new ArrayList<>();
+        for(String context: contexts) {
+            comments.add(Database.getComment(context));
         }
-        Log.i("Comments: getCommentsFromContexts", "Returning " + comments.size() + " comments");
         return comments;
     }
 

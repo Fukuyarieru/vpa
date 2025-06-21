@@ -7,7 +7,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +19,7 @@ public class User {
     private String name;
     // TODO, consider removing this field because upload management turns out to be a pain paired together with playlist management
     private Playlist Uploads;
-    private Map<String, ArrayList<Comment>> Comments;
+    private Map<String, ArrayList<String>> Comments;
     private ArrayList<String> ownedPlaylists;
     private String Password;
     private ArrayList<Byte> Image;
@@ -40,11 +42,13 @@ public class User {
             Name = "@" + Name;
         }
         this.name = Name;
-        this.Uploads = new Playlist("Uploads-" + Name, Name);
-        this.Comments = new HashMap<String, ArrayList<Comment>>();
-        ArrayList<Comment> arrComments = new ArrayList<>();
-        arrComments.add(Comment.Default());
-        this.Comments.put(Comment.Default().getContext(), arrComments);
+        this.Uploads = new Playlist("&Uploads-" + Name, Name);
+        this.Comments = new HashMap<String, ArrayList<String>>();
+
+        ArrayList<String>commentsList = new ArrayList<>();
+        commentsList.add(Comment.Default().getContext());
+        this.Comments.put(Video.Default().getContext(), commentsList);
+
         this.ownedPlaylists = new ArrayList<>();
         this.getOwnedPlaylists().add(this.Uploads.getTitle());
         this.Image = getDefaultUserImage();
@@ -99,11 +103,11 @@ public class User {
         this.Uploads = uploads;
     }
 
-    public Map<String, ArrayList<Comment>> getComments() {
+    public Map<String, ArrayList<String>> getComments() {
         return Comments;
     }
 
-    public void setComments(Map<String, ArrayList<Comment>> comments) {
+    public void setComments(Map<String, ArrayList<String>> comments) {
         Comments = comments;
     }
 
@@ -125,7 +129,16 @@ public class User {
 
     public void addComment(Comment newComment) {
         // String context = newComment.getContext();  // Commented out
-        String context = "videos";  // Use a default context since we're disabling comment-to-comment
+
+//        ArrayList<Comment> a=this.Comments.get(newComment.getContext());
+//
+//        if() {
+//            this.Comments.put(newComment.getContext(), new ArrayList<>());
+//        }
+//        if()
+
+
+        String context = "videos";
         if (!this.Comments.containsKey(context)) {
             ArrayList<Comment> arrComments = new ArrayList<>();
             arrComments.add(newComment);

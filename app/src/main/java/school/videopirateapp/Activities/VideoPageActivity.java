@@ -96,7 +96,7 @@ public class VideoPageActivity extends AppCompatActivity {
             tvUploader.setText(UploaderName);
 
             // Get fresh comments from database
-            ArrayList<Comment> comments = Comments.getCommentsFromContexts(currentVideo.getComments());
+            ArrayList<Comment> comments = Comments.getComments(currentVideo.getComments());
             commentAdapter = new CommentAdapter(this, R.layout.activity_comment_listview_component, comments);
             lvComments.setAdapter(commentAdapter);
 
@@ -207,7 +207,7 @@ public class VideoPageActivity extends AppCompatActivity {
     public void refreshComments() {
         Database.Refresh();
         currentVideo = Database.getVideo(currentVideo.getTitle());
-        ArrayList<Comment> comments = Comments.getCommentsFromContexts(currentVideo.getComments());
+        ArrayList<Comment> comments = Comments.getComments(currentVideo.getComments());
         commentAdapter.clear();
         commentAdapter.addAll(comments);
         commentAdapter.notifyDataSetChanged();

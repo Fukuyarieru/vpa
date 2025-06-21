@@ -97,8 +97,8 @@ public class UserPageActivity extends AppCompatActivity {
         }
 
         comments=new ArrayList<>();
-        ArrayList<ArrayList<Comment>> ArrArr = MapToArrayList(user.getComments());
-        for (ArrayList<Comment> arr : ArrArr) {
+        ArrayList<ArrayList<String>> ArrArr = MapToArrayList(user.getComments());
+        for (ArrayList<String> arr : ArrArr) {
             comments.addAll(arr);
         }
 

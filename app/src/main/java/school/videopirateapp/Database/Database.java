@@ -20,7 +20,8 @@ import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.GlobalVariables;
 
 public abstract class Database {
-    private static final FirebaseDatabase database = FirebaseDatabase.getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
+    private static final FirebaseDatabase database = FirebaseDatabase
+            .getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 
     @Deprecated
     public static DatabaseReference getRef(String ref) {
@@ -55,6 +56,9 @@ public abstract class Database {
 
     public static Comment getComment(String commentContext) {
         return Comments.getComment(commentContext);
+    }
+    public static ArrayList<Comment> getCommentsArray(ArrayList<String> contexts) {
+        return Comments.getComments(contexts);
     }
 
     public static void upvoteVideo(Video targetVideo, User user) {
@@ -92,7 +96,7 @@ public abstract class Database {
     public static ArrayList<Video> getVideosArray(ArrayList<String> videoTitles) {
         ArrayList<Video> videosArr = new ArrayList<>();
         for (String videoTitle : videoTitles) {
-            videosArr.add(Database.getVideo(videoTitle));
+            videosArr.add(Videos.getVideo(videoTitle));
         }
         return videosArr;
     }

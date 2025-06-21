@@ -9,11 +9,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import school.videopirateapp.DataStructures.Comment;
 import school.videopirateapp.DataStructures.User;
 
 public abstract class Users {
 
+    // we dont want to have all users saved in app as it would be unsafe
     private static User savedUser = User.Default();
 
     private Users() {
@@ -42,10 +45,10 @@ public abstract class Users {
 
     public static User getUser(String userName) {
         if (!userName.startsWith("@")) {
-            Log.e("Users: getUser", "Given username does not start with @, returning null to fix");
-            return null;
+            Log.w("Users: getUser", "Entered user name did not start with @, implicitly added it");
+            userName = "@" + userName;
         }
-        if (savedUser == null || !savedUser.getName().equals(userName)) {
+        if (!savedUser.getName().equals(userName)) {
             DatabaseReference userRef = Database.getRef("users").child(userName);
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -53,11 +56,10 @@ public abstract class Users {
                     // check if user exists
                     if (userSnapshot.exists()) {
                         savedUser = userSnapshot.getValue(User.class);
-                        assert savedUser != null;
                         Log.i("Users: getUser", "Fetched user from database: " + savedUser.getName());
                     } else {
-                        savedUser = null;
-                        Log.e("Users: getUser", "User does not exist");
+                        savedUser = User.Default();
+                        Log.e("Users: getUser", "User does not exist in database, returning default user");
                     }
                 }
 
@@ -77,7 +79,7 @@ public abstract class Users {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
                     Log.w("Users: initialize", "Creating default user");
-                    addUser(User.Default());
+                    Users.addUser(User.Default());
                 }
             }
 
@@ -98,7 +100,7 @@ public abstract class Users {
                     userRef.setValue(newUser);
                     Log.i("Database: addUser", "Added user to database: " + newUser.getName());
                 } else {
-                    Log.w("Database: addUser", "User already exists");
+                    Log.w("Database: addUser", "User already exists: " + newUser.getName());
                 }
             }
 
@@ -108,14 +110,19 @@ public abstract class Users {
             }
         });
     }
-    public static void addComment(Comment comment, User user) {
-        DatabaseReference userRef = Database.getRef("users").child(user.getName());
+
+    public static void addComment(Comment comment) {
+        DatabaseReference userRef = Database.getRef("users").child(comment.getAuthor());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                // check if user exists
                 if (userSnapshot.exists()) {
-                    Log.i("Users: addComment", "Adding comment to user: " + user.getName());
+                    Log.i("Users: addComment", "Adding comment to user: " + comment.getAuthor());
+                    User user = userSnapshot.getValue(User.class);
                     userRef.child("comments").child(comment.getContext()).setValue(comment);
+                } else {
+                    Log.e("Users: addComment", "User does not exist: " + user.getName());
                 }
             }
 
