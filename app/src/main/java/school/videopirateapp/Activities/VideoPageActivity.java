@@ -6,6 +6,7 @@ import static school.videopirateapp.Utilities.openUserPage;
 import static school.videopirateapp.Utilities.openVideoOwnerOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoViewerOptionsDialog;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,11 +23,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.DataStructures.Video;
-import school.videopirateapp.Database.Comments;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.datastructures.Comment;
+import school.videopirateapp.datastructures.User;
+import school.videopirateapp.datastructures.Video;
+import school.videopirateapp.database.Comments;
+import school.videopirateapp.database.Database;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
 import school.videopirateapp.R;
@@ -53,6 +54,7 @@ public class VideoPageActivity extends AppCompatActivity {
     VideoView videoView;
     ImageView uploaderImage;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,7 +180,7 @@ public class VideoPageActivity extends AppCompatActivity {
                 } else {
                     String commentStr = etComment.getText().toString().trim();
                     Comment newComment = new Comment(commentStr, GlobalVariables.loggedUser.get().getName(), currentVideo.getCommentsContext());
-                    Database.addComment(newComment, currentVideo.getCommentsContext());
+                    Database.addComment(newComment);
                     commentAdapter.add(newComment);
 //                    tvScore.setText(String.valueOf(currentVideo.getVoteScore()));
                     Utilities.Feedback(VideoPageActivity.this, "Comment added");

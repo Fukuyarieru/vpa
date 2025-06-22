@@ -1,15 +1,8 @@
 package school.videopirateapp;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import androidx.annotation.NonNull;
-
-import java.util.ArrayList;
 import java.util.Optional;
 
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.datastructures.User;
 
 public abstract class GlobalVariables {
 

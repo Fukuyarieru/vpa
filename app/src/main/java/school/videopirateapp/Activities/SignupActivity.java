@@ -3,18 +3,14 @@ package school.videopirateapp.Activities;
 import static school.videopirateapp.Utilities.Feedback;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.datastructures.User;
+import school.videopirateapp.database.Database;
 import school.videopirateapp.R;
-import school.videopirateapp.Utilities;
 
 public class SignupActivity extends AppCompatActivity {
 

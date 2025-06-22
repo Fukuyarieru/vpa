@@ -11,8 +11,8 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.datastructures.Comment;
+import school.videopirateapp.database.Database;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
 import school.videopirateapp.R;
@@ -54,8 +54,8 @@ public class CommentPageActivity extends AppCompatActivity {
                 if (!newCommentText.isEmpty()) {
                     if (GlobalVariables.loggedUser.isPresent()) {
                         Comment newComment = new Comment(newCommentText, GlobalVariables.loggedUser.get().getName(), comment.getCommentsContext());  // Use default context
-                        Database.addComment(newComment, newComment.getContext());
-                        Database.addCommentToUser(newComment, GlobalVariables.loggedUser.get());
+                        Database.addComment(newComment);
+//                        Database.addCommentToUser(newComment, GlobalVariables.loggedUser.get());
                         etNewComment.setText("");
                         commentAdapter.add(newComment);
                         Feedback(CommentPageActivity.this, "Comment added successfully");

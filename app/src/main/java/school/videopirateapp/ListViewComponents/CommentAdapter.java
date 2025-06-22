@@ -1,6 +1,5 @@
 package school.videopirateapp.ListViewComponents;
 
-import static school.videopirateapp.Utilities.ByteArrayToBitmap;
 import static school.videopirateapp.Utilities.ByteListToBitmap;
 import static school.videopirateapp.Utilities.openUserPage;
 import static school.videopirateapp.Utilities.openCommentOwnerOptionsDialog;
@@ -17,14 +16,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.datastructures.Comment;
+import school.videopirateapp.datastructures.User;
+import school.videopirateapp.database.Database;
 import school.videopirateapp.R;
 import school.videopirateapp.GlobalVariables;
 
@@ -55,7 +52,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         ImageView userImage = view.findViewById(R.id.Comment_ListView_Component_ImageView_UserImage);
 //        TextView tvReplies = view.findViewById(R.id.Comment_ListView_Component_TextView_Replies);
 
-        tvComment.setText(comment.getComment());
+        tvComment.setText(comment.getText());
         tvAuthor.setText(comment.getAuthor());
         tvDate.setText(comment.getDate());
         // tvContext.setText(comment.getContext());  // Commented out

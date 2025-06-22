@@ -1,4 +1,4 @@
-package school.videopirateapp.DataStructures;
+package school.videopirateapp.datastructures;
 
 import static school.videopirateapp.Utilities.TimeNow;
 import static school.videopirateapp.Utilities.getDefaultVideoImage;
@@ -13,172 +13,172 @@ public class Video {
 
    private static final Video defaultVideo = new Video();
 
-   private String Title;
-   private String Uploader;
-   private ArrayList<String> Comments;
-   private Integer Views;
-   private Integer Upvotes;
-   private Integer Downvotes;
-   private String UploadDate;
-   private ArrayList<Byte> Image;
-   private String Url;
-   private Integer Score;
+   private String title;
+   private String uploader;
+   private ArrayList<String> comments;
+   private Integer views;
+   private Integer upvotes;
+   private Integer downvotes;
+   private String uploadDate;
+   private ArrayList<Byte> image;
+   private String url;
+   private Integer score;
 
-   public Video(String Title, String Uploader) {
+   public Video(String title, String uploader) {
       // constructor for new videos
-      this.Title = Title;
-      this.Uploader = Uploader;
-      this.Comments = new ArrayList<>();
-      this.Views = 0;
-      this.Upvotes = 0;
-      this.Downvotes = 0;
-      this.UploadDate = TimeNow();
-      this.Image = getDefaultVideoImage();
-      this.Url = "";
-      this.Score = 0;
+      this.title = title;
+      this.uploader = uploader;
+      this.comments = new ArrayList<>();
+      this.views = 0;
+      this.upvotes = 0;
+      this.downvotes = 0;
+      this.uploadDate = TimeNow();
+      this.image = getDefaultVideoImage();
+      this.url = "";
+      this.score = 0;
 
       Log.i("Video: Constructor", "New video created");
    }
 
    public Video() {
       // constructor for default video, mainly firebase use
-      this.Title = "defaultVideo";
-      this.Uploader = User.Default().getName();
-      this.Comments = new ArrayList<>();
-      this.Views = 0;
-      this.Upvotes = 0;
-      this.Downvotes = 0;
-      this.UploadDate = "NO-DATE-SET";
-      this.Image = getDefaultVideoImage();
-      this.Url = "";
-      this.Score = 0;
+      this.title = "defaultVideo";
+      this.uploader = User.defaultUser().getName();
+      this.comments = new ArrayList<>();
+      this.views = 0;
+      this.upvotes = 0;
+      this.downvotes = 0;
+      this.uploadDate = "NO-DATE-SET";
+      this.image = getDefaultVideoImage();
+      this.url = "";
+      this.score = 0;
 
       Log.i("Video: Constructor", "Default video created");
    }
 
-   public static Video Default() {
+   public static Video defaultVideo() {
       return defaultVideo;
    }
 
    public ArrayList<Byte> getImage() {
-      return Image;
+      return image;
    }
 
    public void setImage(ArrayList<Byte> image) {
-      Image = image;
+      this.image = image;
    }
 
    public String getUploadDate() {
-      return UploadDate;
+      return uploadDate;
    }
 
    public void setUploadDate(String uploadDate) {
-      UploadDate = uploadDate;
+      this.uploadDate = uploadDate;
    }
 
    public String getTitle() {
-      return Title;
+      return title;
    }
 
    public void setTitle(String title) {
-      this.Title = title;
+      this.title = title;
    }
 
    public String getUploader() {
-      return Uploader;
+      return uploader;
    }
 
    public void setUploader(String uploader) {
-      Uploader = uploader;
+      this.uploader = uploader;
    }
 
    public ArrayList<String> getComments() {
-      return Comments;
+      return comments;
    }
 
    public void setComments(ArrayList<String> comments) {
-      this.Comments = comments;
+      this.comments = comments;
    }
 
    public Integer getViews() {
-      return Views;
+      return views;
    }
 
    public void setViews(Integer views) {
-      Views = views;
+      this.views = views;
    }
 
    public Integer getUpvotes() {
-      return Upvotes;
+      return upvotes;
    }
 
    public void setUpvotes(Integer upvotes) {
-      Upvotes = upvotes;
+      this.upvotes = upvotes;
    }
 
    public Integer getDownvotes() {
-      return Downvotes;
+      return downvotes;
    }
 
    public void setDownvotes(Integer downvotes) {
-      Downvotes = downvotes;
+      this.downvotes = downvotes;
    }
 
    public String getUrl() {
-      return Url;
+      return url;
    }
 
    public void setUrl(String url) {
-      Url = url;
+      this.url = url;
    }
 
    public Integer getScore() {
-      return Score;
+      return score;
    }
 
    public void setScore(Integer score) {
-      Score = score;
+      this.score = score;
    }
 
    public Integer getVoteScore() {
-      return this.Upvotes - this.Downvotes;
+      return this.upvotes - this.downvotes;
    }
 
    @Deprecated
-   public void Upvote() {
+   public void upvote() {
       Log.i("Video: upvote", "Upvoted video: " + this.getTitle());
-      this.Upvotes++;
-      this.Score = this.Upvotes - this.Downvotes;
+      this.upvotes++;
+      this.score = this.upvotes - this.downvotes;
    }
 
    @Deprecated
-   public void Downvote() {
+   public void downvote() {
       Log.i("Video: downvote", "Downvoted video: " + this.getTitle());
-      this.Downvotes++;
-      this.Score = this.Upvotes - this.Downvotes;
+      this.downvotes++;
+      this.score = this.upvotes - this.downvotes;
    }
 
    @Deprecated
-   public void View() {
-      this.Views++;
+   public void view() {
+      this.views++;
    }
 
    public String getContext() {
-      return "videos-" + this.Title;
+      return "videos-" + this.title;
    }
    public String getCommentsContext() {
       return this.getContext()+"-comments";
    }
 
    public void addCommentContext(String commentContext) {
-      if (!this.Comments.contains(commentContext)) {
-         this.Comments.add(commentContext);
+      if (!this.comments.contains(commentContext)) {
+         this.comments.add(commentContext);
          Log.i("Video: addCommentContext", "Added comment context: " + commentContext);
       }
    }
 
    public void removeCommentContext(String commentContext) {
-      if (this.Comments.remove(commentContext)) {
+      if (this.comments.remove(commentContext)) {
          Log.i("Video: removeCommentContext", "Removed comment context: " + commentContext);
       }
    }

@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import school.videopirateapp.DataStructures.Playlist;
-import school.videopirateapp.DataStructures.Video;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.datastructures.Playlist;
+import school.videopirateapp.datastructures.Video;
+import school.videopirateapp.database.Database;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
@@ -59,7 +59,7 @@ public class PlaylistPageActivity extends AppCompatActivity {
         playlistImage.setImageResource(R.drawable.default_playlist_image);
 
         ArrayList<Video>videos=new ArrayList<>();
-        for (String str:playlist.getVideos()) {
+        for (String str:playlist.getVideos().values()) {
             videos.add(Database.getVideo(str));
         }
 

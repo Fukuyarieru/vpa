@@ -1,4 +1,4 @@
-package school.videopirateapp.Database;
+package school.videopirateapp.database;
 
 import android.util.Log;
 
@@ -9,15 +9,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
-import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.datastructures.Comment;
+import school.videopirateapp.datastructures.User;
 
 public abstract class Users {
 
     // we dont want to have all users saved in app as it would be unsafe
-    private static User savedUser = User.Default();
+    private static User savedUser = User.defaultUser();
 
     private Users() {
         throw new UnsupportedOperationException("This class is not instantiable.");
@@ -58,7 +56,7 @@ public abstract class Users {
                         savedUser = userSnapshot.getValue(User.class);
                         Log.i("Users: getUser", "Fetched user from database: " + savedUser.getName());
                     } else {
-                        savedUser = User.Default();
+                        savedUser = User.defaultUser();
                         Log.e("Users: getUser", "User does not exist in database, returning default user");
                     }
                 }
@@ -79,7 +77,7 @@ public abstract class Users {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
                     Log.w("Users: initialize", "Creating default user");
-                    Users.addUser(User.Default());
+                    Users.addUser(User.defaultUser());
                 }
             }
 

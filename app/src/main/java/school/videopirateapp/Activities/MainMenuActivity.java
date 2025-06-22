@@ -20,8 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-import school.videopirateapp.DataStructures.Video;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.datastructures.Video;
+import school.videopirateapp.database.Database;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;

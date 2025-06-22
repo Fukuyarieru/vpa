@@ -1,4 +1,4 @@
-package school.videopirateapp.Database;
+package school.videopirateapp.database;
 
 import android.util.Log;
 
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.datastructures.Comment;
+import school.videopirateapp.datastructures.User;
+import school.videopirateapp.datastructures.Video;
 import school.videopirateapp.GlobalVariables;
 
 
@@ -76,8 +76,10 @@ public abstract class Comments {
         return comments;
     }
 
-    public static void addComment(Comment comment, String targetContextSection,User user) {
-        if(!user.getName().equals(comment.getAuthor())) {return;}
+    public static void addComment(Comment comment) {
+        User user=Database.getUser(comment.getAuthor());
+        String targetContextSection=comment.getSource();
+
         DatabaseReference userRef=Database.getRef(user.getName());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -264,13 +266,13 @@ public abstract class Comments {
                         public void onDataChange(@NonNull DataSnapshot videoSnapshot) {
                             if (!videoSnapshot.exists()) {
                                 Log.i("Comments: initialize", "Creating default video");
-                                Video defaultVideo = Video.Default();
+                                Video defaultVideo = Video.defaultVideo();
                                 videoRef.setValue(defaultVideo);
                             }
                             // Add default comment and wait for it to complete
-                            Comment defaultComment = Comment.Default();
-                            String targetContext = Video.Default().getCommentsContext();
-                            User defaultUser = User.Default();
+                            Comment defaultComment = Comment.defaultComment();
+                            String targetContext = Video.defaultVideo().getCommentsContext();
+                            User defaultUser = User.defaultUser();
                             
                             DatabaseReference commentRef = Database.getRef("comments").child(defaultComment.getContext());
                             commentRef.setValue(defaultComment).addOnSuccessListener(aVoid -> {

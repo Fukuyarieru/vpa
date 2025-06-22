@@ -1,4 +1,4 @@
-package school.videopirateapp.DataStructures;
+package school.videopirateapp.datastructures;
 
 
 import static school.videopirateapp.Utilities.getDefaultUserImage;
@@ -35,18 +35,18 @@ public class User {
     }
 
     // Constructor with parameters
-    public User(String Name, String password) {
-        if (!Name.startsWith("@")) {
+    public User(String name, String password) {
+        if (!name.startsWith("@")) {
             Log.w("User: User(name,password)", "Entered name did not start with @, implicitly added it");
-            Name = "@" + Name;
+            name = "@" + name;
         }
-        this.name = Name;
-        this.uploads = new Playlist("&Uploads-" + Name, Name);
-        this.comments = new HashMap<String, ArrayList<String>>();
+        this.name = name;
+        this.uploads = new Playlist("&Uploads-" + name, name);
+        this.comments = new HashMap<>();
 
         ArrayList<String>commentsList = new ArrayList<>();
-        commentsList.add(Comment.Default().getContext());
-        this.comments.put(Video.Default().getContext(), commentsList);
+        commentsList.add(Comment.defaultComment().getContext());
+        this.comments.put(Video.defaultVideo().getContext(), commentsList);
 
         this.ownedPlaylists = new ArrayList<>();
         this.getOwnedPlaylists().add(this.uploads.getTitle());
@@ -58,7 +58,7 @@ public class User {
         this.description = "(Empty description)";
     }
 
-    public static User Default() {
+    public static User defaultUser() {
         return defaultUser;
     }
 
@@ -127,7 +127,7 @@ public class User {
     }
 
     public void addComment(Comment newComment) {
-        String sourceContext=newComment.getSourceContext();
+        String sourceContext=newComment.getSource();
         if(!this.comments.containsKey(sourceContext)) {
             this.comments.put(sourceContext, new ArrayList<>());
         }
@@ -136,8 +136,8 @@ public class User {
         }
          this.comments.get(sourceContext).add(newComment.getContext());
     }
-    public void addVideo(Video newVideo) {
-        this.uploads.addVideo(newVideo);
+    public void addVideo(String videoTitle) {
+        this.uploads.addVideo(videoTitle);
     }
 
     public ArrayList<String> getUpvotes() {

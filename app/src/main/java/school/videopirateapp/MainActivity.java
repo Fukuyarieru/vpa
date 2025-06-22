@@ -1,26 +1,14 @@
 package school.videopirateapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.google.android.gms.common.api.Api;
-import com.google.android.gms.common.api.Result;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Optional;
 
 import school.videopirateapp.Activities.MainMenuActivity;
-import school.videopirateapp.DataStructures.Playlist;
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.DataStructures.Video;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.database.Database;
 
 public class MainActivity extends AppCompatActivity {
     @Override

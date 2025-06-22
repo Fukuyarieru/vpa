@@ -1,23 +1,10 @@
 package school.videopirateapp.Dialogs;
 
-import static school.videopirateapp.Utilities.Feedback;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.Database.Database;
 import school.videopirateapp.R;
-import school.videopirateapp.Activities.SignupActivity;
-import school.videopirateapp.Utilities;
 
 public class LoginDialogActivity extends AppCompatActivity {
 

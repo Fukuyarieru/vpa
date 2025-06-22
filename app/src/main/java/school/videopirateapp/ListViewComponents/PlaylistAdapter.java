@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import school.videopirateapp.DataStructures.Playlist;
+import school.videopirateapp.datastructures.Playlist;
 import school.videopirateapp.R;
 
 public class PlaylistAdapter extends ArrayAdapter<Playlist> {

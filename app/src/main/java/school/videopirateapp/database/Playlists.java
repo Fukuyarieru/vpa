@@ -1,4 +1,4 @@
-package school.videopirateapp.Database;
+package school.videopirateapp.database;
 
 import android.util.Log;
 
@@ -12,8 +12,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import school.videopirateapp.DataStructures.Playlist;
-import school.videopirateapp.DataStructures.User;
+import school.videopirateapp.datastructures.Playlist;
+import school.videopirateapp.datastructures.User;
 import school.videopirateapp.GlobalVariables;
 
 public abstract class Playlists {
@@ -340,7 +340,7 @@ public abstract class Playlists {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists() || !snapshot.hasChildren()) {
                     Log.w("Playlists: initialize", "Creating default playlist");
-                    Playlist defaultPlaylist = Playlist.Default();
+                    Playlist defaultPlaylist = Playlist.defaultPlaylist();
                     DatabaseReference playlistRef = Database.getRef("playlists").child(defaultPlaylist.getTitle());
                     playlistRef.setValue(defaultPlaylist).addOnSuccessListener(aVoid -> {
                         Log.i("Playlists: initialize", "Default playlist added successfully");

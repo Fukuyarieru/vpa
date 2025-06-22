@@ -1,4 +1,4 @@
-package school.videopirateapp.Database;
+package school.videopirateapp.database;
 
 import static school.videopirateapp.Utilities.EvaluateVideo;
 
@@ -14,8 +14,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.datastructures.User;
+import school.videopirateapp.datastructures.Video;
 
 public abstract class Videos {
 
@@ -206,7 +206,7 @@ public abstract class Videos {
                         if (task.isSuccessful()) {
                             Log.i("Videos: initialize", "Videos tree created");
                             // Add default video to new tree
-                            addVideo(Video.Default());
+                            addVideo(Video.defaultVideo());
                             Refresh();
                         } else {
                             Log.e("Videos: initialize", "Failed to create videos tree: " + task.getException());
@@ -214,7 +214,7 @@ public abstract class Videos {
                     });
                 } else if (!snapshot.hasChildren()) {
                     Log.w("Videos: initialize", "Videos tree is empty, adding default video");
-                    addVideo(Video.Default());
+                    addVideo(Video.defaultVideo());
                     Refresh();
                 } else {
                     Log.i("Videos: initialize", "Videos tree exists with data, refreshing");
@@ -244,7 +244,8 @@ public abstract class Videos {
                             if (userSnapshot.exists()) {
                                 videoRef.setValue(newVideo);
                                 User user = userSnapshot.getValue(User.class);
-                                user.getUploads().addVideo(newVideo);
+                               assert user != null;
+                               user.getUploads().addVideo(newVideo.getTitle());
                                 userRef.setValue(user);
                                 Videos.put(newVideo.getTitle(), newVideo);
                                 Log.i("Videos: addVideo", "Added video to database: " + newVideo.getTitle());

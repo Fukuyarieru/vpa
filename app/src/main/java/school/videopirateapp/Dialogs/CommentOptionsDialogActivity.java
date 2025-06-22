@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.DataStructures.Video;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.datastructures.Comment;
+import school.videopirateapp.datastructures.Video;
+import school.videopirateapp.database.Database;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.R;
 
@@ -52,7 +52,7 @@ public class CommentOptionsDialogActivity extends AppCompatActivity {
 
         comment=new Comment();
 
-        tvContext.setText(comment.getComment());
+        tvContext.setText(comment.getText());
         tvScore.setText(String.valueOf(comment.getScore()));
 
         // Set up button click listeners

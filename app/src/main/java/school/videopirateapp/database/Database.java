@@ -1,4 +1,4 @@
-package school.videopirateapp.Database;
+package school.videopirateapp.database;
 
 import android.util.Log;
 
@@ -13,45 +13,50 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Map;
 
-import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.DataStructures.Playlist;
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.DataStructures.Video;
-import school.videopirateapp.GlobalVariables;
+import school.videopirateapp.datastructures.Comment;
+import school.videopirateapp.datastructures.Playlist;
+import school.videopirateapp.datastructures.User;
+import school.videopirateapp.datastructures.Video;
 
 public abstract class Database {
-    private static final FirebaseDatabase database = FirebaseDatabase
+    private static final FirebaseDatabase firebaseDatabase = FirebaseDatabase
             .getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 
+    @Deprecated
     public static DatabaseReference getRef(String ref) {
         if (ref.isEmpty()) {
             Log.e("Database: getRef", "Empty string passed to database reference");
-            return database.getReference("ERROR_REF_CANNOT_BE_EMPTY");
+            return firebaseDatabase.getReference("ERROR_REF_CANNOT_BE_EMPTY");
         }
         Log.i("Database: getRef", "Got database reference: " + ref);
-        return database.getReference(ref);
+        return firebaseDatabase.getReference(ref);
     }
 
     @Deprecated
-    public static FirebaseDatabase getDatabase() {
-        return database;
+    public static FirebaseDatabase getFirebaseDatabase() {
+        return firebaseDatabase;
     }
 
     public static void addUser(@NonNull User newUser) {
         Users.addUser(newUser);
     }
 
-    public static void addComment(@NonNull Comment newComment, @NonNull String targetContextSection, User user) {
-        Comments.addComment(newComment, targetContextSection, user);
+    public static void addComment(@NonNull Comment newComment) {
+         Comments.addComment(newComment);
+         Users.addComment(newComment);
     }
 
-    public static void addComment(@NonNull Comment newComment, @NonNull String targetContextSection) {
-        Comments.addComment(newComment, targetContextSection, GlobalVariables.loggedUser.get());
-    }
-
-    public static void addCommentToUser(@NonNull Comment newComment, @NonNull User user) {
-        Users.addComment(newComment, user);
-    }
+//    public static void addComment(@NonNull Comment newComment, @NonNull String targetContextSection, User user) {
+//        Comments.addComment(newComment, targetContextSection, user);
+//    }
+//
+//    public static void addComment(@NonNull Comment newComment, @NonNull String targetContextSection) {
+//        Comments.addComment(newComment, targetContextSection, GlobalVariables.loggedUser.get());
+//    }
+//
+//    public static void addCommentToUser(@NonNull Comment newComment, @NonNull User user) {
+//        Users.addComment(newComment, user);
+//    }
 
     public static Comment getComment(String commentContext) {
         return Comments.getComment(commentContext);
@@ -125,7 +130,7 @@ public abstract class Database {
                         public void onDataChange(@NonNull DataSnapshot playlistSnapshot) {
                             // check if playlist exists
                             if (playlistSnapshot.exists()) {
-                                targetPlaylist.addVideo(video);
+                                targetPlaylist.addVideo(video.getTitle());
                                 playlistRef.setValue(targetPlaylist);
                                 Log.i("Database: addVideoToPlaylist", "Added video to playlist");
                             } else {

@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import school.videopirateapp.DataStructures.Video;
+import school.videopirateapp.datastructures.Video;
 import school.videopirateapp.R;
 import school.videopirateapp.Utilities;
 

@@ -1,15 +1,14 @@
 package school.videopirateapp.Activities;
 
 import static android.view.View.INVISIBLE;
-import static school.videopirateapp.Utilities.ByteArrayToBitmap;
 import static school.videopirateapp.Utilities.ByteListToBitmap;
 import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.MapToArrayList;
-import static school.videopirateapp.Utilities.openPlaylistOptionsDialog;
 import static school.videopirateapp.Utilities.openUserOwnerOptionsDialog;
 import static school.videopirateapp.Utilities.openUserViewerOptionsDialog;
 import static school.videopirateapp.Utilities.openVideoPage;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,18 +20,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
-import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.DataStructures.Playlist;
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.DataStructures.Video;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.datastructures.Comment;
+import school.videopirateapp.datastructures.Playlist;
+import school.videopirateapp.datastructures.User;
+import school.videopirateapp.datastructures.Video;
+import school.videopirateapp.database.Database;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
 import school.videopirateapp.ListViewComponents.PlaylistAdapter;
@@ -62,6 +59,7 @@ public class UserPageActivity extends AppCompatActivity {
     CommentAdapter commentAdapter;
     PlaylistAdapter playlistAdapter;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +87,7 @@ public class UserPageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         user = Database.getUser(intent.getStringExtra("user"));
 
-        videos = Database.getVideosArray(user.getUploads().getVideos());
+        videos = Database.getVideosArray((ArrayList<String>) user.getUploads().getVideos().values());
 
         playlists = new ArrayList<>();
         ArrayList<String> arrPlaylistsStr = user.getOwnedPlaylists();

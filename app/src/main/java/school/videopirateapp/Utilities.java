@@ -38,11 +38,11 @@ import school.videopirateapp.Activities.PlaylistPageActivity;
 import school.videopirateapp.Activities.SignupActivity;
 import school.videopirateapp.Activities.UserPageActivity;
 import school.videopirateapp.Activities.VideoPageActivity;
-import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.DataStructures.Playlist;
-import school.videopirateapp.DataStructures.User;
-import school.videopirateapp.DataStructures.Video;
-import school.videopirateapp.Database.Database;
+import school.videopirateapp.datastructures.Comment;
+import school.videopirateapp.datastructures.Playlist;
+import school.videopirateapp.datastructures.User;
+import school.videopirateapp.datastructures.Video;
+import school.videopirateapp.database.Database;
 import school.videopirateapp.ListViewComponents.PlaylistAdapter;
 
 public abstract class Utilities {
@@ -174,14 +174,14 @@ public abstract class Utilities {
                     Button btnCancel = dialog.findViewById(R.id.CommentInput_Dialog_Button_Cancel);
                     
                     // Set the current comment text
-                    etEditComment.setText(comment.getComment());
+                    etEditComment.setText(comment.getText());
                     
                     btnSubmit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             String newCommentText = etEditComment.getText().toString().trim();
                             if (!newCommentText.isEmpty()) {
-                                comment.setComment(newCommentText);
+                                comment.setText(newCommentText);
                                 Video video = Database.getVideo(comment.getContext());
                                 if (video != null) {
                                     Database.updateComment(comment);
