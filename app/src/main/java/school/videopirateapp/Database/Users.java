@@ -122,7 +122,7 @@ public abstract class Users {
                     User user = userSnapshot.getValue(User.class);
                     userRef.child("comments").child(comment.getContext()).setValue(comment);
                 } else {
-                    Log.e("Users: addComment", "User does not exist: " + user.getName());
+                    Log.e("Users: addComment", "User does not exist: " + comment.getAuthor());
                 }
             }
 

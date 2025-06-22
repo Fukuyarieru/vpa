@@ -7,10 +7,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
@@ -18,16 +17,16 @@ public class User {
     private static final User defaultUser = new User();
     private String name;
     // TODO, consider removing this field because upload management turns out to be a pain paired together with playlist management
-    private Playlist Uploads;
-    private Map<String, ArrayList<String>> Comments;
+    private Playlist uploads;
+    private Map<String, ArrayList<String>> comments;
     private ArrayList<String> ownedPlaylists;
-    private String Password;
-    private ArrayList<Byte> Image;
+    private String password;
+    private List<Byte> image;
     // Votes could include also non videos, like playlists or comments
-    private ArrayList<String> Upvotes;
-    private ArrayList<String> Downvotes;
+    private ArrayList<String> upvotes;
+    private ArrayList<String> downvotes;
     private Integer videosWatched;
-    private String Description;
+    private String description;
 
     // Default constructor required for Firebase
     public User() {
@@ -42,21 +41,21 @@ public class User {
             Name = "@" + Name;
         }
         this.name = Name;
-        this.Uploads = new Playlist("&Uploads-" + Name, Name);
-        this.Comments = new HashMap<String, ArrayList<String>>();
+        this.uploads = new Playlist("&Uploads-" + Name, Name);
+        this.comments = new HashMap<String, ArrayList<String>>();
 
         ArrayList<String>commentsList = new ArrayList<>();
         commentsList.add(Comment.Default().getContext());
-        this.Comments.put(Video.Default().getContext(), commentsList);
+        this.comments.put(Video.Default().getContext(), commentsList);
 
         this.ownedPlaylists = new ArrayList<>();
-        this.getOwnedPlaylists().add(this.Uploads.getTitle());
-        this.Image = getDefaultUserImage();
-        this.Password = password;
-        this.Upvotes = new ArrayList<>();
-        this.Downvotes = new ArrayList<>();
+        this.getOwnedPlaylists().add(this.uploads.getTitle());
+        this.image = getDefaultUserImage();
+        this.password = password;
+        this.upvotes = new ArrayList<>();
+        this.downvotes = new ArrayList<>();
         this.videosWatched = 0;
-        this.Description = "(Empty description)";
+        this.description = "(Empty description)";
     }
 
     public static User Default() {
@@ -64,19 +63,19 @@ public class User {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     public String getName() {
@@ -96,19 +95,19 @@ public class User {
     }
 
     public Playlist getUploads() {
-        return Uploads;
+        return uploads;
     }
 
     public void setUploads(Playlist uploads) {
-        this.Uploads = uploads;
+        this.uploads = uploads;
     }
 
     public Map<String, ArrayList<String>> getComments() {
-        return Comments;
+        return comments;
     }
 
     public void setComments(Map<String, ArrayList<String>> comments) {
-        Comments = comments;
+        this.comments = comments;
     }
 
     public ArrayList<String> getOwnedPlaylists() {
@@ -119,88 +118,42 @@ public class User {
         this.ownedPlaylists = ownedPlaylists;
     }
 
-    public ArrayList<Byte> getImage() {
-        return Image;
+    public List<Byte> getImage() {
+        return image;
     }
 
-    public void setImage(ArrayList<Byte> image) {
-        this.Image = image;
+    public void setImage(List<Byte> image) {
+        this.image = image;
     }
 
     public void addComment(Comment newComment) {
-        // String context = newComment.getContext();  // Commented out
-
-//        ArrayList<Comment> a=this.Comments.get(newComment.getContext());
-//
-//        if() {
-//            this.Comments.put(newComment.getContext(), new ArrayList<>());
-//        }
-//        if()
-
-
-        String context = "videos";
-        if (!this.Comments.containsKey(context)) {
-            ArrayList<Comment> arrComments = new ArrayList<>();
-            arrComments.add(newComment);
-            this.Comments.put(context, arrComments);
-            Log.i("User: addComment", "Added first comment to context: " + context);
-        } else {
-            ArrayList<Comment> arrComments = this.Comments.get(context);
-            // Check for duplicate comments
-            boolean isDuplicate = false;
-            for (Comment existingComment : arrComments) {
-                if (existingComment.getAuthor().equals(newComment.getAuthor()) && existingComment.getComment().equals(newComment.getComment())) {
-                    isDuplicate = true;
-                    Log.w("User: addComment", "Duplicate comment detected and prevented");
-                    break;
-                }
-            }
-            if (!isDuplicate) {
-                arrComments.add(newComment);
-                this.Comments.put(context, arrComments);
-                Log.i("User: addComment", "Added comment to existing context: " + context);
-            }
+        String sourceContext=newComment.getSourceContext();
+        if(!this.comments.containsKey(sourceContext)) {
+            this.comments.put(sourceContext, new ArrayList<>());
         }
+        if(this.comments.get(sourceContext).contains(newComment.getContext())) {
+            return;
+        }
+         this.comments.get(sourceContext).add(newComment.getContext());
     }
-
-   /* Commented out to disable comment-to-comment functionality
-   public void addReplyToComment(Comment parentComment, Comment reply) {
-      String context = parentComment.getContext();
-      if (this.Comments.containsKey(context)) {
-         ArrayList<Comment> arrComments = this.Comments.get(context);
-         // Find the parent comment and add the reply
-         for (Comment comment : arrComments) {
-            if (comment.equals(parentComment)) {
-               if (comment.getReplies() == null) {
-                  comment.setReplies(new ArrayList<>());
-               }
-               comment.getReplies().add(reply);
-               Log.i("User: addReplyToComment", "Added reply to comment in context: " + context);
-               break;
-            }
-         }
-      }
-   }
-   */
-
     public void addVideo(Video newVideo) {
-        this.Uploads.addVideo(newVideo);
+        this.uploads.addVideo(newVideo);
     }
 
     public ArrayList<String> getUpvotes() {
-        return Upvotes;
+        return upvotes;
     }
 
     public void setUpvotes(ArrayList<String> upvotes) {
-        this.Upvotes = upvotes;
+        this.upvotes = upvotes;
     }
 
     public ArrayList<String> getDownvotes() {
-        return Downvotes;
+        return downvotes;
     }
 
     public void setDownvotes(ArrayList<String> downvotes) {
-        this.Downvotes = downvotes;
+        this.downvotes = downvotes;
     }
 
     public Integer getVideosWatched() {

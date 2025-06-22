@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -919,6 +920,20 @@ public abstract class Utilities {
         Intent intent = new Intent(currentActivityThis, PlaylistPageActivity.class);
         intent.putExtra("playlistTitle", playlistTitle);
         currentActivityThis.startActivity(intent);
+    }
+
+    public static Bitmap ByteListToBitmap(List<Byte> byteList) {
+        if (byteList == null || byteList.isEmpty()) {
+            byte[] arr = new byte[]{1};
+            return BitmapFactory.decodeByteArray(arr, 0, arr.length);
+        }
+
+        byte[] bytes = new byte[byteList.size()];
+        for (int i = 0; i < byteList.size(); i++) {
+            bytes[i] = byteList.get(i);
+        }
+
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
     public static Bitmap ByteArrayToBitmap(ArrayList<Byte> byteArray) {

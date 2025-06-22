@@ -1,7 +1,6 @@
 package school.videopirateapp.Activities;
 
 import static school.videopirateapp.Utilities.Feedback;
-import static school.videopirateapp.Utilities.HashMapToArrayList;
 import static school.videopirateapp.Utilities.MapToArrayList;
 import static school.videopirateapp.Utilities.openLoginDialog;
 import static school.videopirateapp.Utilities.openVideoPage;
@@ -11,7 +10,6 @@ import static school.videopirateapp.Utilities.openVideoUploadDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +19,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.concurrent.Delayed;
-import java.util.concurrent.TimeUnit;
 
 import school.videopirateapp.DataStructures.Video;
 import school.videopirateapp.Database.Database;
-import school.videopirateapp.Database.Videos;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.VideoAdapter;
 import school.videopirateapp.R;
@@ -70,10 +65,10 @@ public class MainMenuActivity extends AppCompatActivity {
         btnRefreshVideos.setText("Refresh Videos");
 
 
-        Database.Refresh();
+        Database.refresh();
     }
     public void videoListViewInit() {
-        Database.Refresh(); // more strange behavior here, i think
+        Database.refresh(); // more strange behavior here, i think
         videos=MapToArrayList(Database.getVideos());
         videosAdapter =new VideoAdapter(this,R.layout.activity_video_listview_component,videos);
         listView.setAdapter(videosAdapter);

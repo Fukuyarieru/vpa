@@ -23,7 +23,6 @@ public abstract class Database {
     private static final FirebaseDatabase database = FirebaseDatabase
             .getInstance("https://videopiratingapp-default-rtdb.europe-west1.firebasedatabase.app/");
 
-    @Deprecated
     public static DatabaseReference getRef(String ref) {
         if (ref.isEmpty()) {
             Log.e("Database: getRef", "Empty string passed to database reference");
@@ -176,27 +175,10 @@ public abstract class Database {
         Videos.initialize();
         Playlists.initialize();
         Comments.initialize();
-
-        // Wait for initialization to complete
-        int attempts = 0;
-        while (attempts < 10) {
-            Log.i("Database: initialize", "Waiting for initialization to complete");
-            if (Comments.getComments().isEmpty() || Playlists.getPlaylists().isEmpty()) {
-                try {
-                    Thread.sleep(100);
-                    attempts++;
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                break;
-            }
-        }
-
-        Refresh();
+        Database.refresh();
     }
 
-    public static void Refresh() {
+    public static void refresh() {
         Log.i("Database: Refresh", "Refreshing database");
         Log.i("Database: Refresh, Videos", Videos.getVideos().toString());
         Log.i("Database: Refresh, Comments", Comments.getComments().toString());

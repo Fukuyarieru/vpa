@@ -1,6 +1,7 @@
 package school.videopirateapp.ListViewComponents;
 
 import static school.videopirateapp.Utilities.ByteArrayToBitmap;
+import static school.videopirateapp.Utilities.ByteListToBitmap;
 import static school.videopirateapp.Utilities.openUserPage;
 import static school.videopirateapp.Utilities.openCommentOwnerOptionsDialog;
 import static school.videopirateapp.Utilities.openCommentViewerOptionsDialog;
@@ -61,7 +62,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
         User author = Database.getUser(comment.getAuthor());
         if (author != null) {
-            userImage.setImageBitmap(ByteArrayToBitmap(author.getImage()));
+            userImage.setImageBitmap(ByteListToBitmap(author.getImage()));
         }
 
         userImage.setOnClickListener(new View.OnClickListener() {

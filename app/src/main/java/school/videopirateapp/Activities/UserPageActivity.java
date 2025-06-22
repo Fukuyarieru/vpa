@@ -2,6 +2,7 @@ package school.videopirateapp.Activities;
 
 import static android.view.View.INVISIBLE;
 import static school.videopirateapp.Utilities.ByteArrayToBitmap;
+import static school.videopirateapp.Utilities.ByteListToBitmap;
 import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.MapToArrayList;
 import static school.videopirateapp.Utilities.openPlaylistOptionsDialog;
@@ -124,7 +125,7 @@ public class UserPageActivity extends AppCompatActivity {
             });
         }
 
-        UserImage.setImageBitmap(ByteArrayToBitmap(user.getImage()));
+        UserImage.setImageBitmap(ByteListToBitmap(user.getImage()));
     }
 
 

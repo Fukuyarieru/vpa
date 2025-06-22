@@ -11,10 +11,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 import school.videopirateapp.DataStructures.Comment;
-import school.videopirateapp.Database.Comments;
 import school.videopirateapp.Database.Database;
 import school.videopirateapp.GlobalVariables;
 import school.videopirateapp.ListViewComponents.CommentAdapter;
@@ -33,7 +30,7 @@ public class CommentPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_page);
 
-        Database.Refresh();
+        Database.refresh();
 
         String commentContext = getIntent().getStringExtra("commentContext");
 

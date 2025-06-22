@@ -108,7 +108,7 @@ public abstract class Comments {
 
                                         targetContextSectionRef.child(size).setValue(comment.getContext());
                                         user.addComment(comment);
-                                        Users.addComment(comment,user);
+                                        Users.addComment(comment);
 
                                         Comments.put(comment.getContext(), comment);
                                         Log.i("Comments: addComment", "Added comment: " + comment.getContext());

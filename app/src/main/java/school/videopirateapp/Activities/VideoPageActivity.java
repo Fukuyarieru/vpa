@@ -1,6 +1,6 @@
 package school.videopirateapp.Activities;
 
-import static school.videopirateapp.Utilities.ByteArrayToBitmap;
+import static school.videopirateapp.Utilities.ByteListToBitmap;
 import static school.videopirateapp.Utilities.Feedback;
 import static school.videopirateapp.Utilities.openUserPage;
 import static school.videopirateapp.Utilities.openVideoOwnerOptionsDialog;
@@ -88,7 +88,7 @@ public class VideoPageActivity extends AppCompatActivity {
         // Show loading indicator or disable UI elements here
 
         // Refresh database and load data only after refresh is complete
-        Database.Refresh();
+        Database.refresh();
         currentVideo = Database.getVideo(videoTitle);
         if (currentVideo != null) {
             Log.e("CURRENT VIDEO", currentVideo.getComments().toString());
@@ -191,7 +191,7 @@ public class VideoPageActivity extends AppCompatActivity {
 
         User uploader = Database.getUser(UploaderName);
         try {
-            uploaderImage.setImageBitmap(ByteArrayToBitmap(uploader.getImage()));
+            uploaderImage.setImageBitmap(ByteListToBitmap(uploader.getImage()));
         } catch (Exception e) {
             uploaderImage.setImageResource(R.drawable.default_user_image);
         }
@@ -205,7 +205,7 @@ public class VideoPageActivity extends AppCompatActivity {
     }
 
     public void refreshComments() {
-        Database.Refresh();
+        Database.refresh();
         currentVideo = Database.getVideo(currentVideo.getTitle());
         ArrayList<Comment> comments = Comments.getComments(currentVideo.getComments());
         commentAdapter.clear();
